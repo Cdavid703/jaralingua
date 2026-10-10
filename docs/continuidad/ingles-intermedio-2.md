@@ -47,3 +47,9 @@ Actualización del 9 de octubre de 2026: tres retos separados con mapa de trofeo
 La grabación ahora se procesa automáticamente mediante el Whisper local existente de Jaralingua. Se muestra la transcripción y coincidencia de palabras; no es evaluación fonética de sonidos/acento y no debe presentarse como tal. El trofeo oral exige doce palabras verificadas; autoevaluación u omisión no lo otorgan. Sin envío al docente ni calificación académica. El aviso de privacidad explica el procesamiento temporal en el servidor. Consultar [implementación, límites y pruebas](../english-intermediate2-news-quest.md).
 
 Se conserva la excepción de audio del docente: en los retos de escuchar y escoger imagen o palabra, suena únicamente la palabra objetivo; no se lee la instrucción. Los demás retos tienen pregunta narrada, repetición y cancelación al avanzar o grabar. Las frases incompletas dicen «blank» sin revelar la respuesta.
+
+## Unit 6 · My opinion matters
+
+Coach visual aprobado para preparar una mesa redonda de cinco preguntas: contexto de una foto, alerta sin verificar, grabar o ayudar, suministros limitados y cobertura desigual. Saludo y nombre, descripción, interpretación con looks/seems/might y opinión; seguimientos para pedir razón o predecir. Cinco imágenes originales ampliables, pregunta ampliable, ayudas y ejemplos con audio ocultos inicialmente. Voz David clonada autorizada, principalmente Eleven v3 con indicaciones expresivas para que los saludos y exclamaciones tengan intención vocal.
+
+Conversación guiada con rutas y respuestas pregrabadas, no comprensión generativa ilimitada. Aclara respuestas no reconocidas; no califica opiniones ni inventa puntuación fonética. Informe de cinco opiniones durante la visita, sin persistencia de voz/transcripciones ni envío al docente. Se conserva el motor compartido con extensiones optativas y pruebas de regresión. Referencia: [implementación, recursos y límites](../english-intermediate2-opinion-coach.md).

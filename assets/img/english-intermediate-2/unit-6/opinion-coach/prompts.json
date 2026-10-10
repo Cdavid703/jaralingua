@@ -1,0 +1,25 @@
+{
+  "tool": "Built-in image_gen",
+  "prompts": [
+    [
+      "photo-context",
+      "A wide detailed classroom discussion illustration, realistic editorial storybook painting, landscape 3:2. Fictional flood relief center in Greenford, safe dry pavement. In foreground a large clearly visible smartphone held by an observer shows a tightly cropped photograph of a man in green jacket carrying two cardboard supply boxes away from a van; this crop excludes all other people. Behind the phone, the full real scene shows THAT SAME man in green jacket handing boxes toward a smiling volunteer at a shelter table, families waiting nearby, a van with open rear doors, water bottles and folded blankets. The phone image and full scene must be visibly consistent, but cropping changes the possible interpretation. Rich observable details and nuanced natural faces, not cartoon villains. No readable text, logos, captions, watermarks or speech bubbles. Single coherent scene, foreground phone occupies about one third of composition."
+    ],
+    [
+      "unverified-warning",
+      "A wide detailed classroom discussion illustration, realistic editorial storybook painting, landscape 3:2. Three young adult college students in a bright classroom near a window with rain outside. Main woman in blue sweater looks uncertain at her smartphone held visibly towards viewer: phone screen shows a simple large orange flood warning icon (wave and exclamation mark), anonymous profile silhouette with question mark and an unlabeled forward arrow button. Two friends nearby await her decision, one points toward an open laptop showing a plain weather map with clouds. Backpacks, notebooks, clock, raincoat, wet umbrella visible. The message is unverified, but DO NOT use readable text. Natural ambiguous worried/curious expressions. No logos, captions or watermark. Detailed faces and hands, clearly visible phone."
+    ],
+    [
+      "help-or-film",
+      "A wide detailed classroom discussion illustration, realistic editorial storybook painting, landscape 3:2. Safe aftermath of a flood on a residential street in fictional Greenford in daylight. In foreground a young adult wearing yellow raincoat holds a phone vertically filming; no evil or silly expression. Nearby two adults help a family carry a chair and a box from a muddy doorway onto dry pavement. An older adult waits seated safely beside bags, a dog near its owner, buckets, boots, muddy water line on wall, a parked rescue vehicle in background. No one in danger, injured or drowning. Many details to describe, emotional nuance without judging whether filming helps. No readable text, logo or watermark."
+    ],
+    [
+      "limited-supplies",
+      "A wide detailed classroom discussion illustration, realistic editorial storybook painting, landscape 3:2. Inside a bright community shelter after a flood. A woman volunteer in teal vest stands behind a table with only three small supply boxes, a few water bottles and folded blankets, looking thoughtful and slightly worried. Several diverse families and adults wait respectfully: a parent with child, an older adult with cane, a young adult with muddy boots, a person seated in wheelchair next to a companion. Rows of cots and a nearly empty shelf in background. Clock, clipboard without legible text, practical bags and clothing. Show people with equal dignity; no visual hierarchy of deservingness, no dramatic suffering. Warm detailed natural illustration. No readable text, logos or watermark."
+    ],
+    [
+      "unequal-coverage",
+      "A wide detailed classroom discussion illustration, realistic editorial storybook painting, landscape 3:2, a deliberate two-panel comparison within one image separated by a narrow clean vertical border. Two fictional communities with equally serious but non-graphic flood damage: muddy streets, damaged furniture, residents cleaning, buildings intact. Left panel has a reporter holding microphone, camera operator and television van interviewing a resident. Right panel has no reporters; residents hold a phone and look down the empty street, neighbors cleaning with buckets. Comparable daylight, equal dignity, similarly diverse populations and similar building quality on BOTH sides, do not equate wealth or ethnicity with coverage. Many observable details and nuanced emotions. No readable text, no logos, no captions, no watermark."
+    ]
+  ]
+}

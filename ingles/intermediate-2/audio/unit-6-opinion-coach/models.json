@@ -1,0 +1,1400 @@
+{
+  "voiceId": "pv8WYYW60prEkDbDXyC0",
+  "voiceName": "David",
+  "modelId": "eleven_v3",
+  "authorization": "Existing owner authorization for David cloned voice; expressive coaching requested 2026-10-09.",
+  "items": [
+    {
+      "file": "hello.mp3",
+      "text": "Hi! I'm David. It's good to see you! What's your name?",
+      "delivery": "curious",
+      "generationText": "[curious] Hi! I'm David. It's good to see you! What's your name?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 61066,
+      "sha256": "878bd770cdf70a46d59476aa5d11814fb1fa511f0ffb0f1307b345b2e21189a0"
+    },
+    {
+      "file": "hello-example-1.mp3",
+      "text": "Hi, David! My name is Ana.",
+      "delivery": "calm",
+      "generationText": "Hi, David! My name is Ana.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 36824,
+      "sha256": "826da6c794004cada0b5bd335944583b4ea7a80cf7ee2d0e8526df985d972c51"
+    },
+    {
+      "file": "s1-observe.mp3",
+      "text": "Let's look at our first picture! What can you see on the phone and in the full scene?",
+      "delivery": "curious",
+      "generationText": "[curious] Let's look at our first picture! What can you see on the phone and in the full scene?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 82799,
+      "sha256": "e57b8ea15efcf6891975271d20dee405f1ad3f589a55f2ba000f6111ec0b3220"
+    },
+    {
+      "file": "s1-observe-example-1.mp3",
+      "text": "I can see a man with boxes on the phone. In the full scene, a volunteer is receiving the boxes.",
+      "delivery": "calm",
+      "generationText": "I can see a man with boxes on the phone. In the full scene, a volunteer is receiving the boxes.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 95756,
+      "sha256": "4f13ba65af485a71e82de9e1f01bf82d44834b63fac5d189b44969bfbdb58da3"
+    },
+    {
+      "file": "s1-observe-example-2.mp3",
+      "text": "There are families near a table with water and blankets.",
+      "delivery": "calm",
+      "generationText": "There are families near a table with water and blankets.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 59812,
+      "sha256": "7dbab6c13d2afadd71e3d612096f5222072b8ba810f77761e026f42b21e92122"
+    },
+    {
+      "file": "s1-interpret.mp3",
+      "text": "What does it look like the man is doing?",
+      "delivery": "curious",
+      "generationText": "[curious] What does it look like the man is doing?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 36824,
+      "sha256": "a1dc66e7f26f4c29c6e4b4edcbb8d97d7ee1abf9a703639b0523e8b4fdb9bc7b"
+    },
+    {
+      "file": "s1-interpret-example-1.mp3",
+      "text": "It looks like he is delivering supplies to the shelter.",
+      "delivery": "calm",
+      "generationText": "It looks like he is delivering supplies to the shelter.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 48527,
+      "sha256": "118c15c3e572998c8f804b3c87468c48127b92a7d489e1743ebad3b583730ffa"
+    },
+    {
+      "file": "s1-interpret-example-2.mp3",
+      "text": "He seems to be helping, but the cropped photo does not show the whole situation.",
+      "delivery": "calm",
+      "generationText": "He seems to be helping, but the cropped photo does not show the whole situation.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 71515,
+      "sha256": "de91f055cef896d6bcded20b7fa3da7e9f24583c33f244d20cb92c7d549d5706"
+    },
+    {
+      "file": "s1-evidence.mp3",
+      "text": "Look at the boxes, the open van and the volunteer. Which detail supports your impression?",
+      "delivery": "curious",
+      "generationText": "[curious] Look at the boxes, the open van and the volunteer. Which detail supports your impression?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 91995,
+      "sha256": "cb7bf7af49eb42e824f1af882f0cbbe4d06d78e14fc9463c8beba59174511cd3"
+    },
+    {
+      "file": "s1-opinion.mp3",
+      "text": "Could this photo make people judge the man unfairly? Why or why not?",
+      "delivery": "curious",
+      "generationText": "[curious] Could this photo make people judge the man unfairly? Why or why not?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 71515,
+      "sha256": "21e17addd68168d89caddc9cbaae0cf087bf038e97834f21cd215765f8e66ad9"
+    },
+    {
+      "file": "s1-opinion-example-1.mp3",
+      "text": "I think the photo could mislead people because it hides the volunteer receiving the boxes.",
+      "delivery": "calm",
+      "generationText": "I think the photo could mislead people because it hides the volunteer receiving the boxes.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 79038,
+      "sha256": "e6d23dc1be6ebc0d281cc3a36ad02e8cfd571337afcafc05fa92808f5d65e600"
+    },
+    {
+      "file": "s1-opinion-example-2.mp3",
+      "text": "I would not judge him from this photo because there is not enough evidence.",
+      "delivery": "calm",
+      "generationText": "I would not judge him from this photo because there is not enough evidence.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 69007,
+      "sha256": "11b0b563022f178c16542fce5e5b3c5dc8a036b57aab3ca4be1adedbeb8b0d2c"
+    },
+    {
+      "file": "s1-reason.mp3",
+      "text": "What is your main reason for that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What is your main reason for that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 43511,
+      "sha256": "02901f5d91d8d7d26ef74229a55dc163432d05deacaef29be386840986634b37"
+    },
+    {
+      "file": "s1-reason-example-1.mp3",
+      "text": "My main reason is that the small photo leaves out important context.",
+      "delivery": "calm",
+      "generationText": "My main reason is that the small photo leaves out important context.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 71515,
+      "sha256": "9cde888bb56218ab8ea8d350f714e964cf7b7e05be6757cee297fc39c6458528"
+    },
+    {
+      "file": "s1-prediction.mp3",
+      "text": "What might happen if someone shares only the cropped photo?",
+      "delivery": "curious",
+      "generationText": "[curious] What might happen if someone shares only the cropped photo?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 59812,
+      "sha256": "725cdf254eb9c73b123b403dcd725386cf746c77bceea6cf38c9b05e043e5971"
+    },
+    {
+      "file": "s1-prediction-example-1.mp3",
+      "text": "People might misunderstand the man and accuse him unfairly.",
+      "delivery": "calm",
+      "generationText": "People might misunderstand the man and accuse him unfairly.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 62319,
+      "sha256": "b7d92a9852c1f34597afbf23e37f6f07270164ff510fab6c4328cf2b18ec5424"
+    },
+    {
+      "file": "s1-reaction.mp3",
+      "text": "The small photo leaves out the people receiving the boxes. Your interpretation needs that wider context.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] The small photo leaves out the people receiving the boxes. Your interpretation needs that wider context.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 118744,
+      "sha256": "b25ff329c56fc6fccf87b8a7cb39b3ed42e4fda0ad926d81ba2e79150de21bed"
+    },
+    {
+      "file": "s2-observe.mp3",
+      "text": "Here's a different situation. What can you see on the phone and the laptop?",
+      "delivery": "curious",
+      "generationText": "[curious] Here's a different situation. What can you see on the phone and the laptop?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 65245,
+      "sha256": "e016600f7e68f657509691f4e94885ce85ec631d07fa0a53ec7f6741a912d97e"
+    },
+    {
+      "file": "s2-observe-example-1.mp3",
+      "text": "I can see a warning on a phone and a weather map on a laptop.",
+      "delivery": "calm",
+      "generationText": "I can see a warning on a phone and a weather map on a laptop.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 61066,
+      "sha256": "38460375bbf1d52773b8ed8e44df6293a04da07a8cd042aac8ec854ebbd2d168"
+    },
+    {
+      "file": "s2-observe-example-2.mp3",
+      "text": "Three students are looking at the screens, and it is raining outside.",
+      "delivery": "calm",
+      "generationText": "Three students are looking at the screens, and it is raining outside.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 66499,
+      "sha256": "3accb75614a644742cf688a0b9c630a431a0184e613d555c37dcc7532dd3c103"
+    },
+    {
+      "file": "s2-interpret.mp3",
+      "text": "Look at the student holding the phone. How does she seem to feel?",
+      "delivery": "curious",
+      "generationText": "[curious] Look at the student holding the phone. How does she seem to feel?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 54796,
+      "sha256": "65a53fe0c4e1fd1a3039fb51958e5288681d01c3227f5a5b2fab1e06a3284038"
+    },
+    {
+      "file": "s2-interpret-example-1.mp3",
+      "text": "She looks worried because she is looking carefully at the warning.",
+      "delivery": "calm",
+      "generationText": "She looks worried because she is looking carefully at the warning.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 49781,
+      "sha256": "0a4c2f942f054245b8109bde90d78931dd3bf72b4c6992ebcf1a1226fac3d382"
+    },
+    {
+      "file": "s2-interpret-example-2.mp3",
+      "text": "She seems unsure about what to do next.",
+      "delivery": "calm",
+      "generationText": "She seems unsure about what to do next.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 43511,
+      "sha256": "0dd15dee23a86fc04cfccc016479907b75ebb908ff98f3f849e479581a89f727"
+    },
+    {
+      "file": "s2-evidence.mp3",
+      "text": "Look at her face and the two screens. What visible detail supports your impression?",
+      "delivery": "curious",
+      "generationText": "[curious] Look at her face and the two screens. What visible detail supports your impression?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 93248,
+      "sha256": "278fc0ce97ed7b96f8eaa35452b473b9fc8562db79c8df5bdc64d67bb9b62065"
+    },
+    {
+      "file": "s2-opinion.mp3",
+      "text": "Would you share this warning now or check it first? Explain your choice.",
+      "delivery": "curious",
+      "generationText": "[curious] Would you share this warning now or check it first? Explain your choice.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 71515,
+      "sha256": "5b72803c6a85768217d3fa30ecf3d9cc9faca5ecb7c9a987a2acc193b0733a37"
+    },
+    {
+      "file": "s2-opinion-example-1.mp3",
+      "text": "I would check the source first because a false warning could frighten people.",
+      "delivery": "calm",
+      "generationText": "I would check the source first because a false warning could frighten people.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 69007,
+      "sha256": "74bdb226f9d12b9b63751cee82b8065089d82462f1c31e26f2d041342b4e0929"
+    },
+    {
+      "file": "s2-opinion-example-2.mp3",
+      "text": "I might share it with a clear note that it is unverified because people may need time to prepare.",
+      "delivery": "calm",
+      "generationText": "I might share it with a clear note that it is unverified because people may need time to prepare.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 100772,
+      "sha256": "483ed347e4fa7269f45e6f65367d170196589f62c43dadd6b1a1a4154dd427d1"
+    },
+    {
+      "file": "s2-reason.mp3",
+      "text": "What is your main reason for that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What is your main reason for that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 44765,
+      "sha256": "662a9c518ab2a19f35b7cc6d350132a5dc35844f1572235ba8fe5f3ae2b80923"
+    },
+    {
+      "file": "s2-reason-example-1.mp3",
+      "text": "My main reason is that people need reliable information.",
+      "delivery": "calm",
+      "generationText": "My main reason is that people need reliable information.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 61066,
+      "sha256": "778749d40cd78c4d2f8605c47a31beb82fe16501aa5d08c39e0c87c753aed868"
+    },
+    {
+      "file": "s2-prediction.mp3",
+      "text": "What might happen after the student makes that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What might happen after the student makes that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 53542,
+      "sha256": "ce413f88ab357e0d44906e8b23451e605b03b766c622aae62dfdca3cbeb80020"
+    },
+    {
+      "file": "s2-prediction-example-1.mp3",
+      "text": "Some people might prepare for a flood, while others might check the source.",
+      "delivery": "calm",
+      "generationText": "Some people might prepare for a flood, while others might check the source.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 74022,
+      "sha256": "5fd66a75346d587050bfe36bad7c89e64a942fe7b349463f619a9e6e60986f0c"
+    },
+    {
+      "file": "s2-reaction.mp3",
+      "text": "We can see a warning, but the picture does not establish whether it is reliable.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] We can see a warning, but the picture does not establish whether it is reliable.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 85725,
+      "sha256": "f8a3e70852a834d8c36d7a4c07a46f2c8eaefe6e72525063d3e075d945c249a9"
+    },
+    {
+      "file": "s3-observe.mp3",
+      "text": "Now we're outside. What are the people in this street doing?",
+      "delivery": "curious",
+      "generationText": "Now we're outside. What are the people in this street doing?",
+      "voiceSettings": {
+        "stability": 0.6,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": true
+      },
+      "modelId": "eleven_multilingual_v2",
+      "bytes": 53960,
+      "sha256": "e5a2625f6a7598da491ff927f61229671c62265c9ebe872d14a14c85d30d2d3e"
+    },
+    {
+      "file": "s3-observe-example-1.mp3",
+      "text": "Some people are carrying a chair, and another person is filming.",
+      "delivery": "calm",
+      "generationText": "Some people are carrying a chair, and another person is filming.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 56050,
+      "sha256": "80d0c537a37e932af54ba29af3515e4a1dabbf8a3db71b9d820c59f58517e3eb"
+    },
+    {
+      "file": "s3-observe-example-2.mp3",
+      "text": "I can see muddy walls, bags and an older person sitting near a dog.",
+      "delivery": "calm",
+      "generationText": "I can see muddy walls, bags and an older person sitting near a dog.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 77784,
+      "sha256": "ecc5d23e4178587b4c83b9263fd2cfc25dc14e6e6093175212c02e4338c7ecaa"
+    },
+    {
+      "file": "s3-interpret.mp3",
+      "text": "What does it look like the person in the yellow raincoat is trying to do?",
+      "delivery": "curious",
+      "generationText": "[curious] What does it look like the person in the yellow raincoat is trying to do?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 69007,
+      "sha256": "ebf05d9bc9eb4dd71891db1c7a24213983604d3ac763088b245cc803888b21c6"
+    },
+    {
+      "file": "s3-interpret-example-1.mp3",
+      "text": "It looks like the person is recording the damage.",
+      "delivery": "calm",
+      "generationText": "It looks like the person is recording the damage.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 48527,
+      "sha256": "867fceed5fa3fe74e97a28a456d7496d4ad4c9be63c4b91f3e2f308ffb8ae5c9"
+    },
+    {
+      "file": "s3-interpret-example-2.mp3",
+      "text": "They might be asking for help, but we cannot know that from the image alone.",
+      "delivery": "calm",
+      "generationText": "They might be asking for help, but we cannot know that from the image alone.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 61066,
+      "sha256": "6812485edcfbba04ec06874bbbea13e9a99b189d7ae9fe772f5540676ed7fd5f"
+    },
+    {
+      "file": "s3-evidence.mp3",
+      "text": "Which detail in the image supports your idea about the person filming?",
+      "delivery": "curious",
+      "generationText": "[curious] Which detail in the image supports your idea about the person filming?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 70261,
+      "sha256": "7118b3011bc3b2400d30b1bac9b1b01f49a25e4193bba0b13f0d5e6698f1a961"
+    },
+    {
+      "file": "s3-opinion.mp3",
+      "text": "Do you think filming is useful or harmful in this situation? Explain your opinion.",
+      "delivery": "curious",
+      "generationText": "[curious] Do you think filming is useful or harmful in this situation? Explain your opinion.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 94502,
+      "sha256": "0a50a4839ffefb654ad1b8db978df5df87211577fd53b9253c76c1393ad39b29"
+    },
+    {
+      "file": "s3-opinion-example-1.mp3",
+      "text": "Filming could help show what the families need, as long as it does not get in the way.",
+      "delivery": "calm",
+      "generationText": "Filming could help show what the families need, as long as it does not get in the way.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 76530,
+      "sha256": "627778226cb85486c193a3501d42c69e0212d5c0d4d800ccf25aa5426d93ad7c"
+    },
+    {
+      "file": "s3-opinion-example-2.mp3",
+      "text": "I think helping directly is more useful here because the neighbors are carrying heavy things.",
+      "delivery": "calm",
+      "generationText": "I think helping directly is more useful here because the neighbors are carrying heavy things.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 93248,
+      "sha256": "3f7e151cc1ca9482fddd928cbf45654872b30180c40e80d927a3022e69e2ff35"
+    },
+    {
+      "file": "s3-reason.mp3",
+      "text": "What is your main reason for that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What is your main reason for that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 44765,
+      "sha256": "4f63f3079a90e4e77544e70c40f2b17dae3227aab566f1e17820e6073c6673cb"
+    },
+    {
+      "file": "s3-reason-example-1.mp3",
+      "text": "My main reason is that filming can show what help is needed.",
+      "delivery": "calm",
+      "generationText": "My main reason is that filming can show what help is needed.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 58558,
+      "sha256": "59665dd11154750fb0f1332a9a6db3d03b1c2ce29567f290721c2b01762b0fa6"
+    },
+    {
+      "file": "s3-prediction.mp3",
+      "text": "What might change if the person puts the phone away?",
+      "delivery": "curious",
+      "generationText": "[curious] What might change if the person puts the phone away?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 54796,
+      "sha256": "221b4b0a735514233f0e7bd524a129bffb9e1790e6c083fce8480154790f91fa"
+    },
+    {
+      "file": "s3-prediction-example-1.mp3",
+      "text": "The person might help carry the furniture instead.",
+      "delivery": "calm",
+      "generationText": "The person might help carry the furniture instead.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 40586,
+      "sha256": "b36fd332892bea699bfe0ea75ac0f75826f129dec1e4a6888c519b8ddbdec1c3"
+    },
+    {
+      "file": "s3-reaction.mp3",
+      "text": "The phone is visible. The reason for filming is something we have to infer.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] The phone is visible. The reason for filming is something we have to infer.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 76530,
+      "sha256": "d7d77925a0fb3782801fcf8d97a23672dbf2e1c784289407efb0744d27c83eb1"
+    },
+    {
+      "file": "s4-observe.mp3",
+      "text": "Let's step inside the shelter. What is on the table, and who is waiting?",
+      "delivery": "curious",
+      "generationText": "[curious] Let's step inside the shelter. What is on the table, and who is waiting?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 69007,
+      "sha256": "cb05225f7f5efb67ef103149e26920f1b272c653af8fa146caabe56b5c309730"
+    },
+    {
+      "file": "s4-observe-example-1.mp3",
+      "text": "There are three small boxes, water bottles and blankets on the table. Several families are waiting.",
+      "delivery": "calm",
+      "generationText": "There are three small boxes, water bottles and blankets on the table. Several families are waiting.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 88233,
+      "sha256": "733c1b66d1383d9479933e534686dba756747cc251af4173cd05544d036ceeaa"
+    },
+    {
+      "file": "s4-observe-example-2.mp3",
+      "text": "I can see a volunteer, a child, an older adult and a person in a wheelchair.",
+      "delivery": "calm",
+      "generationText": "I can see a volunteer, a child, an older adult and a person in a wheelchair.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 80292,
+      "sha256": "ddc06b6e1656586e1d1786130a17398548c97c353fdba5e39493334511e153bf"
+    },
+    {
+      "file": "s4-interpret.mp3",
+      "text": "Look at the volunteer behind the table. How does she seem to feel?",
+      "delivery": "curious",
+      "generationText": "[curious] Look at the volunteer behind the table. How does she seem to feel?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 62319,
+      "sha256": "82e024f33b89bf0a16a0d8d7cfa486ed0b1cea31bb73fd631d9aa147b9448150"
+    },
+    {
+      "file": "s4-interpret-example-1.mp3",
+      "text": "She seems worried because there are few supplies and several people waiting.",
+      "delivery": "calm",
+      "generationText": "She seems worried because there are few supplies and several people waiting.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 69007,
+      "sha256": "b36a549dd19419efaa2bd70156389173eb518a6ade8dc0a0a707d4109c1e125a"
+    },
+    {
+      "file": "s4-interpret-example-2.mp3",
+      "text": "She looks thoughtful. She might be planning how to share the supplies.",
+      "delivery": "calm",
+      "generationText": "She looks thoughtful. She might be planning how to share the supplies.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 57304,
+      "sha256": "a1049528d59eef072a527a6264164b590f6c02d00b2f8237f938177156dda9a4"
+    },
+    {
+      "file": "s4-evidence.mp3",
+      "text": "What can you see in her expression or around the table that supports your impression?",
+      "delivery": "curious",
+      "generationText": "[curious] What can you see in her expression or around the table that supports your impression?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 89487,
+      "sha256": "46459c4a0afca610449861d05b732972ad2ea5e29798f87a60a05e670d373d73"
+    },
+    {
+      "file": "s4-opinion.mp3",
+      "text": "If you were this volunteer, how would you distribute the supplies fairly?",
+      "delivery": "curious",
+      "generationText": "[curious] If you were this volunteer, how would you distribute the supplies fairly?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 66499,
+      "sha256": "71a3874a7959d1a50223e3021211f83103253f0fac267b8c56716753873a75a1"
+    },
+    {
+      "file": "s4-opinion-example-1.mp3",
+      "text": "I would ask what each person needs and explain how the supplies will be shared.",
+      "delivery": "calm",
+      "generationText": "I would ask what each person needs and explain how the supplies will be shared.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 86979,
+      "sha256": "1dac8c9153ce4b4e45863a4cf9907273121018f0d6b82a87319076c9989a7fad"
+    },
+    {
+      "file": "s4-opinion-example-2.mp3",
+      "text": "I would give everyone some water first, then check who needs extra support.",
+      "delivery": "calm",
+      "generationText": "I would give everyone some water first, then check who needs extra support.",
+      "voiceSettings": {
+        "stability": 0.6,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": true
+      },
+      "modelId": "eleven_multilingual_v2",
+      "bytes": 76948,
+      "sha256": "1cd3979201e4ba2853e3fccf0b57674ebef05f16ceb4d33e9897c33033d18730"
+    },
+    {
+      "file": "s4-reason.mp3",
+      "text": "What is your main reason for that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What is your main reason for that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 47273,
+      "sha256": "8831dda8c0140f891e3542a19719901f9a27f79759cf38d3fd9570bc57c06e9f"
+    },
+    {
+      "file": "s4-reason-example-1.mp3",
+      "text": "My main reason is that everyone should have access to essential supplies.",
+      "delivery": "calm",
+      "generationText": "My main reason is that everyone should have access to essential supplies.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 67753,
+      "sha256": "fd351f38577605189f8bb5300a10607360f59f0be5ba7db0ec6438eacf2962ad"
+    },
+    {
+      "file": "s4-prediction.mp3",
+      "text": "How might the families react to your plan?",
+      "delivery": "curious",
+      "generationText": "[curious] How might the families react to your plan?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 46019,
+      "sha256": "c14fd406f5b87de7fb3db33a9de673e75863ab1e75f3d114ef4cf6bb4b102e78"
+    },
+    {
+      "file": "s4-prediction-example-1.mp3",
+      "text": "Some families might appreciate the plan, but others may ask for more supplies.",
+      "delivery": "calm",
+      "generationText": "Some families might appreciate the plan, but others may ask for more supplies.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 74022,
+      "sha256": "c9ce695a3f2c93941090b463433b7660fd549ec8c7518b74c7ffd5a9a8b793a1"
+    },
+    {
+      "file": "s4-reaction.mp3",
+      "text": "We can see limited supplies and several people waiting. Their exact needs are not all visible.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] We can see limited supplies and several people waiting. Their exact needs are not all visible.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 94502,
+      "sha256": "245cdc064684f1ad6127f58604a0ea82117baf3fdc33ffd3f61bff31208e1148"
+    },
+    {
+      "file": "s5-observe.mp3",
+      "text": "One last picture! What is similar, and what is different, between these communities?",
+      "delivery": "curious",
+      "generationText": "[curious] One last picture! What is similar, and what is different, between these communities?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 82799,
+      "sha256": "bd03e79eceeae400d918323ed9416fed6f5f7ebf3b3faaf59e13ee0546c011df"
+    },
+    {
+      "file": "s5-observe-example-1.mp3",
+      "text": "Both communities have flood damage, but only one has reporters.",
+      "delivery": "calm",
+      "generationText": "Both communities have flood damage, but only one has reporters.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 65245,
+      "sha256": "878cdf53ec860b8056e5a4e41c6f441397812fccba70254a6339f772b20b6044"
+    },
+    {
+      "file": "s5-observe-example-2.mp3",
+      "text": "People are cleaning in both places. On the left, a camera operator is filming an interview.",
+      "delivery": "calm",
+      "generationText": "People are cleaning in both places. On the left, a camera operator is filming an interview.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 80292,
+      "sha256": "5722a40c59414cf913b5ef0abc6ea5659cf22a034d4a5bb9b839ece9eb7309d5"
+    },
+    {
+      "file": "s5-interpret.mp3",
+      "text": "How do you think the people without reporters might feel?",
+      "delivery": "curious",
+      "generationText": "[curious] How do you think the people without reporters might feel?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 63991,
+      "sha256": "b6edaf1ee2b431a8714b83bcf3d5eba4571346f3f1b22ff52c84f5d9ead0a410"
+    },
+    {
+      "file": "s5-interpret-example-1.mp3",
+      "text": "They might feel ignored because no reporters are there.",
+      "delivery": "calm",
+      "generationText": "They might feel ignored because no reporters are there.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 48527,
+      "sha256": "16020efe804087321d4ae129c1c0628e4065777b8e7d445e76ffeab4460cbbc9"
+    },
+    {
+      "file": "s5-interpret-example-2.mp3",
+      "text": "They may feel focused on cleaning. We cannot be sure of their feelings.",
+      "delivery": "calm",
+      "generationText": "They may feel focused on cleaning. We cannot be sure of their feelings.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 63991,
+      "sha256": "72e3a16c5998fb06fb274a961695bb86b652e9e7efcef3da5b612419f622fc4a"
+    },
+    {
+      "file": "s5-evidence.mp3",
+      "text": "Which detail supports your interpretation, and what can the image not tell us?",
+      "delivery": "curious",
+      "generationText": "[curious] Which detail supports your interpretation, and what can the image not tell us?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 79038,
+      "sha256": "c375f7ac58cee58a8ef8aedb28fb9e79fa0830952db5ab23ebb9ae6607255d7b"
+    },
+    {
+      "file": "s5-opinion.mp3",
+      "text": "Should reporters give these communities the same attention? Explain your view.",
+      "delivery": "curious",
+      "generationText": "[curious] Should reporters give these communities the same attention? Explain your view.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 72768,
+      "sha256": "462ac559b99b7ff76d838fe45748a228b1419205d44b3f6655c51dfd26618515"
+    },
+    {
+      "file": "s5-opinion-example-1.mp3",
+      "text": "I think both deserve attention because both communities need help.",
+      "delivery": "calm",
+      "generationText": "I think both deserve attention because both communities need help.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 65245,
+      "sha256": "aebae89031b19d1de4757f0c3e18adef18049e40c440bf35ec6d6e36aa5d42f8"
+    },
+    {
+      "file": "s5-opinion-example-2.mp3",
+      "text": "I would compare their needs before deciding how much coverage each should receive.",
+      "delivery": "calm",
+      "generationText": "I would compare their needs before deciding how much coverage each should receive.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 93248,
+      "sha256": "4c5f5fa79d98c753369b591f5320aff8d7cdd0705fef807ede7905201278fe57"
+    },
+    {
+      "file": "s5-reason.mp3",
+      "text": "What is your main reason for that choice?",
+      "delivery": "curious",
+      "generationText": "[curious] What is your main reason for that choice?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 40586,
+      "sha256": "e60c5acb919d65c25467906306e95a8a027ad2364243b5b0215405ee1990d9a3"
+    },
+    {
+      "file": "s5-reason-example-1.mp3",
+      "text": "My main reason is that both communities need to be heard.",
+      "delivery": "calm",
+      "generationText": "My main reason is that both communities need to be heard.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 59812,
+      "sha256": "be146cfdf1554a9757586467d80eac81296f5efc3195b7649f19f7dab516a47f"
+    },
+    {
+      "file": "s5-prediction.mp3",
+      "text": "What might happen if one community remains out of the news?",
+      "delivery": "curious",
+      "generationText": "[curious] What might happen if one community remains out of the news?",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 71515,
+      "sha256": "c4084f849900727957d09a24dfb01373048adcd5ce39a830f0ca4991c9b2ef50"
+    },
+    {
+      "file": "s5-prediction-example-1.mp3",
+      "text": "The community might receive less support because fewer people hear its story.",
+      "delivery": "calm",
+      "generationText": "The community might receive less support because fewer people hear its story.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 72768,
+      "sha256": "6f1467b016165ac0d52ccf23dc3cc5703935920f7be2c3356b6e676f95c0be6d"
+    },
+    {
+      "file": "s5-reaction.mp3",
+      "text": "Both scenes show damage. The different coverage does not tell us the full needs of either community.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] Both scenes show damage. The different coverage does not tell us the full needs of either community.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 99518,
+      "sha256": "c10a68eb1a5635614fb749558e0c173145bdfb563db61cc9dfaac4643a2d88b3"
+    },
+    {
+      "file": "reply-hello.mp3",
+      "text": "Nice to meet you! I'm glad you're here. Let's explore these pictures together!",
+      "delivery": "warm",
+      "generationText": "[warmly] Nice to meet you! I'm glad you're here. Let's explore these pictures together!",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 79038,
+      "sha256": "6cb9e8d043876cc666994ef9fe4541f339b9a7b86f5604a7db9763d6ada0a3bf"
+    },
+    {
+      "file": "reply-observe.mp3",
+      "text": "Thanks for describing what you noticed. Let’s look a little more closely.",
+      "delivery": "warm",
+      "generationText": "[warmly] Thanks for describing what you noticed. Let’s look a little more closely.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 62319,
+      "sha256": "1213169c20e3304d338d9e6ec35e2fdf4cd6151cbc93d62d64cf477827e21fb0"
+    },
+    {
+      "file": "reply-inference.mp3",
+      "text": "That is one possible interpretation. Remember, an impression is not a fact.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] That is one possible interpretation. Remember, an impression is not a fact.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 91995,
+      "sha256": "db6e10ae00b1fe51fc4c5f9e880da9302566ae1082dc554083f8c1e9a7163560"
+    },
+    {
+      "file": "reply-uncertain.mp3",
+      "text": "It's okay to be unsure! Try one possibility with, it looks like, or, it seems.",
+      "delivery": "encouraging",
+      "generationText": "[encouraging] It's okay to be unsure! Try one possibility with, it looks like, or, it seems.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 100772,
+      "sha256": "92b9b787cc200442d159a49acb80dfc196feaeffe8bd29bcfd86e4f144730969"
+    },
+    {
+      "file": "reply-reason.mp3",
+      "text": "You have given a reason for your view. Let’s think about what could happen next.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] You have given a reason for your view. Let’s think about what could happen next.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 75276,
+      "sha256": "0e17caf1c56d1b840db236f0a73e738b0b46495796d753f3633ca083e85ca6a0"
+    },
+    {
+      "file": "reply-opinion.mp3",
+      "text": "I hear your point. Let’s explore the reason behind it.",
+      "delivery": "curious",
+      "generationText": "[curious] I hear your point. Let’s explore the reason behind it.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 49781,
+      "sha256": "9b0005ba4a153f6e36fc6ecf9fa4ae56cffbc8400b938c417d6f59a182a24acc"
+    },
+    {
+      "file": "reply-followup.mp3",
+      "text": "Thanks for developing your idea. You can bring that perspective to the round table!",
+      "delivery": "warm",
+      "generationText": "[warmly] Thanks for developing your idea. You can bring that perspective to the round table!",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 67753,
+      "sha256": "6252964d4ac99b0dcd0b406e8e57824e83d86bae702960ab71b87477e1386d00"
+    },
+    {
+      "file": "reply-clarify.mp3",
+      "text": "I'm not sure I understood your idea about this picture. Try naming one visible detail, or open Help me answer.",
+      "delivery": "gentle",
+      "generationText": "[gently] I'm not sure I understood your idea about this picture. Try naming one visible detail, or open Help me answer.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 125431,
+      "sha256": "7fc9af9e46553b25136c1d43172df1c21ad57d466c3e35ce07aecb3ee8e835b4"
+    },
+    {
+      "file": "reply-correction-looks.mp3",
+      "text": "A small language tip: say, she looks worried, without like before the adjective. Try that pattern with your own idea.",
+      "delivery": "gentle",
+      "generationText": "[gently] A small language tip: say, she looks worried, without like before the adjective. Try that pattern with your own idea.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 139224,
+      "sha256": "1e238644ff7b026ba4903bf7575217aa4f036c11e57f274c513d3fb45e697d49"
+    },
+    {
+      "file": "reply-correction-agree.mp3",
+      "text": "A small language tip: the phrase, I am agree, is not correct. Say, I agree. Your opinion can stay the same!",
+      "delivery": "gentle",
+      "generationText": "A small language tip: the phrase, I am agree, is not correct. Say, I agree. Your opinion can stay the same!",
+      "voiceSettings": {
+        "stability": 0.6,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": true
+      },
+      "modelId": "eleven_multilingual_v2",
+      "bytes": 97010,
+      "sha256": "ce7d80d326b24622f0495bb390d2a975921a838b869ff8db2056f04f2a65fb36"
+    },
+    {
+      "file": "reply-correction-seems.mp3",
+      "text": "A small language tip: say, she seems to be helping. Use seems to be before an action ending in ing.",
+      "delivery": "gentle",
+      "generationText": "[gently] A small language tip: say, she seems to be helping. Use seems to be before an action ending in ing.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 123759,
+      "sha256": "d65674344d66bc10ac96d82e166b59143da519fcd53aacf4e85910001c751e1a"
+    },
+    {
+      "file": "reply-not-worried.mp3",
+      "text": "You do not see worry in that expression. That is possible; a picture can support more than one interpretation.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] You do not see worry in that expression. That is possible; a picture can support more than one interpretation.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 104951,
+      "sha256": "b0665a65a3237d18de111378594ad00e4ba6e05f89144430a36e02a4eed0fc92"
+    },
+    {
+      "file": "reply-worried.mp3",
+      "text": "You mentioned worry. Remember to connect that impression to a detail you can see.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] You mentioned worry. Remember to connect that impression to a detail you can see.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 72768,
+      "sha256": "4114c3e8a6d23a1231fbd7f55103e44e76c705d478f959e23a7af9f425ae2680"
+    },
+    {
+      "file": "reply-share.mp3",
+      "text": "Sharing quickly can have consequences. The source and the uncertainty are part of this decision.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] Sharing quickly can have consequences. The source and the uncertainty are part of this decision.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 97010,
+      "sha256": "d399ab9b38212d25b40006aab571e629ff0797c6f0b5d1092bb5f89bbd627cf4"
+    },
+    {
+      "file": "reply-check.mp3",
+      "text": "Checking a source takes time, and reliability matters. Think about how you would explain your choice.",
+      "delivery": "thoughtful",
+      "generationText": "[thoughtful] Checking a source takes time, and reliability matters. Think about how you would explain your choice.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 99518,
+      "sha256": "c0ced86b8954f7bb10bd36fd9d1cf72d50364dfff37986fd58f56d1bbd53c5ae"
+    },
+    {
+      "file": "reply-both.mp3",
+      "text": "You are considering more than one possibility. That can help you explain a balanced opinion.",
+      "delivery": "warm",
+      "generationText": "[warmly] You are considering more than one possibility. That can help you explain a balanced opinion.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 94502,
+      "sha256": "0469c2fd146fd537c2951f4742d15790800bf23842efb4b52277ca05a0248c2c"
+    },
+    {
+      "file": "reply-question.mp3",
+      "text": "For this activity, use the image and give your own opinion. You can open the help for language or listen to the question again.",
+      "delivery": "gentle",
+      "generationText": "[gently] For this activity, use the image and give your own opinion. You can open the help for language or listen to the question again.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 111221,
+      "sha256": "fbbe878a6185c90539b594cadd34c27c2107badfe366cdbc2d4e8a1f7ad70822"
+    },
+    {
+      "file": "reply-return.mp3",
+      "text": "Now, let’s come back to the question on screen.",
+      "delivery": "warm",
+      "generationText": "[warmly] Now, let’s come back to the question on screen.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 39332,
+      "sha256": "e1aa34849d3dce7b47460757941b5c553f6d119cdb9ec0bd4b90cd31e187d5f5"
+    },
+    {
+      "file": "reply-no-speech.mp3",
+      "text": "I couldn't hear a clear answer. Check your microphone, and let's try again.",
+      "delivery": "gentle",
+      "generationText": "[gently] I couldn't hear a clear answer. Check your microphone, and let's try again.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 67753,
+      "sha256": "d188962951f8187ddfecab1e3949ecc76c76ca81173b276f49a7e15c480186ac"
+    },
+    {
+      "file": "reply-service.mp3",
+      "text": "I couldn't get your words this time. Please retry the analysis, or continue without feedback.",
+      "delivery": "gentle",
+      "generationText": "[gently] I couldn't get your words this time. Please retry the analysis, or continue without feedback.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 102026,
+      "sha256": "e5091dfc81586b0ac303de24b11099454e44c69989d0d4d69ce52410aa52427e"
+    },
+    {
+      "file": "reply-closing.mp3",
+      "text": "Thanks for sharing your ideas! In the round table, listen to your classmates, explain your reasons, and remember: different opinions can help us think. See you soon!",
+      "delivery": "warm",
+      "generationText": "[warmly] Thanks for sharing your ideas! In the round table, listen to your classmates, explain your reasons, and remember: different opinions can help us think. See you soon!",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 149673,
+      "sha256": "6c37ba6321c8e6de0ef402b298e1b61a26605bb3781c56e4ab1bfb1813cbdbc3"
+    },
+    {
+      "file": "reply-welcome.mp3",
+      "text": "Hi there! I'm David. Five pictures, five big questions, and your own ideas! We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk!",
+      "delivery": "warm",
+      "generationText": "[warmly] Hi there! I'm David. Five pictures, five big questions, and your own ideas! We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk!",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 172661,
+      "sha256": "584c1964e24b0bc2e98ad427ad7d611d5c23553309418ba72929d9dcde57ed01"
+    },
+    {
+      "file": "reply-instructions.mp3",
+      "text": "Listen to one question at a time. Record your answer, then hear my reply. Open Help me answer if you need a start or an example. Click the picture to see more detail. You can skip a turn and come back later.",
+      "delivery": "warm",
+      "generationText": "[warmly] Listen to one question at a time. Record your answer, then hear my reply. Open Help me answer if you need a start or an example. Click the picture to see more detail. You can skip a turn and come back later.",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 221144,
+      "sha256": "1192ee6a12b8a62031f2e931f69e05c30c397fe5f2dd8a56f36d00c6b0ecad06"
+    },
+    {
+      "file": "word-photo.mp3",
+      "text": "photo",
+      "delivery": "clear",
+      "generationText": "photo",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 10075,
+      "sha256": "cb9572792b96dc99444627eed10b2a02e234713c869b33ee5bf3f8e4cd10fe73"
+    },
+    {
+      "file": "word-volunteer.mp3",
+      "text": "volunteer",
+      "delivery": "clear",
+      "generationText": "volunteer",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 24285,
+      "sha256": "dc22434dae7d3e6b6d46d996e83100d625b55466b7d8ac182c3f526768301ba0"
+    },
+    {
+      "file": "word-misleading.mp3",
+      "text": "misleading",
+      "delivery": "clear",
+      "generationText": "misleading",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 16344,
+      "sha256": "6c893e3be838feb901798ce347805e4cef17140fcf93cc52aa4499427e257e72"
+    },
+    {
+      "file": "word-share.mp3",
+      "text": "share",
+      "delivery": "clear",
+      "generationText": "share",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 31808,
+      "sha256": "44e284fb96f7e2449692d67ffbc1022e8de1eb895ddafa7e9d272222c791c87f"
+    },
+    {
+      "file": "word-check.mp3",
+      "text": "check",
+      "delivery": "clear",
+      "generationText": "check",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 11328,
+      "sha256": "c189c41155ef5aae11a848800c2a559521a2a27489348933432e4af22ae79a62"
+    },
+    {
+      "file": "word-worried.mp3",
+      "text": "worried",
+      "delivery": "clear",
+      "generationText": "worried",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 12582,
+      "sha256": "c1678150b838228a6e715bff716eebf3eb0f7c2ae42e5bf0c2643bda757eb8a0"
+    },
+    {
+      "file": "word-film.mp3",
+      "text": "film",
+      "delivery": "clear",
+      "generationText": "film",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 10075,
+      "sha256": "ea8ed31104133208c619970f4740aefa411fddad4fbb015dfcdf402ec033ac92"
+    },
+    {
+      "file": "word-help.mp3",
+      "text": "help",
+      "delivery": "clear",
+      "generationText": "help",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 20106,
+      "sha256": "ee3dd17d225b881c01beb43ea61428989221f61fa0baa487e000fd145da09926"
+    },
+    {
+      "file": "word-might.mp3",
+      "text": "might",
+      "delivery": "clear",
+      "generationText": "might",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 12582,
+      "sha256": "eebee44159bf20dfb53d9c36890de457f0a0a73221568449afe7725a5d3e4abb"
+    },
+    {
+      "file": "word-blankets.mp3",
+      "text": "blankets",
+      "delivery": "clear",
+      "generationText": "blankets",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 17598,
+      "sha256": "eee7810224ab846ad58141af6d68ff4863ab86aa9427bca91714e29a197b64d7"
+    },
+    {
+      "file": "word-fairly.mp3",
+      "text": "fairly",
+      "delivery": "clear",
+      "generationText": "fairly",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 11328,
+      "sha256": "60764f92b0db07bda05596483fbd93c184e62e882c883d179aab06d311fbb9fa"
+    },
+    {
+      "file": "word-seems.mp3",
+      "text": "seems",
+      "delivery": "clear",
+      "generationText": "seems",
+      "voiceSettings": {
+        "stability": 0.6,
+        "similarity_boost": 0.8,
+        "style": 0.3,
+        "use_speaker_boost": true
+      },
+      "modelId": "eleven_multilingual_v2",
+      "bytes": 18016,
+      "sha256": "82158e4a2577cb557b915d9f3cf8030e4f0e12318b806562889b9ff2e2577fb2"
+    },
+    {
+      "file": "word-attention.mp3",
+      "text": "attention",
+      "delivery": "clear",
+      "generationText": "attention",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 17598,
+      "sha256": "fb1c2596db48a91efc04fa402853c6590258a8d55c7658baf3e7be33104e9cd4"
+    },
+    {
+      "file": "word-community.mp3",
+      "text": "community",
+      "delivery": "clear",
+      "generationText": "community",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 16344,
+      "sha256": "9a65a58b3dab4293c81e9ddf2a596b8b00cc2f916e590cee08fd87c896113eb8"
+    },
+    {
+      "file": "word-nice-to-meet-you.mp3",
+      "text": "nice to meet you",
+      "delivery": "clear",
+      "generationText": "nice to meet you",
+      "voiceSettings": {
+        "stability": 0.5,
+        "similarity_boost": 0.8
+      },
+      "bytes": 18852,
+      "sha256": "fc627f20c23f0e312939762a55828cd1922d3556416191defaafd156afb9ba37"
+    }
+  ]
+}

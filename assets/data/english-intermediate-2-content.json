@@ -1215,6 +1215,45 @@
         "listening",
         "News Quest"
       ]
+    },
+    {
+      "id": "unit-6-my-opinion-matters-coach",
+      "unit": 6,
+      "order": 3,
+      "type": "conversation-coach",
+      "skillLabel": "Conversation Coach",
+      "title": "My opinion matters",
+      "subtitle": "Five pictures. Your perspective.",
+      "summary": "Describe, interpret and discuss five news scenes with David. Practise looks, seems and opinions before the round table.",
+      "cardSummary": "Explore each picture, hear David’s reply and open possible answers when you need help.",
+      "image": "/assets/img/english-intermediate-2/unit-6/opinion-coach/limited-supplies-v1.webp",
+      "media": "/ingles/intermediate-2/audio/unit-6-opinion-coach/reply-welcome.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "pv8WYYW60prEkDbDXyC0",
+      "voiceName": "David",
+      "scriptHref": "/ingles/intermediate-2/audio/unit-6-opinion-coach/models.json",
+      "workshopHref": "/ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html",
+      "turnCount": 16,
+      "duration": "15–25 minutes · at your pace",
+      "product": "Five opinions prepared for a round table",
+      "recording": true,
+      "temporaryTranscription": true,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "news",
+        "opinions",
+        "round table",
+        "David",
+        "looks like",
+        "seems",
+        "pictures",
+        "conversation"
+      ]
     }
   ]
 }

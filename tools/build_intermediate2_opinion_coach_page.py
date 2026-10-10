@@ -1,0 +1,20 @@
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+s=(ROOT/'ingles/intermediate-2/conversation-coach-unit-5-david-first-impression.html').read_text()
+s=s.replace('A Good First Impression','My opinion matters').replace('Unit 5','Unit 6').replace('unit-5-folder','unit-6-folder').replace('Your first visit is this weekend. Let’s talk it through.','Five pictures. Your perspective. Let’s talk!').replace('Twelve stages, one conversation. Listen, speak, and hear David’s reply.','Five scenes to describe, interpret and discuss. Practise your ideas before the round table.').replace('Practise the final writing themes aloud: feelings, preparation, appearance, behaviour and conversation before meeting your partner’s family.','Describe five news scenes, practise looks and seems, and develop your own opinions with David.').replace('david-coach-page"','david-coach-page opinion-coach-page"')
+s=s.replace('David, your conversation coach, welcoming you to practise a first meeting','Fictional portrait of David, your coach for discussing news pictures')
+s=s.replace('</head>','<link rel="stylesheet" href="../../assets/css/intermediate2-opinion-coach.css?v=20261009-1"></head>')
+s=s.replace('<div class="david-prompt-column">','<div class="david-prompt-column"><figure id="opinionScene" hidden><figcaption id="opinionSceneTitle"></figcaption><button id="opinionImageOpen" type="button" aria-label="Enlarge the scene"><img id="opinionImage" alt="" width="1536" height="1024"></button><small>Click the image to explore the details.</small></figure>')
+s=s.replace('<h2 id="questionText"></h2>','<h2 id="questionText"></h2><button type="button" id="opinionQuestionExpand" class="coach-audio-button">Enlarge question</button>')
+s=s.replace('<p class="coach-grammar" id="grammarClue"></p>','<p class="coach-grammar" id="grammarClue"></p><details id="opinionExamples"><summary>Possible answers · Listen and personalize</summary><div id="opinionExamplesBody"></div></details>')
+s=s.replace('Private practice. Audio is processed for transcription; only your written report is saved on this device. No teacher submission.','Private guided practice. Audio is processed temporarily on Jaralingua for transcription. Your ideas stay in this visit; no teacher submission. David uses prepared replies selected from your words. If he misunderstands, try again.')
+s=s.replace('<h2>Your conversation</h2>','<h2>Your ideas for the round table</h2><div id="opinionReport"></div>')
+s=s.replace('<section class="david-result">','<section class="david-result" hidden>').replace('<div class="coach-guidance-grid">','<div class="coach-guidance-grid" hidden>').replace('<details class="david-report-details">','<details class="david-report-details" hidden>').replace('<details class="david-report-details" hidden><summary>Review each answer</summary>','<details class="david-report-details"><summary>Review each answer</summary>')
+s=s.replace('english-intermediate-2-unit-5-david.js?v=20261003-next','english-intermediate-2-unit-6-opinion.js?v=20261009-1')
+s=s.replace('<script src="../../assets/js/conversation-coach-v2.js?v=20261003-next"></script>','<script src="../../assets/js/intermediate2-opinion-coach.js?v=20261009-1"></script><script src="../../assets/js/conversation-coach-v2.js?v=20261009-opinion"></script>')
+s=s.replace('</main>','<dialog id="opinionDialog" aria-label="Enlarged learning material"><button id="opinionDialogClose" type="button" autofocus>Close ×</button><div id="opinionDialogContent"></div></dialog><div id="opinionTooltip" role="tooltip" lang="es" hidden></div></main>')
+a=s.index('<section class="coach-stage"');b=s.index('<section class="coach-recorder"')
+block=s[a:b];block=block[:block.rfind('</div>')]
+s=s[:a]+'</div><div class="opinion-conversation-column">'+block+s[b:]
+s=s.replace('          </section>\n        </div>\n      </div>','          </section>\n        </div></div>\n      </div>')
+(ROOT/'ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html').write_text(s)

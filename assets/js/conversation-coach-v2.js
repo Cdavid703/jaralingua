@@ -130,6 +130,7 @@
   }
 
   function loadPersistent() {
+    if (config.persistHistory === false) return {history:[], lastReport:null};
     try {
       const parsed = JSON.parse(localStorage.getItem(storageKey) || "{}");
       return {
@@ -142,6 +143,7 @@
   }
 
   function savePersistent() {
+    if (config.persistHistory === false) return;
     try {
       localStorage.setItem(storageKey, JSON.stringify(persistent));
     } catch {
@@ -185,7 +187,8 @@
   }
 
   function currentQuestion() {
-    return questionById.get(session.questionIds[session.currentIndex]);
+    const question = questionById.get(session.questionIds[session.currentIndex]);
+    return question && config.questionResolver ? config.questionResolver(question, session.answers[session.currentIndex - 1]?.main) : question;
   }
 
   function currentTurn() {
@@ -210,7 +213,8 @@
   }
 
   function audioPath(file) {
-    return file ? `${audioRoot}${file}` : "";
+    const path = typeof file === "string" ? file : file?.file;
+    return path ? (path.startsWith("/") ? path : `${audioRoot}${path}`) : "";
   }
 
   function showToast(message) {
@@ -394,6 +398,7 @@
     setRecordStatus("Ready for your answer", question.interaction ? (config.ui?.interactionRecordHelp || `Ask ${coachFirstName} two different questions in English.`) : "Tap the microphone and answer in English.");
     setStage("ready", `${coachFirstName} is ready`);
     updateControls();
+    config.onPrompt?.(question, file => { if (!analyzing && !audioBusy && mediaRecorder?.state !== "recording") return playAudio(elements.reactionAudio, file); });
     if (autoplay) {
       if (config.ui?.immediatePrompt) playQuestion();
       else window.setTimeout(playQuestion, 250);
@@ -402,6 +407,7 @@
 
   function beginConversation(ids = null, forcedMode = null) {
     turnRevision += 1;
+    stopCoachAudio();
     const questionIds = (ids || selectBalancedQuestions()).filter((id) => questionById.has(id));
     if (!questionIds.length) {
       showToast("The question bank is unavailable.");
@@ -546,6 +552,7 @@
     const recording = mediaRecorder?.state === "recording";
     const hasAnswer = Boolean(currentPhaseAnswer());
     const locked = analyzing || audioBusy;
+    config.onControls?.({recording, locked});
     elements.mic.disabled = recording || locked || hasAnswer;
     elements.stop.disabled = !recording;
     elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !hasAnswer);
@@ -775,6 +782,7 @@
   }
 
   function feedbackMarkup(answer, question) {
+    if (config.feedbackRenderer) return config.feedbackRenderer(answer, question);
     if (answer.analysis.unscored) return "<p>Nice to meet you. Your name is not scored.</p>";
     const metrics = (config.rubric || []).map((criterion) => `<div class="coach-feedback-metric"><strong>${answer.analysis.metrics[criterion.key] ?? "—"}</strong><span>${escapeHtml(criterion.label)} /10</span></div>`).join("");
     const checks = answer.analysis.checks.map((check) => `<span class="coach-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i> ${escapeHtml(check.label)}</span>`).join("");
@@ -855,6 +863,7 @@
     elements.recordAgain.disabled = true;
     resetTimer();
     setRecordStatus(`${coachFirstName} has a follow-up`, "Listen, then give a short second response in English.");
+    config.onPrompt?.(followUp, file => { if (!analyzing && !audioBusy && mediaRecorder?.state !== "recording") return playAudio(elements.reactionAudio, file); });
     setStage("speaking", `${coachFirstName} is asking a follow-up`);
     updateControls();
   }
@@ -1194,6 +1203,7 @@
   }
 
   function renderReport(report) {
+    if (config.reportRenderer) { config.reportRenderer(report); return; }
     const turns = (report.answers || []).map(normalizeReportTurn);
     const totalResponses = report.totalResponses || report.totalTurns || turns.length;
     const reportLowConfidence = (report.lowConfidence || []).filter((item) => isUsefulEnglishFeedbackWord(item.word));
@@ -1232,6 +1242,7 @@
     setStage("complete", "Conversation complete");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast("Conversation complete. Your private report is ready.");
+    if (config.ui?.autoClosing) playAudio(elements.reactionAudio, config.audio?.closing, {restoreStage:false});
   }
 
   function reviewLatest() {
