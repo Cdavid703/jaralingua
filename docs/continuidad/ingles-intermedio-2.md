@@ -59,3 +59,5 @@ Ajuste de distribución del coach: imagen, conversación y grabación en una fil
 ## Unit 6 · What did they say?
 
 Actividad de parejas: ejemplo guiado más diez escenas distintas de noticias/desastres. A describe tres detalles en presente; B reporta lo dicho por A usando said that y cambios de verbos/pronombres, sin añadir información. Modelos comparables, 25 audios David, ayudas y cada escena ampliables. Galería filtrable y proyector; modelos de práctica cerrados hasta solicitarlos. Once imágenes de actividad y hero propio. Sin grabación, entregas ni notas. Ver [implementación y pruebas](../english-intermediate2-reported-speech.md).
+
+Ajuste visual y vocabulario del 9 de octubre de 2026: David visible a 144 px (128 px en móvil) en el coach, con imágenes completas y manteniendo la fila. What did they say incorpora cinco palabras por cada una de sus once imágenes, significados españoles por mouse/foco/toque y pronunciación por clic; vocabulario y ayudas funcionan también dentro del proyector. Banner y miniaturas sin recorte.

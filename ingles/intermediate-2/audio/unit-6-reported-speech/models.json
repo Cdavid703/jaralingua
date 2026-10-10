@@ -26,13 +26,13 @@
       "file": "flood-b.mp3",
       "text": "Ana said that the street was flooded. She said that the rescue workers were helping people. She said that she could see a red boat.",
       "bytes": 117908,
+      "sha256": "bc57ebe756cbcfcf55e891d50ab4751f858b4b720664f9f79a96e3e969932a1d",
       "voiceSettings": {
         "stability": 0.75,
         "similarity_boost": 0.8,
         "style": 0,
         "use_speaker_boost": true
-      },
-      "sha256": "bc57ebe756cbcfcf55e891d50ab4751f858b4b720664f9f79a96e3e969932a1d"
+      }
     },
     {
       "file": "earthquake-a.mp3",
@@ -116,13 +116,13 @@
       "file": "sources-b.mp3",
       "text": "Ana said that the journalists were checking a photograph. She said that the woman was pointing at the laptop. She said that there was a notebook on the desk.",
       "bytes": 131283,
+      "sha256": "fb13208334532d774fc98b1d4a1d8e50de1d3eb1c24e6fef6d3add41da2e4186",
       "voiceSettings": {
         "stability": 0.75,
         "similarity_boost": 0.8,
         "style": 0,
         "use_speaker_boost": true
-      },
-      "sha256": "fb13208334532d774fc98b1d4a1d8e50de1d3eb1c24e6fef6d3add41da2e4186"
+      }
     },
     {
       "file": "briefing-a.mp3",
@@ -134,13 +134,13 @@
       "file": "briefing-b.mp3",
       "text": "Ana said that the woman was speaking. She said that a reporter had a question. She said that the man was raising his hand.",
       "bytes": 95338,
+      "sha256": "d19312eec4028daec13159748be3c41e58f4ae32bf027d2a84e6471c0a080dd0",
       "voiceSettings": {
         "stability": 0.75,
         "similarity_boost": 0.8,
         "style": 0,
         "use_speaker_boost": true
-      },
-      "sha256": "d19312eec4028daec13159748be3c41e58f4ae32bf027d2a84e6471c0a080dd0"
+      }
     },
     {
       "file": "shelter-a.mp3",
@@ -171,6 +171,296 @@
       "text": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs and the pronouns. Then change roles for the next picture.",
       "bytes": 215711,
       "sha256": "913cfa00dac92c7e8541fe898d327cb6c7e27c0427f9e3bf11f158f06f85b92c"
+    },
+    {
+      "file": "word-raincoat.mp3",
+      "text": "raincoat",
+      "bytes": 19688,
+      "sha256": "45ade9a78a48fc551f3e272e80fad10f66571097967d2435528b5fec17780005"
+    },
+    {
+      "file": "word-fallen-branches.mp3",
+      "text": "fallen branches",
+      "bytes": 25539,
+      "sha256": "6b7022971124f4f09bd09363a7b066ceee7a3c6f02819f59aa15b9225228c0fe"
+    },
+    {
+      "file": "word-microphone.mp3",
+      "text": "microphone",
+      "bytes": 21777,
+      "sha256": "abea94dabc97c8dbdd1438c0b284942a2b633ea58b9ad3308278637635b572af"
+    },
+    {
+      "file": "word-flooded.mp3",
+      "text": "flooded",
+      "bytes": 18016,
+      "sha256": "aef8006a2c46422d2e225e63d7987275dad1f7672a23c9b6483b01faa811205a"
+    },
+    {
+      "file": "word-rescue-workers.mp3",
+      "text": "rescue workers",
+      "bytes": 23449,
+      "sha256": "86586e670c070593e1b5c44b2a77ad1ea8668901ca841e1b4a6c02b64d205212"
+    },
+    {
+      "file": "word-boat.mp3",
+      "text": "boat",
+      "bytes": 18016,
+      "sha256": "22f3b83bada284779ae255ad090bd6145292184454ce4e5a7f3bc1edc79cec19"
+    },
+    {
+      "file": "word-bridge.mp3",
+      "text": "bridge",
+      "bytes": 16762,
+      "sha256": "cc5171ad00157cacb3860a452556c92873c73a4ddd45bf597a007f12d34e88c2"
+    },
+    {
+      "file": "word-damaged.mp3",
+      "text": "damaged",
+      "bytes": 18016,
+      "sha256": "96729f3740aee298b04e8f31e77b495f61c9590a20887d1b31b57c533336c28c"
+    },
+    {
+      "file": "word-rubble.mp3",
+      "text": "rubble",
+      "bytes": 15926,
+      "generationText": "rubble.",
+      "voiceSettings": {
+        "stability": 0.75,
+        "similarity_boost": 0.8,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "sha256": "e8d2559ebe3a73223abe78246f5cdd7d382ecb44971a1c7817a7c74502f58599"
+    },
+    {
+      "file": "word-inspectors.mp3",
+      "text": "inspectors",
+      "bytes": 18852,
+      "generationText": "inspectors.",
+      "voiceSettings": {
+        "stability": 0.75,
+        "similarity_boost": 0.8,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "sha256": "6c2be8e3a00be4727a922ef40189cc9d6a8f45e13a93c6f317aecb38c33fd4fd"
+    },
+    {
+      "file": "word-safety-tape.mp3",
+      "text": "safety tape",
+      "bytes": 20942,
+      "sha256": "b152752cec0be3d2d82f41db4129a876da336b59288a7d6252e83e3ee665ad25"
+    },
+    {
+      "file": "word-smoke.mp3",
+      "text": "smoke",
+      "bytes": 18016,
+      "sha256": "19c38f8d402f7181bc129a0994d87cc3689bc025d805b11ca6e24bee72db8203"
+    },
+    {
+      "file": "word-firefighters.mp3",
+      "text": "firefighters",
+      "bytes": 22613,
+      "sha256": "d5cdcaa2774d32707987150d13ae1fe522d2db3137f01c5e975d3c91425be6f7"
+    },
+    {
+      "file": "word-fire-truck.mp3",
+      "text": "fire truck",
+      "bytes": 19688,
+      "sha256": "18e5baba74fe3de66df212d6c058b4dace8f62d04c2ffe4bd08eb052fc5167db"
+    },
+    {
+      "file": "word-hills.mp3",
+      "text": "hills",
+      "bytes": 16762,
+      "sha256": "a27b42a933e0b7a89799d7293e6dbdee35afffb2f6024f6c0855742a5827bb42"
+    },
+    {
+      "file": "word-reservoir.mp3",
+      "text": "reservoir",
+      "bytes": 19688,
+      "sha256": "45cf946e86b01ef9986cc32db3ff4510f72a037f4d970c6cc0189eb8a44cc236"
+    },
+    {
+      "file": "word-cracked-ground.mp3",
+      "text": "cracked ground",
+      "bytes": 21777,
+      "sha256": "3b41476dd2b807320c31708504163e16bdbafe834bac279dbac0f6149a4bc5c7"
+    },
+    {
+      "file": "word-farmer.mp3",
+      "text": "farmer",
+      "bytes": 18852,
+      "sha256": "fb25109ff72a4647eb73d68404217f747aae4580c11f08ae50f1535f82dc4ee4"
+    },
+    {
+      "file": "word-dry.mp3",
+      "text": "dry",
+      "bytes": 15090,
+      "sha256": "ca65bb12ec164ddc99168979ae62c5211e4364bd188a17c3c93c94d34924095c"
+    },
+    {
+      "file": "word-rocks.mp3",
+      "text": "rocks",
+      "bytes": 16762,
+      "sha256": "b65488f47bee4de38c9b2c70c5ecba4ef33d73d73eddd396a13672adb94a7413"
+    },
+    {
+      "file": "word-excavator.mp3",
+      "text": "excavator",
+      "bytes": 23449,
+      "sha256": "f87dbd16f2b2eeeeeb9c598c4edbc7192cfdf99b202984c43c3affc144f2c142"
+    },
+    {
+      "file": "word-blockage.mp3",
+      "text": "blockage",
+      "bytes": 18852,
+      "sha256": "2c0a722a4f9ce2cb1902836b737bbd545be1e0a18894d221bf4c0b4c40692921"
+    },
+    {
+      "file": "word-road.mp3",
+      "text": "road",
+      "bytes": 17598,
+      "sha256": "9b6fa214bb8a1473a2510c66ab290249c10b225703341d45ba06bb025b22f582"
+    },
+    {
+      "file": "word-palm-trees.mp3",
+      "text": "palm trees",
+      "bytes": 20942,
+      "sha256": "5b827ab03389bdc2a13432125b18c4151df0988a9b840152308e9381a16f5e48"
+    },
+    {
+      "file": "word-strong-wind.mp3",
+      "text": "strong wind",
+      "bytes": 20524,
+      "sha256": "d83376e73ced5f7c8a1ff877dbb13a548859f10167172237d66f62711192fc59"
+    },
+    {
+      "file": "word-waves.mp3",
+      "text": "waves",
+      "bytes": 16762,
+      "sha256": "f79900d2fe0fd68e0353c822b9b39e4b593c19e914ed3f0f0fd9d1295d17133d"
+    },
+    {
+      "file": "word-bending.mp3",
+      "text": "bending",
+      "bytes": 16762,
+      "sha256": "f079969da25ab6545bedbd17f3836d5f749576fc1bbd2ff98f7812bba63d2295"
+    },
+    {
+      "file": "word-musician.mp3",
+      "text": "musician",
+      "bytes": 20942,
+      "sha256": "0ce7ba071a16ca93cc69a180fdb94280350d2e79f15e08082bad6ed5c3c2d0c2"
+    },
+    {
+      "file": "word-journalist.mp3",
+      "text": "journalist",
+      "bytes": 19688,
+      "sha256": "7f9fd79c1b6fee12507eb8ec6f23ff28f81381b9427dd4e4e5daa0632d733c27"
+    },
+    {
+      "file": "word-guitar.mp3",
+      "text": "guitar",
+      "bytes": 17598,
+      "sha256": "195b081993981876ac1fa29f193bae36d18ac48b3fa28b35754e90790a45ab60"
+    },
+    {
+      "file": "word-camera-operator.mp3",
+      "text": "camera operator",
+      "bytes": 24285,
+      "sha256": "8845e1c5380fc593734a6ebcb98eeafd8ba83f99ac24e8dbc73e3207e789f05c"
+    },
+    {
+      "file": "word-journalists.mp3",
+      "text": "journalists",
+      "bytes": 20524,
+      "sha256": "2a20a5abce514c92ceb09cc91cf5e50a88ffd6db729f4615bf8e47daf33b6c27"
+    },
+    {
+      "file": "word-photograph.mp3",
+      "text": "photograph",
+      "bytes": 20942,
+      "sha256": "bcc22713b8dd7d32a7c252368e89cba44d9d339a6a91dddb2d0322a4586efc89"
+    },
+    {
+      "file": "word-notebook.mp3",
+      "text": "notebook",
+      "bytes": 20942,
+      "sha256": "da9aa112eaf953373655ffa210b53b1ead17b1cb8e673986ef4cc131ce828979"
+    },
+    {
+      "file": "word-laptop.mp3",
+      "text": "laptop",
+      "bytes": 18852,
+      "sha256": "9c4790fc3ff976e88f8cf48c73d6231de1461202291d0d538678ff0d2cf1644e"
+    },
+    {
+      "file": "word-checking-sources.mp3",
+      "text": "checking sources",
+      "bytes": 24285,
+      "sha256": "24400ba8405310c132088209672fe6ff868def4a6b3cc3b7701a77f81f64e890"
+    },
+    {
+      "file": "word-press-briefing.mp3",
+      "text": "press briefing",
+      "bytes": 21777,
+      "sha256": "b616c7653c0d42d6bbfb3ab829c21231132463e9132afd631ff4b28a0f059de4"
+    },
+    {
+      "file": "word-lectern.mp3",
+      "text": "lectern",
+      "bytes": 20942,
+      "sha256": "d458a0ad643c5189a6a700c495723c8f383a77d46d7956f19fe18c0ad6402bdb"
+    },
+    {
+      "file": "word-raising-his-hand.mp3",
+      "text": "raising his hand",
+      "bytes": 22613,
+      "sha256": "3eb337cdbc016fa8f22f3cc7901922ea0ceae642df96394e3134c63a4b925770"
+    },
+    {
+      "file": "word-notebooks.mp3",
+      "text": "notebooks",
+      "bytes": 23449,
+      "sha256": "b1a2e61b3c083168b10a866b66446645454e85b86f0397e09822f9cbb5541264"
+    },
+    {
+      "file": "word-temporary-beds.mp3",
+      "text": "temporary beds",
+      "bytes": 22613,
+      "sha256": "7b02b5b2c65daa55aa19b1ea87ad76943a7a460feb589ac0e601c339d3445ded"
+    },
+    {
+      "file": "word-reported-speech.mp3",
+      "text": "reported speech",
+      "bytes": 24285,
+      "sha256": "c72e08f164aef6b2494915e82943c1c7cd2943b37a45853e539625b21f8d9898"
+    },
+    {
+      "file": "word-swap-roles.mp3",
+      "text": "swap roles",
+      "bytes": 20942,
+      "sha256": "424144c0c79bc5f290de8955f85be71ac0f945c88424a008fdc4ca59a019daa3"
+    },
+    {
+      "file": "word-partner.mp3",
+      "text": "partner",
+      "bytes": 18852,
+      "sha256": "46634c2e60a0a23940bef5ea05090ef1e0691dfc10929b6e0ea871ec352d6065"
+    },
+    {
+      "file": "word-meaning.mp3",
+      "text": "meaning",
+      "bytes": 18852,
+      "sha256": "21e4502047ef63b5132777c9e3f9f842357807caf8d7fbf4a531d948da3b036d"
+    },
+    {
+      "file": "word-pronouns.mp3",
+      "text": "pronouns",
+      "bytes": 18852,
+      "sha256": "7a5e26d25eab4da919b77acac6c181353fbf3986e9c0a06b317dc5a6fb96c218"
     }
   ]
 }

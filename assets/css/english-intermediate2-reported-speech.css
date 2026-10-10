@@ -5,3 +5,19 @@
 @media(prefers-reduced-motion:reduce){.reported-page *{scroll-behavior:auto!important;transition:none!important}}
 @media(max-width:620px){.reported-page .rs-hero .jl-page-qr-host{padding-right:100px!important}.reported-page .rs-hero .jl-page-qr-card{position:absolute;top:4px;right:0;margin:0;width:84px;padding:5px}.reported-page .rs-hero .jl-page-qr-open{width:66px;height:66px;min-height:0}.reported-page .rs-hero .jl-page-qr-card strong{font-size:.56rem}}
 .reported-page .jl-page-qr-open{padding:0;border:0;min-height:0;background:transparent}
+/* Preserve every visual clue in the photographs. */
+.rs-hero figure{background:#102c4e;border-radius:18px}
+.rs-hero figure img,.rs-gallery img{object-fit:contain}
+.rs-gallery img{background:#edf2f6}
+.reported-page button.rs-word{display:inline;font:inherit;line-height:inherit;min-height:0;padding:2px 0;border:0;border-radius:2px;background:transparent;color:inherit;text-align:inherit;text-decoration:underline dotted #0f766e;text-underline-offset:4px;cursor:pointer}
+.reported-page button.rs-word:hover,.reported-page button.rs-word[aria-pressed=true]{background:#d7eee7;color:#103c33}
+.rs-word-guide{font-size:.88rem;color:#385766;margin:0}
+.rs-word-bank{margin-top:14px;border-top:1px solid #d2e0e7;padding-top:12px}
+.rs-word-bank h3{font-size:1rem;margin:0 0 8px}
+.rs-word-list{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:10px}
+.reported-page .rs-word-list .rs-word{display:inline-block;min-height:44px;padding:8px 10px;background:#edf6f2}
+#rsTooltip{position:fixed;z-index:2147483647;width:max-content;max-width:min(320px,calc(100vw - 24px));padding:12px 14px;border:1px solid #81aea8;border-radius:10px;background:#102f3d;color:white;font:500 1rem/1.45 system-ui,sans-serif;box-shadow:0 5px 16px #0003}
+#rsProjected>.rs-word-bank{font-size:clamp(1.5rem,3vw,3rem);border:0;padding:20px}
+#rsProjected>.rs-word-bank h3{font-size:inherit;margin-bottom:24px}
+#rsProjected>.rs-word-bank .rs-word-list{gap:24px}
+#rsProjected .rs-round .rs-word-bank{font-size:1rem}

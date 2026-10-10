@@ -26,13 +26,45 @@ instructions={
  'b':'Student B. Listen to your partner. Begin with your partner’s name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning.',
  'guide':'What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs and the pronouns. Then change roles for the next picture.'}
 for id,text in instructions.items():items.append(dict(file=id+'.mp3',text=text))
-config=dict(scenes=scenes,instructions=instructions,audioRoot='/ingles/intermediate-2/audio/unit-6-reported-speech/')
+# Five concrete vocabulary prompts per image; also used as inline word help.
+vocabulary_rows=[
+ [('witness','testigo'),('reporter','reportero/a'),('raincoat','impermeable'),('fallen branches','ramas caídas'),('microphone','micrófono')],
+ [('flooded','inundado/a'),('rescue workers','rescatistas'),('boat','bote'),('residents','residentes'),('bridge','puente')],
+ [('earthquake','terremoto'),('damaged','dañado/a'),('rubble','escombros'),('inspectors','inspectores'),('safety tape','cinta de seguridad')],
+ [('wildfire','incendio forestal'),('smoke','humo'),('firefighters','bomberos'),('fire truck','camión de bomberos'),('hills','colinas')],
+ [('drought','sequía'),('reservoir','embalse'),('cracked ground','suelo agrietado'),('farmer','agricultor/a'),('dry','seco/a')],
+ [('landslide','deslizamiento de tierra'),('rocks','rocas'),('excavator','excavadora'),('blockage','obstrucción'),('road','carretera')],
+ [('hurricane','huracán'),('palm trees','palmeras'),('strong wind','viento fuerte'),('waves','olas'),('bending','doblándose / inclinándose')],
+ [('musician','músico/a'),('journalist','periodista'),('microphone','micrófono'),('guitar','guitarra'),('camera operator','camarógrafo/a')],
+ [('journalists','periodistas'),('photograph','fotografía'),('notebook','cuaderno'),('laptop','computadora portátil'),('checking sources','verificando las fuentes')],
+ [('press briefing','rueda de prensa informativa'),('spokesperson','portavoz'),('lectern','atril'),('raising his hand','levantando la mano'),('notebooks','cuadernos')],
+ [('shelter','refugio'),('volunteers','voluntarios'),('blankets','mantas / cobijas'),('bottled water','agua embotellada'),('temporary beds','camas provisionales')]
+]
+# Reuse an existing word recording only when its exact spoken text matches.
+existing={}
+for folder in ['unit-6-explanation','unit-6-newsroom']:
+ path=R/'ingles/intermediate-2/audio'/folder/'models.json'
+ if path.exists():
+  for item in json.loads(path.read_text())['items']:
+   if item['file'].startswith('word-'):
+    existing[item['text'].strip().rstrip('.').lower()]='/ingles/intermediate-2/audio/'+folder+'/'+item['file']
+glossary={}
+for scene,words in zip(scenes,vocabulary_rows):
+ scene['vocabulary']=[word for word,_ in words]
+ for term,spanish in words:glossary[term]=dict(term=term,spanish=spanish)
+for term,spanish in [('reported speech','discurso indirecto'),('swap roles','intercambiar los papeles'),('partner','compañero/a'),('meaning','significado / sentido'),('pronouns','pronombres')]:
+ glossary[term]=dict(term=term,spanish=spanish)
+for term,word in glossary.items():
+ file='word-'+term.replace(' ','-')+'.mp3'
+ word['audio']=existing.get(term,'/ingles/intermediate-2/audio/unit-6-reported-speech/'+file)
+ if term not in existing:items.append(dict(file=file,text=term))
+config=dict(scenes=scenes,instructions=instructions,glossary=list(glossary.values()),audioRoot='/ingles/intermediate-2/audio/unit-6-reported-speech/')
 (R/'assets/js/english-intermediate2-reported-speech-data.js').write_text('window.ReportedSpeechLesson = '+json.dumps(config,ensure_ascii=False,indent=2)+';\n')
 audio=R/'ingles/intermediate-2/audio/unit-6-reported-speech';audio.mkdir(parents=True,exist_ok=True)
 old=json.loads((audio/'models.json').read_text()) if (audio/'models.json').exists() else {'items':[]}
 for item in items:
  for prior in old['items']:
   if prior['file']==item['file'] and prior['text']==item['text']:
-   item.update({k:prior[k] for k in ['bytes','sha256','voiceSettings'] if k in prior})
+   item.update({k:prior[k] for k in ['bytes','sha256','voiceSettings','generationText'] if k in prior})
 (audio/'models.json').write_text(json.dumps(dict(provider='ElevenLabs',voiceId='pv8WYYW60prEkDbDXyC0',voiceName='David',modelId='eleven_multilingual_v2',items=items),ensure_ascii=False,indent=2)+'\n')
 print(len(scenes),'scenes;',len(items),'recordings')

@@ -23,3 +23,9 @@ Escenas: entrevista tras una tormenta (ejemplo), inundación, terremoto, incendi
 ## Validación
 
 `tools/test_intermediate2_reported_speech.cjs --static` comprueba escenas, frases, recursos, hashes y auditoría de voz. Sin el indicador prueba la interfaz: escenas, modelos ocultos, proyecciones, navegación por teclado, audio real, errores de audio, velocidad, cancelación, QR, seis anchos y enlace de catálogo. Complementar con contrato del curso y auditoría de Sign in. La transcripción comprueba las palabras audibles; no es una evaluación perceptiva de la entonación.
+
+## Vocabulario e imágenes · 9 de octubre de 2026
+
+Cada una de las once escenas tiene un banco de cinco palabras/expresiones concretas bajo la imagen, ampliable para proyectar. Cincuenta y nueve términos únicos cubren estos bancos y algunas instrucciones. El vocabulario relevante de los modelos y la explicación se subraya: mouse o foco muestra español sin reproducir; clic o toque reproduce la palabra. Reutiliza trece grabaciones exactas de Unidad 6 y añade 46 grabaciones David; el manifiesto de la actividad contiene ahora 71 clips. Un solo reproductor evita voces superpuestas.
+
+La ayuda mantiene interacción por teclado y pantalla táctil, con Escape para cerrar primero el significado. El globo se coloca dentro del diálogo activo para ser visible durante proyección y pantalla completa. La galería, el banner y la escena muestran imágenes completas mediante contain. Validación adicional: `tools/test_intermediate2_reported_glossary.cjs` comprueba los once bancos, traducción sin audio al pasar el mouse, audio al pulsar, foco, toque, proyección, cancelación y seis anchos.

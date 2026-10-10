@@ -20,6 +20,13 @@ window.ReportedSpeechLesson = {
         "is talking → was talking",
         "are → were",
         "I can → she could"
+      ],
+      "vocabulary": [
+        "witness",
+        "reporter",
+        "raincoat",
+        "fallen branches",
+        "microphone"
       ]
     },
     {
@@ -42,6 +49,13 @@ window.ReportedSpeechLesson = {
         "is → was",
         "are helping → were helping",
         "I can → she could"
+      ],
+      "vocabulary": [
+        "flooded",
+        "rescue workers",
+        "boat",
+        "residents",
+        "bridge"
       ]
     },
     {
@@ -64,6 +78,13 @@ window.ReportedSpeechLesson = {
         "are → were",
         "are checking → were checking",
         "there is → there was"
+      ],
+      "vocabulary": [
+        "earthquake",
+        "damaged",
+        "rubble",
+        "inspectors",
+        "safety tape"
       ]
     },
     {
@@ -86,6 +107,13 @@ window.ReportedSpeechLesson = {
         "covers → covered",
         "are looking → were looking",
         "I can → she could"
+      ],
+      "vocabulary": [
+        "wildfire",
+        "smoke",
+        "firefighters",
+        "fire truck",
+        "hills"
       ]
     },
     {
@@ -108,6 +136,13 @@ window.ReportedSpeechLesson = {
         "is → was",
         "is looking → was looking",
         "needs → needed"
+      ],
+      "vocabulary": [
+        "drought",
+        "reservoir",
+        "cracked ground",
+        "farmer",
+        "dry"
       ]
     },
     {
@@ -130,6 +165,13 @@ window.ReportedSpeechLesson = {
         "block → blocked",
         "is waiting → was waiting",
         "are checking → were checking"
+      ],
+      "vocabulary": [
+        "landslide",
+        "rocks",
+        "excavator",
+        "blockage",
+        "road"
       ]
     },
     {
@@ -152,6 +194,13 @@ window.ReportedSpeechLesson = {
         "is → was",
         "are bending → were bending",
         "there are → there were"
+      ],
+      "vocabulary": [
+        "hurricane",
+        "palm trees",
+        "strong wind",
+        "waves",
+        "bending"
       ]
     },
     {
@@ -174,6 +223,13 @@ window.ReportedSpeechLesson = {
         "is talking → was talking",
         "holds → held",
         "is recording → was recording"
+      ],
+      "vocabulary": [
+        "musician",
+        "journalist",
+        "microphone",
+        "guitar",
+        "camera operator"
       ]
     },
     {
@@ -196,6 +252,13 @@ window.ReportedSpeechLesson = {
         "are checking → were checking",
         "is pointing → was pointing",
         "there is → there was"
+      ],
+      "vocabulary": [
+        "journalists",
+        "photograph",
+        "notebook",
+        "laptop",
+        "checking sources"
       ]
     },
     {
@@ -218,6 +281,13 @@ window.ReportedSpeechLesson = {
         "is speaking → was speaking",
         "has → had",
         "is raising → was raising"
+      ],
+      "vocabulary": [
+        "press briefing",
+        "spokesperson",
+        "lectern",
+        "raising his hand",
+        "notebooks"
       ]
     },
     {
@@ -240,6 +310,13 @@ window.ReportedSpeechLesson = {
         "are giving → were giving",
         "need → needed",
         "there are → there were"
+      ],
+      "vocabulary": [
+        "shelter",
+        "volunteers",
+        "blankets",
+        "bottled water",
+        "temporary beds"
       ]
     }
   ],
@@ -248,5 +325,302 @@ window.ReportedSpeechLesson = {
     "b": "Student B. Listen to your partner. Begin with your partner’s name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning.",
     "guide": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs and the pronouns. Then change roles for the next picture."
   },
+  "glossary": [
+    {
+      "term": "witness",
+      "spanish": "testigo",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-witness.mp3"
+    },
+    {
+      "term": "reporter",
+      "spanish": "reportero/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-reporter.mp3"
+    },
+    {
+      "term": "raincoat",
+      "spanish": "impermeable",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-raincoat.mp3"
+    },
+    {
+      "term": "fallen branches",
+      "spanish": "ramas caídas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-fallen-branches.mp3"
+    },
+    {
+      "term": "microphone",
+      "spanish": "micrófono",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-microphone.mp3"
+    },
+    {
+      "term": "flooded",
+      "spanish": "inundado/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-flooded.mp3"
+    },
+    {
+      "term": "rescue workers",
+      "spanish": "rescatistas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rescue-workers.mp3"
+    },
+    {
+      "term": "boat",
+      "spanish": "bote",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-boat.mp3"
+    },
+    {
+      "term": "residents",
+      "spanish": "residentes",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-residents.mp3"
+    },
+    {
+      "term": "bridge",
+      "spanish": "puente",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-bridge.mp3"
+    },
+    {
+      "term": "earthquake",
+      "spanish": "terremoto",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-earthquake.mp3"
+    },
+    {
+      "term": "damaged",
+      "spanish": "dañado/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-damaged.mp3"
+    },
+    {
+      "term": "rubble",
+      "spanish": "escombros",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rubble.mp3"
+    },
+    {
+      "term": "inspectors",
+      "spanish": "inspectores",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-inspectors.mp3"
+    },
+    {
+      "term": "safety tape",
+      "spanish": "cinta de seguridad",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-safety-tape.mp3"
+    },
+    {
+      "term": "wildfire",
+      "spanish": "incendio forestal",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-wildfire.mp3"
+    },
+    {
+      "term": "smoke",
+      "spanish": "humo",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-smoke.mp3"
+    },
+    {
+      "term": "firefighters",
+      "spanish": "bomberos",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-firefighters.mp3"
+    },
+    {
+      "term": "fire truck",
+      "spanish": "camión de bomberos",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-fire-truck.mp3"
+    },
+    {
+      "term": "hills",
+      "spanish": "colinas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-hills.mp3"
+    },
+    {
+      "term": "drought",
+      "spanish": "sequía",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-drought.mp3"
+    },
+    {
+      "term": "reservoir",
+      "spanish": "embalse",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-reservoir.mp3"
+    },
+    {
+      "term": "cracked ground",
+      "spanish": "suelo agrietado",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-cracked-ground.mp3"
+    },
+    {
+      "term": "farmer",
+      "spanish": "agricultor/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-farmer.mp3"
+    },
+    {
+      "term": "dry",
+      "spanish": "seco/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-dry.mp3"
+    },
+    {
+      "term": "landslide",
+      "spanish": "deslizamiento de tierra",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-landslide.mp3"
+    },
+    {
+      "term": "rocks",
+      "spanish": "rocas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rocks.mp3"
+    },
+    {
+      "term": "excavator",
+      "spanish": "excavadora",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-excavator.mp3"
+    },
+    {
+      "term": "blockage",
+      "spanish": "obstrucción",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-blockage.mp3"
+    },
+    {
+      "term": "road",
+      "spanish": "carretera",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-road.mp3"
+    },
+    {
+      "term": "hurricane",
+      "spanish": "huracán",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-hurricane.mp3"
+    },
+    {
+      "term": "palm trees",
+      "spanish": "palmeras",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-palm-trees.mp3"
+    },
+    {
+      "term": "strong wind",
+      "spanish": "viento fuerte",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-strong-wind.mp3"
+    },
+    {
+      "term": "waves",
+      "spanish": "olas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-waves.mp3"
+    },
+    {
+      "term": "bending",
+      "spanish": "doblándose / inclinándose",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-bending.mp3"
+    },
+    {
+      "term": "musician",
+      "spanish": "músico/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-musician.mp3"
+    },
+    {
+      "term": "journalist",
+      "spanish": "periodista",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-journalist.mp3"
+    },
+    {
+      "term": "guitar",
+      "spanish": "guitarra",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-guitar.mp3"
+    },
+    {
+      "term": "camera operator",
+      "spanish": "camarógrafo/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-camera-operator.mp3"
+    },
+    {
+      "term": "journalists",
+      "spanish": "periodistas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-journalists.mp3"
+    },
+    {
+      "term": "photograph",
+      "spanish": "fotografía",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-photograph.mp3"
+    },
+    {
+      "term": "notebook",
+      "spanish": "cuaderno",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-notebook.mp3"
+    },
+    {
+      "term": "laptop",
+      "spanish": "computadora portátil",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-laptop.mp3"
+    },
+    {
+      "term": "checking sources",
+      "spanish": "verificando las fuentes",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-checking-sources.mp3"
+    },
+    {
+      "term": "press briefing",
+      "spanish": "rueda de prensa informativa",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-press-briefing.mp3"
+    },
+    {
+      "term": "spokesperson",
+      "spanish": "portavoz",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-spokesperson.mp3"
+    },
+    {
+      "term": "lectern",
+      "spanish": "atril",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-lectern.mp3"
+    },
+    {
+      "term": "raising his hand",
+      "spanish": "levantando la mano",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-raising-his-hand.mp3"
+    },
+    {
+      "term": "notebooks",
+      "spanish": "cuadernos",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-notebooks.mp3"
+    },
+    {
+      "term": "shelter",
+      "spanish": "refugio",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-shelter.mp3"
+    },
+    {
+      "term": "volunteers",
+      "spanish": "voluntarios",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-volunteers.mp3"
+    },
+    {
+      "term": "blankets",
+      "spanish": "mantas / cobijas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-blankets.mp3"
+    },
+    {
+      "term": "bottled water",
+      "spanish": "agua embotellada",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-bottled-water.mp3"
+    },
+    {
+      "term": "temporary beds",
+      "spanish": "camas provisionales",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-temporary-beds.mp3"
+    },
+    {
+      "term": "reported speech",
+      "spanish": "discurso indirecto",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-reported-speech.mp3"
+    },
+    {
+      "term": "swap roles",
+      "spanish": "intercambiar los papeles",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-swap-roles.mp3"
+    },
+    {
+      "term": "partner",
+      "spanish": "compañero/a",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-partner.mp3"
+    },
+    {
+      "term": "meaning",
+      "spanish": "significado / sentido",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-meaning.mp3"
+    },
+    {
+      "term": "pronouns",
+      "spanish": "pronombres",
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-pronouns.mp3"
+    }
+  ],
   "audioRoot": "/ingles/intermediate-2/audio/unit-6-reported-speech/"
 };

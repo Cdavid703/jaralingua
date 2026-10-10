@@ -26,3 +26,10 @@
  .opinion-coach-page .david-hero-image{display:block;height:220px}
  .opinion-coach-page #opinionImage{max-height:340px}
 }
+/* The full photograph and a readable David portrait remain visible at every width. */
+.opinion-coach-page .david-hero-image{height:clamp(220px,25vw,340px);background:#102c4e}
+.opinion-coach-page .david-hero-image img{object-fit:contain;object-position:center}
+.opinion-coach-page .coach-stage{grid-template-columns:minmax(0,1fr)}
+.opinion-coach-page .coach-avatar{display:block;width:144px;height:144px;max-width:100%;margin:0 auto}
+.opinion-coach-page .coach-stage .coach-avatar img{object-fit:contain;object-position:center}
+@media(max-width:767px){.opinion-coach-page .coach-avatar{width:128px;height:128px}}
