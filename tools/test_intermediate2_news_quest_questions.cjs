@@ -9,8 +9,8 @@ async function playing(p,src){await p.waitForFunction(s=>{const a=document.query
  const p=await browser.newPage({viewport:{width,height:900}});const errors=[];p.on('pageerror',e=>errors.push(e.message));
  await p.addInitScript(()=>{window.played=[];document.addEventListener('play',e=>{if(e.target.id==='quest-model-audio')window.played.push(e.target.getAttribute('src'));},true);});
  await p.goto(url);await p.locator('#quest-start').click();
- const visited=new Set();let count=0;
- while(visited.size<7&&count++<36){
+ const visited=new Set();let count=0,stageIndex=0;
+ while(visited.size<7&&count++<40){
   const type=await p.locator('#quest-type').innerText();let w,key;
   if(type.startsWith('Listen')){
    await p.waitForFunction(()=>document.querySelector('#quest-model-audio').currentTime>0);const src=await p.locator('#quest-model-audio').getAttribute('src');w=words.find(w=>w.audio===src);assert(w,'listening must autoplay only a vocabulary word');key=type==='Listen → picture'?'listen-picture':'listen-word';assert(await p.locator('#quest-repeat-question').isHidden());
@@ -32,8 +32,9 @@ async function playing(p,src){await p.waitForFunction(s=>{const a=document.query
   }
   if(key.startsWith('speak-'))await p.locator('#quest-skip').click();else{await p.locator('#quest-choices input[value="'+w.id+'"]').check();await p.locator('#quest-check').click();}
   await p.locator('#quest-next').click();
+  if(await p.locator('#quest-results').isVisible()){stageIndex++;if(stageIndex<3)await p.locator('#quest-next-stage').click();}
  }
  assert.equal(visited.size,7);assert.deepEqual(errors,[]);assert(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));console.log('PASS all seven task modes autoplay correctly; listening reads only the word; stop/mute cancel queued clips at',width);await p.close();
  }
- const blocked=await browser.newPage();await blocked.addInitScript(()=>{const original=HTMLMediaElement.prototype.play;let first=true;HTMLMediaElement.prototype.play=function(){if(first&&this.id==='quest-model-audio'){first=false;return Promise.reject(new DOMException('Test autoplay restriction','NotAllowedError'));}return original.call(this);};});await blocked.goto(url);await blocked.locator('#quest-start').click();await blocked.waitForFunction(()=>document.querySelector('#quest-audio-status').textContent.includes('Press Repeat question or Listen'));await blocked.locator('#quest-listen').click();await blocked.waitForFunction(()=>document.querySelector('#quest-model-audio').currentTime>0);console.log('PASS blocked autoplay has manual retry');await blocked.close();
+ const blocked=await browser.newPage();await blocked.addInitScript(()=>{const original=HTMLMediaElement.prototype.play;let first=true;HTMLMediaElement.prototype.play=function(){if(first&&this.id==='quest-model-audio'){first=false;return Promise.reject(new DOMException('Test autoplay restriction','NotAllowedError'));}return original.call(this);};});await blocked.goto(url);await blocked.locator('#quest-start').click();await blocked.waitForFunction(()=>document.querySelector('#quest-audio-status').textContent.includes('Press Repeat question or Listen'));await blocked.locator('#quest-repeat-question').click();await blocked.waitForFunction(()=>document.querySelector('#quest-model-audio').currentTime>0);console.log('PASS blocked autoplay has manual retry');await blocked.close();
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

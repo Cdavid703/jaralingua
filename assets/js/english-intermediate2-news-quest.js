@@ -1,6 +1,8 @@
-/* News Quest: private practice. Recordings never leave this tab; no speech scoring API. */
+/* News Quest: three separate practice challenges; no academic submissions. */
 (()=>{'use strict';
 const $=s=>document.querySelector(s),app=$('#quest-app');
+const stages=[{id:'vocabulary',name:'Vocabulary',icon:'📚',detail:'Pictures and sentence gaps'},{id:'listening',name:'Listening',icon:'🎧',detail:'Hear a word and choose'},{id:'pronunciation',name:'Pronunciation',icon:'🎙️',detail:'Say it and check your words'}];
+let stage='vocabulary',earned=new Set(),progress={},verified=new Set(),assessmentController=null,lastBlob=null,assessing=false;
 let words=[],prompts={},queue=[],position=0,selected=null,attempts=0,resolved=false,run='main',difficult=new Set(),scheduled=new Set(),firstCorrect=0,choiceCount=0,oralDone=0,oralSkipped=0,revealed=false;
 const model=document.createElement('audio');model.id='quest-model-audio';model.preload='metadata';document.body.append(model);
 const recording=$('#quest-recording');let audioTicket=0,audioQueue=[],queueSlow=false,fxContext=null,fxNodes=[];
@@ -22,7 +24,7 @@ async function play(file,slow=false,tail=[]){
 }
 model.addEventListener('error',()=>{audioQueue=[];audioStatus('Audio is unavailable. Check your connection and try again.');});
 model.addEventListener('ended',()=>{document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed','false'));if(audioQueue.length){const [file,...rest]=audioQueue;play(file,queueSlow,rest);}});
-recording.addEventListener('play',()=>{audioTicket++;audioQueue=[];model.pause();$('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=false);});
+recording.addEventListener('play',()=>{audioTicket++;audioQueue=[];model.pause();});
 function effect(good){
  if(!$('#quest-effects').checked)return;
  try{fxContext??=new (window.AudioContext||window.webkitAudioContext)();fxContext.resume().catch(()=>{});const time=fxContext.currentTime;
@@ -30,29 +32,27 @@ function effect(good){
 }
 function releaseStream(){clearInterval(micTimer);micTimer=0;cancelAnimationFrame(micFrame);micFrame=0;stream?.getTracks().forEach(t=>t.stop());stream=null;micContext?.close().catch(()=>{});micContext=null;$('#quest-level').value=0;}
 function clearRecording(){recording.pause();recording.removeAttribute('src');recording.load();recording.hidden=true;if(recordURL)URL.revokeObjectURL(recordURL);recordURL=null;}
-function cancelMic(){micToken++;micBusy=false;if(recorder?.state==='recording')recorder.stop();recorder=null;releaseStream();clearRecording();$('#quest-record').disabled=false;$('#quest-record-stop').disabled=true;}
+function cancelMic(){assessmentController?.abort();assessmentController=null;assessing=false;lastBlob=null;micToken++;micBusy=false;if(recorder?.state==='recording')recorder.stop();recorder=null;releaseStream();clearRecording();$('#quest-record').disabled=false;$('#quest-record-stop').disabled=true;}
 function resetMedia(){stopAudio();cancelMic();hideTranslation();}
 function setView(id){for(const name of ['intro','review','game','results'])$('#quest-'+name).hidden=name!==id;}
 function task(id,type,extra={}){return {id,type,...extra};}
 function start(ids=words.map(w=>w.id),kind='main'){
  resetMedia();run=kind;difficult=new Set();scheduled=new Set();firstCorrect=0;choiceCount=0;oralDone=0;oralSkipped=0;position=0;
- if(kind==='phrases')queue=shuffle(ids).map(id=>task(id,'speak',{speech:'sentence'}));
- else{
-  const ordered=shuffle(ids),types=['listen-picture','picture-word','listen-word','cloze'];
-  const choices=[...ordered.map((id,i)=>task(id,types[i%4])),...shuffle(ordered.map((id,i)=>task(id,types[(i+2)%4])))];
-  const spoken=shuffle(ids);queue=[];choices.forEach((t,i)=>{queue.push(t);if(i%2===1)queue.push(task(spoken[Math.floor(i/2)],'speak',{speech:['word','sentence','image'][Math.floor(i/2)%3]}));});
- }
+ verified=new Set();
+ const ordered=shuffle(ids);
+ if(stage==='pronunciation')queue=ordered.map((id,i)=>task(id,'speak',{speech:kind==='phrases'?'sentence':['word','sentence','image'][i%3]}));
+ else {const types=stage==='listening'?['listen-picture','listen-word']:['picture-word','cloze'];queue=ordered.map((id,i)=>task(id,types[i%2]));}
  setView('game');render();
 }
 function scheduleReview(t){
  difficult.add(t.id);if(scheduled.has(t.id)||t.revisit)return;
- scheduled.add(t.id);const retry=task(t.id,t.type==='speak'?'speak':t.type==='cloze'?'picture-word':'cloze',{revisit:true,speech:'sentence'});
+ scheduled.add(t.id);const retry=task(t.id,t.type==='speak'?'speak':stage==='listening'?(t.type==='listen-picture'?'listen-word':'listen-picture'):(t.type==='cloze'?'picture-word':'cloze'),{revisit:true,speech:'sentence'});
  queue.splice(Math.min(queue.length,position+4),0,retry);
 }
 function render(){
  resetMedia();if(position>=queue.length)return finish();
  const t=current(),w=term(),oral=t.type==='speak';selected=null;attempts=0;resolved=false;revealed=!(oral&&t.speech==='image');
- $('#quest-count').textContent='Challenge '+(position+1)+' / '+queue.length+(t.revisit?' · revisit':'');$('#quest-progress').max=queue.length;$('#quest-progress').value=position;
+ $('#quest-count').textContent=stages.find(s=>s.id===stage).name+' · '+(position+1)+' / '+queue.length+(t.revisit?' · revisit':'');$('#quest-progress').max=queue.length;$('#quest-progress').value=position;
  const names={'listen-picture':'Listen → picture','picture-word':'Picture → word','listen-word':'Listen → word',cloze:'Complete the news',speak:'Speaking practice'};
  $('#quest-type').textContent=names[t.type];$('#quest-repeat-question').hidden=t.type==='listen-picture'||t.type==='listen-word';
  $('#quest-prompt').textContent=prompts[oral?'speak-'+t.speech:t.type].text;
@@ -64,7 +64,7 @@ function render(){
   $('#quest-reveal').hidden=revealed;$('#quest-model-controls').hidden=!revealed;$('#quest-tip').hidden=!revealed;
   $('#quest-tip').innerHTML='<span class="quest-stress">'+esc(w.stress)+'</span> · '+esc(w.tip);
   $('#quest-self-check').hidden=true;$('#quest-skip').hidden=false;$('#quest-aloud').hidden=false;$('#quest-record').hidden=false;$('#quest-record-stop').hidden=false;
-  $('#quest-timer').textContent='0 / 10 s';$('#quest-mic-status').textContent='Your recording stays in this tab. No automatic pronunciation score.';
+  $('#quest-assessment').textContent='';$('#quest-assess-retry').hidden=true;$('#quest-timer').textContent='0 / 10 s';$('#quest-mic-status').textContent='Record to check which words the system understands.';
  }else{
   let options=t.type==='cloze'?w.distractors.map(x=>words.find(a=>a.term===x)):shuffle(words.filter(a=>a.id!==w.id)).slice(0,2);
   options=shuffle([w,...options]);t.options=options.map(x=>x.id);
@@ -105,21 +105,36 @@ function oralComplete(needsPractice=false,skipped=false){
  cancelMic();stopAudio();resolved=true;
  if(!current().revisit){if(skipped)oralSkipped++;else oralDone++;}
  if(needsPractice)scheduleReview(current());if(skipped)difficult.add(current().id);
- $('#quest-feedback').textContent=skipped?'Speaking skipped. You can practise this word again at the end.':needsPractice?'Reflection saved. This word will return for more practice.':'Practice complete. Keep listening for the sound and stress in the model.';
- $('#quest-self-check').hidden=true;$('#quest-skip').hidden=true;$('#quest-aloud').hidden=true;$('#quest-record').hidden=true;$('#quest-record-stop').hidden=true;$('#quest-next').hidden=false;
+ $('#quest-feedback').textContent=verified.has(current().id)?'Your words were recognized. Well done.':skipped?'Speaking skipped. You can practise this word again at the end.':needsPractice?'Reflection saved. This word will return for more practice.':'Practice complete. Keep listening for the sound and stress in the model.';
+ $('#quest-assess-retry').hidden=true;$('#quest-self-check').hidden=true;$('#quest-skip').hidden=true;$('#quest-aloud').hidden=true;$('#quest-record').hidden=true;$('#quest-record-stop').hidden=true;$('#quest-next').hidden=false;
  if(!skipped)effect(true);
+}
+function drawTrophies(){
+ $('#quest-trophies').innerHTML=stages.map((s,i)=>'<button type="button" data-stage="'+s.id+'" class="quest-trophy '+(earned.has(s.id)?'is-earned':'')+'"><span class="quest-trophy-icon" aria-hidden="true">'+(earned.has(s.id)?'🏆':s.icon)+'</span><strong>Challenge '+(i+1)+' · '+s.name+'</strong><span>'+s.detail+'</span><span class="quest-trophy-state">'+(earned.has(s.id)?'Trophy earned ✓':progress[s.id]||'Ready to play')+'</span></button>').join('');
+}
+function trophyMap(){resetMedia();drawTrophies();setView('intro');$('#quest-intro h2').setAttribute('tabindex','-1');$('#quest-intro h2').focus({preventScroll:true});$('#quest-intro').scrollIntoView({block:'start'});}
+function celebrate(){
+ const box=$('#quest-celebration');box.classList.toggle('quest-no-effects',!$('#quest-effects').checked);box.innerHTML='<span class="quest-cup">🏆</span>';
+ if(!$('#quest-effects').checked||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ for(let i=0;i<24;i++){const bit=document.createElement('i');bit.style.setProperty('--x',(i*37%100)+'%');bit.style.setProperty('--delay',(i%6)*.06+'s');bit.style.setProperty('--color',['#087f83','#edb638','#c65477','#4580bf'][i%4]);box.append(bit);}
+ effect(true);
 }
 function finish(){
  resetMedia();setView('results');
- $('#quest-summary').innerHTML='<p><strong>'+firstCorrect+' / '+choiceCount+'</strong>Vocabulary · first try</p><p><strong>'+oralDone+'</strong>Speaking turns practised</p><p><strong>'+oralSkipped+'</strong>Speaking turns skipped</p>';
- $('#quest-difficult').innerHTML=difficult.size?[...difficult].map(id=>wordButton(word(id))).join(''):'<p>No difficult words marked in this round. Try the sentence challenge next.</p>';
- $('#quest-practise-difficult').hidden=!difficult.size;$('#quest-finish-title').focus({preventScroll:true});$('#quest-results').scrollIntoView({block:'start'});
+ const complete=run==='main'&&(stage!=='pronunciation'||verified.size===words.length);
+ if(complete)earned.add(stage);
+ progress[stage]=stage==='pronunciation'?verified.size+' / 12 words verified':'Round completed';
+ $('#quest-celebration').innerHTML='';if(complete)celebrate();
+ $('#quest-finish-title').textContent=complete?stages.find(s=>s.id===stage).name+' trophy earned!':'Keep building your '+stage+' skills';
+ $('#quest-summary').innerHTML=stage==='pronunciation'?'<p><strong>'+verified.size+' / '+words.length+'</strong>Words verified automatically</p><p><strong>'+oralDone+'</strong>Turns practised</p><p><strong>'+oralSkipped+'</strong>Turns skipped</p>':'<p><strong>'+firstCorrect+' / '+choiceCount+'</strong>Correct on the first try</p><p><strong>'+difficult.size+'</strong>Words to revisit</p>';
+ $('#quest-difficult').innerHTML=difficult.size?[...difficult].map(id=>wordButton(word(id))).join(''):'<p>Well done. You can replay this challenge whenever you like.</p>';
+ $('#quest-practise-difficult').hidden=!difficult.size;$('#quest-phrases').hidden=stage!=='pronunciation';$('#quest-next-stage').hidden=stage==='pronunciation';$('#quest-finish-title').focus({preventScroll:true});$('#quest-results').scrollIntoView({block:'start'});
 }
 async function startRecording(){
- if(micBusy||recorder?.state==='recording'||resolved)return;
- stopAudio();clearRecording();reveal();$('#quest-self-check').hidden=true;
+ if(micBusy||assessing||recorder?.state==='recording'||resolved)return;
+ stopAudio();clearRecording();reveal();lastBlob=null;$('#quest-assessment').textContent='';$('#quest-assess-retry').hidden=true;$('#quest-self-check').hidden=true;
  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){$('#quest-mic-status').textContent='Recording is unavailable in this browser. Use Repeat without a microphone or skip this turn.';return;}
- const token=++micToken;micBusy=true;$('#quest-record').disabled=true;$('#quest-mic-status').textContent='Allow the microphone to record up to ten seconds.';
+ $('#quest-timer').textContent='0 / 10 s';const token=++micToken;micBusy=true;$('#quest-record').disabled=true;$('#quest-mic-status').textContent='Allow the microphone to record up to ten seconds.';
  try{
   const requested=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false});
   if(token!==micToken){requested.getTracks().forEach(t=>t.stop());return;}
@@ -139,21 +154,49 @@ async function startRecording(){
    const blob=new Blob(chunks,{type:rec.mimeType});
    if(!blob.size||elapsed<400||(peak!==null&&peak<.003)){$('#quest-mic-status').textContent='The recording was too quiet or too short. Move closer and try again; this is not a pronunciation error.';return;}
    recordURL=URL.createObjectURL(blob);recording.src=recordURL;recording.hidden=false;
-   $('#quest-mic-status').textContent='Recording ready. Press Play below to hear yourself, then compare with the model.';
-   $('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=true);
+   lastBlob=blob;assessRecording(blob,token);
   };
   startedAt=performance.now();rec.start(200);micBusy=false;$('#quest-record-stop').disabled=false;$('#quest-mic-status').textContent='Recording… Say the model. Press Stop when you finish.';
   micTimer=setInterval(()=>{const elapsed=(performance.now()-startedAt)/1000;$('#quest-timer').textContent=Math.min(10,Math.floor(elapsed))+' / 10 s';if(elapsed>=10&&rec.state==='recording')rec.stop();},150);
  }catch(error){if(token!==micToken)return;releaseStream();micBusy=false;$('#quest-record').disabled=false;$('#quest-record-stop').disabled=true;$('#quest-mic-status').textContent=error.name==='NotAllowedError'?'Microphone permission was not granted. You can change the site permission, repeat without a microphone, or skip.':'The microphone could not start. Check your device, try again, or repeat without a microphone.';}
 }
+// Recognition feedback is explicitly word matching, never a phonetic score.
+function compareSpeech(expected,heard){
+ const tokens=s=>s.toLowerCase().normalize('NFKC').replace(/[’']/g,'').match(/[a-z]+/g)||[];
+ const a=tokens(expected),b=tokens(heard),dp=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+ for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+ const matched=new Set();let i=a.length,j=b.length;
+ while(i&&j){if(a[i-1]===b[j-1]){matched.add(--i);j--;}else if(dp[i-1][j]>=dp[i][j-1])i--;else j--;}
+ return {tokens:a,matched,passed:a.length>0&&a.length===b.length&&matched.size===a.length};
+}
+async function assessRecording(blob,token){
+ if(assessing)return;
+ assessmentController=new AbortController();const controller=assessmentController;
+ const timeout=setTimeout(()=>controller.abort(),90000);assessing=true;$('#quest-record').disabled=true;$('#quest-assess-retry').hidden=true;$('#quest-self-check').hidden=true;$('#quest-mic-status').textContent='Checking your words…';$('#quest-assessment').textContent='';
+ try{
+  const response=await fetch('/api/english-intermediate/pronunciation-assessment',{method:'POST',headers:{'Content-Type':blob.type||'audio/webm'},body:blob,signal:controller.signal});
+  if(!response.ok)throw Error(response.status===429?'Too many attempts. Wait a moment, then retry analysis.':'Analysis is unavailable. Retry analysis or record again.');
+  const data=await response.json();if(token!==micToken)return;
+  if(typeof data.text!=='string')throw Error('No recognition result was returned. Please retry analysis.');
+  if(!data.text.trim()||(typeof data.audio?.rms==='number'&&data.audio.rms<.003))throw Error('No clear speech was detected. Listen to your recording and try again.');
+  const w=term(),expected=current().speech==='sentence'?w.sentence:w.term,result=compareSpeech(expected,data.text);
+  $('#quest-assessment').innerHTML='<strong>'+ (result.passed?'Words recognized ✓':'Let’s try again')+'</strong><p>Heard: “'+esc(data.text)+'”</p><p>'+result.matched.size+' / '+result.tokens.length+' expected words recognized in order.</p><p>'+result.tokens.map((t,i)=>'<span class="'+(result.matched.has(i)?'quest-heard':'quest-missed')+'">'+esc(t)+(result.matched.has(i)?' ✓':' ↻')+'</span>').join(' ')+'</p><p>'+esc(w.tip)+'</p><small>Word recognition feedback, not a sound-by-sound pronunciation score.</small>';
+  if(result.passed){verified.add(w.id);oralComplete();$('#quest-mic-status').textContent='Verified. Continue to the next word.';}
+  else{difficult.add(w.id);effect(false);$('#quest-mic-status').textContent='Listen to the model, then record again. Recognition can make mistakes.';}
+ }catch(error){if(token!==micToken)return;$('#quest-mic-status').textContent=error.name==='AbortError'?'Analysis took too long. Retry analysis when ready.':error.message;$('#quest-assess-retry').hidden=false;}
+ finally{clearTimeout(timeout);if(token===micToken){assessing=false;assessmentController=null;$('#quest-record').disabled=false;}}
+}
+$('#quest-assess-retry').addEventListener('click',()=>{if(lastBlob&&!assessing)assessRecording(lastBlob,micToken);});
+
 // Spanish help is restricted to study cards and revealed feedback, never answer options.
 const translation=document.createElement('div');translation.className='quest-translation';translation.id='quest-translation';translation.lang='es';translation.role='tooltip';translation.hidden=true;document.body.append(translation);let tipTarget=null;
 function hideTranslation(){tipTarget?.removeAttribute('aria-describedby');tipTarget=null;translation.hidden=true;}
 function showTranslation(button){const w=word(button?.dataset.word);if(!w)return;hideTranslation();tipTarget=button;translation.textContent=w.spanish;translation.hidden=false;button.setAttribute('aria-describedby',translation.id);const r=button.getBoundingClientRect(),t=translation.getBoundingClientRect();translation.style.left=Math.max(12,Math.min(innerWidth-t.width-12,r.left))+'px';translation.style.top=Math.max(12,r.top-t.height-8)+'px';}
 document.addEventListener('pointerover',e=>{const b=e.target.closest('[data-word]');if(b&&e.pointerType!=='touch')showTranslation(b);});document.addEventListener('pointerout',e=>{if(e.target.closest('[data-word]'))hideTranslation();});document.addEventListener('focusin',e=>{const b=e.target.closest('[data-word]');if(b)showTranslation(b);});document.addEventListener('focusout',hideTranslation);document.addEventListener('scroll',hideTranslation,true);window.addEventListener('resize',hideTranslation);document.addEventListener('keydown',e=>{if(e.key==='Escape')hideTranslation();});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-word]');if(b){showTranslation(b);play(word(b.dataset.word).audio);}const self=e.target.closest('[data-self]');if(self&&!self.disabled)oralComplete(self.dataset.self==='practice');});
-$('#quest-start').addEventListener('click',()=>start());$('#quest-restart').addEventListener('click',()=>start());$('#quest-phrases').addEventListener('click',()=>start(difficult.size?[...difficult]:words.map(w=>w.id),'phrases'));$('#quest-practise-difficult').addEventListener('click',()=>start([...difficult],'review'));
-$('#quest-preview').addEventListener('click',()=>{resetMedia();setView('review');});$('#quest-review-close').addEventListener('click',()=>{resetMedia();setView('intro');});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-stage]');if(b){stage=b.dataset.stage;start();}});
+$('#quest-start').addEventListener('click',()=>{stage='vocabulary';start();});$('#quest-restart').addEventListener('click',trophyMap);$('#quest-map').addEventListener('click',trophyMap);$('#quest-next-stage').addEventListener('click',()=>{stage=stages[stages.findIndex(s=>s.id===stage)+1].id;start();});$('#quest-phrases').addEventListener('click',()=>start(difficult.size?[...difficult]:words.map(w=>w.id),'phrases'));$('#quest-practise-difficult').addEventListener('click',()=>start([...difficult],'review'));
+$('#quest-preview').addEventListener('click',()=>{resetMedia();setView('review');});$('#quest-review-close').addEventListener('click',()=>{resetMedia();drawTrophies();setView('intro');});
 $('#quest-choices').addEventListener('change',e=>{if(e.target.name==='quest-answer'&&!resolved){selected=e.target.value;$('#quest-check').disabled=false;}});
 $('#quest-check').addEventListener('click',check);$('#quest-retry').addEventListener('click',retry);$('#quest-next').addEventListener('click',()=>{if(resolved){position++;render();}});
 $('#quest-repeat-question').addEventListener('click',()=>playQuestion());
@@ -163,7 +206,7 @@ $('#quest-reveal').addEventListener('click',()=>{reveal();play(modelFile());});$
 $('#quest-aloud').addEventListener('click',()=>{cancelMic();reveal();play(modelFile());$('#quest-mic-status').textContent='Listen, repeat aloud, then choose your own reflection below.';$('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=false);});$('#quest-skip').addEventListener('click',()=>oralComplete(false,true));
 window.addEventListener('pagehide',resetMedia);document.addEventListener('visibilitychange',()=>{if(document.hidden){const active=micBusy||recorder?.state==='recording';stopAudio();if(active){cancelMic();$('#quest-mic-status').textContent='Recording stopped when you left this tab. Try again when you are ready.';}}});
 $('#quest-load-retry').addEventListener('click',()=>location.reload());
-async function init(){try{const response=await fetch('/assets/data/english-intermediate2-news-quest.json?v=20261009-2');if(!response.ok)throw Error('Unavailable');const data=await response.json();if(data.words?.length!==12||!data.prompts)throw Error('Incomplete');words=data.words;prompts=data.prompts;
+async function init(){try{const response=await fetch('/assets/data/english-intermediate2-news-quest.json?v=20261009-3');if(!response.ok)throw Error('Unavailable');const data=await response.json();if(data.words?.length!==12||!data.prompts)throw Error('Incomplete');words=data.words;prompts=data.prompts;drawTrophies();
  $('#quest-cards').innerHTML=words.map(w=>'<article class="quest-card"><img src="'+w.image+'" alt="'+esc(w.alt)+'" loading="lazy" width="1536" height="1024"/><div>'+wordButton(w)+'<p>'+esc(w.definition)+'</p></div></article>').join('');$('#quest-loading').hidden=true;app.hidden=false;
  }catch{$('#quest-loading').textContent='The activity could not load. Check your connection and try again.';$('#quest-load-retry').hidden=false;}}
 init();

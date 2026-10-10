@@ -1,42 +1,38 @@
-# News Quest · Unit 6 vocabulary and speaking practice
+# News Quest · Unit 6
 
-Approved on 9 October 2026: a short-challenge game inspired by familiar language-learning patterns, using the twelve Greenford News words. Published entry point: `ingles/intermediate-2/practice-unit-6-news-quest.html`, in Practice Lab → Unit 6 → pronunciation filter. This is independent private practice, not the official course pronunciation submission activity.
+Private practice at `ingles/intermediate-2/practice-unit-6-news-quest.html`, linked from Practice Lab → Unit 6 → pronunciation. Uses the twelve Greenford News words and existing illustrations. No teacher submission, gradebook entry or academic grade.
 
-## Learning sequence
+## Three trophies · 9 October 2026
 
-- Optional illustrated study cards: the twelve existing Greenford images, Spanish on hover/focus/tap, ElevenLabs word pronunciation on click. Sources remain the canonical Greenford assets.
-- Main quest: 24 vocabulary challenges, exactly two per word, with six each of listening-to-picture, picture-to-word, listening-to-word and sentence completion. Choices have explicit A/B/C labels and are shuffled.
-- Twelve interleaved speaking turns, one per word: four word models, four sentence models and four image recall prompts. Learners can reveal the model on image prompts.
-- A first vocabulary mistake allows another attempt. After a second mistake the correct letter, definition, meaning and model sentence are shown. Correct responses show the same learning feedback. Continue is always explicit.
-- A difficult word returns after three intervening challenges where possible (or at the end), in a different format. At most one additional review is scheduled per word, bounding a main quest at 48 turns.
-- The final summary separates vocabulary first attempts, speaking practice and skipped speaking. Review turns do not inflate the first-attempt score. Learners can practise difficult words or start a fresh shuffled quest. The optional sentence round covers the marked difficult words, or all twelve if none are marked.
+The teacher requested separate challenges presented as trophies. The map offers direct access to all three in suggested order; students can replay any challenge. Progress and trophies stay in memory for the current visit only, avoiding another student's results on shared devices.
 
-## Speaking, feedback and privacy
+1. Vocabulary: twelve tasks, six picture-to-word and six sentence gaps, one per word.
+2. Listening: twelve tasks, six listening-to-picture and six listening-to-word, one per word. Listening tasks play only the target word, never the generic question.
+3. Pronunciation: twelve tasks, four word models, four sentence models and four image recall prompts. A pronunciation trophy requires all twelve words to be verified automatically during a full round. Skipped turns or self-reflection cannot earn it. The optional sentence round remains available.
 
-The current shared course pronunciation engine evaluates transcript alignment and speaking rate; it does not provide phonetic assessment. This activity does not reuse its percentage scores or describe recognition as pronunciation accuracy. There is no automated pronunciation grade. Each word instead supplies a specific sound/stress tip, a professional word model and a short sentence.
+Vocabulary/listening trophies celebrate completing a full practice round, not mastery or a grade. First-attempt results remain visible. One additional review per difficult word is inserted after three intervening tasks where possible; review stays within the selected skill. Partial difficult-word reviews do not award a full-round trophy.
 
-The lightweight recording path uses MediaRecorder and a local Blob URL. Permission is requested only on Record; an input meter and ten-second limit are visible. Replay enables the learner's own reflection: “I feel ready” or “I need more practice.” Quiet/short recordings receive a recording-quality message, never a pronunciation failure. A without-microphone path permits listening and repeating aloud; Skip is always available.
+Trophies animate with brief confetti and synthesized success tones. Effects can be disabled; reduced-motion preferences suppress animation. Optional twelve-word study cards retain Spanish on hover/focus/tap and ElevenLabs pronunciation on click. Choices are labelled A/B/C and contain no translation hints before answering.
 
-Recordings are not uploaded, stored in localStorage or persisted. Retry replaces them; advancing clears them. Streams, pending permission results, timers, Blob URLs and playback are cleaned up. Leaving the tab interrupts active recording. No assessment endpoint, submission, gradebook, teacher inbox or student data changes are involved. These choices implement the explicitly approved private-practice plan; the full four-section assessment/submission pronunciation-page workflow does not apply to this mini-game.
+## Automatic voice feedback and limitations
 
-## Sound and visual controls
+The existing same-origin `/api/english-intermediate/pronunciation-assessment` service runs local Whisper. On stopping a valid recording, the activity sends raw audio to that endpoint and compares recognized tokens with the expected word or sentence, in order. Case and punctuation are ignored. It displays the actual transcript, matched/missed words, and the existing word-specific sound/stress tip. Exact normalized words with no extra tokens pass. It does not use recognition confidence as pronunciation accuracy or invent phonetic scores. The UI explicitly labels this as word recognition, not individual sound or accent assessment. The teacher was informed of this distinction while a separate detailed phonetic service option was offered.
 
-One current professional model player, repeat and slow replay, 1× / 0.75× speed, independent Voice and Effects toggles, and Stop audio. Short synthesized sine tones provide local interaction feedback; all spoken language is ElevenLabs Sarah, not browser speech synthesis. Student playback pauses the professional model and vice versa. Playback is blocked while recording to avoid capturing the model.
+A mismatch allows another recording; it does not automatically complete the turn. Empty/quiet input, service failure and rate limiting show a retry message rather than a failed pronunciation grade. Transport retries reuse the current recording explicitly. A 90-second timeout and AbortController cancel stale requests when the learner changes views, skips or advances. Recording permissions and streams are cleaned up even if they arrive late. Recordings are limited to ten seconds.
 
-Spanish hints appear on study cards and revealed feedback, not on unanswered choices. Images use contain and bounded heights. The page preserves the established shared course header, authentication, responsive layout and canonical page-access QR. It reuses original Greenford illustrations; no additional AI images were needed.
+The existing service processes temporary audio locally and discards it; no external speech provider receives recordings. The page tells students before recording that audio is sent to Jaralingua. No audio or transcript is stored in localStorage or submitted to a teacher. Retry/advance clears browser Blob URLs. A no-microphone path allows oral rehearsal and reflection without earning verified credit.
 
-## Sources and validation
+## Spoken questions and media
 
-- Canonical content builder: `tools/build_intermediate2_news_quest_content.py` → `assets/data/english-intermediate2-news-quest.json`.
+All language models are ElevenLabs Sarah. The existing 29 clips (twelve sentences, five generic prompts and twelve cloze clips) plus twelve reused word clips remain unchanged. Non-listening questions play automatically. Cloze clips say “blank”; picture recognition never speaks the answer. Image recall hides the model until requested. Stop, mute, advancing or recording cancels the audio queue. Autoplay restrictions expose a manual retry. No browser speech synthesis.
+
+## Sources and tests
+
 - Page builder: `tools/build_intermediate2_news_quest.py`.
-- Behavior and styles: `assets/js/english-intermediate2-news-quest.js`, `assets/css/english-intermediate2-news-quest.css`.
-- New audio: twelve sentence models in `ingles/intermediate-2/audio/unit-6-news-quest/`, with production manifest and Scribe audit. Existing twelve word models are reused without overwriting them.
-- Audio generator/auditor: `tools/generate_intermediate2_news_quest_audio.py`, `tools/audit_intermediate2_news_quest_audio.py`. Canonical public learning sentences contain no speaker labels.
-- Functional test: `tools/test_intermediate2_news_quest.cjs`: 320–1920 px, QR, hover, muted/slow audio, full correct and incorrect quests, bounded repeated practice, recording with a synthetic microphone, replay, silence, denied/late permissions, stream disposal, failed media/data and no student POST requests. It also validates catalog discovery and all asset URLs. Use `QUEST_ORIGIN` for public checks.
-- Shared page contract: 49 pages. Authentication checks cover the course, including the new page and Practice Lab; no real credentials are submitted.
-
-## Spoken questions · 9 October 2026
-
-Questions now play automatically when each challenge opens after Start or Continue. Per the teacher's clarification, listening-to-picture and listening-to-word play only the target word; their written instructions are not narrated. Picture-to-word reads only its generic question, never the answer. Sentence completion reads its instruction followed by the sentence with “blank” in place of the answer. Speaking word/sentence turns read the instruction then the model. Image recall reads only the instruction until the learner reveals the model.
-
-Five instruction clips and twelve cloze clips were added using the same ElevenLabs voice. Their scripts and audit live with the existing twelve sentence models (29 files total). Repeat question is available outside listening tasks; listening retains its word replay controls. Stop, mute, manual replay, advancing, student playback and recording cancel queued clips. If a browser blocks automatic playback, the learner can retry with a visible button. No browser speech synthesis is used. `tools/test_intermediate2_news_quest_questions.cjs` verifies all seven challenge modes, the listening exception, absence of premature answers, queued playback cancellation and autoplay recovery at phone/desktop widths.
+- Content builder: `tools/build_intermediate2_news_quest_content.py`.
+- Behavior/style: `assets/js/english-intermediate2-news-quest.js`, `assets/css/english-intermediate2-news-quest.css`.
+- Catalog: `assets/data/english-intermediate-2-content.json`.
+- `tools/test_intermediate2_news_quest.cjs`: six widths 320–1920, QR, Spanish hints, separated full rounds, bounded review, trophies, synthetic MediaRecorder input with mocked recognition, wrong answers, service retry, skipped credit, quiet/denied/late microphone, track cleanup, reduced motion, data failure.
+- `tools/test_intermediate2_news_quest_questions.cjs`: seven prompt types across the three challenges, listening exception, no premature answer, queue cancellation, autoplay recovery at phone/desktop widths.
+- Shared page contract: all 49 course pages. Header, authentication and QR components unchanged.
+- Live recognition smoke check on 9 October: all twelve existing public word-model MP3s returned their expected words through the public endpoint. This verifies connectivity/model compatibility, not accuracy across student accents or recording conditions. No student recordings were used.
