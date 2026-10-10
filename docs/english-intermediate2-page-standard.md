@@ -7,7 +7,7 @@ Applies to every course page, including explanations, Practice Lab activities, p
 3. Asset convention: for `/ingles/intermediate-2/example.html`, provide `/assets/img/page-qr/ingles-intermediate-2-example.svg`.
 4. Include both page and SVG in the release. The component hides itself if the SVG fails to load, so script presence alone is not sufficient.
 5. Check image loading, opening/closing the enlarged QR, mobile layout and lack of overlap with the title, login and controls.
-6. Run `node tools/test_intermediate2_page_contract.mjs` before publishing. It checks the QR script and actual SVG file on all 52 current pages. Update the page count when adding a new page; do not remove QR checks.
+6. Run `node tools/test_intermediate2_page_contract.mjs` before publishing. It checks the QR script and actual SVG file on all 54 current pages. Update the page count when adding a new page; do not remove QR checks.
 7. Repeat the visibility and enlargement check on the published page. Preserve exam access restrictions and never include private exam content in the QR.
 
 This requirement is also recorded in `ingles/intermediate-2/AGENTS.md` so it is visible when working on future pages.

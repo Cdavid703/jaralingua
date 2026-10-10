@@ -1330,6 +1330,39 @@
       ],
       "gradebookProjected": false,
       "affectsAverage": false
+    },
+    {
+      "id": "unit-6-report-the-news-pronunciation",
+      "unit": 6,
+      "order": 6,
+      "type": "pronunciation",
+      "skillLabel": "Pronunciation",
+      "title": "Report the News Clearly",
+      "subtitle": "News vocabulary, reported speech and past endings",
+      "summary": "Listen, shadow and record a fictional news bulletin in four meaning groups, then send the final recording to the teacher.",
+      "cardSummary": "Report a news story, practice past endings and improve section by section.",
+      "image": "/assets/img/english-intermediate-2/unit-6/pronunciation/report-the-news-hero.webp",
+      "workshopHref": "/ingles/intermediate-2/pronunciation-unit-6-report-the-news-clearly.html",
+      "duration": "12–15 minutes",
+      "product": "One complete spoken news bulletin",
+      "audioProvider": "elevenlabs",
+      "teacherSubmission": true,
+      "gradebookProjected": false,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "pronunciation",
+        "news",
+        "reported speech",
+        "past endings",
+        "checked",
+        "delivered",
+        "wanted",
+        "word stress"
+      ],
+      "media": "/ingles/intermediate-2/audio/pronunciation/unit-6-intermediate2/report-the-news-clearly-model-us.mp3",
+      "scriptHref": "/ingles/intermediate-2/audio/pronunciation/unit-6-report-the-news-clearly-script.md"
     }
   ]
 }

@@ -1,0 +1,491 @@
+{
+  "activityId": "intermediate2Unit6NewsPronunciation",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "provider": "elevenlabs",
+  "items": [
+    {
+      "file": "section-1.mp3",
+      "text": "Heavy rain flooded the town last night. A reporter said that rescue workers were helping residents near the river.",
+      "kind": "section",
+      "bytes": 103697,
+      "sha256": "893bade0c4a2bb92bdcba36fda4dbb2f32d8c927c9062c5f01b6b0c47dfd7a8e"
+    },
+    {
+      "file": "section-2.mp3",
+      "text": "The mayor told us that the bridge was closed. She said that the storm had damaged the road.",
+      "kind": "section",
+      "bytes": 81128,
+      "sha256": "9f26850b00474d33ee54fc2e86d313d7321eedd74c0f0f80e7049170d36e0f57"
+    },
+    {
+      "file": "section-3.mp3",
+      "text": "Volunteers delivered food and checked the shelter. They wanted warm blankets and clean water for the families.",
+      "kind": "section",
+      "bytes": 104951,
+      "sha256": "1bc30df6b625cf7fb9ba6db25a4ec2053ae66412b41802654fa99cdbafe33013"
+    },
+    {
+      "file": "section-4.mp3",
+      "text": "Before sharing a headline, check the source and the evidence. The latest report seems reliable, but we should avoid spreading rumors.",
+      "kind": "section",
+      "bytes": 122088,
+      "sha256": "c1a00188fbe9efbb3ba283f7f84b3500083a5fe72788b9515c1106097a905547"
+    },
+    {
+      "file": "report-the-news-clearly-model-us.mp3",
+      "text": "Heavy rain flooded the town last night. A reporter said that rescue workers were helping residents near the river. The mayor told us that the bridge was closed. She said that the storm had damaged the road. Volunteers delivered food and checked the shelter. They wanted warm blankets and clean water for the families. Before sharing a headline, check the source and the evidence. The latest report seems reliable, but we should avoid spreading rumors.",
+      "kind": "section",
+      "bytes": 405464,
+      "sha256": "90c17e6c1f5f69f46d21f8f1f2a87a4bd8dfe1133a8377b9b62e0a4e0332285c"
+    },
+    {
+      "file": "words/a.mp3",
+      "text": "a",
+      "kind": "word",
+      "generationText": "A.",
+      "voiceSettings": {
+        "stability": 0.8,
+        "similarity_boost": 0.85,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "bytes": 9239,
+      "sha256": "8ba9ecafea1dfa8a3e8db170114ce792490a3b6a4fdea4fdd4a498198cb2e151"
+    },
+    {
+      "file": "words/and.mp3",
+      "text": "and",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/and.mp3",
+      "bytes": 10075,
+      "sha256": "f442f1593865eb45e3e5e61a1d58d0cb759ed4aaf8570428bbe7f84348f4fcd8"
+    },
+    {
+      "file": "words/avoid.mp3",
+      "text": "avoid",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "b0450cbcefffcb4d2104c77f912e51e95d6906c60ef1bb845aed707a4de7253b"
+    },
+    {
+      "file": "words/before.mp3",
+      "text": "before",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "e86496b08de99fe236bd15aefaad9cba75fa086283205986d9493c1979bd45cb"
+    },
+    {
+      "file": "words/blankets.mp3",
+      "text": "blankets",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "b32afe9a573c08e7b5202c31b23aa0236229683a5b3cfe7475d5cba9e82f15f2"
+    },
+    {
+      "file": "words/bridge.mp3",
+      "text": "bridge",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "fb28deec97862410fd153482ac6f01dff6e63d260d710f4fc3b4f6be2f68ade4"
+    },
+    {
+      "file": "words/but.mp3",
+      "text": "but",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/but.mp3",
+      "bytes": 8403,
+      "sha256": "7898f09f5fd846f3832086a36d7e84b22d64b3f093827ae7410a7a7d4267604b"
+    },
+    {
+      "file": "words/check.mp3",
+      "text": "check",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-4-intermediate2/words/check.mp3",
+      "bytes": 11328,
+      "sha256": "89fc3495d398855b060cea8e7d88a6a783b45f5f657cfc079f0d9441ad818a8a"
+    },
+    {
+      "file": "words/checked.mp3",
+      "text": "checked",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "2344ebcd26dc24a760cc81cbee5d1619eb85f0948667004d437e8b4ea1a1c58a"
+    },
+    {
+      "file": "words/clean.mp3",
+      "text": "clean",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "a1504b8db483f35d6f345568804fa0b2f06c6e6358ae07229f81b163d59db627"
+    },
+    {
+      "file": "words/closed.mp3",
+      "text": "closed",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "38048513044b9d6dd9851a5ec7ff2540836042931b84350d1ad05d8439021985"
+    },
+    {
+      "file": "words/damaged.mp3",
+      "text": "damaged",
+      "kind": "word",
+      "bytes": 16762,
+      "sha256": "d07a09ecd7ef9c9f4e8aae5fdaf5d8106240e7d60c70356a0ec18e37a1d1d156"
+    },
+    {
+      "file": "words/delivered.mp3",
+      "text": "delivered",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "18c1f823019f7f195180da90b65cbd0bec60bbd9fa9b5cde56c1d6afc5578df8"
+    },
+    {
+      "file": "words/evidence.mp3",
+      "text": "evidence",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "6315c66584077e4b7ca0f4fa77f22ea76c3980adea63a00a256eceb37be53263"
+    },
+    {
+      "file": "words/families.mp3",
+      "text": "families",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "295e41b63fc6a97bfe5d23098126aecebe8aa0d8c5179c99c641459275639b0d"
+    },
+    {
+      "file": "words/flooded.mp3",
+      "text": "flooded",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "97a0b488f79a6922d6cfb9baa96b2bbece45dd8f9ed5403582fbbc3f5ff22fd9"
+    },
+    {
+      "file": "words/food.mp3",
+      "text": "food",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "225c42f7ac72c04c24aa470742c2a72867ceb9ee9039a2f879fde1e70646f09f"
+    },
+    {
+      "file": "words/for.mp3",
+      "text": "for",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/for.mp3",
+      "bytes": 9239,
+      "sha256": "fe8a2f05e5dcb7beef70427a361adb530c7c5d041045390e7e68bc475d1170f7"
+    },
+    {
+      "file": "words/had.mp3",
+      "text": "had",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "c5732c0c70dbe0ba7df3783b01a1619b768d4c10e2e0a6ba6dfad610ae617b42"
+    },
+    {
+      "file": "words/headline.mp3",
+      "text": "headline",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "9115c2850cb227496c121ff628a2b8966967cbd3ad9ceccafc5e787e66db0f29"
+    },
+    {
+      "file": "words/heavy.mp3",
+      "text": "heavy",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "862689c3b18f6085a859f3e0a2d0484f8043c5b9c980f14b9df928b4317eacc1"
+    },
+    {
+      "file": "words/helping.mp3",
+      "text": "helping",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "74568866307b23ce9b53d90210de84a20daa1d2c31b1a9c829f094056d34200b"
+    },
+    {
+      "file": "words/last.mp3",
+      "text": "last",
+      "kind": "word",
+      "bytes": 10911,
+      "sha256": "3daecea8c9a57335cbaa16dccf1585c2aa1dad57517c6b5e66f6618ea199cb0b"
+    },
+    {
+      "file": "words/latest.mp3",
+      "text": "latest",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "b8b7309b684de5dfeb0d89d46d261e394ca429c67abe3fe04d9802975726dbdb"
+    },
+    {
+      "file": "words/mayor.mp3",
+      "text": "mayor",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "d4ecc6fa8a025c8c2ec1484724dbf8e249e98fcdebc37a99eb638480d8cd0d0a"
+    },
+    {
+      "file": "words/near.mp3",
+      "text": "near",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "44bfee4eb2713a0b241d8ba0f82531ee74b22fbd9ed2325bc9366b21ff6b0724"
+    },
+    {
+      "file": "words/night.mp3",
+      "text": "night",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "377bff320e215c1521a2a5ab41aa6f9483a7b6efa1fcf92ac17724b8073b9db7"
+    },
+    {
+      "file": "words/rain.mp3",
+      "text": "rain",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "e05a1503bae013a35330a514688225bea2d0d8be45568811a813c5ca50df2c56"
+    },
+    {
+      "file": "words/reliable.mp3",
+      "text": "reliable",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "376249a607ab467417c101854a325cdd7772251beff274bf444eb5c97234de85"
+    },
+    {
+      "file": "words/report.mp3",
+      "text": "report",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "45cc41fcee94cdc3becf5eab88df5dc950273e2f4fca69bb54ee77b9f3d42e50"
+    },
+    {
+      "file": "words/reporter.mp3",
+      "text": "reporter",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "d164451159177e5eb6810dce2143258c5d203e1ad7715416af0175ed27d63c2e"
+    },
+    {
+      "file": "words/rescue.mp3",
+      "text": "rescue",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "f02bb037b8e5ff55a0ab4e8913102f3445d2fd8a9f37c8322d44cdb9ffec7477"
+    },
+    {
+      "file": "words/residents.mp3",
+      "text": "residents",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "1b1ca236367f36af64c477040159e34b12628df68b6c9cc758eabf8fee3300a8"
+    },
+    {
+      "file": "words/river.mp3",
+      "text": "river",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "56258c358ca8b7212a3abce561d002500b4d3ec7e1c2f1ed3d3c59abc19b98fc"
+    },
+    {
+      "file": "words/road.mp3",
+      "text": "road",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "86bf535ce550fa31eb64de0ebe6ed178b0076f5a3b66bb54bd6fe85700236c98"
+    },
+    {
+      "file": "words/rumors.mp3",
+      "text": "rumors",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "54cfeb9fe9e7f7c933fa225a874a9a78b996f50f45c5aa2f3b094bbf2f5a9919"
+    },
+    {
+      "file": "words/said.mp3",
+      "text": "said",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "58f44abad87f64ad9794623a779bb1cc1f60f59b0882c7d05930f72f2692e0a9"
+    },
+    {
+      "file": "words/seems.mp3",
+      "text": "seems",
+      "kind": "word",
+      "generationText": "Seems.",
+      "voiceSettings": {
+        "stability": 0.8,
+        "similarity_boost": 0.85,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "bytes": 11328,
+      "sha256": "8102b4aeacdcb62295d2983e67809611a4e32bb14c4761f73ad03a920645aad6"
+    },
+    {
+      "file": "words/sharing.mp3",
+      "text": "sharing",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "b0cff6c9a7006600db36ecc80ad65c72d2bf925cef8711185a01038f577e374f"
+    },
+    {
+      "file": "words/she.mp3",
+      "text": "she",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/she.mp3",
+      "bytes": 10911,
+      "sha256": "2b05234a8554f26d0f93ce4d7054a8840f9bd1de05b9a9d30d2a005311a13368"
+    },
+    {
+      "file": "words/shelter.mp3",
+      "text": "shelter",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "16ef43d9b75644023392297c692c12f3e39c1f409aaabc78badf4650d9c54c3d"
+    },
+    {
+      "file": "words/should.mp3",
+      "text": "should",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "054e85c7978dad16bb439e901dbe5a2bf90374a2008999bc7bb790c4bcaf50bc"
+    },
+    {
+      "file": "words/source.mp3",
+      "text": "source",
+      "kind": "word",
+      "bytes": 18016,
+      "sha256": "3f544c41a354f66815231e56a8aceb45733521c45c5f6556200a81452ad6dd07"
+    },
+    {
+      "file": "words/spreading.mp3",
+      "text": "spreading",
+      "kind": "word",
+      "bytes": 16762,
+      "sha256": "827193cab4106d277122d0799251845b40666bf3de9af529f709ed4fe254a94b"
+    },
+    {
+      "file": "words/storm.mp3",
+      "text": "storm",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "476c6bba2f542ae101998285a337a91f6a68dfdef63a0e7c10375e6f79f86b77"
+    },
+    {
+      "file": "words/that.mp3",
+      "text": "that",
+      "kind": "word",
+      "bytes": 10075,
+      "sha256": "08e314dc1b04f95e70c581c079234d402feca6f292f16ba91e8feb0d4d38d3bc"
+    },
+    {
+      "file": "words/the.mp3",
+      "text": "the",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/the.mp3",
+      "bytes": 10911,
+      "sha256": "d32652fec019b868052bb6ce5f6770fad9ee57ff4c6aff257ffebb65f4decbe8"
+    },
+    {
+      "file": "words/they.mp3",
+      "text": "they",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "66e7dcf04fa37369a0e9908a528de1825e69cd932da200856d64dc1d5e33b46f"
+    },
+    {
+      "file": "words/told.mp3",
+      "text": "told",
+      "kind": "word",
+      "generationText": "Told.",
+      "voiceSettings": {
+        "stability": 0.8,
+        "similarity_boost": 0.85,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "bytes": 10911,
+      "sha256": "d36bbfcbb6340d1da4f5e6b3994fb0e5e3943ecd04ab5353be13b1fea8a71a3b"
+    },
+    {
+      "file": "words/town.mp3",
+      "text": "town",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "09f06bc2153d3ab5127f3441bc18e3f21529c7d30e292987b2fc7b910f63c97e"
+    },
+    {
+      "file": "words/us.mp3",
+      "text": "us",
+      "kind": "word",
+      "generationText": "Us.",
+      "voiceSettings": {
+        "stability": 0.8,
+        "similarity_boost": 0.85,
+        "style": 0,
+        "use_speaker_boost": true
+      },
+      "bytes": 10911,
+      "sha256": "288c7a6ee07720568e1fb29be05824749a27019ef4d40c5144dc380513ecf090"
+    },
+    {
+      "file": "words/volunteers.mp3",
+      "text": "volunteers",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "7df9f54b10af60fac99fbf99ef63afa0274d7188bdaba6c9939a71d3164904c7"
+    },
+    {
+      "file": "words/wanted.mp3",
+      "text": "wanted",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "a47d4a1b91f356d2fd126425b755cb0e8d2d161a0c9fe459e5b05bf720251163"
+    },
+    {
+      "file": "words/warm.mp3",
+      "text": "warm",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "330831d22790967228b789fb978590ebbae067aa02434f97d428a6f49442b8ed"
+    },
+    {
+      "file": "words/was.mp3",
+      "text": "was",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "67079437baba927a7b30620086d5ed866fcaf29bcb88ded253a3ec85c2051900"
+    },
+    {
+      "file": "words/water.mp3",
+      "text": "water",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "5c164b822d4c6c0e56dadbcc64e8d45ad568f9a0eef8cc1c87c181ccb6c9ba49"
+    },
+    {
+      "file": "words/we.mp3",
+      "text": "we",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-5-intermediate2/words/we.mp3",
+      "bytes": 10075,
+      "sha256": "a0f24fc8237187e1975c7c9a24a17930df65d6ca41ba73d09078fb3954590a8a"
+    },
+    {
+      "file": "words/were.mp3",
+      "text": "were",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "166dd6eee13e3b7989338fe0b9b247dc8dee57af3ccb2022efe9f0c532c46336"
+    },
+    {
+      "file": "words/workers.mp3",
+      "text": "workers",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "d2282658ca5e908acb4f7a5422ba801ba38d3b32a22a323a43e0f754f3cea326"
+    }
+  ]
+}

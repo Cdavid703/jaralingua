@@ -65,3 +65,9 @@ Ajuste visual y vocabulario del 9 de octubre de 2026: David visible a 144 px (12
 ## Unit 6 · After the Flood listening
 
 Cierre de la secuencia de noticias: boletín ficticio de 29 segundos a 1×, voz Sarah de ElevenLabs, ocho preguntas A/B/C con evidencia y reintento. Tres propósitos de escucha, audio a 0.75×/1×/1.25× y cierre oral con reported speech. Transcripción solo para docente/admin mediante `/api/intermediate2/unit6-after-the-flood/transcript`, sin guion completo en los recursos públicos; se borra al cambiar/cerrar sesión y se descartan respuestas tardías. En Practice Lab y Listening Library, Unidad 6. Ver [implementación](../english-intermediate2-unit6-listening.md).
+
+## Unit 6 · Pronunciation and Pronunciation Library
+
+Report the News Clearly: cuatro grupos de noticia ficticia más grabación final; 64 modelos Sarah/ElevenLabs y 59 palabras clicables con consejo individual. Motor compartido sin cambios; resultados de reconocimiento, no diagnóstico fonético. Entrega final a bandeja docente independiente, sin notas, con rutas protegidas e idempotentes de Unidad 6.
+
+Nueva Pronunciation Library, accesible desde portada y Practice Lab: siete actividades originales del catálogo, incluidas las seis unidades y el reto de News Quest. No duplicar las actividades ni alterar entregas. Ejecutar su constructor al añadir una nueva entrada. Referencia: [implementación, pruebas y recursos](../english-intermediate2-unit6-pronunciation.md).
