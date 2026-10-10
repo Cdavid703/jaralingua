@@ -39,3 +39,7 @@ Ajuste visual del 9 de octubre de 2026: las imágenes de lectura tienen un máxi
 ## Unit 6 · Greenford News
 
 El docente aprobó aprender vocabulario mediante un noticiero ilustrado, con traducción al pasar el mouse y diez preguntas finales de comprensión. `vocabulary-unit-6-greenford-news.html` incorpora doce escenas e imágenes distintas, doce tarjetas de palabras principales, 33 términos con ayuda en español, audios de ElevenLabs y proyección. Enlaces desde el vocabulario inicial de la explicación y Practice Lab. Actividad formativa con subtítulos públicos solicitados, sin envío ni calificación académica. Consultar [implementación y pruebas](../english-intermediate2-newsroom.md).
+
+## Unit 6 · News Quest
+
+Actividad aprobada el 9 de octubre de 2026: 24 retos de vocabulario y 12 turnos orales intercalados, con las doce palabras de Greenford News. Imágenes existentes, pronunciaciones de palabras y doce frases nuevas de ElevenLabs, sonidos breves de interacción, repaso diferido de errores y ronda opcional de frases. Página `practice-unit-6-news-quest.html`, enlazada en Practice Lab, Unidad 6. Grabación local con reproducción y autoevaluación guiada; no se presenta reconocimiento de texto como evaluación fonética. Micrófono opcional, sin envío, persistencia de voz ni impacto académico. Consultar [implementación, privacidad y pruebas](../english-intermediate2-news-quest.md).

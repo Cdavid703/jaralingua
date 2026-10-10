@@ -1,0 +1,105 @@
+{
+  "provider": "ElevenLabs",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah",
+  "modelId": "eleven_multilingual_v2",
+  "context": "One voice models twelve public practice sentences, without speaker labels.",
+  "items": [
+    {
+      "id": "headline",
+      "file": "headline-sentence.mp3",
+      "text": "The headline tells us the main news.",
+      "kind": "section",
+      "bytes": 36824,
+      "sha256": "14814d7ba8c2de0da45e00add5fdbe506af966aef1dfd6129a8ea21802c605be"
+    },
+    {
+      "id": "reporter",
+      "file": "reporter-sentence.mp3",
+      "text": "The reporter asks questions.",
+      "kind": "section",
+      "bytes": 32226,
+      "sha256": "52d7b968c0b3b51d6b9cc49f7b118b29b11e3e88501bd5385fbedd17998614a0"
+    },
+    {
+      "id": "witness",
+      "file": "witness-sentence.mp3",
+      "text": "A witness saw the tree fall.",
+      "kind": "section",
+      "bytes": 28465,
+      "sha256": "e3da446d9576225c760ed6ce9b4aeb7ee25347cba789c523c53e0a002a1f825f"
+    },
+    {
+      "id": "flood",
+      "file": "flood-sentence.mp3",
+      "text": "The flood covered the road.",
+      "kind": "section",
+      "bytes": 26375,
+      "sha256": "c66eaa5073503266a7336cc2cca5837a4f365e39c2251d7392e9bd80bc223727"
+    },
+    {
+      "id": "damage",
+      "file": "damage-sentence.mp3",
+      "text": "The storm caused damage.",
+      "kind": "section",
+      "bytes": 26375,
+      "sha256": "9a5bee10340f5f3c5ab0dae49da2ab0f2e08ecb608d77664b79580e70751cc24"
+    },
+    {
+      "id": "warning",
+      "file": "warning-sentence.mp3",
+      "text": "The council sent a warning.",
+      "kind": "section",
+      "bytes": 26375,
+      "sha256": "1f39b26818eaaccde6823e28b9d044cb637d147f9877ea50690651ba7c9ea4ec"
+    },
+    {
+      "id": "rescue-crew",
+      "file": "rescue-crew-sentence.mp3",
+      "text": "The rescue crew arrived by boat.",
+      "kind": "section",
+      "bytes": 34316,
+      "sha256": "18130f18d60599773f554ad3f9d1b634f435dbd6db626e2c3ce4eed92da7a08e"
+    },
+    {
+      "id": "shelter",
+      "file": "shelter-sentence.mp3",
+      "text": "The school became a shelter.",
+      "kind": "section",
+      "bytes": 27211,
+      "sha256": "21b1ca9b924257dfdcea0873864ae59b6384b2d4eeac6ced9be03d5da017dbf5"
+    },
+    {
+      "id": "supplies",
+      "file": "supplies-sentence.mp3",
+      "text": "Volunteers brought supplies.",
+      "kind": "section",
+      "bytes": 29301,
+      "sha256": "ecd3ebaf6d095ef3e08f6fee5f39868d3b4da569c1004aa02760361a49aca6c8"
+    },
+    {
+      "id": "source",
+      "file": "source-sentence.mp3",
+      "text": "Check the source of the news.",
+      "kind": "section",
+      "bytes": 25539,
+      "sha256": "6e5e8fad5f7e19665eb60457de0b86505ba19acde04ab0c26cec5a372c91164d"
+    },
+    {
+      "id": "statement",
+      "file": "statement-sentence.mp3",
+      "text": "The council released a statement.",
+      "kind": "section",
+      "bytes": 30137,
+      "sha256": "ecc945ad119d5e3767b97fc1ba19f9e2a20c36499fa433b2bd3b3907fed6111f"
+    },
+    {
+      "id": "evidence",
+      "file": "evidence-sentence.mp3",
+      "text": "The photos provide evidence.",
+      "kind": "section",
+      "bytes": 26375,
+      "sha256": "74779397635a0cd9623590fafe1d6ff5de8f772fe617e2a1afcade015326f48a"
+    }
+  ]
+}

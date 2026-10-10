@@ -1,0 +1,86 @@
+[
+  {
+    "file": "headline-sentence.mp3",
+    "expected": "The headline tells us the main news.",
+    "heard": "The headline tells us the main news.",
+    "matched": true,
+    "sha256": "14814d7ba8c2de0da45e00add5fdbe506af966aef1dfd6129a8ea21802c605be"
+  },
+  {
+    "file": "reporter-sentence.mp3",
+    "expected": "The reporter asks questions.",
+    "heard": "The reporter asks questions.",
+    "matched": true,
+    "sha256": "52d7b968c0b3b51d6b9cc49f7b118b29b11e3e88501bd5385fbedd17998614a0"
+  },
+  {
+    "file": "flood-sentence.mp3",
+    "expected": "The flood covered the road.",
+    "heard": "The flood covered the road.",
+    "matched": true,
+    "sha256": "c66eaa5073503266a7336cc2cca5837a4f365e39c2251d7392e9bd80bc223727"
+  },
+  {
+    "file": "witness-sentence.mp3",
+    "expected": "A witness saw the tree fall.",
+    "heard": "A witness saw the tree fall.",
+    "matched": true,
+    "sha256": "e3da446d9576225c760ed6ce9b4aeb7ee25347cba789c523c53e0a002a1f825f"
+  },
+  {
+    "file": "warning-sentence.mp3",
+    "expected": "The council sent a warning.",
+    "heard": "The council sent a warning",
+    "matched": true,
+    "sha256": "1f39b26818eaaccde6823e28b9d044cb637d147f9877ea50690651ba7c9ea4ec"
+  },
+  {
+    "file": "damage-sentence.mp3",
+    "expected": "The storm caused damage.",
+    "heard": "The storm caused damage",
+    "matched": true,
+    "sha256": "9a5bee10340f5f3c5ab0dae49da2ab0f2e08ecb608d77664b79580e70751cc24"
+  },
+  {
+    "file": "rescue-crew-sentence.mp3",
+    "expected": "The rescue crew arrived by boat.",
+    "heard": "The rescue crew arrived by boat.",
+    "matched": true,
+    "sha256": "18130f18d60599773f554ad3f9d1b634f435dbd6db626e2c3ce4eed92da7a08e"
+  },
+  {
+    "file": "shelter-sentence.mp3",
+    "expected": "The school became a shelter.",
+    "heard": "The school became a shelter.",
+    "matched": true,
+    "sha256": "21b1ca9b924257dfdcea0873864ae59b6384b2d4eeac6ced9be03d5da017dbf5"
+  },
+  {
+    "file": "source-sentence.mp3",
+    "expected": "Check the source of the news.",
+    "heard": "Check the source of the news",
+    "matched": true,
+    "sha256": "6e5e8fad5f7e19665eb60457de0b86505ba19acde04ab0c26cec5a372c91164d"
+  },
+  {
+    "file": "supplies-sentence.mp3",
+    "expected": "Volunteers brought supplies.",
+    "heard": "Volunteers brought supplies.",
+    "matched": true,
+    "sha256": "ecd3ebaf6d095ef3e08f6fee5f39868d3b4da569c1004aa02760361a49aca6c8"
+  },
+  {
+    "file": "statement-sentence.mp3",
+    "expected": "The council released a statement.",
+    "heard": "The council released a statement",
+    "matched": true,
+    "sha256": "ecc945ad119d5e3767b97fc1ba19f9e2a20c36499fa433b2bd3b3907fed6111f"
+  },
+  {
+    "file": "evidence-sentence.mp3",
+    "expected": "The photos provide evidence.",
+    "heard": "The photos provide evidence",
+    "matched": true,
+    "sha256": "74779397635a0cd9623590fafe1d6ff5de8f772fe617e2a1afcade015326f48a"
+  }
+]

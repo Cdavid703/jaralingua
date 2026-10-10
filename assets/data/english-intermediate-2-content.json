@@ -1178,6 +1178,43 @@
         "Spanish",
         "comprehension"
       ]
+    },
+    {
+      "id": "unit-6-news-quest",
+      "unit": 6,
+      "order": 2,
+      "type": "pronunciation",
+      "skillLabel": "Vocabulary + speaking",
+      "title": "News Quest",
+      "subtitle": "See it. Hear it. Say it.",
+      "summary": "Twenty-four vocabulary challenges and twelve speaking turns, with pictures, ElevenLabs models, private recording and spaced review.",
+      "cardSummary": "Listen, choose, complete and say twelve news words. Replay your voice and practise difficult words.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/reporter-v1.webp",
+      "media": "/ingles/intermediate-2/audio/unit-6-news-quest/reporter-sentence.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah",
+      "workshopHref": "/ingles/intermediate-2/practice-unit-6-news-quest.html",
+      "duration": "12–18 minutes · at your pace",
+      "product": "Private vocabulary review and speaking rehearsal",
+      "recording": true,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "news",
+        "vocabulary",
+        "pronunciation",
+        "speaking",
+        "game",
+        "Duolingo",
+        "microphone",
+        "listening",
+        "News Quest"
+      ]
     }
   ]
 }

@@ -1,0 +1,221 @@
+{
+  "title": "News Quest",
+  "words": [
+    {
+      "id": "headline",
+      "term": "headline",
+      "spanish": "titular",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/headline-v1.webp",
+      "alt": "An anchor presents a storm report with a red bridge on the studio screen.",
+      "definition": "The title that tells us the main news.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-headline.mp3",
+      "sentence": "The headline tells us the main news.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/headline-sentence.mp3",
+      "cloze": "The ___ is the title at the top of a news report.",
+      "distractors": [
+        "supplies",
+        "shelter"
+      ],
+      "stress": "HEAD-line",
+      "tip": "Make HEAD stronger. Link the two parts without adding a syllable."
+    },
+    {
+      "id": "reporter",
+      "term": "reporter",
+      "spanish": "periodista",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/reporter-v1.webp",
+      "alt": "A reporter holds a microphone on dry ground above a flooded street.",
+      "definition": "A person who gathers information and presents the news.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-reporter.mp3",
+      "sentence": "The reporter asks questions.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/reporter-sentence.mp3",
+      "cloze": "The ___ interviews people and presents the news.",
+      "distractors": [
+        "flood",
+        "shelter"
+      ],
+      "stress": "re-POR-ter",
+      "tip": "Make the middle syllable stronger. Keep the first and last syllables light."
+    },
+    {
+      "id": "witness",
+      "term": "witness",
+      "spanish": "testigo",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/witness-v1.webp",
+      "alt": "A resident in a yellow raincoat points to a fallen tree while a reporter listens.",
+      "definition": "Someone who saw or experienced an event.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-witness.mp3",
+      "sentence": "A witness saw the tree fall.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/witness-sentence.mp3",
+      "cloze": "A ___ saw the tree fall and described what happened.",
+      "distractors": [
+        "headline",
+        "warning"
+      ],
+      "stress": "WIT-ness",
+      "tip": "Use two syllables. Make WIT stronger and keep the final s audible."
+    },
+    {
+      "id": "flood",
+      "term": "flood",
+      "spanish": "inundación",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/flood-v1.webp",
+      "alt": "River water covers a street and surrounds parked cars near a red bridge.",
+      "definition": "Water covering land that is normally dry.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-flood.mp3",
+      "sentence": "The flood covered the road.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/flood-sentence.mp3",
+      "cloze": "River water covered the road during the ___.",
+      "distractors": [
+        "statement",
+        "source"
+      ],
+      "stress": "FLOOD",
+      "tip": "Use one syllable. This word does not rhyme with food. Listen to the short vowel and final d."
+    },
+    {
+      "id": "damage",
+      "term": "damage",
+      "spanish": "daños",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/damage-v1.webp",
+      "alt": "A fallen tree blocks a brick library entrance beside two broken windows.",
+      "definition": "Harm to a building, object or place.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-damage.mp3",
+      "sentence": "The storm caused damage.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/damage-sentence.mp3",
+      "cloze": "The broken windows show physical ___ to the library.",
+      "distractors": [
+        "supplies",
+        "reporter"
+      ],
+      "stress": "DAM-age",
+      "tip": "Make the first syllable stronger. Keep the final sound; do not add a third syllable."
+    },
+    {
+      "id": "warning",
+      "term": "warning",
+      "spanish": "advertencia",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/warning-v1.webp",
+      "alt": "A phone displays a flood warning symbol near a closed riverside path.",
+      "definition": "A message about a possible danger or problem.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-warning.mp3",
+      "sentence": "The council sent a warning.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/warning-sentence.mp3",
+      "cloze": "The council sent a ___ about danger near the river.",
+      "distractors": [
+        "shelter",
+        "rescue crew"
+      ],
+      "stress": "WAR-ning",
+      "tip": "Use two syllables. Finish with the nasal sound in -ing, without adding a separate g syllable."
+    },
+    {
+      "id": "rescue-crew",
+      "term": "rescue crew",
+      "spanish": "equipo de rescate",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/rescue-crew-v1.webp",
+      "alt": "A rescue team helps two residents from a boat onto a dry landing.",
+      "definition": "A team trained to help people in danger.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-rescue-crew.mp3",
+      "sentence": "The rescue crew arrived by boat.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/rescue-crew-sentence.mp3",
+      "cloze": "The ___ used a boat to bring people to dry ground.",
+      "distractors": [
+        "headline",
+        "damage"
+      ],
+      "stress": "RES-cue CREW",
+      "tip": "Say rescue in two syllables, then crew in one. Keep the words connected."
+    },
+    {
+      "id": "shelter",
+      "term": "shelter",
+      "spanish": "refugio",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/shelter-v1.webp",
+      "alt": "A school gym contains camp beds, blankets, families and volunteers.",
+      "definition": "A place where people can stay safely for a time.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-shelter.mp3",
+      "sentence": "The school became a shelter.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/shelter-sentence.mp3",
+      "cloze": "Families stayed in a temporary ___ with beds and blankets.",
+      "distractors": [
+        "witness",
+        "headline"
+      ],
+      "stress": "SHEL-ter",
+      "tip": "Start with the quiet sh sound. Make SHEL stronger and the last syllable lighter."
+    },
+    {
+      "id": "supplies",
+      "term": "supplies",
+      "spanish": "provisiones",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/supplies-v1.webp",
+      "alt": "Bottled water, food and blankets sit on a distribution table inside a gym.",
+      "definition": "Useful things such as food, water and blankets.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-supplies.mp3",
+      "sentence": "Volunteers brought supplies.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/supplies-sentence.mp3",
+      "cloze": "Volunteers brought ___ such as water, food and blankets.",
+      "distractors": [
+        "evidence",
+        "damage"
+      ],
+      "stress": "sup-PLIES",
+      "tip": "Make the second syllable stronger. Keep the final voiced z sound."
+    },
+    {
+      "id": "source",
+      "term": "source",
+      "spanish": "fuente",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/source-v1.webp",
+      "alt": "An editor checks a town council website and a printed official notice.",
+      "definition": "The person, document or organization providing information.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-source.mp3",
+      "sentence": "Check the source of the news.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/source-sentence.mp3",
+      "cloze": "The editor checked the original ___ of the information.",
+      "distractors": [
+        "flood",
+        "shelter"
+      ],
+      "stress": "SOURCE",
+      "tip": "Use one syllable. Keep the final s audible without adding a vowel after it."
+    },
+    {
+      "id": "statement",
+      "term": "statement",
+      "spanish": "declaración",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/statement-v1.webp",
+      "alt": "A council spokesperson speaks into microphones at a public briefing.",
+      "definition": "Something a person or organization says formally.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-statement.mp3",
+      "sentence": "The council released a statement.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/statement-sentence.mp3",
+      "cloze": "The council released an official ___ explaining its decision.",
+      "distractors": [
+        "witness",
+        "flood"
+      ],
+      "stress": "STATE-ment",
+      "tip": "Start directly with st, without adding a vowel before it. Make STATE stronger."
+    },
+    {
+      "id": "evidence",
+      "term": "evidence",
+      "spanish": "evidencia",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/evidence-v1.webp",
+      "alt": "Two photographs compare the same library before and after a storm.",
+      "definition": "Information that supports or challenges a claim.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-evidence.mp3",
+      "sentence": "The photos provide evidence.",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/evidence-sentence.mp3",
+      "cloze": "The before-and-after photos provide ___ of the damage.",
+      "distractors": [
+        "supplies",
+        "shelter"
+      ],
+      "stress": "EV-i-dence",
+      "tip": "Use three syllables. Make the first one stronger and keep the others light."
+    }
+  ]
+}
