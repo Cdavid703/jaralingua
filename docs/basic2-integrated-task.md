@@ -68,3 +68,7 @@ node tools/test_basic2_integrated_exam_layout.mjs
 Coverage: closed access, permissions, private content, more than three plays, editable mobile answers, reload, tab conflicts, offline recovery, lost submission response, duplicate retries, receipt, teacher review, gradebook weight, preservation of unrelated grades and responsive submit layout.
 
 Before publication: copy only these scoped changes, back up production, compile backend, restart the existing API, verify health and anonymous access denial, confirm the exam remains closed, and inspect mobile/tablet/desktop. Never stage or publish unrelated work already present in the checkout.
+
+## Copied-link recovery — 11 October 2026
+
+The reported 404 was `/ingles/basico-2/basic-course-2-integrated-task.html%E2%81%A0%EF%BF%BC`: the shared URL contained an invisible WORD JOINER (U+2060) followed by an OBJECT REPLACEMENT CHARACTER (U+FFFC). The clean page and the evaluation-center link were valid. `deploy/nginx-basic2-integrated-link-recovery.conf` redirects only copies of this page with those trailing characters to the clean URL, preserving query parameters. It does not alter exam availability, authentication, attempts or grades. Install as `/etc/nginx/snippets/jaralingua-basic2-integrated-link-recovery.conf` and include in the www server block; back up the existing host configuration, run `nginx -t`, then reload Nginx. Keep the canonical page unchanged.
