@@ -62,3 +62,7 @@ All 31 published static files matched the reviewed SHA-256 values over HTTPS. Pr
 ## Image projection correction — 8 October 2026
 
 Production CSP permits same-origin and data images, but blocks blob image URLs. The uploaded-material projector previously created blob URLs, so the browser rejected slides even after successful upload. It now reads the authenticated JPEG into a data URL, checks for stale account/slide requests before displaying it, and clears the image on logout. No server permissions or student data change. The browser regression test now applies the production image CSP and checks an uploaded image actually decodes and appears. All ten catalog images were separately verified to decode in production.
+
+## Published feedback visibility — 12 October 2026
+
+The student's Grades table now includes “Read teacher feedback” beneath the Basic 2 Final Oral Task title when its published grade detail has nonempty feedback. The text is escaped and preserves paragraph breaks. This display is restricted to this course and assessment; it does not reveal the teacher rubric, criterion scores or unpublished review drafts. Student URL: `/ingles/basico-2/notas.html`.
