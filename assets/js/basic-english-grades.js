@@ -467,12 +467,12 @@
     return evaluations.map(function (evaluation) {
       const status = evaluationStatus(student, evaluation);
       const detail = evaluationDetail(student, evaluation);
-      const oralFeedback = API_PATH === "/api/basic2/grades" && evaluation.id === "basic2FinalOralTask20"
-        && detail && detail.status === "graded" && typeof detail.feedback === "string" && detail.feedback.trim()
+      const assessmentFeedback = API_PATH === "/api/basic2/grades" && ["basic2FinalOralTask20", "basic2FinalWritingTask20"].includes(evaluation.id)
+        && detail && ["graded", "manual"].includes(detail.status) && typeof detail.feedback === "string" && detail.feedback.trim()
         ? `<details class="mt-2"><summary>Read teacher feedback</summary><p class="mt-2 mb-0" style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(detail.feedback)}</p></details>` : "";
       return `
         <tr>
-          <td>${escapeHtml(evaluation.title)}${oralFeedback}</td>
+          <td>${escapeHtml(evaluation.title)}${assessmentFeedback}</td>
           <td>${escapeHtml(evaluation.type || "Assessment")}</td>
           <td>${evaluation.weight}%</td>
           <td>${escapeHtml(formatEvaluationResult(student, evaluation))}</td>

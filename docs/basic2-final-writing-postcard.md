@@ -10,6 +10,8 @@ The 48-hour timer begins once, continues while the page is closed, and never des
 
 ## Historical records and grades
 
+Published final-writing feedback, including teacher-entered grades for externally received PDFs, is also visible under “Read teacher feedback” in the student's Grades table. External delivery does not create a fictitious online attempt. The display accepts graded/manual results only, escapes the comments, and excludes pending drafts.
+
 Existing group records, memberships, writing, receipts and individual reviews remain intact and readable. The old schema and endpoint names are retained for compatibility. Historical members retain their original access; new records have `mode: individual` and one member. No bulk migration or recalculation is performed. Gradebook projection and manual-override preservation are unchanged.
 
 Teacher/admin can open/close access, optionally assign one student, review deliveries and grade each author. Graded deliveries cannot be reopened. Preview uses one synthetic student with all three editable sections, a paused timer and no POST, storage, receipt or grade changes.

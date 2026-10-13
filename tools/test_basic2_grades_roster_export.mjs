@@ -16,7 +16,7 @@ assert.match(basic2Grades, /disableAdminEditing:\s*false/, "Basic English Course
 assert.match(basic2Grades, /showStudentProfile:\s*true/, "Basic English Course 2 must enable the student profile tab");
 assert.match(basic2Grades, /studentProfileApiPath:\s*"\/api\/basic2\/student-profile"/, "Basic English Course 2 must save student profiles to its own endpoint");
 assert.match(basic2Grades, /#basicEnglishGradesApp\.hide-email-columns \[data-email-column\]/, "Basic English Course 2 must include CSS for the show/hide email column button");
-assert.match(basic2Grades, /basic-english-grades\.js\?v=20261012-basic2-oral-feedback/, "Basic English Course 2 must bust the gradebook JS cache for oral feedback visibility");
+assert.match(basic2Grades, /basic-english-grades\.js\?v=20261012-basic2-final-feedback/, "Basic English Course 2 must bust the gradebook JS cache for final exam feedback visibility");
 assert.match(
   basic2Grades,
   /rosterExcelFileName:\s*"basic-english-course-2-student-roster\.xls"/,
