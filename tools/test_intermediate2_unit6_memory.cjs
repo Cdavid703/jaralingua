@@ -18,6 +18,17 @@ for (const m of models.items) assert.equal(crypto.createHash('sha256').update(fs
     assert.equal(await p.locator('#memoryBoard button').count(), 40);
     assert.equal(await p.locator('.dm-tabs').count(), 0);
     assert.equal(await p.locator('.vocab-word').count(), 20);
+    assert(await p.locator('#firstExampleSentence').isVisible());
+    assert.equal(await p.locator('#firstExampleSentence').innerText(), data[0].sentence);
+    assert.equal(await p.locator('#firstExampleSentence').evaluate(el => el.closest('details')), null);
+    await p.locator('#hearFirstExample').click(); await p.waitForFunction(() => document.querySelector('#modelAudio').currentTime > 0);
+    assert.equal(await p.locator('#modelAudio').getAttribute('src'), data[0].sentenceAudio);
+    await p.locator('#newGame').click();
+    const replacements = data.filter(item => item.image); assert.equal(replacements.length, 2);
+    for (const item of replacements) {
+      assert(await p.locator('[data-pair="' + item.id + '"] .card-art').first().evaluate((el, src) => el.style.backgroundImage.includes(src) && el.style.backgroundSize === 'contain', item.image));
+      assert(await p.evaluate(async src => { const image = new Image(); image.src = src; await image.decode(); return image.naturalWidth > 0; }, item.image));
+    }
     for (const item of data) {
       const pair = p.locator('[data-pair="' + item.id + '"]'); assert.equal(await pair.count(), 2);
       assert.equal(await pair.first().locator('.card-front').innerHTML(), await pair.last().locator('.card-front').innerHTML());
@@ -53,13 +64,20 @@ for (const m of models.items) assert.equal(crypto.createHash('sha256').update(fs
     await p.waitForFunction(() => document.querySelector('#turnName').textContent === 'Team 2');
     assert.equal(await p.locator('.memory-card.is-flipped').count(), 0);
     await clickPair(a.id); assert.equal(await p.locator('#score1').innerText(), '0');
+    assert.match(await p.locator('#gateTitle').innerText(), /news headline/);
+    assert.match(await p.locator('.headline-instruction').innerText(), /ONE sentence in the past, in your own words/);
+    assert.match(await p.locator('#confirmReading').innerText(), /Headline completed/);
     await p.keyboard.press('Escape'); assert.equal(await p.locator('.memory-card.is-flipped').count(), 0);
-    await clickPair(a.id); await p.locator('#gateExample summary').click(); await p.locator('#hearSentence').click();
+    await clickPair(a.id); assert(await p.locator('#gateExample').evaluate(el => el.open)); await p.locator('#hearSentence').click();
     await p.waitForFunction(() => document.querySelector('#modelAudio').currentTime > 0);
     assert.equal(await p.locator('#modelAudio').getAttribute('src'), a.sentenceAudio);
     await p.locator('#confirmReading').evaluate(el => { el.click(); el.click(); });
     assert.equal(await p.locator('#score1').innerText(), '1'); assert.equal(await p.locator('#turnName').innerText(), 'Team 2');
-    for (const item of help.slice(1)) { await clickPair(item.id); await p.locator('#confirmReading').click(); }
+    for (const item of help.slice(1)) {
+      await clickPair(item.id); assert.equal(await p.locator('#gateExample').evaluate(el => el.open), false);
+      if (item.image) assert(await p.locator('#gateImage .gate-art').evaluate((el, src) => el.style.backgroundImage.includes(src), item.image));
+      await p.locator('#confirmReading').click();
+    }
     assert(await p.locator('#winnerOverlay').isVisible()); assert.match(await p.locator('#winnerTitle').innerText(), /Team 2 wins/);
     assert.equal(await p.locator('.memory-card.is-matched').count(), 10);
     await p.locator('#playAgain').click(); assert.equal(await p.locator('.memory-card.is-matched').count(), 0);
@@ -90,9 +108,9 @@ for (const m of models.items) assert.equal(crypto.createHash('sha256').update(fs
     await p.locator('#unit6ActivityGrid a[href="/ingles/intermediate-2/game-unit-6-disaster-news-memory.html"]').waitFor();
     assert.equal(await p.locator('#unit6ActivityCount').textContent(), '7 activities');
     const recovery = await browser.newPage(); let fail = true;
-    await recovery.route('**/english-intermediate2-unit6-memory.json', r => fail ? r.fulfill({ status: 503, body: 'Unavailable' }) : r.continue());
+    await recovery.route('**/english-intermediate2-unit6-memory.json*', r => fail ? r.fulfill({ status: 503, body: 'Unavailable' }) : r.continue());
     await recovery.goto(url); await recovery.locator('#retryLoad').waitFor({ state: 'visible' }); assert(await recovery.locator('#newGame').isDisabled());
     fail = false; await recovery.locator('#retryLoad').click(); await recovery.locator('#memoryBoard button').first().waitFor(); await recovery.close();
-    console.log('PASS 20 words, 40 unchanged audio hashes/decodes, every word playback, identical picture pairs, turns, teacher scoring, retry, winner, reset race, mute, projection, reduced motion, catalog and load recovery');
+    console.log('PASS 20 words, 40 unchanged audio hashes/decodes, every word playback, identical picture pairs, turns, past headline with visible first example, new disaster images, teacher scoring, retry, winner, reset race, mute, projection, reduced motion, catalog and load recovery');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exit(1); });

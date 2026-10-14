@@ -189,7 +189,9 @@
       "sentence": "The community provided food supplies.",
       "tile": 18,
       "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/food-supplies.mp3",
-      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/food-supplies-sentence.mp3"
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/food-supplies-sentence.mp3",
+      "image": "/assets/img/english-intermediate-2/unit-6/memory/food-supplies-flood-v2.webp",
+      "imageDescription": "Community helpers give a family food supplies on dry ground beside a flooded neighborhood."
     },
     {
       "id": "drinking-water",
@@ -199,7 +201,9 @@
       "sentence": "Emergency workers delivered drinking water.",
       "tile": 19,
       "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drinking-water.mp3",
-      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drinking-water-sentence.mp3"
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drinking-water-sentence.mp3",
+      "image": "/assets/img/english-intermediate-2/unit-6/memory/drinking-water-drought-v2.webp",
+      "imageDescription": "Emergency workers deliver drinking water from a truck beside a reservoir dried up by drought."
     }
   ]
 }

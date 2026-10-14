@@ -1,4 +1,4 @@
-/* Basic 2 memory format: identical pictures, two teams and teacher-confirmed speech.
+/* Basic 2 memory format: identical pictures, two teams and teacher-confirmed past-tense headlines.
    Session-only game points; no automatic pronunciation grade or submission. */
 (() => {
   'use strict';
@@ -80,7 +80,13 @@
   function art(item, className) {
     const el = document.createElement('span');
     el.className = className;
-    el.style.backgroundPosition = (item.tile % 5) * 25 + '% ' + Math.floor(item.tile / 5) * (100 / 3) + '%';
+    if (item.image) {
+      el.style.backgroundImage = 'url("' + item.image + '")';
+      el.style.backgroundSize = 'contain';
+      el.style.backgroundPosition = 'center';
+    } else {
+      el.style.backgroundPosition = (item.tile % 5) * 25 + '% ' + Math.floor(item.tile / 5) * (100 / 3) + '%';
+    }
     return el;
   }
   function renderVocabulary() {
@@ -160,9 +166,10 @@
       if (a.item.id === b.item.id) {
         pending = a.item;
         $('gateImage').replaceChildren(art(pending, 'gate-art'));
+        $('gateImage').setAttribute('aria-label', pending.imageDescription || 'News picture: ' + pending.term);
         $('gatePhrase').textContent = pending.term; $('gateMeaning').textContent = pending.spanish;
-        $('gateSentence').textContent = pending.sentence; $('gateExample').open = false;
-        $('gameStatus').textContent = 'Match found! Say the word before collecting your point.';
+        $('gateSentence').textContent = pending.sentence; $('gateExample').open = pairs === 0;
+        $('gameStatus').textContent = 'Match found! Give your own news headline in the past before collecting your point.';
         gate.showModal(); play(pending.audio);
       } else {
         $('gameStatus').textContent = 'Different pictures. The other team plays next.';
@@ -178,10 +185,10 @@
     selected.forEach(index => { cards[index].matched = true; updateCard(cards[index], index); });
     selected = []; pending = null; locked = false; pairs++; scores[team]++;
     gate.close(); stopAudio(); updateScores();
-    $('gameStatus').textContent = teamName(team) + ' earns a point and plays again.';
+    $('gameStatus').textContent = teamName(team) + ' earns a point for the headline and plays again.';
     if (pairs === pool.length) {
       $('winnerTitle').textContent = scores[0] === scores[1] ? 'It is a tie!' : teamName(scores[0] > scores[1] ? 0 : 1) + ' wins!';
-      $('winnerMessage').textContent = teamName(0) + ': ' + scores[0] + ' points · ' + teamName(1) + ': ' + scores[1] + ' points. You practised ' + pool.length + ' words!';
+      $('winnerMessage').textContent = teamName(0) + ': ' + scores[0] + ' points · ' + teamName(1) + ': ' + scores[1] + ' points. You practised ' + pool.length + ' news headlines!';
       winner.showModal();
     } else focusCard();
     celebrate();
@@ -202,6 +209,10 @@
   });
   for (let i = 0; i < 2; i++) $('teamName' + i).addEventListener('input', updateScores);
   $('hearWord').addEventListener('click', () => pending && play(pending.audio));
+  $('hearFirstExample').addEventListener('click', () => {
+    const example = vocabulary.find(item => item.id === 'flood');
+    if (example) play(example.sentenceAudio);
+  });
   $('hearSentence').addEventListener('click', () => pending && play(pending.sentenceAudio));
   $('confirmReading').addEventListener('click', award);
   $('retryPair').addEventListener('click', retryPair);
@@ -222,12 +233,18 @@
     if (loading) return;
     loading = true; $('retryLoad').hidden = true;
     try {
-      const response = await fetch('/assets/data/english-intermediate2-unit6-memory.json');
+      const response = await fetch('/assets/data/english-intermediate2-unit6-memory.json?v=20261014-headlines-1');
       if (!response.ok) throw Error('Vocabulary unavailable');
       const data = await response.json();
       if (data.items.length !== 20 || new Set(data.items.map(item => item.id)).size !== 20) throw Error('Incomplete vocabulary');
-      const image = new Image(); image.src = '/assets/img/english-intermediate-2/unit-6/memory/cards.webp'; await image.decode();
-      vocabulary = data.items; renderVocabulary(); newGame(); $('newGame').disabled = false;
+      const sources = ['/assets/img/english-intermediate-2/unit-6/memory/cards.webp', ...data.items.filter(item => item.image).map(item => item.image)];
+      await Promise.all(sources.map(async src => { const image = new Image(); image.src = src; await image.decode(); }));
+      vocabulary = data.items;
+      const example = vocabulary.find(item => item.id === 'flood');
+      $('firstExampleImage').replaceChildren(art(example, 'gate-art'));
+      $('firstExampleSentence').textContent = example.sentence;
+      $('hearFirstExample').disabled = false;
+      renderVocabulary(); newGame(); $('newGame').disabled = false;
     } catch {
       $('gameStatus').textContent = 'The vocabulary could not load. Check your connection and retry.'; $('retryLoad').hidden = false;
     } finally { loading = false; }
