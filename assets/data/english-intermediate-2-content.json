@@ -1363,6 +1363,40 @@
       ],
       "media": "/ingles/intermediate-2/audio/pronunciation/unit-6-intermediate2/report-the-news-clearly-model-us.mp3",
       "scriptHref": "/ingles/intermediate-2/audio/pronunciation/unit-6-intermediate2/models.json"
+    },
+    {
+      "id": "unit-6-disaster-news-memory",
+      "unit": 6,
+      "order": 0,
+      "type": "speaking-game",
+      "skillLabel": "Vocabulary game",
+      "title": "Disaster News Memory",
+      "subtitle": "Learn the words before your news report",
+      "summary": "Learn 20 disaster, consequence and help terms. Match pictures and words, listen and build a short news report.",
+      "cardSummary": "20 illustrated words, memory pairs, listening and short news reports.",
+      "image": "/assets/img/english-intermediate-2/unit-6/memory/hero.webp",
+      "workshopHref": "/ingles/intermediate-2/game-unit-6-disaster-news-memory.html",
+      "duration": "15–20 minutes",
+      "product": "Picture–word pairs and a short spoken news report",
+      "audioProvider": "elevenlabs",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "memory",
+        "disasters",
+        "flood",
+        "earthquake",
+        "hurricane",
+        "wildfire",
+        "landslide",
+        "drought",
+        "news",
+        "vocabulary"
+      ]
     }
   ]
 }

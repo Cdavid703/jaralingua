@@ -1,0 +1,205 @@
+{
+  "title": "Disaster News Memory",
+  "items": [
+    {
+      "id": "flood",
+      "term": "flood",
+      "spanish": "inundación",
+      "group": "events",
+      "sentence": "The river overflowed and caused a flood.",
+      "tile": 0,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/flood.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/flood-sentence.mp3"
+    },
+    {
+      "id": "earthquake",
+      "term": "earthquake",
+      "spanish": "terremoto",
+      "group": "events",
+      "sentence": "The earthquake shook the town last night.",
+      "tile": 1,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/earthquake.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/earthquake-sentence.mp3"
+    },
+    {
+      "id": "hurricane",
+      "term": "hurricane",
+      "spanish": "huracán",
+      "group": "events",
+      "sentence": "The hurricane hit the coast on Monday.",
+      "tile": 2,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/hurricane.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/hurricane-sentence.mp3"
+    },
+    {
+      "id": "wildfire",
+      "term": "wildfire",
+      "spanish": "incendio forestal",
+      "group": "events",
+      "sentence": "The wildfire spread through the forest.",
+      "tile": 3,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/wildfire.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/wildfire-sentence.mp3"
+    },
+    {
+      "id": "landslide",
+      "term": "landslide",
+      "spanish": "deslizamiento de tierra",
+      "group": "events",
+      "sentence": "Heavy rain caused a landslide on the hill.",
+      "tile": 4,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/landslide.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/landslide-sentence.mp3"
+    },
+    {
+      "id": "drought",
+      "term": "drought",
+      "spanish": "sequía",
+      "group": "events",
+      "sentence": "The drought lasted for several months.",
+      "tile": 5,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drought.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drought-sentence.mp3"
+    },
+    {
+      "id": "heavy-rain",
+      "term": "heavy rain",
+      "spanish": "lluvia intensa",
+      "group": "events",
+      "sentence": "Heavy rain caused the river to overflow.",
+      "tile": 6,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/heavy-rain.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/heavy-rain-sentence.mp3"
+    },
+    {
+      "id": "damaged-buildings",
+      "term": "damaged buildings",
+      "spanish": "edificios dañados",
+      "group": "effects",
+      "sentence": "The earthquake left many damaged buildings.",
+      "tile": 7,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/damaged-buildings.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/damaged-buildings-sentence.mp3"
+    },
+    {
+      "id": "flooded-streets",
+      "term": "flooded streets",
+      "spanish": "calles inundadas",
+      "group": "effects",
+      "sentence": "People used boats to cross the flooded streets.",
+      "tile": 8,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/flooded-streets.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/flooded-streets-sentence.mp3"
+    },
+    {
+      "id": "fallen-trees",
+      "term": "fallen trees",
+      "spanish": "árboles caídos",
+      "group": "effects",
+      "sentence": "Workers removed the fallen trees after the storm.",
+      "tile": 9,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/fallen-trees.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/fallen-trees-sentence.mp3"
+    },
+    {
+      "id": "power-outage",
+      "term": "power outage",
+      "spanish": "corte de electricidad",
+      "group": "effects",
+      "sentence": "The storm caused a power outage.",
+      "tile": 10,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/power-outage.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/power-outage-sentence.mp3"
+    },
+    {
+      "id": "blocked-road",
+      "term": "blocked road",
+      "spanish": "carretera bloqueada",
+      "group": "effects",
+      "sentence": "The blocked road delayed the rescue team.",
+      "tile": 11,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/blocked-road.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/blocked-road-sentence.mp3"
+    },
+    {
+      "id": "injured-people",
+      "term": "injured people",
+      "spanish": "personas heridas",
+      "group": "effects",
+      "sentence": "Doctors treated the injured people.",
+      "tile": 12,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/injured-people.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/injured-people-sentence.mp3"
+    },
+    {
+      "id": "destroyed-homes",
+      "term": "destroyed homes",
+      "spanish": "viviendas destruidas",
+      "group": "effects",
+      "sentence": "Families left their destroyed homes.",
+      "tile": 13,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/destroyed-homes.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/destroyed-homes-sentence.mp3"
+    },
+    {
+      "id": "damaged-crops",
+      "term": "damaged crops",
+      "spanish": "cultivos dañados",
+      "group": "effects",
+      "sentence": "Farmers lost income because of the damaged crops.",
+      "tile": 14,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/damaged-crops.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/damaged-crops-sentence.mp3"
+    },
+    {
+      "id": "rescue-team",
+      "term": "rescue team",
+      "spanish": "equipo de rescate",
+      "group": "help",
+      "sentence": "The rescue team brought the families to safety.",
+      "tile": 15,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/rescue-team.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/rescue-team-sentence.mp3"
+    },
+    {
+      "id": "firefighters",
+      "term": "firefighters",
+      "spanish": "bomberos",
+      "group": "help",
+      "sentence": "Firefighters rescued people from the burning building.",
+      "tile": 16,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/firefighters.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/firefighters-sentence.mp3"
+    },
+    {
+      "id": "emergency-shelter",
+      "term": "emergency shelter",
+      "spanish": "refugio de emergencia",
+      "group": "help",
+      "sentence": "Families stayed in an emergency shelter.",
+      "tile": 17,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/emergency-shelter.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/emergency-shelter-sentence.mp3"
+    },
+    {
+      "id": "food-supplies",
+      "term": "food supplies",
+      "spanish": "provisiones de alimentos",
+      "group": "help",
+      "sentence": "The community provided food supplies.",
+      "tile": 18,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/food-supplies.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/food-supplies-sentence.mp3"
+    },
+    {
+      "id": "drinking-water",
+      "term": "drinking water",
+      "spanish": "agua potable",
+      "group": "help",
+      "sentence": "Emergency workers delivered drinking water.",
+      "tile": 19,
+      "audio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drinking-water.mp3",
+      "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-disaster-memory/drinking-water-sentence.mp3"
+    }
+  ]
+}

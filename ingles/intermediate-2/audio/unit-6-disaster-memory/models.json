@@ -1,0 +1,287 @@
+{
+  "provider": "elevenlabs",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "flood.mp3",
+      "text": "flood",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "db1494527e30008aef82d8b4967412f2177286903a6b6f2fb2168fb4015aa85b"
+    },
+    {
+      "file": "flood-sentence.mp3",
+      "text": "The river overflowed and caused a flood.",
+      "kind": "sentence",
+      "bytes": 39750,
+      "sha256": "adde5074fce3abdeb05936119955be818224449b3907c1f85b6cd59aee8589fd"
+    },
+    {
+      "file": "earthquake.mp3",
+      "text": "earthquake",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "e2852e3e788bf9b08340a4d2b176187e175dd06e5ba7c7dbe4689e3c50b0094e"
+    },
+    {
+      "file": "earthquake-sentence.mp3",
+      "text": "The earthquake shook the town last night.",
+      "kind": "sentence",
+      "bytes": 32226,
+      "sha256": "cbdd1fb3da32eb29d1b201a403aa4e9387a3b7e93b6a91d40b6bbd3116258bae"
+    },
+    {
+      "file": "hurricane.mp3",
+      "text": "hurricane",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "957964d73ddb9127dd985d290633af0bfbfc5d9851d7bf9b4fc1fbe7eb7c06ae"
+    },
+    {
+      "file": "hurricane-sentence.mp3",
+      "text": "The hurricane hit the coast on Monday.",
+      "kind": "sentence",
+      "bytes": 35152,
+      "sha256": "0d13db56e551ba1f01560372d0ee596816d318d7795473d819a342b8957d0ae3"
+    },
+    {
+      "file": "wildfire.mp3",
+      "text": "wildfire",
+      "kind": "word",
+      "bytes": 16762,
+      "sha256": "80e5c31125048c1b90955964a8c783f4eb6851f59d5a348799fafc7cff5e5914"
+    },
+    {
+      "file": "wildfire-sentence.mp3",
+      "text": "The wildfire spread through the forest.",
+      "kind": "sentence",
+      "bytes": 38914,
+      "sha256": "69ee23f70f037b46accc19990c73ca5229cbe0145713e5d432472e4daf9dbda3"
+    },
+    {
+      "file": "landslide.mp3",
+      "text": "landslide",
+      "kind": "word",
+      "bytes": 16762,
+      "sha256": "9479d15f36a1091c1964226a89c091dde8d3db0534c20d922727388f93ae0c43"
+    },
+    {
+      "file": "landslide-sentence.mp3",
+      "text": "Heavy rain caused a landslide on the hill.",
+      "kind": "sentence",
+      "bytes": 39750,
+      "sha256": "4a5fb105e93e9c1f3e8ccf2d939a76d326689c198d106b1331323bc5f90907bd"
+    },
+    {
+      "file": "drought.mp3",
+      "text": "drought",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "db0a4a42a015d601a07566f499c8c0b6f5f4ffbf9afa384c50b0f8dc7384562a"
+    },
+    {
+      "file": "drought-sentence.mp3",
+      "text": "The drought lasted for several months.",
+      "kind": "sentence",
+      "bytes": 34316,
+      "sha256": "c15678c76c3cd9e188ae7a6e8a6b78ec80ea5f7816d162fe0e19cff552dd7fb7"
+    },
+    {
+      "file": "heavy-rain.mp3",
+      "text": "heavy rain",
+      "kind": "word",
+      "bytes": 16762,
+      "sha256": "64aea453c3fa0addbda9821a5eb19a9e06ecadd73627b621ec61a22069a53c6b"
+    },
+    {
+      "file": "heavy-rain-sentence.mp3",
+      "text": "Heavy rain caused the river to overflow.",
+      "kind": "sentence",
+      "bytes": 38914,
+      "sha256": "a68d237ea5f3816cefbe26a54e7c8a3abcdf3b25accc4c4618f7e0f06c9e1483"
+    },
+    {
+      "file": "damaged-buildings.mp3",
+      "text": "damaged buildings",
+      "kind": "word",
+      "bytes": 24285,
+      "sha256": "f9341260f826014180071c948a45d8f86856253b79ad9eee5e304e5214340d2e"
+    },
+    {
+      "file": "damaged-buildings-sentence.mp3",
+      "text": "The earthquake left many damaged buildings.",
+      "kind": "sentence",
+      "bytes": 39750,
+      "sha256": "4c6b6a38264a8ad6897d494bf2d94ef9ede5fe4576cafb434149a17d57da267b"
+    },
+    {
+      "file": "flooded-streets.mp3",
+      "text": "flooded streets",
+      "kind": "word",
+      "bytes": 21777,
+      "sha256": "71c4785c755d52d4977fc33ad3901794cf238b86c68d75ea6228a73cd2ebb893"
+    },
+    {
+      "file": "flooded-streets-sentence.mp3",
+      "text": "People used boats to cross the flooded streets.",
+      "kind": "sentence",
+      "bytes": 44765,
+      "sha256": "7a1fdf8a9763ffd4a53219e8caf17da477c49e4268bc3a2eea9076a1a3fc8020"
+    },
+    {
+      "file": "fallen-trees.mp3",
+      "text": "fallen trees",
+      "kind": "word",
+      "bytes": 20524,
+      "sha256": "ccb21521d464ac6afb5969c14c1004c5b4c73a233e3176ef449cb2fc31eb619f"
+    },
+    {
+      "file": "fallen-trees-sentence.mp3",
+      "text": "Workers removed the fallen trees after the storm.",
+      "kind": "sentence",
+      "bytes": 51453,
+      "sha256": "5d0bc7e5db4b06eb9ffeafd3cfcec82073359ffa435d50a20a1981547e1454fa"
+    },
+    {
+      "file": "power-outage.mp3",
+      "text": "power outage",
+      "kind": "word",
+      "bytes": 17598,
+      "sha256": "8440d4aec0fbb02d33c84297fda97ae210146f01e6e9368643556566906f84db"
+    },
+    {
+      "file": "power-outage-sentence.mp3",
+      "text": "The storm caused a power outage.",
+      "kind": "sentence",
+      "bytes": 33898,
+      "sha256": "7ad90bd1c121c408145a3b8b0341393291591dab0eb6b2b9802673cc1411dd41"
+    },
+    {
+      "file": "blocked-road.mp3",
+      "text": "blocked road",
+      "kind": "word",
+      "bytes": 20524,
+      "sha256": "a8040d44c1ced43c8adfc278098d60035df9dfc65d40bd49f431606af22d99b6"
+    },
+    {
+      "file": "blocked-road-sentence.mp3",
+      "text": "The blocked road delayed the rescue team.",
+      "kind": "sentence",
+      "bytes": 36824,
+      "sha256": "24a8548f52d4d30b5f93fd6eb13c3b59bc8a8be990cc6272bd0be4b2437abeb2"
+    },
+    {
+      "file": "injured-people.mp3",
+      "text": "injured people",
+      "kind": "word",
+      "bytes": 20524,
+      "sha256": "1fb052a1384045139f70f479b1725c98c85703ac93c7df0383dc7ae059b0f71b"
+    },
+    {
+      "file": "injured-people-sentence.mp3",
+      "text": "Doctors treated the injured people.",
+      "kind": "sentence",
+      "bytes": 36824,
+      "sha256": "7eb775fda241f796b0ac23f9b7430b88cc21b0c1eaa1843808cccac5f34c3581"
+    },
+    {
+      "file": "destroyed-homes.mp3",
+      "text": "destroyed homes",
+      "kind": "word",
+      "bytes": 24703,
+      "sha256": "cbf94854b7d946f67c6b5796a39db72eb25adc5fa6ed843c5ef3c3eb54572863"
+    },
+    {
+      "file": "destroyed-homes-sentence.mp3",
+      "text": "Families left their destroyed homes.",
+      "kind": "sentence",
+      "bytes": 35988,
+      "sha256": "9a0a946ff3d528814e54f6905d3f15a01be8e0540a382874dc2a037e5e22bdc4"
+    },
+    {
+      "file": "damaged-crops.mp3",
+      "text": "damaged crops",
+      "kind": "word",
+      "bytes": 20942,
+      "sha256": "4a1ec0002d1249c82bc9eb91ed755019d4a32b90534e2bab0c9618ed563b6504"
+    },
+    {
+      "file": "damaged-crops-sentence.mp3",
+      "text": "Farmers lost income because of the damaged crops.",
+      "kind": "sentence",
+      "bytes": 48527,
+      "sha256": "7620e4b9870cf4d5c06d7b9c49a7b4bf06f5bc226c410b1e45aa120eded18a78"
+    },
+    {
+      "file": "rescue-team.mp3",
+      "text": "rescue team",
+      "kind": "word",
+      "bytes": 18852,
+      "sha256": "59010c0390cceba94fd901fa7b8de5d4b0ae0b58d871cb204959641628c0dca2"
+    },
+    {
+      "file": "rescue-team-sentence.mp3",
+      "text": "The rescue team brought the families to safety.",
+      "kind": "sentence",
+      "bytes": 44765,
+      "sha256": "ce7f2fc1aafa9e495678d58be2878c8da4af6ba75aaf72286817f726aefb5a02"
+    },
+    {
+      "file": "firefighters.mp3",
+      "text": "firefighters",
+      "kind": "word",
+      "bytes": 18852,
+      "sha256": "6ed2614a6fb609ea0efa6b23c22a48c82e0e9c1f0e034510af0d7392773423bb"
+    },
+    {
+      "file": "firefighters-sentence.mp3",
+      "text": "Firefighters rescued people from the burning building.",
+      "kind": "sentence",
+      "bytes": 49363,
+      "sha256": "cf8bbba121033b5b259a179c54105458d1176cdf21c72dd6513345b384be8bd0"
+    },
+    {
+      "file": "emergency-shelter.mp3",
+      "text": "emergency shelter",
+      "kind": "word",
+      "bytes": 23449,
+      "sha256": "5281997f69a1f8997ea2d942254304044136705a3d27f121b3b42886b8808980"
+    },
+    {
+      "file": "emergency-shelter-sentence.mp3",
+      "text": "Families stayed in an emergency shelter.",
+      "kind": "sentence",
+      "bytes": 39750,
+      "sha256": "44b632c68488ae19073a29e969cf331c7c7c47c91078e4f09a60f565191e2114"
+    },
+    {
+      "file": "food-supplies.mp3",
+      "text": "food supplies",
+      "kind": "word",
+      "bytes": 19688,
+      "sha256": "fca238bdcbca207d0253ee94b5c151d73c427cc2acc82ca60870484a0ad46e05"
+    },
+    {
+      "file": "food-supplies-sentence.mp3",
+      "text": "The community provided food supplies.",
+      "kind": "sentence",
+      "bytes": 38078,
+      "sha256": "a70095789e671f423b839d4bfada93570f1b75e99d1072fc8fc4a21b1377088a"
+    },
+    {
+      "file": "drinking-water.mp3",
+      "text": "drinking water",
+      "kind": "word",
+      "bytes": 19688,
+      "sha256": "ec397df11f6b5bcbb840aa42734f5e13eca57f294f74b2a61d05c0c3cf06d339"
+    },
+    {
+      "file": "drinking-water-sentence.mp3",
+      "text": "Emergency workers delivered drinking water.",
+      "kind": "sentence",
+      "bytes": 41839,
+      "sha256": "ec0725b4c6c0acf09a900ad9fab22114685ac719c8dbc1c0fe948aca356fc8f6"
+    }
+  ]
+}

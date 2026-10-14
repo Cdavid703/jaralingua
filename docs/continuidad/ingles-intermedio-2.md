@@ -71,3 +71,10 @@ Cierre de la secuencia de noticias: boletín ficticio de 29 segundos a 1×, voz 
 Report the News Clearly: cuatro grupos de noticia ficticia más grabación final; 64 modelos Sarah/ElevenLabs y 59 palabras clicables con consejo individual. Motor compartido sin cambios; resultados de reconocimiento, no diagnóstico fonético. Entrega final a bandeja docente independiente, sin notas, con rutas protegidas e idempotentes de Unidad 6.
 
 Nueva Pronunciation Library, accesible desde portada y Practice Lab: siete actividades originales del catálogo, incluidas las seis unidades y el reto de News Quest. No duplicar las actividades ni alterar entregas. Ejecutar su constructor al añadir una nueva entrada. Referencia: [implementación, pruebas y recursos](../english-intermediate2-unit6-pronunciation.md).
+
+
+## Unit 6 · Disaster News Memory
+
+Actividad aprobada el 13 de octubre de 2026 para aprender vocabulario antes del noticiero oral: veinte términos, sin ambulance, evacuation, volunteers ni volcanic eruption. Tres grupos completos de 7/8/5 términos y mezcla final de diez elegidos al azar. Referencia: juego de memoria de películas y música de Unidad 4; aquí se empareja imagen con palabra. Aprender con traducción por cursor/foco/toque, juego individual o de dos equipos con punto confirmado, reconocimiento auditivo con cuatro imágenes y cierre oral con tres imágenes relacionadas. No califica pronunciación automáticamente ni envía resultados.
+
+Página `game-unit-6-disaster-news-memory.html`, primera entrada de Unidad 6 en Practice Lab. Veinte ilustraciones originales en una lámina, banner propio y cuarenta modelos Sarah de ElevenLabs (palabra y ejemplo en pasado); auditados con Scribe y hashes. QR, proyección, velocidad 0.75×/1×, efectos opcionales y movimiento reducido. Datos en `assets/data/english-intermediate2-unit6-memory.json`; inventario de audio en `audio/unit-6-disaster-memory/models.json`. Prueba funcional: `tools/test_intermediate2_unit6_memory.cjs`. Recursos y prompts: `docs/english-intermediate2-unit6-memory-resources.json`.

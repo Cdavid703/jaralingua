@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-13",
+  "generator": "Built-in image_gen; PNG originals optimized to WebP without changing framing",
+  "images": [
+    {
+      "path": "assets/img/english-intermediate-2/unit-6/memory/cards.webp",
+      "prompt": "Use case scientific-educational. Create ONE sprite sheet bitmap for an adult English-learning picture-word memory game: exactly 5 columns by 4 rows, 20 equal square illustration panels in a strict regular grid, landscape overall ratio 5:4. Each cell is a separate highly readable polished editorial illustration with a pale neutral background, visually centered with safe interior margin. NO text, letters, numbers, labels, borders, logos, watermarks. Not graphic, no blood. Exact row-major contents: ROW 1: (1) FLOOD: wide river overflowing into a neighborhood with partially submerged houses; (2) EARTHQUAKE: ground cracking beneath visibly shaking buildings; (3) HURRICANE: huge spiraling storm over a coast and bent palms; (4) WILDFIRE: forest trees burning with orange flames and smoke; (5) LANDSLIDE: earth and rocks sliding down a steep hillside. ROW 2: (6) DROUGHT: parched cracked dry reservoir and a small dry plant under hot sun; (7) HEAVY RAIN: obvious dense rain pouring onto umbrellas and puddles; (8) DAMAGED BUILDINGS: two standing multistory buildings with broken windows and cracked walls, still standing; (9) FLOODED STREETS: close street-level view of road with cars wheels under water; (10) FALLEN TREES: two fallen trees lying horizontally on grass. ROW 3: (11) POWER OUTAGE: dark house interior with unlit ceiling lamp and family using a flashlight; (12) BLOCKED ROAD: road blocked by a pile of rocks and a road barrier, clear road leading to it; (13) INJURED PEOPLE: two seated adults receiving care, one bandaged arm and one bandaged leg, no blood; (14) DESTROYED HOMES: collapsed small houses reduced to roof pieces and rubble; (15) DAMAGED CROPS: field of broken corn plants and ruined vegetables. ROW 4: (16) RESCUE TEAM: three rescuers in orange helmets and life vests helping a person into a rescue boat; (17) FIREFIGHTERS: two firefighters in helmets and protective gear holding an active hose toward flames; (18) EMERGENCY SHELTER: spacious indoor gym with camp beds blankets and displaced families resting; (19) FOOD SUPPLIES: boxes of canned food, bread and rice sacks on a distribution table; (20) DRINKING WATER: sealed clear bottles and a water dispenser with a person filling a glass. Clear distinct visual meaning between panels, consistent sophisticated illustrated style for adults. All 20 cells exactly equal size in straight rows and columns; no gutters. Save final image locally for website use."
+    },
+    {
+      "path": "assets/img/english-intermediate-2/unit-6/memory/hero.webp",
+      "prompt": "Use case illustration-story. Website hero banner for adult English learning vocabulary memory game about disaster news and community help. Wide editorial illustration, sophisticated warm human style. Two adult students at a table matching illustrated picture cards about storms, flooded roads and rescue teams. In the background a large television displays a fictional news scene of a flooded town and a rescue boat, no news text. A calm teacher gestures toward the matching cards. Teal, navy and soft amber accents, detailed natural faces and hands, welcoming classroom, clear composition, no distressing injuries. Horizontal landscape 3:2. No words, letters, logos, watermark or typography. Image should be attractive and legible at small banner size. Entire scene fully framed with generous margins."
+    }
+  ],
+  "audio": {
+    "provider": "ElevenLabs",
+    "voice": "Sarah",
+    "models": "ingles/intermediate-2/audio/unit-6-disaster-memory/models.json",
+    "audit": "ingles/intermediate-2/audio/unit-6-disaster-memory/audio-audit.json"
+  }
+}
