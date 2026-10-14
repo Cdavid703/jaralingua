@@ -2,10 +2,9 @@
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import hashlib,json,re,threading,urllib.request
-from audit_intermediate2_midterm_oral_coach_audio import load_key,transcribe as transcribe_auto
-BASE=Path(__file__).resolve().parents[1]/'ingles/intermediate-2/audio/unit-6-reported-speech'
+from audit_intermediate2_midterm_oral_coach_audio import load_key
+BASE=Path(__file__).resolve().parents[1]/'ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1'
 def transcribe(path,key):
- if not path.name.startswith('word-'):return transcribe_auto(path,key)
  boundary='----JaralinguaReportedWords'
  fields=''.join(f'--{boundary}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n' for k,v in [('model_id','scribe_v1'),('language_code','en'),('tag_audio_events','false')])
  body=(fields+f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="{path.name}"\r\nContent-Type: audio/mpeg\r\n\r\n').encode()+path.read_bytes()+f'\r\n--{boundary}--\r\n'.encode()

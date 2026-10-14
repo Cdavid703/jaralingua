@@ -56,15 +56,15 @@ for term,spanish in [('reported speech','discurso indirecto'),('swap roles','int
  glossary[term]=dict(term=term,spanish=spanish)
 for term,word in glossary.items():
  file='word-'+term.replace(' ','-')+'.mp3'
- word['audio']=existing.get(term,'/ingles/intermediate-2/audio/unit-6-reported-speech/'+file)
+ word['audio']=existing.get(term,'/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/'+file)
  if term not in existing:items.append(dict(file=file,text=term))
-config=dict(scenes=scenes,instructions=instructions,glossary=list(glossary.values()),audioRoot='/ingles/intermediate-2/audio/unit-6-reported-speech/')
+config=dict(scenes=scenes,instructions=instructions,glossary=list(glossary.values()),audioRoot='/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/')
 (R/'assets/js/english-intermediate2-reported-speech-data.js').write_text('window.ReportedSpeechLesson = '+json.dumps(config,ensure_ascii=False,indent=2)+';\n')
-audio=R/'ingles/intermediate-2/audio/unit-6-reported-speech';audio.mkdir(parents=True,exist_ok=True)
+audio=R/'ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1';audio.mkdir(parents=True,exist_ok=True)
 old=json.loads((audio/'models.json').read_text()) if (audio/'models.json').exists() else {'items':[]}
 for item in items:
  for prior in old['items']:
-  if prior['file']==item['file'] and prior['text']==item['text']:
+  if old.get('voiceId')=='iP95p4xoKVk53GoZ742B' and prior['file']==item['file'] and prior['text']==item['text']:
    item.update({k:prior[k] for k in ['bytes','sha256','voiceSettings','generationText'] if k in prior})
-(audio/'models.json').write_text(json.dumps(dict(provider='ElevenLabs',voiceId='pv8WYYW60prEkDbDXyC0',voiceName='David',modelId='eleven_multilingual_v2',items=items),ensure_ascii=False,indent=2)+'\n')
+(audio/'models.json').write_text(json.dumps(dict(provider='ElevenLabs',voiceId='iP95p4xoKVk53GoZ742B',voiceName='Chris',modelId='eleven_multilingual_v2',items=items),ensure_ascii=False,indent=2)+'\n')
 print(len(scenes),'scenes;',len(items),'recordings')

@@ -17,4 +17,5 @@ a=s.index('<section class="coach-stage"');b=s.index('<section class="coach-recor
 block=s[a:b];block=block[:block.rfind('</div>')]
 s=s[:a]+'</div><div class="opinion-conversation-column">'+block+'</div>'+s[b:]
 s=s.replace('<figure class="david-hero-image"><img src="../../assets/img/english-intermediate-2/unit-5/david-coach/david.png" alt="Fictional portrait of David, your coach for discussing news pictures" width="1254" height="1254"', '<figure class="david-hero-image"><img src="../../assets/img/english-intermediate-2/unit-6/opinion-coach/limited-supplies-v1.webp" alt="Volunteers distributing limited supplies to families at a shelter" width="1536" height="1024"')
+s=s.replace('David','Chris').replace('Chris’s voice used with permission.','Chris voice; fictional coach portrait.').replace('20261009-1','20261013-chris-1')
 (ROOT/'ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html').write_text(s)

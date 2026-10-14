@@ -1,0 +1,499 @@
+[
+  {
+    "file": "example-a.mp3",
+    "expected": "A woman is talking to a reporter. There are fallen branches. I can see a microphone.",
+    "heard": "A woman is talking to a reporter. There are fallen branches. I can see a microphone",
+    "matched": true,
+    "sha256": "78a828ac8fc127c763c5426cb8e767f52fc8c4460f7a613579cb8bd5eb2cd19d"
+  },
+  {
+    "file": "example-b.mp3",
+    "expected": "Ana said that a woman was talking to a reporter. She said that there were fallen branches. She said that she could see a microphone.",
+    "heard": "Ana said that a woman was talking to a reporter. She said that there were fallen branches. She said that she could see a microphone",
+    "matched": true,
+    "sha256": "3827b0230c18fd0c5192aaca262862eadea03ad56a8c0b4bd84c61d6f4dc0c4b"
+  },
+  {
+    "file": "flood-a.mp3",
+    "expected": "The street is flooded. The rescue workers are helping people. I can see a red boat.",
+    "heard": "The street is flooded. The rescue workers are helping people. I can see a red boat",
+    "matched": true,
+    "sha256": "f5d9caeee177e79a3c34500487a6eab523261c8edbb4b9b1b253b5ee7e8c2fed"
+  },
+  {
+    "file": "flood-b.mp3",
+    "expected": "Ana said that the street was flooded. She said that the rescue workers were helping people. She said that she could see a red boat.",
+    "heard": "Ana said that the street was flooded. She said that the rescue workers were helping people. She said that she could see a red boat",
+    "matched": true,
+    "sha256": "2c433a51e7b03cf918d0a60038a2bd4099facdb59484e0a0bc1dd41815c2f55d"
+  },
+  {
+    "file": "earthquake-a.mp3",
+    "expected": "The buildings are damaged. The inspectors are checking the damage. There is rubble on the ground.",
+    "heard": "The buildings are damaged. The inspectors are checking the damage. There is rubble on the ground",
+    "matched": true,
+    "sha256": "2dbc0856661812d184c00cfce1247d2304ad4487b131ec57f315a593eb244341"
+  },
+  {
+    "file": "earthquake-b.mp3",
+    "expected": "Ana said that the buildings were damaged. She said that the inspectors were checking the damage. She said that there was rubble on the ground.",
+    "heard": "Anna said that the buildings were damaged. She said that the inspectors were checking the damage. She said that there was rubble on the ground",
+    "matched": true,
+    "sha256": "b527c680fe0090f68a1cdc08ca0e0d71e8150442783d230ff20228719f7f067d"
+  },
+  {
+    "file": "wildfire-a.mp3",
+    "expected": "Smoke covers the hills. The firefighters are looking at a map. I can see a fire truck.",
+    "heard": "Smoke covers the hills. The firefighters are looking at a map. I can see a fire truck",
+    "matched": true,
+    "sha256": "8d11f411304786d9df66c686c55d77871216c69b96d39fc14703b50b484ade6a"
+  },
+  {
+    "file": "wildfire-b.mp3",
+    "expected": "Ana said that smoke covered the hills. She said that the firefighters were looking at a map. She said that she could see a fire truck.",
+    "heard": "Ana said that smoke covered the hills. She said that the firefighters were looking at a map. She said that she could see a fire truck",
+    "matched": true,
+    "sha256": "6f2bbb0c7d2559fce1c2997a62c70370c3053f03fe9c9ee6985690dc8f7cbf18"
+  },
+  {
+    "file": "drought-a.mp3",
+    "expected": "The ground is dry. The farmer is looking at the water. The reservoir needs more rain.",
+    "heard": "The ground is dry. The farmer is looking at the water. The reservoir needs more rain.",
+    "matched": true,
+    "sha256": "80d8b6db22e46d7abda4cd2eb138ea3fdd3c6a67c6e974588dce957a66eb84cb"
+  },
+  {
+    "file": "drought-b.mp3",
+    "expected": "Ana said that the ground was dry. She said that the farmer was looking at the water. She said that the reservoir needed more rain.",
+    "heard": "Anna said that the ground was dry. She said that the farmer was looking at the water. She said that the reservoir needed more rain",
+    "matched": true,
+    "sha256": "3225654faf26f240d3f7b23d1d35f205d64bb3948d4208f1a672a635e93a07eb"
+  },
+  {
+    "file": "landslide-a.mp3",
+    "expected": "Rocks block the road. An excavator is waiting near the road. The workers are checking the blockage.",
+    "heard": "Rocks block the road. An excavator is waiting near the road. The workers are checking the blockage.",
+    "matched": true,
+    "sha256": "1166ebd13a6cf4424b7eddca1164e704457096f60425b61a2a6836f70673a9a7"
+  },
+  {
+    "file": "landslide-b.mp3",
+    "expected": "Ana said that rocks blocked the road. She said that an excavator was waiting near the road. She said that the workers were checking the blockage.",
+    "heard": "Anna said that rocks blocked the road. She said that an excavator was waiting near the road. She said that the workers were checking the blockage",
+    "matched": true,
+    "sha256": "77da93046d12505f35b9138bd7c613d4cb8bbb9a5747c6b1b0e762dac06778a4"
+  },
+  {
+    "file": "hurricane-a.mp3",
+    "expected": "The wind is strong. The palm trees are bending. There are large waves.",
+    "heard": "The wind is strong, the palm trees are bending. There are large waves",
+    "matched": true,
+    "sha256": "4f712a766fbb2b10b1df589c659ab59271eca06abd471bb5108912c8a3056b24"
+  },
+  {
+    "file": "hurricane-b.mp3",
+    "expected": "Ana said that the wind was strong. She said that the palm trees were bending. She said that there were large waves.",
+    "heard": "Ana said that the wind was strong. She said that the palm trees were bending. She said that there were large waves",
+    "matched": true,
+    "sha256": "e68b5f574fa691c1f74d909c77e039480d4b18646f2bf0cfd228a40bc7ca8bdd"
+  },
+  {
+    "file": "interview-a.mp3",
+    "expected": "The musician is talking. The journalist holds a microphone. The camera operator is recording the interview.",
+    "heard": "The musician is talking. The journalist holds a microphone. The camera operator is recording the interview",
+    "matched": true,
+    "sha256": "49f0a000efc1261a2f1e238230dd736fce7da567ec94b4fbc67a5a6b6a57b840"
+  },
+  {
+    "file": "interview-b.mp3",
+    "expected": "Ana said that the musician was talking. She said that the journalist held a microphone. She said that the camera operator was recording the interview.",
+    "heard": "Ana said that the musician was talking. She said that the journalist held a microphone. She said that the camera operator was recording the interview.",
+    "matched": true,
+    "sha256": "402d96d9925dfece2da881f84a256072875a1d208e8b67b57f7da59f1682a73a"
+  },
+  {
+    "file": "sources-a.mp3",
+    "expected": "The journalists are checking a photograph. The woman is pointing at the laptop. There is a notebook on the desk.",
+    "heard": "The journalists are checking a photograph. The woman is pointing at the laptop. There is a notebook on the desk.",
+    "matched": true,
+    "sha256": "7e282c1887bd56014e18e4a1fcaf72bbf209854ee6c4b50a5485cce8b3ed83c3"
+  },
+  {
+    "file": "sources-b.mp3",
+    "expected": "Ana said that the journalists were checking a photograph. She said that the woman was pointing at the laptop. She said that there was a notebook on the desk.",
+    "heard": "Anna said that the journalists were checking a photograph. She said that the woman was pointing at the laptop. She said that there was a notebook on the desk",
+    "matched": true,
+    "sha256": "f575cb4638ace8e4442134402088be69c3dbc8aa6881d9d120f74d630cf0d078"
+  },
+  {
+    "file": "briefing-a.mp3",
+    "expected": "The woman is speaking. A reporter has a question. The man is raising his hand.",
+    "heard": "The woman is speaking. A reporter has a question. The man is raising his hand.",
+    "matched": true,
+    "sha256": "54eb13c19a6a1bba8d97b8e583e68431480c48805cf5eea66f6867b828d43689"
+  },
+  {
+    "file": "shelter-a.mp3",
+    "expected": "The volunteers are giving people water. The families need blankets. There are beds in the shelter.",
+    "heard": "The volunteers are giving people water. The families need blankets. There are beds in the shelter",
+    "matched": true,
+    "sha256": "8d47c3bee23867433fb3a0bb309d97afaba1ed5e421de8bdc850f814e0629ce7"
+  },
+  {
+    "file": "briefing-b.mp3",
+    "expected": "Ana said that the woman was speaking. She said that a reporter had a question. She said that the man was raising his hand.",
+    "heard": "Ana said that the woman was speaking. She said that a reporter had a question. She said that the man was raising his hand",
+    "matched": true,
+    "sha256": "3a0f4e59e13eb4158ae0b6d370e3041b11d5e891c0e5a1823c92f3caefef83fb"
+  },
+  {
+    "file": "shelter-b.mp3",
+    "expected": "Ana said that the volunteers were giving people water. She said that the families needed blankets. She said that there were beds in the shelter.",
+    "heard": "Anna said that the volunteers were giving people water. She said that the families needed blankets. She said that there were beds in the shelter",
+    "matched": true,
+    "sha256": "af6ac0ac653885adf472b3fa2294800cb953fa39066f2787f5953a72ec99a641"
+  },
+  {
+    "file": "a.mp3",
+    "expected": "Student A. Look carefully. Describe three details in the present. Say who or what you can see, what is happening, and one more detail. Speak slowly. Pause so your partner can remember.",
+    "heard": "Student A, look carefully. Describe three details in the present. Say who or what you can see, what is happening, and one more detail. Speak slowly. Pause so your partner can remember",
+    "matched": true,
+    "sha256": "2f0e14de41f85b0f24d66d422ce421c65970ea70fb831f69fae791ba22ed6914"
+  },
+  {
+    "file": "b.mp3",
+    "expected": "Student B. Listen to your partner. Begin with your partner’s name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning.",
+    "heard": "Student B, listen to your partner. Begin with your partner's name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning",
+    "matched": true,
+    "sha256": "1dad921d7e5f7da6a1eabc9f92a952c20784bdd8527d2b3527f2bb21a6732cad"
+  },
+  {
+    "file": "guide.mp3",
+    "expected": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs and the pronouns. Then change roles for the next picture.",
+    "heard": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs, and the pronouns. Then change roles for the next picture",
+    "matched": true,
+    "sha256": "a97e406ebb0b8885d387d64fae596ea602a4e630f13008dad83826ad53bcbfcb"
+  },
+  {
+    "file": "word-raincoat.mp3",
+    "expected": "raincoat",
+    "heard": "Raincoat",
+    "matched": true,
+    "sha256": "d9924e810546701426ffd1ce4002070273203bdc267b3b16d51bee16aaf9d0ed"
+  },
+  {
+    "file": "word-fallen-branches.mp3",
+    "expected": "fallen branches",
+    "heard": "Fallen branches",
+    "matched": true,
+    "sha256": "cdda4b8818de3694aa97e123124a0c95fe8d733667afaee2fdf67afe4102ef62"
+  },
+  {
+    "file": "word-microphone.mp3",
+    "expected": "microphone",
+    "heard": "Microphone",
+    "matched": true,
+    "sha256": "be77f5d7598ae0cfae2e120c54bff830de8c59cda25b115b7f2f0b7551ff7f79"
+  },
+  {
+    "file": "word-rescue-workers.mp3",
+    "expected": "rescue workers",
+    "heard": "Rescue workers",
+    "matched": true,
+    "sha256": "8e969c5ca8c4557f9a1deff481a993ec15dbef7adcb5baeaaedc46f87999287c"
+  },
+  {
+    "file": "word-flooded.mp3",
+    "expected": "flooded",
+    "heard": "Flooded",
+    "matched": true,
+    "sha256": "27af7d0f1ab3664d80a2785c2c7cb005c0aa4916d57d220edc988fd41790667b"
+  },
+  {
+    "file": "word-bridge.mp3",
+    "expected": "bridge",
+    "heard": "Bridge",
+    "matched": true,
+    "sha256": "ce802f3fba4eb9d8079ceb145d1b831fcb6f2c438cb9c54b673707977c32c7f5"
+  },
+  {
+    "file": "word-boat.mp3",
+    "expected": "boat",
+    "heard": "Boat",
+    "matched": true,
+    "sha256": "a554179597a89c6614b7447c7723f5bb31b0bd423cee8cb2ed48ce6c3a18bdff"
+  },
+  {
+    "file": "word-damaged.mp3",
+    "expected": "damaged",
+    "heard": "damaged",
+    "matched": true,
+    "sha256": "47e1f6a9fceeddc294609a078112c56382465ecdedab7ec9910b7494bfa75ca3"
+  },
+  {
+    "file": "word-rubble.mp3",
+    "expected": "rubble",
+    "heard": "Rubble",
+    "matched": true,
+    "sha256": "eda79ab151c30822e125db03b3dd7dca555677fc6de25d642d43af61ca67a251"
+  },
+  {
+    "file": "word-safety-tape.mp3",
+    "expected": "safety tape",
+    "heard": "Safety tape",
+    "matched": true,
+    "sha256": "720ad67659e888869287b05a0c6d89809cdaf9bca8b4009e78ad5e73f5a5a740"
+  },
+  {
+    "file": "word-inspectors.mp3",
+    "expected": "inspectors",
+    "heard": "Inspectors",
+    "matched": true,
+    "sha256": "c140edecb0bb22b36ebef1422a6a89438eed87d22456ebaf12bd999679192ecf"
+  },
+  {
+    "file": "word-smoke.mp3",
+    "expected": "smoke",
+    "heard": "Smoke",
+    "matched": true,
+    "sha256": "c2ce67c64e19a577d0fb118354cb00aba73727ff4041218054969593459507ee"
+  },
+  {
+    "file": "word-firefighters.mp3",
+    "expected": "firefighters",
+    "heard": "Firefighters",
+    "matched": true,
+    "sha256": "422d2e6db3ae5e01045ca3c388b1bbf0f9d813c12fd7203cf80183337d0cc4a8"
+  },
+  {
+    "file": "word-fire-truck.mp3",
+    "expected": "fire truck",
+    "heard": "Fire truck",
+    "matched": true,
+    "sha256": "06f03021d7e6be10ab2bbec450098a80eb35772a23f65c64e5ab33a3f8200916"
+  },
+  {
+    "file": "word-hills.mp3",
+    "expected": "hills",
+    "heard": "Hills",
+    "matched": true,
+    "sha256": "80f5b643440c1e27965f70ee78db3667cc20cf4a06a263dff1a516670f43d819"
+  },
+  {
+    "file": "word-cracked-ground.mp3",
+    "expected": "cracked ground",
+    "heard": "Cracked ground",
+    "matched": true,
+    "sha256": "e3786f1f8c5aa9ee99043c689b4948f71ec59b289427e4d2d11e85adea5a7eda"
+  },
+  {
+    "file": "word-reservoir.mp3",
+    "expected": "reservoir",
+    "heard": "Reservoir",
+    "matched": true,
+    "sha256": "c5957ebf9c869e3a0f65be90f0b70807c92e1f5069adc519abd019bc46a49925"
+  },
+  {
+    "file": "word-farmer.mp3",
+    "expected": "farmer",
+    "heard": "Farmer",
+    "matched": true,
+    "sha256": "387e430e1f64e2330bd64e3e6d9f7e346bf5106cd5b37657494f96f595e00010"
+  },
+  {
+    "file": "word-dry.mp3",
+    "expected": "dry",
+    "heard": "Dry",
+    "matched": true,
+    "sha256": "c1c9abeebaba043448a30fcb04303bbf63d1c141bbcb3e8596a8bc3b7668f89d"
+  },
+  {
+    "file": "word-rocks.mp3",
+    "expected": "rocks",
+    "heard": "Rocks",
+    "matched": true,
+    "sha256": "c2fdfae04a9831506bdb395eb1444148ec2d9a1474526ddad30f23ea83c2cb04"
+  },
+  {
+    "file": "word-excavator.mp3",
+    "expected": "excavator",
+    "heard": "Excavator",
+    "matched": true,
+    "sha256": "4b55cc1d86622b82c37476c2f50f7b1b90b743cfbd2df3f533724498702699f1"
+  },
+  {
+    "file": "word-blockage.mp3",
+    "expected": "blockage",
+    "heard": "Blockage",
+    "matched": true,
+    "sha256": "7a87063cf4c3afae1d058dc2f1285aa25914f988aba549f443f7608c48ee3a98"
+  },
+  {
+    "file": "word-road.mp3",
+    "expected": "road",
+    "heard": "road",
+    "matched": true,
+    "sha256": "3dc7a9b632d76497854e831a5f85f5896cc720a07b9eb0267cc51d7a8ce3d194"
+  },
+  {
+    "file": "word-strong-wind.mp3",
+    "expected": "strong wind",
+    "heard": "Strong wind",
+    "matched": true,
+    "sha256": "c4c48bb51f61dafd2f841ab9dea42d576bcb3fa8fcf8eefa89eecb17e27acfb6"
+  },
+  {
+    "file": "word-palm-trees.mp3",
+    "expected": "palm trees",
+    "heard": "Palm trees",
+    "matched": true,
+    "sha256": "14cba7f26af02bcabc69ddada8375d86804449c5998d1211b09ced6c42cef3c4"
+  },
+  {
+    "file": "word-waves.mp3",
+    "expected": "waves",
+    "heard": "Waves",
+    "matched": true,
+    "sha256": "b2858a7fda61d39b5942358174c13d2b71d1a9773db9f67796d315001827645e"
+  },
+  {
+    "file": "word-bending.mp3",
+    "expected": "bending",
+    "heard": "bending",
+    "matched": true,
+    "sha256": "54290bf91a2841aa0e20c597b9b3cc77d1c8cd93308a6ecae81d6e3a3c6483e5"
+  },
+  {
+    "file": "word-musician.mp3",
+    "expected": "musician",
+    "heard": "Musician",
+    "matched": true,
+    "sha256": "9865f4a691403ce227397465661cfecdef2e6d8d82e52f419bb96c1873851a29"
+  },
+  {
+    "file": "word-journalist.mp3",
+    "expected": "journalist",
+    "heard": "Journalist",
+    "matched": true,
+    "sha256": "b084581ff14250c216d6ce4e06d59eb77894d79209fa5c17c7a1883c76ac98cc"
+  },
+  {
+    "file": "word-guitar.mp3",
+    "expected": "guitar",
+    "heard": "Guitar",
+    "matched": true,
+    "sha256": "b7b634b7b0e3f0074a8ae43d614c8212f3ce5433254613778138d2c3a81b3e2c"
+  },
+  {
+    "file": "word-camera-operator.mp3",
+    "expected": "camera operator",
+    "heard": "Camera operator",
+    "matched": true,
+    "sha256": "f2c9f59ffa9648b032817d2de43df0c67acb91ab2b2abd433dbbc8e9fc056aaa"
+  },
+  {
+    "file": "word-journalists.mp3",
+    "expected": "journalists",
+    "heard": "Journalists",
+    "matched": true,
+    "sha256": "032dd625a206efd93325cf3c5ab8f63716a5cbd2572db399732c5d694da75b5e"
+  },
+  {
+    "file": "word-photograph.mp3",
+    "expected": "photograph",
+    "heard": "Photograph",
+    "matched": true,
+    "sha256": "9d11f8ea7c867ec10f0123251a43ce653e42e29b823ceb857f3cce518605282f"
+  },
+  {
+    "file": "word-notebook.mp3",
+    "expected": "notebook",
+    "heard": "Notebook",
+    "matched": true,
+    "sha256": "5b37d3acfa0af4b26a9315818abbaa1c2ee98e7906ae373ad429c16c66d2e142"
+  },
+  {
+    "file": "word-laptop.mp3",
+    "expected": "laptop",
+    "heard": "Laptop",
+    "matched": true,
+    "sha256": "04f9178233ea4581a5d9b5bbd4e50eca03f382637d11407b054aeaf42cfaa3a7"
+  },
+  {
+    "file": "word-checking-sources.mp3",
+    "expected": "checking sources",
+    "heard": "Checking sources",
+    "matched": true,
+    "sha256": "326a401467dea16d3b8a2b33d1d33a4a2451b799182319af5875e79a11dab65c"
+  },
+  {
+    "file": "word-press-briefing.mp3",
+    "expected": "press briefing",
+    "heard": "Press briefing",
+    "matched": true,
+    "sha256": "c9933ea2f57c050922978960c08ff42814334d3e12ee8270d1054ac2e3f1d615"
+  },
+  {
+    "file": "word-lectern.mp3",
+    "expected": "lectern",
+    "heard": "Lectern",
+    "matched": true,
+    "sha256": "2a60aa89db8753b00da992c2f4188354d4ac4aad57aa2cadd54f3fd00504173b"
+  },
+  {
+    "file": "word-raising-his-hand.mp3",
+    "expected": "raising his hand",
+    "heard": "Raising his hand",
+    "matched": true,
+    "sha256": "d4616b98a4bdfa3561f6f6662cba8dbfb2d4f4bc154a9321bb78559eaaeb2512"
+  },
+  {
+    "file": "word-notebooks.mp3",
+    "expected": "notebooks",
+    "heard": "Notebooks",
+    "matched": true,
+    "sha256": "d6243ef14b2b78e8098a815eb1d55e33c36be47c097ad8b555047dff539b7c63"
+  },
+  {
+    "file": "word-temporary-beds.mp3",
+    "expected": "temporary beds",
+    "heard": "temporary beds",
+    "matched": true,
+    "sha256": "f48f70022bf1f70cd7e7fe9e23bc35a08ed82497cdc3e058e03b4d326fd54efd"
+  },
+  {
+    "file": "word-reported-speech.mp3",
+    "expected": "reported speech",
+    "heard": "Reported speech",
+    "matched": true,
+    "sha256": "e1e9a2729c9fa4e6811a5bffe140854905d28cea0a9e969e7f364cfc71f34e0c"
+  },
+  {
+    "file": "word-swap-roles.mp3",
+    "expected": "swap roles",
+    "heard": "Swap roles",
+    "matched": true,
+    "sha256": "5de05adde05bb2ccfd11beb19bac94d03a59fca7683534e80a8dcb22b448dcc2"
+  },
+  {
+    "file": "word-partner.mp3",
+    "expected": "partner",
+    "heard": "Partner",
+    "matched": true,
+    "sha256": "6a21ffa4740da6461b51e91d23f93f903e75bfb67d54e95c5ce0cbedeb97d557"
+  },
+  {
+    "file": "word-meaning.mp3",
+    "expected": "meaning",
+    "heard": "Meaning",
+    "matched": true,
+    "sha256": "af800a88fec68591d9118c608a7ee01aad5ffdfcd8ca0334d7ae30892773a883"
+  },
+  {
+    "file": "word-pronouns.mp3",
+    "expected": "pronouns",
+    "heard": "Pronouns",
+    "matched": true,
+    "sha256": "bec8de1697956c4308616f2848b2f3b1c42d338d38aaa3e2db60d8de857cafc8"
+  }
+]

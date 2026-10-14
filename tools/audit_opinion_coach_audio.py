@@ -1,9 +1,10 @@
-"""Check public David coach MP3s against their scripts; resumable per file hash."""
+"""Check public Chris coach MP3s against their scripts; resumable per file hash."""
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import hashlib,json,re,threading
-from audit_intermediate2_midterm_oral_coach_audio import load_key,transcribe
-BASE=Path(__file__).resolve().parents[1]/'ingles/intermediate-2/audio/unit-6-opinion-coach'
+from audit_intermediate2_midterm_oral_coach_audio import load_key
+from audit_reported_speech_audio import transcribe
+BASE=Path(__file__).resolve().parents[1]/'ingles/intermediate-2/audio/unit-6-opinion-coach/chris-v1'
 def norm(s):
  s=s.lower().replace('’',"'")
  for a,b in [("he's",'he is'),("she's",'she is'),('roundtable','round table'),('anna','ana'),('czech','check')]:s=re.sub(r'\b'+re.escape(a)+r'\b',b,s)

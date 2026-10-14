@@ -12,9 +12,9 @@ The final report collects the five opinion transcripts, with a prompt to add a r
 
 ## Expressive speech
 
-The teacher explicitly requested audible expression, including exclamations. Voice: authorized cloned David `pv8WYYW60prEkDbDXyC0`; the previously unavailable professional David is not used. New recordings use Eleven v3 with warm, curious, thoughtful or gentle audio direction tags and natural punctuation. Stability 0.5 balances expressive variation. Four fidelity-sensitive clips use Multilingual v2 with explicit per-item settings. Reused canonical vocabulary clips remain their existing ElevenLabs recordings.
+The teacher retired the cloned David voices on 2026-10-13 because of pronunciation problems. 114 activity recordings now use premade **Chris**, `iP95p4xoKVk53GoZ742B`, `eleven_multilingual_v2`, with natural punctuation, stability 0.65, similarity 0.75 and style 0.2. The visible coach is Chris Rivera. Previously generated imagery remains a fictional illustration, unrelated to the voice owner.
 
-Reference: [ElevenLabs prompting documentation](https://elevenlabs.io/docs/best-practices/prompting). Delivery tags are only generation inputs, never visible lesson text. No browser speech synthesis. 115 public MP3s cover questions, replies, alternate follow-ups, examples and new vocabulary. `models.json` records every exact script, generation text, model override, settings and SHA. The Scribe audit checks lexical fidelity; equivalent contractions and documented homophones (Ana/Anna, check/Czech) are normalized. This audit cannot certify perceived emotion or every accent nuance; real playback checks verify that media plays, separately from text matching.
+Active recordings and the current manifest/audit are in `audio/unit-6-opinion-coach/chris-v1/`. Old David recordings remain historical files and are not used by this activity. Canonical vocabulary borrowed from other Unit 6 activities keeps its Sarah voice. Regeneration preserves hashes only when voice, model, text and settings match. The Scribe audit checks script fidelity; it does not certify phonetic quality or perceived emotion. Browser tests independently verify playback. No browser speech synthesis.
 
 ## Image provenance
 
@@ -32,3 +32,5 @@ Five images generated with the built-in image_gen tool. Inspected before integra
 - `tools/test_intermediate2_signin.cjs`: all course pages at five viewport widths, with typing, scrolling, short viewports, Close and Escape; no real login.
 
 Shared engine additions are opt-in hooks for prompt resolution, prompt media, support audio state, formative feedback and report rendering, plus an optional persistence flag. Existing configurations retain their behavior. The practice uses no new server endpoint and does not alter academic records or exam access.
+
+The isolated word “might” uses premade Sarah: Scribe repeatedly transcribed the Chris version as “mate”. All 186 replacements (114 coach recordings with Chris, one with Sarah, and 71 reported-speech recordings with Chris) pass script/transcript comparison.

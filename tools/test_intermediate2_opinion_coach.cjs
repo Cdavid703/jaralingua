@@ -11,8 +11,8 @@ assert.equal(c.responseResolver(a('Quantum mathematics is interesting.'),q('s2-o
 assert.equal(c.responseResolver(a('I do not know.'),q('s4-opinion'))[0].file,'reply-uncertain.mp3');
 assert.equal(c.followUpResolver(a('I would check the source because it could be false.'),q('s2-opinion'),c.followUpSets['2']).kind,'prediction');assert.equal(c.followUpResolver(a('I would share the warning.'),q('s2-opinion'),c.followUpSets['2']).kind,'reason');
 assert.equal(c.questionResolver(q('s2-interpret'),{questionId:'s2-observe',transcript:'The student seems worried.'}).audio,'s2-evidence.mp3');
-const manifest=JSON.parse(fs.readFileSync('ingles/intermediate-2/audio/unit-6-opinion-coach/models.json'));
-for(const item of manifest.items){const data=fs.readFileSync('ingles/intermediate-2/audio/unit-6-opinion-coach/'+item.file);assert(data.length>1000);assert.equal(crypto.createHash('sha256').update(data).digest('hex'),item.sha256);}
+const manifest=JSON.parse(fs.readFileSync('ingles/intermediate-2/audio/unit-6-opinion-coach/chris-v1/models.json'));
+for(const item of manifest.items){const data=fs.readFileSync('ingles/intermediate-2/audio/unit-6-opinion-coach/chris-v1/'+item.file);assert(data.length>1000);assert.equal(crypto.createHash('sha256').update(data).digest('hex'),item.sha256);}
 (async()=>{const b=await chromium.launch({args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream']});try{
  const p=await b.newPage({viewport:{width:1440,height:900}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.route('https://accounts.google.com/**',r=>r.fulfill({body:''}));let transcript='',mode='ok';
  await p.route('**/api/english-intermediate/pronunciation-assessment',r=>r.fulfill({status:mode==='fail'?503:200,contentType:'application/json',body:JSON.stringify({text:mode==='silence'?'':transcript,language_code:'en',words:[],audio:{rms:mode==='silence'?0:.08}})}));
@@ -37,7 +37,7 @@ for(const item of manifest.items){const data=fs.readFileSync('ingles/intermediat
  await p.locator('#restartConversationButton').click();mode='fail';await record('Ana');await p.locator('#transcriptionRecovery').waitFor({state:'visible'});mode='ok';transcript='Ana';await p.locator('#retryTranscriptionButton').click();await ready();await p.locator('#nextTurnButton').click();
  await p.setViewportSize({width:390,height:844});await p.screenshot({path:'/private/tmp/opinion-coach-mobile.png',fullPage:true});await p.setViewportSize({width:1440,height:900});await p.screenshot({path:'/private/tmp/opinion-coach-desktop.png',fullPage:true});
  mode='silence';await record('');await p.locator('#transcriptionRecovery').waitFor({state:'visible'});await p.locator('#nextTurnButton').click();await p.waitForFunction(()=>!document.querySelector('#micButton').disabled);assert.deepEqual(errors,[]);
- const assets=[...c.scenes.map(s=>s.image),...manifest.items.map(i=>'/ingles/intermediate-2/audio/unit-6-opinion-coach/'+i.file),...Object.values(c.wordHelp).map(v=>v.audio.startsWith('/')?v.audio:'/ingles/intermediate-2/'+v.audio)];
+ const assets=[...c.scenes.map(s=>s.image),...manifest.items.map(i=>'/ingles/intermediate-2/audio/unit-6-opinion-coach/chris-v1/'+i.file),...Object.values(c.wordHelp).map(v=>v.audio.startsWith('/')?v.audio:'/ingles/intermediate-2/'+v.audio)];
  for(const asset of new Set(assets)){const r=await p.request.get(base+asset);assert.equal(r.status(),200,asset);}
  console.log('PASS five scenes, 16 main/5 adaptive turns, name/replies, interpretation without repetition, negations, language help, enlarged image/question, QR, six widths, recovery, temporary-only report and all media.');await p.close();
  // Independent real playback check: no play() mocking and public prepared audio only.

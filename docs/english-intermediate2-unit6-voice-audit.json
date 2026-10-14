@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-13",
+  "retiredVoice": "David (created/cloned)",
+  "replacement": "Chris (premade)",
+  "replacementVoiceId": "iP95p4xoKVk53GoZ742B",
+  "replacedRecordings": 186,
+  "replacementVoiceCounts": {
+    "Chris": 185,
+    "Sarah": 1
+  },
+  "activities": [
+    {
+      "activity": "Greenford News",
+      "primaryVoice": "Sarah",
+      "activeAudioFiles": 55,
+      "voices": [
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "News Quest",
+      "primaryVoice": "Sarah",
+      "activeAudioFiles": 41,
+      "voices": [
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "My opinion matters",
+      "primaryVoice": "Chris",
+      "activeAudioFiles": 123,
+      "voices": [
+        "Chris",
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "What did they say?",
+      "primaryVoice": "Chris",
+      "activeAudioFiles": 84,
+      "voices": [
+        "Chris",
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "After the Flood",
+      "primaryVoice": "Sarah",
+      "activeAudioFiles": 1,
+      "voices": [
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "Report the News Clearly",
+      "primaryVoice": "Sarah",
+      "activeAudioFiles": 64,
+      "voices": [
+        "Sarah"
+      ]
+    },
+    {
+      "activity": "Disaster News Memory",
+      "primaryVoice": "Sarah",
+      "activeAudioFiles": 40,
+      "voices": [
+        "Sarah"
+      ]
+    }
+  ]
+}

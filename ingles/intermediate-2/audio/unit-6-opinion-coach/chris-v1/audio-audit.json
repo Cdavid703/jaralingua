@@ -1,0 +1,807 @@
+[
+  {
+    "file": "hello.mp3",
+    "expected": "Hi! I'm Chris. It's good to see you! What's your name?",
+    "heard": "Hi, I'm Chris. It's good to see you. What's your name?",
+    "matched": true,
+    "sha256": "730c8f00a57db039a099a8e4b329b7c74d46cabda1d9390c4d3b4df530624dbc"
+  },
+  {
+    "file": "hello-example-1.mp3",
+    "expected": "Hi, Chris! My name is Ana.",
+    "heard": "Hi, Chris. My name is Ana",
+    "matched": true,
+    "sha256": "8a5839087586be02caf44da629f2c8497dca89d410f731c1b74bbad32ad3eea6"
+  },
+  {
+    "file": "s1-observe.mp3",
+    "expected": "Let's look at our first picture! What can you see on the phone and in the full scene?",
+    "heard": "Let's look at our first picture. What can you see on the phone and in the full scene?",
+    "matched": true,
+    "sha256": "1c617d80928361c10f3fb28ea942811f39032392200e6ae3c262d5aa73febee8"
+  },
+  {
+    "file": "s1-observe-example-1.mp3",
+    "expected": "I can see a man with boxes on the phone. In the full scene, a volunteer is receiving the boxes.",
+    "heard": "I can see a man with boxes on the phone. In the full scene, a volunteer is receiving the boxes.",
+    "matched": true,
+    "sha256": "26dfea3f2e4587cf505ea1c94ad1da66940ab5113b8065763c485677474f5abe"
+  },
+  {
+    "file": "s1-observe-example-2.mp3",
+    "expected": "There are families near a table with water and blankets.",
+    "heard": "There are families near a table with water and blankets.",
+    "matched": true,
+    "sha256": "368af1b7d0eb76509955798dbe124cee4008b052764e14e027727d056f426d72"
+  },
+  {
+    "file": "s1-interpret.mp3",
+    "expected": "What does it look like the man is doing?",
+    "heard": "What does it look like the man is doing?",
+    "matched": true,
+    "sha256": "fe02780ca8f05d39067ace69bc343392e1d3fc472f7ef5486a67bb2276fface2"
+  },
+  {
+    "file": "s1-interpret-example-1.mp3",
+    "expected": "It looks like he is delivering supplies to the shelter.",
+    "heard": "It looks like he is delivering supplies to the shelter",
+    "matched": true,
+    "sha256": "8c8c5ab9245c7160a90b466bbaa913fb409d2a98710dd86f8accb27cf9ba2d58"
+  },
+  {
+    "file": "s1-interpret-example-2.mp3",
+    "expected": "He seems to be helping, but the cropped photo does not show the whole situation.",
+    "heard": "He seems to be helping, but the cropped photo does not show the whole situation.",
+    "matched": true,
+    "sha256": "465b21aba5a8980375ba87566f3347f44cd571eb79b58236468ddd97606cbbc8"
+  },
+  {
+    "file": "s1-evidence.mp3",
+    "expected": "Look at the boxes, the open van and the volunteer. Which detail supports your impression?",
+    "heard": "Look at the boxes, the open van, and the volunteer. Which detail supports your impression?",
+    "matched": true,
+    "sha256": "933f9b7d2280824b521e29ad5660ec179e94f35b43f6cdb3c5e41836a963ff69"
+  },
+  {
+    "file": "s1-opinion.mp3",
+    "expected": "Could this photo make people judge the man unfairly? Why or why not?",
+    "heard": "Could this photo make people judge the man unfairly? Why or why not?",
+    "matched": true,
+    "sha256": "514b59d1109a696bd82cceb21df737233452ed5654ab62aa24ec379298e41a91"
+  },
+  {
+    "file": "s1-opinion-example-1.mp3",
+    "expected": "I think the photo could mislead people because it hides the volunteer receiving the boxes.",
+    "heard": "I think the photo could mislead people because it hides the volunteer receiving the boxes",
+    "matched": true,
+    "sha256": "bcc2c71d52465f3381c842052e40990a4e3a47be1eae7ced0446e16391938492"
+  },
+  {
+    "file": "s1-opinion-example-2.mp3",
+    "expected": "I would not judge him from this photo because there is not enough evidence.",
+    "heard": "I would not judge him from this photo because there is not enough evidence",
+    "matched": true,
+    "sha256": "310ab5a009a46a0a39f7c90a576092b4127257f03ae52cf4c8bc1dd42d450283"
+  },
+  {
+    "file": "s1-reason.mp3",
+    "expected": "What is your main reason for that choice?",
+    "heard": "What is your main reason for that choice?",
+    "matched": true,
+    "sha256": "3b9c4897648dac6c39c312058ac324febe9c63178adf71878e0f0cdb1d0695e7"
+  },
+  {
+    "file": "s1-reason-example-1.mp3",
+    "expected": "My main reason is that the small photo leaves out important context.",
+    "heard": "My main reason is that the small photo leaves out important context",
+    "matched": true,
+    "sha256": "0cc72042866b8440bb3a06c8926eaadadc2ba770c3eb6b9bd871688567872ec5"
+  },
+  {
+    "file": "s1-prediction-example-1.mp3",
+    "expected": "People might misunderstand the man and accuse him unfairly.",
+    "heard": "People might misunderstand the man and accuse him unfairly",
+    "matched": true,
+    "sha256": "334f5c0e80a6182f6e125e6c87d1bb51adcb1c6aef157cfc33074e0a5c176e47"
+  },
+  {
+    "file": "s1-prediction.mp3",
+    "expected": "What might happen if someone shares only the cropped photo?",
+    "heard": "What might happen if someone shares only the cropped photo?",
+    "matched": true,
+    "sha256": "9c220abdb1cfb93a02e7536a9d07e5981db283e2f9a7a41b216464fb90939518"
+  },
+  {
+    "file": "s2-observe.mp3",
+    "expected": "Here's a different situation. What can you see on the phone and the laptop?",
+    "heard": "Here's a different situation. What can you see on the phone and the laptop?",
+    "matched": true,
+    "sha256": "0f91f0940957b408e149df48e702f80e94b6e883aa807342f74af8cce1d3980b"
+  },
+  {
+    "file": "s1-reaction.mp3",
+    "expected": "The small photo leaves out the people receiving the boxes. Your interpretation needs that wider context.",
+    "heard": "The small photo leaves out the people receiving the boxes. Your interpretation needs that wider context",
+    "matched": true,
+    "sha256": "9886ec061cf06fe94e4f5bed0a4420635ddb68fc1f250fa54c6bb6392910793a"
+  },
+  {
+    "file": "s2-observe-example-1.mp3",
+    "expected": "I can see a warning on a phone and a weather map on a laptop.",
+    "heard": "I can see a warning on a phone and a weather map on a laptop",
+    "matched": true,
+    "sha256": "500844b0f771af418786b00a3bcb8c1fc63a5d4d283267631a94701d83e71548"
+  },
+  {
+    "file": "s2-observe-example-2.mp3",
+    "expected": "Three students are looking at the screens, and it is raining outside.",
+    "heard": "Three students are looking at the screens and it is raining outside.",
+    "matched": true,
+    "sha256": "88a86c2adc30f82cc50345b6216b541779637d62a737d99e2d57c63955bb4af6"
+  },
+  {
+    "file": "s2-interpret-example-1.mp3",
+    "expected": "She looks worried because she is looking carefully at the warning.",
+    "heard": "She looks worried because she is looking carefully at the warning",
+    "matched": true,
+    "sha256": "64a58a4f0b302d5e744d4eae50f2e06f3e845259ec4458ed23025b74b66328dc"
+  },
+  {
+    "file": "s2-interpret.mp3",
+    "expected": "Look at the student holding the phone. How does she seem to feel?",
+    "heard": "Look at the student holding the phone. How does she seem to feel?",
+    "matched": true,
+    "sha256": "36c235838972dd0784082bbfe55f6d4276ed1a02470964424d34fcb636f40dd4"
+  },
+  {
+    "file": "s2-interpret-example-2.mp3",
+    "expected": "She seems unsure about what to do next.",
+    "heard": "She seems unsure about what to do next.",
+    "matched": true,
+    "sha256": "97d72b6570cfbc35b538e1536a7e919423ee3a7eadd812297563feaa5f35cdef"
+  },
+  {
+    "file": "s2-evidence.mp3",
+    "expected": "Look at her face and the two screens. What visible detail supports your impression?",
+    "heard": "Look at her face and the two screens. What visible detail supports your impression?",
+    "matched": true,
+    "sha256": "4610118b5b2b1445a8b5ec827844d099e5b6a7479717dc23604a1f399c8f9e34"
+  },
+  {
+    "file": "s2-opinion.mp3",
+    "expected": "Would you share this warning now or check it first? Explain your choice.",
+    "heard": "Would you share this warning now or check it first? Explain your choice",
+    "matched": true,
+    "sha256": "cfc4f521d34fb9ecf04025ad77de15a87bf85e5516f57076a5e919150828e892"
+  },
+  {
+    "file": "s2-opinion-example-1.mp3",
+    "expected": "I would check the source first because a false warning could frighten people.",
+    "heard": "I would check the source first because a false warning could frighten people.",
+    "matched": true,
+    "sha256": "2928deb6b425938356f40281ab138d906bf34b6f3e15bbb50024ccbe244fd3c5"
+  },
+  {
+    "file": "s2-opinion-example-2.mp3",
+    "expected": "I might share it with a clear note that it is unverified because people may need time to prepare.",
+    "heard": "I might share it with a clear note that it is unverified because people may need time to prepare.",
+    "matched": true,
+    "sha256": "1148cf5ef6cc2b3202b5bddfb9a9bfedb02aa475cc3146222c2634d9683c2504"
+  },
+  {
+    "file": "s2-reason.mp3",
+    "expected": "What is your main reason for that choice?",
+    "heard": "What is your main reason for that choice?",
+    "matched": true,
+    "sha256": "2391d2558f4dde7acd0911c08f298ed1ea2d4a79d4e4608e5b8e63a96b4195c7"
+  },
+  {
+    "file": "s2-reason-example-1.mp3",
+    "expected": "My main reason is that people need reliable information.",
+    "heard": "My main reason is that people need reliable information",
+    "matched": true,
+    "sha256": "c99dc6dcee1e9a71d84fab5c9ef3d44df4270e78753915c95dd12e02d5fc6216"
+  },
+  {
+    "file": "s2-prediction.mp3",
+    "expected": "What might happen after the student makes that choice?",
+    "heard": "What might happen after the student makes that choice?",
+    "matched": true,
+    "sha256": "6dee5eee8b511d47dee72d953661acd823e005f657b4397bab13e4caae87f671"
+  },
+  {
+    "file": "s2-prediction-example-1.mp3",
+    "expected": "Some people might prepare for a flood, while others might check the source.",
+    "heard": "Some people might prepare for a flood, while others might check the source.",
+    "matched": true,
+    "sha256": "096632f501607d12742bd9940fe1f87105c5098335f4b9cf0fd41af1876055be"
+  },
+  {
+    "file": "s2-reaction.mp3",
+    "expected": "We can see a warning, but the picture does not establish whether it is reliable.",
+    "heard": "We can see a warning, but the picture does not establish whether it is reliable.",
+    "matched": true,
+    "sha256": "ae5fe8a167f1bbcd13bbf9331b10541eef974dfddc56910464e2de9cd8a51ac2"
+  },
+  {
+    "file": "s3-observe.mp3",
+    "expected": "Now we're outside. What are the people in this street doing?",
+    "heard": "Now we're outside. What are the people in this street doing?",
+    "matched": true,
+    "sha256": "b5551f2d0227bc9267c941c42a2f0eb4f7de6074ce6b1f34f6d93d697acad748"
+  },
+  {
+    "file": "s3-observe-example-1.mp3",
+    "expected": "Some people are carrying a chair, and another person is filming.",
+    "heard": "Some people are carrying a chair and another person is filming.",
+    "matched": true,
+    "sha256": "3516cd66436e7b1b562bfd5b000a6ba64cc96d625b9b00a5396792d5d5ddc9bb"
+  },
+  {
+    "file": "s3-observe-example-2.mp3",
+    "expected": "I can see muddy walls, bags and an older person sitting near a dog.",
+    "heard": "I can see muddy walls, bags, and an older person sitting near a dog.",
+    "matched": true,
+    "sha256": "7ea8f57473bca3b9ed344f6a7cdee5b0e7f33e2721935ec31b4a7b2f66eb44b6"
+  },
+  {
+    "file": "s3-interpret.mp3",
+    "expected": "What does it look like the person in the yellow raincoat is trying to do?",
+    "heard": "What does it look like the person in the yellow raincoat is trying to do?",
+    "matched": true,
+    "sha256": "5dfdbe5791d6924e1ca8976ba78ba43279cb7359cd0d778c7db72c1a68f19906"
+  },
+  {
+    "file": "s3-interpret-example-1.mp3",
+    "expected": "It looks like the person is recording the damage.",
+    "heard": "It looks like the person is recording the damage",
+    "matched": true,
+    "sha256": "c4b050bcb96bb0f24704cc838f39d02e5492277149bb5aa5207ed2a034f52dbd"
+  },
+  {
+    "file": "s3-interpret-example-2.mp3",
+    "expected": "They might be asking for help, but we cannot know that from the image alone.",
+    "heard": "They might be asking for help, but we cannot know that from the image alone.",
+    "matched": true,
+    "sha256": "7b32fd97c7fabd4940bc99d548c19bfec07af5acfc9f4c8a7ee2a339ecabe928"
+  },
+  {
+    "file": "s3-evidence.mp3",
+    "expected": "Which detail in the image supports your idea about the person filming?",
+    "heard": "Which detail in the image supports your idea about the person filming?",
+    "matched": true,
+    "sha256": "4e093b9096785770bcaf7c43f78a3c056d073cf309cd1a23ddb469b91c032d8a"
+  },
+  {
+    "file": "s3-opinion.mp3",
+    "expected": "Do you think filming is useful or harmful in this situation? Explain your opinion.",
+    "heard": "Do you think filming is useful or harmful in this situation? Explain your opinion.",
+    "matched": true,
+    "sha256": "19740c7e056ca93bc6fef3dea71b369b2a9c285f32cef5ed15ee930eb1fb208a"
+  },
+  {
+    "file": "s3-opinion-example-1.mp3",
+    "expected": "Filming could help show what the families need, as long as it does not get in the way.",
+    "heard": "Filming could help show what the families need as long as it does not get in the way",
+    "matched": true,
+    "sha256": "f4b84c8f4677dbb277c2cb0ad6e61572dc54368c6cb737e704a51d309c0065f8"
+  },
+  {
+    "file": "s3-opinion-example-2.mp3",
+    "expected": "I think helping directly is more useful here because the neighbors are carrying heavy things.",
+    "heard": "I think helping directly is more useful here because the neighbors are carrying heavy things.",
+    "matched": true,
+    "sha256": "781fd5fd44976070bd96a3695f2e05a6698b61b46827badaaf1e29398699a461"
+  },
+  {
+    "file": "s3-reason.mp3",
+    "expected": "What is your main reason for that choice?",
+    "heard": "What is your main reason for that choice?",
+    "matched": true,
+    "sha256": "f89aa3c95a6fb7a8ce037a1c95e8682fd3c16eefa93328d45a279b68525e7efc"
+  },
+  {
+    "file": "s3-reason-example-1.mp3",
+    "expected": "My main reason is that filming can show what help is needed.",
+    "heard": "My main reason is that filming can show what help is needed.",
+    "matched": true,
+    "sha256": "f92a6259f54a1d481aa5e83507f7fe9daefddd7cdaa6359e72e5d892cc240d1a"
+  },
+  {
+    "file": "s3-prediction.mp3",
+    "expected": "What might change if the person puts the phone away?",
+    "heard": "What might change if the person puts the phone away?",
+    "matched": true,
+    "sha256": "2d075d3d2e0a397fe896a2f19b7ff853fa295babbb957b66e05a4c54f5aaad51"
+  },
+  {
+    "file": "s3-prediction-example-1.mp3",
+    "expected": "The person might help carry the furniture instead.",
+    "heard": "The person might help carry the furniture instead.",
+    "matched": true,
+    "sha256": "465f6e8755662745c3c9205f325c6c3fd58f2357a2f689d183fc9531a5a74be0"
+  },
+  {
+    "file": "s3-reaction.mp3",
+    "expected": "The phone is visible. The reason for filming is something we have to infer.",
+    "heard": "The phone is visible. The reason for filming is something we have to infer",
+    "matched": true,
+    "sha256": "503b150541e4bde9c64b0c9f084f45bc39e46f950dfdc92afff7e6c4e2d1489a"
+  },
+  {
+    "file": "s4-observe.mp3",
+    "expected": "Let's step inside the shelter. What is on the table, and who is waiting?",
+    "heard": "Let's step inside the shelter. What is on the table and who is waiting?",
+    "matched": true,
+    "sha256": "7300c9f2b4c57be6ca6555464bb46be68282a0857cacae008a2c95301e6af2ba"
+  },
+  {
+    "file": "s4-observe-example-1.mp3",
+    "expected": "There are three small boxes, water bottles and blankets on the table. Several families are waiting.",
+    "heard": "There are three small boxes, water bottles, and blankets on the table. Several families are waiting.",
+    "matched": true,
+    "sha256": "845e048692a53d08b85e35ba3ce81cd4ee45190413d3a913f492245894ef1b53"
+  },
+  {
+    "file": "s4-observe-example-2.mp3",
+    "expected": "I can see a volunteer, a child, an older adult and a person in a wheelchair.",
+    "heard": "I can see a volunteer, a child, an older adult, and a person in a wheelchair",
+    "matched": true,
+    "sha256": "c16aeeb31321a258b5497f088585b8c88a19578c6e1fdffe81fb3bc35885bc01"
+  },
+  {
+    "file": "s4-interpret.mp3",
+    "expected": "Look at the volunteer behind the table. How does she seem to feel?",
+    "heard": "Look at the volunteer behind the table. How does she seem to feel?",
+    "matched": true,
+    "sha256": "7069cab7cb62b7c8f06dee316b991d0890703f93e12021f7b14b73e6a0657386"
+  },
+  {
+    "file": "s4-interpret-example-1.mp3",
+    "expected": "She seems worried because there are few supplies and several people waiting.",
+    "heard": "She seems worried because there are few supplies and several people waiting.",
+    "matched": true,
+    "sha256": "825a0e5072e3554b2a9b3830ba37c6107142c2b744d6dfad411d4a3106d6c0b8"
+  },
+  {
+    "file": "s4-interpret-example-2.mp3",
+    "expected": "She looks thoughtful. She might be planning how to share the supplies.",
+    "heard": "She looks thoughtful. She might be planning how to share the supplies.",
+    "matched": true,
+    "sha256": "423a93e5c378813da2390aea23f5a00313f13918af22a8ccf05ab960fba77aab"
+  },
+  {
+    "file": "s4-evidence.mp3",
+    "expected": "What can you see in her expression or around the table that supports your impression?",
+    "heard": "What can you see in her expression or around the table that supports your impression?",
+    "matched": true,
+    "sha256": "cd5d2cf8ff1d6c460dad6d54b14da7ef073c35280544e736a17f3951a90faf92"
+  },
+  {
+    "file": "s4-opinion.mp3",
+    "expected": "If you were this volunteer, how would you distribute the supplies fairly?",
+    "heard": "If you were this volunteer, how would you distribute the supplies fairly?",
+    "matched": true,
+    "sha256": "6f961b3ed1ba7918148639ac60ce4e4815319cb7a2c712966f2d964c17afd909"
+  },
+  {
+    "file": "s4-opinion-example-2.mp3",
+    "expected": "I would give everyone some water first, then check who needs extra support.",
+    "heard": "I would give everyone some water first, then check who needs extra support.",
+    "matched": true,
+    "sha256": "d6cf5932f54d3587714dd5d7310a7036dceb84342164ff1f5a85d08b81baee11"
+  },
+  {
+    "file": "s4-opinion-example-1.mp3",
+    "expected": "I would ask what each person needs and explain how the supplies will be shared.",
+    "heard": "I would ask what each person needs and explain how the supplies will be shared.",
+    "matched": true,
+    "sha256": "9dc2c44fd712e4190f831bc604d2b5341b6cc59e69c2a9c99b4dcfbae7507b50"
+  },
+  {
+    "file": "s4-reason.mp3",
+    "expected": "What is your main reason for that choice?",
+    "heard": "What is your main reason for that choice?",
+    "matched": true,
+    "sha256": "f2df67fd389a461550822d5d01665eb8ed4c58567a045ca1804abee1f281c1fd"
+  },
+  {
+    "file": "s4-reason-example-1.mp3",
+    "expected": "My main reason is that everyone should have access to essential supplies.",
+    "heard": "My main reason is that everyone should have access to essential supplies",
+    "matched": true,
+    "sha256": "aa035902d400e0e6fc3a85a2e2978f37928eb8b5663a610b487dc59eb62acfa6"
+  },
+  {
+    "file": "s4-prediction.mp3",
+    "expected": "How might the families react to your plan?",
+    "heard": "How might the families react to your plan?",
+    "matched": true,
+    "sha256": "f6ca2ff206185cf754d12df06e8e2789ed25d6851c4b7316c0567f43419eaf7b"
+  },
+  {
+    "file": "s4-prediction-example-1.mp3",
+    "expected": "Some families might appreciate the plan, but others may ask for more supplies.",
+    "heard": "Some families might appreciate the plan, but others may ask for more supplies.",
+    "matched": true,
+    "sha256": "0de9b9d9c692aae84adaa0ba163ba439d9f156b37fa66cf798e795c09d6c89ca"
+  },
+  {
+    "file": "s4-reaction.mp3",
+    "expected": "We can see limited supplies and several people waiting. Their exact needs are not all visible.",
+    "heard": "We can see limited supplies and several people waiting. Their exact needs are not all visible.",
+    "matched": true,
+    "sha256": "6cc2b4b65895dfe7c480785aa2a8de12661dfb255268669ad2031ddabcdaf14e"
+  },
+  {
+    "file": "s5-observe.mp3",
+    "expected": "One last picture! What is similar, and what is different, between these communities?",
+    "heard": "One last picture. What is similar and what is different between these communities?",
+    "matched": true,
+    "sha256": "3a208f5525b7af088d7a09185bd9877ee7607461df90c8ef86e2386a96a7050a"
+  },
+  {
+    "file": "s5-observe-example-1.mp3",
+    "expected": "Both communities have flood damage, but only one has reporters.",
+    "heard": "Both communities have flood damage, but only one has reporters",
+    "matched": true,
+    "sha256": "f0eb9bc2fb368774c5bed9f28c989faddbcaa78183da7dc37bb8b7e816720888"
+  },
+  {
+    "file": "s5-observe-example-2.mp3",
+    "expected": "People are cleaning in both places. On the left, a camera operator is filming an interview.",
+    "heard": "People are cleaning in both places. On the left, a camera operator is filming an interview.",
+    "matched": true,
+    "sha256": "f69d0c6ebcde153e7f26e83fcbc3d7f44029af1f89e2a3c2467d5441853f8c50"
+  },
+  {
+    "file": "s5-interpret.mp3",
+    "expected": "How do you think the people without reporters might feel?",
+    "heard": "How do you think the people without reporters might feel?",
+    "matched": true,
+    "sha256": "3063f4efe4fb01cbf7a0b28906e0c4fd8c212aa2d4062b89c9a59321c5e324e0"
+  },
+  {
+    "file": "s5-interpret-example-1.mp3",
+    "expected": "They might feel ignored because no reporters are there.",
+    "heard": "They might feel ignored because no reporters are there.",
+    "matched": true,
+    "sha256": "4d5a12dfee7bd4f2f2fcfa982281eee7de088c7c3d4a086895868a3a3008c23c"
+  },
+  {
+    "file": "s5-interpret-example-2.mp3",
+    "expected": "They may feel focused on cleaning. We cannot be sure of their feelings.",
+    "heard": "They may feel focused on cleaning. We cannot be sure of their feelings",
+    "matched": true,
+    "sha256": "022dfdacde152122a81fe03a391e230faadad6870dad44b93f81223e177f58ed"
+  },
+  {
+    "file": "s5-evidence.mp3",
+    "expected": "Which detail supports your interpretation, and what can the image not tell us?",
+    "heard": "Which detail supports your interpretation, and what can the image not tell us?",
+    "matched": true,
+    "sha256": "fdd115b92e4b05ab1e5e397e2417ad03d27376b0fbc7373bbadd9e3e369549eb"
+  },
+  {
+    "file": "s5-opinion.mp3",
+    "expected": "Should reporters give these communities the same attention? Explain your view.",
+    "heard": "Should reporters give these communities the same attention? Explain your view",
+    "matched": true,
+    "sha256": "cec4e1ed70a4441f2aaf97fce46709e902e85ba2cafba8627911e138ecd7a30b"
+  },
+  {
+    "file": "s5-opinion-example-1.mp3",
+    "expected": "I think both deserve attention because both communities need help.",
+    "heard": "I think both deserve attention because both communities need help",
+    "matched": true,
+    "sha256": "db4435dd9dc12081b9fb38dd5c56983c08effa8982fdf18316251250b806e847"
+  },
+  {
+    "file": "s5-opinion-example-2.mp3",
+    "expected": "I would compare their needs before deciding how much coverage each should receive.",
+    "heard": "I would compare their needs before deciding how much coverage each should receive.",
+    "matched": true,
+    "sha256": "715b95a39c65d3429ca26dd82d637255082d66bf6733bfff161a85569c106f00"
+  },
+  {
+    "file": "s5-reason.mp3",
+    "expected": "What is your main reason for that choice?",
+    "heard": "What is your main reason for that choice?",
+    "matched": true,
+    "sha256": "4d3a42de8c4cbb88e31b147d60ea7f67238785f08eb893ff0b85d2ffdd17a9c8"
+  },
+  {
+    "file": "s5-reason-example-1.mp3",
+    "expected": "My main reason is that both communities need to be heard.",
+    "heard": "My main reason is that both communities need to be heard",
+    "matched": true,
+    "sha256": "8392ef76c9e91a37482dde5ddf97da7863a3ae7737899cd0f664b1ca742156ae"
+  },
+  {
+    "file": "s5-prediction.mp3",
+    "expected": "What might happen if one community remains out of the news?",
+    "heard": "What might happen if one community remains out of the news?",
+    "matched": true,
+    "sha256": "d99d94a4c5e3377ef7d6f61b1595a3b85ec462332ca43c914e5e81285cb33796"
+  },
+  {
+    "file": "s5-prediction-example-1.mp3",
+    "expected": "The community might receive less support because fewer people hear its story.",
+    "heard": "The community might receive less support because fewer people hear its story",
+    "matched": true,
+    "sha256": "66c61ba926cc39d54e3b02ad1185505d779aef893437fa9da3e42b1555cd6736"
+  },
+  {
+    "file": "s5-reaction.mp3",
+    "expected": "Both scenes show damage. The different coverage does not tell us the full needs of either community.",
+    "heard": "Both scenes show damage. The different coverage does not tell us the full needs of either community.",
+    "matched": true,
+    "sha256": "18b467cd4af69062f16054171e96e8aa03e80350ccd9d65fc52b5e91e001bbda"
+  },
+  {
+    "file": "reply-observe.mp3",
+    "expected": "Thanks for describing what you noticed. Let’s look a little more closely.",
+    "heard": "Thanks for describing what you noticed. Let's look a little more closely",
+    "matched": true,
+    "sha256": "0416d00a93f9fff4cf10a025031c9fabfb9fe36f102a65518d24c8f31769e01d"
+  },
+  {
+    "file": "reply-hello.mp3",
+    "expected": "Nice to meet you! I'm glad you're here. Let's explore these pictures together!",
+    "heard": "Nice to meet you. I'm glad you're here. Let's explore these pictures together.",
+    "matched": true,
+    "sha256": "e924c71454f74c1ebb6e440c25f56c4e13f802f4ea6184079b7f3cf7b565f7db"
+  },
+  {
+    "file": "reply-inference.mp3",
+    "expected": "That is one possible interpretation. Remember, an impression is not a fact.",
+    "heard": "That is one possible interpretation. Remember, an impression is not a fact",
+    "matched": true,
+    "sha256": "eb7e8563603be80c4430518e0dd4a6599c7c9ba7fbfdba8fe3e0489c9632c6fd"
+  },
+  {
+    "file": "reply-uncertain.mp3",
+    "expected": "It's okay to be unsure! Try one possibility with, it looks like, or, it seems.",
+    "heard": "It's okay to be unsure. Try one possibility with \"it looks like\" or \"it seems.\"",
+    "matched": true,
+    "sha256": "9773c50e98b226cb0ef07b87e53d221b82a2bb028b591348a634d42b60e4e296"
+  },
+  {
+    "file": "reply-reason.mp3",
+    "expected": "You have given a reason for your view. Let’s think about what could happen next.",
+    "heard": "You have given a reason for your view. Let's think about what could happen next.",
+    "matched": true,
+    "sha256": "c217a1b3c5cd4818b8919c130a222c42fef0f43b772a2be602734ea332522fe7"
+  },
+  {
+    "file": "reply-opinion.mp3",
+    "expected": "I hear your point. Let’s explore the reason behind it.",
+    "heard": "I hear your point. Let's explore the reason behind it",
+    "matched": true,
+    "sha256": "3593d203ba9d1aa8167032eb997a51622cc6b85e9299f23447e4db23a475ab75"
+  },
+  {
+    "file": "reply-followup.mp3",
+    "expected": "Thanks for developing your idea. You can bring that perspective to the round table!",
+    "heard": "Thanks for developing your idea. You can bring that perspective to the roundtable",
+    "matched": true,
+    "sha256": "729e8b4324ce31cb980ef643e5bed38722f17f9b69e183b76b327055b4894595"
+  },
+  {
+    "file": "reply-clarify.mp3",
+    "expected": "I'm not sure I understood your idea about this picture. Try naming one visible detail, or open Help me answer.",
+    "heard": "I'm not sure I understood your idea about this picture. Try naming one visible detail or open help me answer.",
+    "matched": true,
+    "sha256": "d0f1224f26ecb89baa868a082c35ce36d669c5ec8a34b2b1685b058b442573c4"
+  },
+  {
+    "file": "reply-correction-looks.mp3",
+    "expected": "A small language tip: say, she looks worried, without like before the adjective. Try that pattern with your own idea.",
+    "heard": "A small language tip. Say, \"She looks worried,\" without like before the adjective. Try that pattern with your own idea",
+    "matched": true,
+    "sha256": "d72f91c632877b550a38567bd33994b07331fbadec629bf83bc9fda1164e58ad"
+  },
+  {
+    "file": "reply-correction-agree.mp3",
+    "expected": "A small language tip: the phrase, I am agree, is not correct. Say, I agree. Your opinion can stay the same!",
+    "heard": "A small language tip: the phrase \"I am agree\" is not correct. Say, \"I agree.\" Your opinion can stay the same.",
+    "matched": true,
+    "sha256": "a846c5513f1d579df89969f413a20c368f2f390817988dfb9626e1bd5e1e9158"
+  },
+  {
+    "file": "reply-correction-seems.mp3",
+    "expected": "A small language tip: say, she seems to be helping. Use seems to be before an action ending in ing.",
+    "heard": "A small language tip. Say, \"She seems to be helping.\" Use seems to be before an action ending in ing.",
+    "matched": true,
+    "sha256": "5a26ca1f0c5a0aa1dc7a3866cd3a1e04cf91fb86766f27ed3cdf5ab8a8e4d4a2"
+  },
+  {
+    "file": "reply-worried.mp3",
+    "expected": "You mentioned worry. Remember to connect that impression to a detail you can see.",
+    "heard": "You mentioned worry. Remember to connect that impression to a detail you can see",
+    "matched": true,
+    "sha256": "20263c077adb6ad6defb96b06fc9babf76c110b08c592d0fe3b0781d8db54014"
+  },
+  {
+    "file": "reply-not-worried.mp3",
+    "expected": "You do not see worry in that expression. That is possible; a picture can support more than one interpretation.",
+    "heard": "You do not see worry in that expression. That is possible. A picture can support more than one interpretation",
+    "matched": true,
+    "sha256": "a8bccf0e4099e86f6231beacfd1625c84d880ff5dba5cb59b4874f238dce845b"
+  },
+  {
+    "file": "reply-share.mp3",
+    "expected": "Sharing quickly can have consequences. The source and the uncertainty are part of this decision.",
+    "heard": "Sharing quickly can have consequences. The source and the uncertainty are part of this decision",
+    "matched": true,
+    "sha256": "1b7ca025c0c92a5710cfea10276c9da217c8cd15230cc45bd1e2a092bad496cc"
+  },
+  {
+    "file": "reply-check.mp3",
+    "expected": "Checking a source takes time, and reliability matters. Think about how you would explain your choice.",
+    "heard": "Checking a source takes time, and reliability matters. Think about how you would explain your choice",
+    "matched": true,
+    "sha256": "63aac7c68f6eeaa0a412ab238d35f6c3e34c2fe37e4bba883b553b9abdf9f324"
+  },
+  {
+    "file": "reply-both.mp3",
+    "expected": "You are considering more than one possibility. That can help you explain a balanced opinion.",
+    "heard": "You are considering more than one possibility. That can help you explain a balanced opinion.",
+    "matched": true,
+    "sha256": "09f2b61c74ea5f5afac03eb25597b6f1c2d8dc4e660d9e226e50b2312d43d906"
+  },
+  {
+    "file": "reply-question.mp3",
+    "expected": "For this activity, use the image and give your own opinion. You can open the help for language or listen to the question again.",
+    "heard": "For this activity, use the image and give your own opinion. You can open the help for language or listen to the question again",
+    "matched": true,
+    "sha256": "3c2e92cb609b3befe89061a7d279b4bd9eac5ebb6b90be777596b97add195927"
+  },
+  {
+    "file": "reply-return.mp3",
+    "expected": "Now, let’s come back to the question on screen.",
+    "heard": "Now let's come back to the question on screen",
+    "matched": true,
+    "sha256": "659f39ce6ca706545bf6baa8cd099d13b2d6032694c72d1ca7cc8123df87db80"
+  },
+  {
+    "file": "reply-no-speech.mp3",
+    "expected": "I couldn't hear a clear answer. Check your microphone, and let's try again.",
+    "heard": "I couldn't hear a clear answer. Check your microphone and let's try again",
+    "matched": true,
+    "sha256": "1fba667f929dab82a53f351c61aa447aea8b131b32f72440f1312c66bf91340a"
+  },
+  {
+    "file": "reply-service.mp3",
+    "expected": "I couldn't get your words this time. Please retry the analysis, or continue without feedback.",
+    "heard": "I couldn't get your words this time. Please retry the analysis or continue without feedback",
+    "matched": true,
+    "sha256": "4185084fb0d2becb1ad603c08b3e3df8c49e9a8eb344b79badc01e7ee0b94c39"
+  },
+  {
+    "file": "reply-closing.mp3",
+    "expected": "Thanks for sharing your ideas! In the round table, listen to your classmates, explain your reasons, and remember: different opinions can help us think. See you soon!",
+    "heard": "Thanks for sharing your ideas. In the roundtable, listen to your classmates, explain your reasons, and remember, different opinions can help us think. See you soon",
+    "matched": true,
+    "sha256": "4952bdb5f6e6f3f35aa3805b45c3721f2ff5d256e34741b5cf1604afc16a0d6e"
+  },
+  {
+    "file": "reply-welcome.mp3",
+    "expected": "Hi there! I'm Chris. Five pictures, five big questions, and your own ideas! We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk!",
+    "heard": "Hi there, I'm Chris. Five pictures, five big questions, and your own ideas. We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk",
+    "matched": true,
+    "sha256": "94aa61e6675631e25628f031542436b97a3182da3b486aea6d7518448112410a"
+  },
+  {
+    "file": "word-photo.mp3",
+    "expected": "photo",
+    "heard": "Photo",
+    "matched": true,
+    "sha256": "29e41f64b4fec915964c34bb8b157011eed4018c3577ee5d552fbb48769b933b"
+  },
+  {
+    "file": "reply-instructions.mp3",
+    "expected": "Listen to one question at a time. Record your answer, then hear my reply. Open Help me answer if you need a start or an example. Click the picture to see more detail. You can skip a turn and come back later.",
+    "heard": "Listen to one question at a time. Record your answer, then hear my reply. Open Help Me Answer if you need a start or an example. Click the picture to see more detail. You can skip a turn and come back later",
+    "matched": true,
+    "sha256": "f08a066b2cb10e997965f5cce61068933db27000c2838cd1520a7f7a20f39b5f"
+  },
+  {
+    "file": "word-volunteer.mp3",
+    "expected": "volunteer",
+    "heard": "Volunteer",
+    "matched": true,
+    "sha256": "e5bc06af143fe95d8eb531a5185ffeebbf899ed1da542659eb161bd64e9795aa"
+  },
+  {
+    "file": "word-misleading.mp3",
+    "expected": "misleading",
+    "heard": "Misleading",
+    "matched": true,
+    "sha256": "42d96397460d8f9d044c41950cb94ecbfb28130d1b400a1cb9a6266a1952f6ac"
+  },
+  {
+    "file": "word-share.mp3",
+    "expected": "share",
+    "heard": "Share",
+    "matched": true,
+    "sha256": "7c8720e041b0cc186c84477d83b505dcac1d6fe09aa5808be8983e3a43921770"
+  },
+  {
+    "file": "word-check.mp3",
+    "expected": "check",
+    "heard": "Check",
+    "matched": true,
+    "sha256": "8a5c74a114147ba6cba4df0876484968820d770a516a9ac2b4fd6bf4d8b2ae4d"
+  },
+  {
+    "file": "word-film.mp3",
+    "expected": "film",
+    "heard": "Film",
+    "matched": true,
+    "sha256": "1c293b036d6afd11e99b71ce399f0dd4cbdd5025accedf8b472452acb045fc1d"
+  },
+  {
+    "file": "word-worried.mp3",
+    "expected": "worried",
+    "heard": "Worried",
+    "matched": true,
+    "sha256": "77db112dacac62451aad3444671583ddf0b30b47ee3deda6191d16952e304151"
+  },
+  {
+    "file": "word-might.mp3",
+    "expected": "might",
+    "heard": "Might",
+    "matched": true,
+    "sha256": "f0d9806b95bbc42c482f9bbdf2021f00a6cbc906732660583765f6d9e44ce801"
+  },
+  {
+    "file": "word-help.mp3",
+    "expected": "help",
+    "heard": "Help",
+    "matched": true,
+    "sha256": "cc0cb07ce41344c34a7c76308542c6c83d66f26333211a706cdb3c1350122142"
+  },
+  {
+    "file": "word-blankets.mp3",
+    "expected": "blankets",
+    "heard": "Blankets",
+    "matched": true,
+    "sha256": "361dde6365d69c3b5b83dee10777cc31dc51c76d7a9ea44a7171c90cc2ac62a8"
+  },
+  {
+    "file": "word-fairly.mp3",
+    "expected": "fairly",
+    "heard": "fairly",
+    "matched": true,
+    "sha256": "45cb28bf0b2fb57f563780f24c5f6cfafc26a06719aba564d09f440a8904f4f9"
+  },
+  {
+    "file": "word-seems.mp3",
+    "expected": "seems",
+    "heard": "Seems",
+    "matched": true,
+    "sha256": "3bffd7df5c87a8424f0b769bfef4aba0b16e7a5fdfd556b42f6a4d32b6f6f402"
+  },
+  {
+    "file": "word-attention.mp3",
+    "expected": "attention",
+    "heard": "Attention",
+    "matched": true,
+    "sha256": "93942d5a4258ac5aa37f4ae0f56633c00b72f0501ad2abcd352fb154b9692ed0"
+  },
+  {
+    "file": "word-community.mp3",
+    "expected": "community",
+    "heard": "Community",
+    "matched": true,
+    "sha256": "19ba7ca479cfaa47d862d435c05aaa99434f4097bf4c36fd0918672ffece7e8e"
+  },
+  {
+    "file": "word-nice-to-meet-you.mp3",
+    "expected": "nice to meet you",
+    "heard": "Nice to meet you",
+    "matched": true,
+    "sha256": "722f91e14759f98d0d00d9bc6165dee508845770bcfd5f1e1a99afe79d158c66"
+  }
+]

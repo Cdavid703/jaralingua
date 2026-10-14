@@ -12,3 +12,5 @@ Antes de trabajar, lee `docs/continuidad/README.md` y el documento del nivel sol
 
 - Para cada cambio solicitado, completar validación, commit de las rutas pertinentes, push normal y despliegue selectivo con verificación. El docente reiteró esta autorización permanente el 2 de octubre de 2026; no pedir confirmación adicional para este flujo ordinario.
 - Mantener sincronizado todo el código entre la copia local, GitHub y el servidor. Conservar borradores incompatibles en una rama de respaldo; mantener activa la versión publicada de Maple Café según la decisión del docente del 2 de octubre de 2026. Excluir credenciales, datos académicos, respaldos y archivos temporales.
+
+- Desde el 13 de octubre de 2026, el docente prohíbe volver a usar las voces creadas/clonadas David de ElevenLabs por problemas de pronunciación. Para nuevos audios o regeneraciones, usar voces de catálogo; Unidad 6 de Intermedio 2 usa Chris para el coach y reported speech, y conserva Sarah en las otras actividades. No interpretar referencias históricas a David como autorización vigente.

@@ -339,32 +339,32 @@ window.ReportedSpeechLesson = {
     {
       "term": "raincoat",
       "spanish": "impermeable",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-raincoat.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-raincoat.mp3"
     },
     {
       "term": "fallen branches",
       "spanish": "ramas caídas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-fallen-branches.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-fallen-branches.mp3"
     },
     {
       "term": "microphone",
       "spanish": "micrófono",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-microphone.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-microphone.mp3"
     },
     {
       "term": "flooded",
       "spanish": "inundado/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-flooded.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-flooded.mp3"
     },
     {
       "term": "rescue workers",
       "spanish": "rescatistas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rescue-workers.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-rescue-workers.mp3"
     },
     {
       "term": "boat",
       "spanish": "bote",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-boat.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-boat.mp3"
     },
     {
       "term": "residents",
@@ -374,7 +374,7 @@ window.ReportedSpeechLesson = {
     {
       "term": "bridge",
       "spanish": "puente",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-bridge.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-bridge.mp3"
     },
     {
       "term": "earthquake",
@@ -384,22 +384,22 @@ window.ReportedSpeechLesson = {
     {
       "term": "damaged",
       "spanish": "dañado/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-damaged.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-damaged.mp3"
     },
     {
       "term": "rubble",
       "spanish": "escombros",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rubble.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-rubble.mp3"
     },
     {
       "term": "inspectors",
       "spanish": "inspectores",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-inspectors.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-inspectors.mp3"
     },
     {
       "term": "safety tape",
       "spanish": "cinta de seguridad",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-safety-tape.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-safety-tape.mp3"
     },
     {
       "term": "wildfire",
@@ -409,22 +409,22 @@ window.ReportedSpeechLesson = {
     {
       "term": "smoke",
       "spanish": "humo",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-smoke.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-smoke.mp3"
     },
     {
       "term": "firefighters",
       "spanish": "bomberos",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-firefighters.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-firefighters.mp3"
     },
     {
       "term": "fire truck",
       "spanish": "camión de bomberos",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-fire-truck.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-fire-truck.mp3"
     },
     {
       "term": "hills",
       "spanish": "colinas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-hills.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-hills.mp3"
     },
     {
       "term": "drought",
@@ -434,22 +434,22 @@ window.ReportedSpeechLesson = {
     {
       "term": "reservoir",
       "spanish": "embalse",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-reservoir.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-reservoir.mp3"
     },
     {
       "term": "cracked ground",
       "spanish": "suelo agrietado",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-cracked-ground.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-cracked-ground.mp3"
     },
     {
       "term": "farmer",
       "spanish": "agricultor/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-farmer.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-farmer.mp3"
     },
     {
       "term": "dry",
       "spanish": "seco/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-dry.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-dry.mp3"
     },
     {
       "term": "landslide",
@@ -459,22 +459,22 @@ window.ReportedSpeechLesson = {
     {
       "term": "rocks",
       "spanish": "rocas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-rocks.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-rocks.mp3"
     },
     {
       "term": "excavator",
       "spanish": "excavadora",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-excavator.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-excavator.mp3"
     },
     {
       "term": "blockage",
       "spanish": "obstrucción",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-blockage.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-blockage.mp3"
     },
     {
       "term": "road",
       "spanish": "carretera",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-road.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-road.mp3"
     },
     {
       "term": "hurricane",
@@ -484,72 +484,72 @@ window.ReportedSpeechLesson = {
     {
       "term": "palm trees",
       "spanish": "palmeras",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-palm-trees.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-palm-trees.mp3"
     },
     {
       "term": "strong wind",
       "spanish": "viento fuerte",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-strong-wind.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-strong-wind.mp3"
     },
     {
       "term": "waves",
       "spanish": "olas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-waves.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-waves.mp3"
     },
     {
       "term": "bending",
       "spanish": "doblándose / inclinándose",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-bending.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-bending.mp3"
     },
     {
       "term": "musician",
       "spanish": "músico/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-musician.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-musician.mp3"
     },
     {
       "term": "journalist",
       "spanish": "periodista",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-journalist.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-journalist.mp3"
     },
     {
       "term": "guitar",
       "spanish": "guitarra",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-guitar.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-guitar.mp3"
     },
     {
       "term": "camera operator",
       "spanish": "camarógrafo/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-camera-operator.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-camera-operator.mp3"
     },
     {
       "term": "journalists",
       "spanish": "periodistas",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-journalists.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-journalists.mp3"
     },
     {
       "term": "photograph",
       "spanish": "fotografía",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-photograph.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-photograph.mp3"
     },
     {
       "term": "notebook",
       "spanish": "cuaderno",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-notebook.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-notebook.mp3"
     },
     {
       "term": "laptop",
       "spanish": "computadora portátil",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-laptop.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-laptop.mp3"
     },
     {
       "term": "checking sources",
       "spanish": "verificando las fuentes",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-checking-sources.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-checking-sources.mp3"
     },
     {
       "term": "press briefing",
       "spanish": "rueda de prensa informativa",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-press-briefing.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-press-briefing.mp3"
     },
     {
       "term": "spokesperson",
@@ -559,17 +559,17 @@ window.ReportedSpeechLesson = {
     {
       "term": "lectern",
       "spanish": "atril",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-lectern.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-lectern.mp3"
     },
     {
       "term": "raising his hand",
       "spanish": "levantando la mano",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-raising-his-hand.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-raising-his-hand.mp3"
     },
     {
       "term": "notebooks",
       "spanish": "cuadernos",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-notebooks.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-notebooks.mp3"
     },
     {
       "term": "shelter",
@@ -594,33 +594,33 @@ window.ReportedSpeechLesson = {
     {
       "term": "temporary beds",
       "spanish": "camas provisionales",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-temporary-beds.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-temporary-beds.mp3"
     },
     {
       "term": "reported speech",
       "spanish": "discurso indirecto",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-reported-speech.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-reported-speech.mp3"
     },
     {
       "term": "swap roles",
       "spanish": "intercambiar los papeles",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-swap-roles.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-swap-roles.mp3"
     },
     {
       "term": "partner",
       "spanish": "compañero/a",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-partner.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-partner.mp3"
     },
     {
       "term": "meaning",
       "spanish": "significado / sentido",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-meaning.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-meaning.mp3"
     },
     {
       "term": "pronouns",
       "spanish": "pronombres",
-      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/word-pronouns.mp3"
+      "audio": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/word-pronouns.mp3"
     }
   ],
-  "audioRoot": "/ingles/intermediate-2/audio/unit-6-reported-speech/"
+  "audioRoot": "/ingles/intermediate-2/audio/unit-6-reported-speech/chris-v1/"
 };

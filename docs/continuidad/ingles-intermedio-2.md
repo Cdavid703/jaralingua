@@ -4,6 +4,8 @@ Este nivel tiene documentación propia y no debe confundirse con Intermedio 1. E
 
 ## Decisiones y referencias
 
+- Preferencia del 13 de octubre de 2026: no volver a utilizar las voces creadas/clonadas David de ElevenLabs. La autorización histórica queda retirada para nuevas generaciones. Auditoría de las siete actividades de Practice Lab Unidad 6: My opinion matters (115 clips) y What did they say? (71 clips) migran a Chris de catálogo (`iP95p4xoKVk53GoZ742B`), Multilingual v2; las cinco restantes usan Sarah y no requieren regeneración. Unidad 5 no forma parte de esta migración solicitada. Los MP3 anteriores se conservan como históricos sin enlaces activos en Unidad 6; las páginas y el catálogo apuntan a `chris-v1/`.
+
 - Leer [plan maestro](../english-intermediate-2-master-plan.md), [guía de construcción](../guia-construccion-ingles-intermedio-2.md) y [sistema de diseño](../english-intermediate2-page-design-system.md).
 - El plan maestro propone seis unidades, secciones del curso, grilla privada independiente y cinco evaluaciones de 20%. Es planificación: no demuestra que todas estén implementadas o calificadas.
 - Este sistema de diseño fue referencia para aprovechar el ancho en Básico 2: optimizar espacio con grillas, no estirar innecesariamente texto.
@@ -50,7 +52,7 @@ Se conserva la excepción de audio del docente: en los retos de escuchar y escog
 
 ## Unit 6 · My opinion matters
 
-Coach visual aprobado para preparar una mesa redonda de cinco preguntas: contexto de una foto, alerta sin verificar, grabar o ayudar, suministros limitados y cobertura desigual. Saludo y nombre, descripción, interpretación con looks/seems/might y opinión; seguimientos para pedir razón o predecir. Cinco imágenes originales ampliables, pregunta ampliable, ayudas y ejemplos con audio ocultos inicialmente. Voz David clonada autorizada, principalmente Eleven v3 con indicaciones expresivas para que los saludos y exclamaciones tengan intención vocal.
+Coach visual aprobado para preparar una mesa redonda de cinco preguntas: contexto de una foto, alerta sin verificar, grabar o ayudar, suministros limitados y cobertura desigual. Saludo y nombre, descripción, interpretación con looks/seems/might y opinión; seguimientos para pedir razón o predecir. Cinco imágenes originales ampliables, pregunta ampliable, ayudas y ejemplos con audio ocultos inicialmente. Voz Chris de catálogo, Multilingual v2, con puntuación natural e intención expresiva. Sustituye la voz creada David por solicitud del docente.
 
 Conversación guiada con rutas y respuestas pregrabadas, no comprensión generativa ilimitada. Aclara respuestas no reconocidas; no califica opiniones ni inventa puntuación fonética. Informe de cinco opiniones durante la visita, sin persistencia de voz/transcripciones ni envío al docente. Se conserva el motor compartido con extensiones optativas y pruebas de regresión. Referencia: [implementación, recursos y límites](../english-intermediate2-opinion-coach.md).
 
@@ -58,9 +60,9 @@ Ajuste de distribución del coach: imagen, conversación y grabación en una fil
 
 ## Unit 6 · What did they say?
 
-Actividad de parejas: ejemplo guiado más diez escenas distintas de noticias/desastres. A describe tres detalles en presente; B reporta lo dicho por A usando said that y cambios de verbos/pronombres, sin añadir información. Modelos comparables, 25 audios David, ayudas y cada escena ampliables. Galería filtrable y proyector; modelos de práctica cerrados hasta solicitarlos. Once imágenes de actividad y hero propio. Sin grabación, entregas ni notas. Ver [implementación y pruebas](../english-intermediate2-reported-speech.md).
+Actividad de parejas: ejemplo guiado más diez escenas distintas de noticias/desastres. A describe tres detalles en presente; B reporta lo dicho por A usando said that y cambios de verbos/pronombres, sin añadir información. Modelos comparables, 25 modelos de frases e instrucciones, ayudas y cada escena ampliables. Galería filtrable y proyector; modelos de práctica cerrados hasta solicitarlos. Once imágenes de actividad y hero propio. Sin grabación, entregas ni notas. Ver [implementación y pruebas](../english-intermediate2-reported-speech.md).
 
-Ajuste visual y vocabulario del 9 de octubre de 2026: David visible a 144 px (128 px en móvil) en el coach, con imágenes completas y manteniendo la fila. What did they say incorpora cinco palabras por cada una de sus once imágenes, significados españoles por mouse/foco/toque y pronunciación por clic; vocabulario y ayudas funcionan también dentro del proyector. Banner y miniaturas sin recorte.
+Ajuste visual y vocabulario del 9 de octubre de 2026: Retrato ficticio visible a 144 px (128 px en móvil) en el coach, con imágenes completas y manteniendo la fila. What did they say incorpora cinco palabras por cada una de sus once imágenes, significados españoles por mouse/foco/toque y pronunciación por clic; vocabulario y ayudas funcionan también dentro del proyector. Banner y miniaturas sin recorte.
 
 ## Unit 6 · After the Flood listening
 
@@ -85,3 +87,5 @@ Página `game-unit-6-disaster-news-memory.html`, primera entrada de Unidad 6 en 
 Actualización del reto oral: al encontrar cada pareja, el estudiante da **un titular de noticia, una sola frase en pasado y con sus propias palabras**, usando el término de la tarjeta. El docente acepta cualquier titular coherente y confirma «Headline completed · +1»; no se pide una segunda intervención ni reported speech. Ejemplo inicial visible con imagen y audio antes del tablero: «The river overflowed and caused a flood». La primera pareja también muestra su modelo abierto; en las siguientes, el modelo queda disponible bajo demanda, sin imponer una respuesta única. Se conserva el formato de Básico 2 y los cuarenta audios originales.
 
 Dos imágenes contextuales nuevas, generadas con imagegen, reemplazan en el juego las celdas food supplies y drinking water: entrega de alimentos tras una inundación y reparto de agua durante una sequía. Los otros dieciocho temas siguen usando la lámina original. Los datos añaden `image` e `imageDescription` solo a esas dos palabras. Modelos y prompts se registran en `docs/english-intermediate2-unit6-memory-resources.json`. El panel de pareja coloca imagen amplia y consigna en paralelo en computador y se adapta al móvil.
+
+La grabación aislada «might» usa Sarah de catálogo como excepción de claridad: la auditoría transcribía la versión Chris como «mate». Las otras 114 grabaciones nuevas del coach y las 71 de reported speech usan Chris. Los 186 archivos nuevos pasan la comparación con sus guiones.

@@ -7,7 +7,7 @@ const topics=[null,/\b(photo|phone|man|box|boxes|volunteer|picture|scene|crop|he
 const relevant=(t,q)=>!q.sceneId||topics[q.sceneId].test(norm(t))||(q.kind==='interpret'&&/\b(looks?|seems?|might|worried|happy|tired|calm|confused|focused|angry|sad|unsure)\b/.test(norm(t)));
 function correction(t){t=norm(t);if(/\b(?:looks?|seems?) like (?:very |really )?(?:worried|happy|sad|tired|confused|nervous|calm)\b/.test(t))return c.replies['correction-looks'];if(/\bi am agree\b/.test(t))return c.replies['correction-agree'];if(/\bseems? (?:helping|waiting|thinking|working)\b/.test(t))return c.replies['correction-seems'];return null;}
 c.questionResolver=(q,previous)=>q.kind==='interpret'&&previous?.questionId===`s${q.sceneId}-observe`&&/\b(looks?|seems?|might|worried|happy|tired|unsure|anxious|calm)\b/.test(norm(previous.transcript))?{...q,...q.alternative}:q;
-c.isStudentQuestion=t=>/^(?:hi david[, ]*|david[, ]*)?(?:could you repeat|can you repeat|what does|what do you mean|how do i|can you help|could you help|what is your opinion|what do you think)\b/.test(norm(t).trim());
+c.isStudentQuestion=t=>/^(?:hi chris[, ]*|chris[, ]*)?(?:could you repeat|can you repeat|what does|what do you mean|how do i|can you help|could you help|what is your opinion|what do you think)\b/.test(norm(t).trim());
 c.responseResolver=(answer,q,p=q)=>{
  const t=norm(answer.transcript),fix=correction(t);
  if(q.interaction){if(/repeat/.test(t))return [{file:p.audio,text:p.text}];return [c.replies.question];}

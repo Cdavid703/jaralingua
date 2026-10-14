@@ -8,11 +8,11 @@ window.JaraLinguaConversationCoachConfig = {
   "courseLabel": "Intermediate English Course 2",
   "unitLabel": "Unit 6",
   "title": "My opinion matters",
-  "audioRoot": "audio/unit-6-opinion-coach/",
+  "audioRoot": "audio/unit-6-opinion-coach/chris-v1/",
   "attemptQuestionCount": 16,
   "maxRecordingSeconds": 50,
   "character": {
-    "name": "David Rivera",
+    "name": "Chris Rivera",
     "role": "Your conversation coach",
     "portrait": "../../assets/img/english-intermediate-2/unit-5/david-coach/david.png"
   },
@@ -22,7 +22,7 @@ window.JaraLinguaConversationCoachConfig = {
       "sceneId": null,
       "kind": "hello",
       "topic": "Let’s meet",
-      "text": "Hi! I'm David. It's good to see you! What's your name?",
+      "text": "Hi! I'm Chris. It's good to see you! What's your name?",
       "audio": "hello.mp3",
       "frames": [
         "My name is ___. Nice to meet you!"
@@ -30,7 +30,7 @@ window.JaraLinguaConversationCoachConfig = {
       "examples": [
         {
           "file": "hello-example-1.mp3",
-          "text": "Hi, David! My name is Ana."
+          "text": "Hi, Chris! My name is Ana."
         }
       ],
       "vocabulary": [
@@ -44,7 +44,7 @@ window.JaraLinguaConversationCoachConfig = {
           "minMatches": 3
         }
       ],
-      "improved": "Hi, David! My name is Ana.",
+      "improved": "Hi, Chris! My name is Ana.",
       "minWords": 1,
       "maxSeconds": 20,
       "unscored": true
@@ -1251,7 +1251,7 @@ window.JaraLinguaConversationCoachConfig = {
   "wordHelp": {
     "photo": {
       "spanish": "foto",
-      "audio": "audio/unit-6-opinion-coach/word-photo.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-photo.mp3"
     },
     "supplies": {
       "spanish": "suministros",
@@ -1259,7 +1259,7 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "volunteer": {
       "spanish": "voluntario o voluntaria",
-      "audio": "audio/unit-6-opinion-coach/word-volunteer.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-volunteer.mp3"
     },
     "evidence": {
       "spanish": "evidencia; pruebas",
@@ -1267,7 +1267,7 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "misleading": {
       "spanish": "engañoso; que da una impresión equivocada",
-      "audio": "audio/unit-6-opinion-coach/word-misleading.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-misleading.mp3"
     },
     "warning": {
       "spanish": "alerta; advertencia",
@@ -1279,19 +1279,19 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "share": {
       "spanish": "compartir",
-      "audio": "audio/unit-6-opinion-coach/word-share.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-share.mp3"
     },
     "check": {
       "spanish": "comprobar; verificar",
-      "audio": "audio/unit-6-opinion-coach/word-check.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-check.mp3"
     },
     "worried": {
       "spanish": "preocupado o preocupada",
-      "audio": "audio/unit-6-opinion-coach/word-worried.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-worried.mp3"
     },
     "film": {
       "spanish": "grabar un video",
-      "audio": "audio/unit-6-opinion-coach/word-film.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-film.mp3"
     },
     "rescue crew": {
       "spanish": "equipo de rescate",
@@ -1303,11 +1303,11 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "help": {
       "spanish": "ayudar; ayuda",
-      "audio": "audio/unit-6-opinion-coach/word-help.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-help.mp3"
     },
     "might": {
       "spanish": "podría; expresa posibilidad",
-      "audio": "audio/unit-6-opinion-coach/word-might.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-might.mp3"
     },
     "shelter": {
       "spanish": "refugio",
@@ -1315,15 +1315,15 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "blankets": {
       "spanish": "mantas; cobijas",
-      "audio": "audio/unit-6-opinion-coach/word-blankets.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-blankets.mp3"
     },
     "fairly": {
       "spanish": "de manera justa",
-      "audio": "audio/unit-6-opinion-coach/word-fairly.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-fairly.mp3"
     },
     "seems": {
       "spanish": "parece",
-      "audio": "audio/unit-6-opinion-coach/word-seems.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-seems.mp3"
     },
     "reporter": {
       "spanish": "reportero o reportera",
@@ -1331,15 +1331,15 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "attention": {
       "spanish": "atención",
-      "audio": "audio/unit-6-opinion-coach/word-attention.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-attention.mp3"
     },
     "community": {
       "spanish": "comunidad",
-      "audio": "audio/unit-6-opinion-coach/word-community.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-community.mp3"
     },
     "nice to meet you": {
       "spanish": "mucho gusto",
-      "audio": "audio/unit-6-opinion-coach/word-nice-to-meet-you.mp3"
+      "audio": "audio/unit-6-opinion-coach/chris-v1/word-nice-to-meet-you.mp3"
     }
   },
   "replies": {
@@ -1429,7 +1429,7 @@ window.JaraLinguaConversationCoachConfig = {
     },
     "welcome": {
       "file": "reply-welcome.mp3",
-      "text": "Hi there! I'm David. Five pictures, five big questions, and your own ideas! We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk!"
+      "text": "Hi there! I'm Chris. Five pictures, five big questions, and your own ideas! We'll describe what we see, explore what it might mean, and share opinions. Ready? Let's talk!"
     },
     "instructions": {
       "file": "reply-instructions.mp3",
@@ -1437,10 +1437,10 @@ window.JaraLinguaConversationCoachConfig = {
     }
   },
   "voice": {
-    "id": "pv8WYYW60prEkDbDXyC0",
-    "name": "David",
-    "category": "cloned",
-    "modelId": "eleven_v3"
+    "id": "iP95p4xoKVk53GoZ742B",
+    "name": "Chris",
+    "category": "premade",
+    "modelId": "eleven_multilingual_v2"
   },
   "audio": {
     "welcome": "reply-welcome.mp3",
