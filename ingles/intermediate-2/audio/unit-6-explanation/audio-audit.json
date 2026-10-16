@@ -488,5 +488,502 @@
     "heard": "Reported, damaged, rescued",
     "matched": true,
     "sha256": "0cf3d223ee5bb1b29b98b48a374baea3acca80dadafa369229b1b900c83f9bd0"
+  },
+  {
+    "file": "prep-look-question.mp3",
+    "expected": "Are they trying to find someone, or directing their eyes towards something?",
+    "heard": "Are they trying to find someone or directing their eyes towards something?",
+    "matched": true,
+    "sha256": "97e51212abfee2ca33d7728a3efc1f9f8d169b918cf5bba6006617c83905251a"
+  },
+  {
+    "file": "prep-introduction.mp3",
+    "expected": "Compare two pictures. Notice how the preposition changes the action or the information that follows the verb. Learn each combination in context. Then use a past form to report what happened.",
+    "heard": "Compare two pictures. Notice how the preposition changes the action or the information that follows the verb. Learn each combination in context, then use a past form to report what happened",
+    "matched": true,
+    "sha256": "3c39bd0886f7240bb5a22b16a2c945fdae40eadf29e533b6a6e960e1b3efe848"
+  },
+  {
+    "file": "prep-look-for-present.mp3",
+    "expected": "They are looking for survivors.",
+    "heard": "They are looking for survivors",
+    "matched": true,
+    "sha256": "ac21f284316cdf4d0920c6e283c7d2a0a6e06a07500e7878ee95619e99f3f136"
+  },
+  {
+    "file": "prep-look-for.mp3",
+    "expected": "look for",
+    "heard": "Look for",
+    "matched": true,
+    "sha256": "ebe56ee2b3db77ac0082e3c3e2498a519d44260daa12c78eab131376d3e69a60"
+  },
+  {
+    "file": "prep-look-at.mp3",
+    "expected": "look at",
+    "heard": "Look at",
+    "matched": true,
+    "sha256": "83e8bca8c467fa18c1d0adecc05eff7668ccee553b3c0543b44cc1fad6695e7f"
+  },
+  {
+    "file": "prep-look-for-past.mp3",
+    "expected": "The rescuers looked for survivors.",
+    "heard": "The rescuers looked for survivors",
+    "matched": true,
+    "sha256": "e5d33cd4b34a58d3d9ea16560de52f46d850e7090c0100f32cdef12d20bd33b5"
+  },
+  {
+    "file": "prep-look-at-present.mp3",
+    "expected": "They are looking at a map.",
+    "heard": "They are looking at a map.",
+    "matched": true,
+    "sha256": "c9b90152e0224d54627de4f034c3be699bc46f9fc07f2688ff4c97a68a90a7d2"
+  },
+  {
+    "file": "prep-look-at-past.mp3",
+    "expected": "The rescuers looked at a map.",
+    "heard": "The rescuers looked at a map.",
+    "matched": true,
+    "sha256": "19ae4015b327a929803964d81678c1dc53cf6b8dfb32294d772c9a894fc2073b"
+  },
+  {
+    "file": "prep-listen-to.mp3",
+    "expected": "listen to",
+    "heard": "Listen to",
+    "matched": true,
+    "sha256": "09c623332eeff978dbf21bc0fdab1ee13b54316588d5cc81624dcfcadcc91e17"
+  },
+  {
+    "file": "prep-listen-question.mp3",
+    "expected": "Are they paying attention to a message, or trying to detect a sound?",
+    "heard": "Are they paying attention to a message or trying to detect a sound?",
+    "matched": true,
+    "sha256": "47c96b4e5f0e27dd6bf8344c8949421f2ac0b06fe7b4c5a19c5e015605996cd5"
+  },
+  {
+    "file": "prep-listen-to-present.mp3",
+    "expected": "They are listening to the instructions.",
+    "heard": "They are listening to the instructions.",
+    "matched": true,
+    "sha256": "fc9036e81e12d644b0b87fb06e7f6314259e70b8d2ca1517d0044691c0203f2d"
+  },
+  {
+    "file": "prep-listen-to-past.mp3",
+    "expected": "The family listened to the instructions.",
+    "heard": "The family listened to the instructions.",
+    "matched": true,
+    "sha256": "1257616fe8468dc21d9265b3b9f7e3cc3c64f9c145fdafccdf44506230a56226"
+  },
+  {
+    "file": "prep-listen-for.mp3",
+    "expected": "listen for",
+    "heard": "Listen for",
+    "matched": true,
+    "sha256": "a1f1eb337125ea649193f4ec4888157ce7306e37ccca8915a54c6bc164b0e04a"
+  },
+  {
+    "file": "prep-listen-for-present.mp3",
+    "expected": "He is listening for cries for help.",
+    "heard": "He is listening for cries for help.",
+    "matched": true,
+    "sha256": "a162e0fef8d72a3dce37ef420cb89d1edf99fcd274df6dfd48af7142ff0f5ce0"
+  },
+  {
+    "file": "prep-listen-for-past.mp3",
+    "expected": "The firefighter listened for cries for help.",
+    "heard": "The firefighter listened for cries for help.",
+    "matched": true,
+    "sha256": "dbea8b618a13d4dc4234772d99d19fe494e15fb265389ad143bbdfcdab1a8ecb"
+  },
+  {
+    "file": "prep-ask-question.mp3",
+    "expected": "Do they want to receive something, or get information about a topic?",
+    "heard": "Do they want to receive something or get information about a topic?",
+    "matched": true,
+    "sha256": "e0136a6f6d6512f87852ae94dcd8d6872ec1030e8c1452ced36cc2ef4aa3f059"
+  },
+  {
+    "file": "prep-ask-for.mp3",
+    "expected": "ask for",
+    "heard": "Ask for",
+    "matched": true,
+    "sha256": "994341fb6e489e31a5503229ae195d3757c893432b095e766dd6111807d73115"
+  },
+  {
+    "file": "prep-ask-for-present.mp3",
+    "expected": "They are asking for blankets.",
+    "heard": "They are asking for blankets",
+    "matched": true,
+    "sha256": "0074cb5deb0182c07002efed945b3b48c858f112ff75095b92d7e05c2be07689"
+  },
+  {
+    "file": "prep-ask-for-past.mp3",
+    "expected": "The family asked for blankets.",
+    "heard": "The family asked for blankets.",
+    "matched": true,
+    "sha256": "d6523fc082779f562b762fe3c4d99182a643e0024888d9d988b0af8dee11820f"
+  },
+  {
+    "file": "prep-ask-about.mp3",
+    "expected": "ask about",
+    "heard": "Ask about",
+    "matched": true,
+    "sha256": "c879b4903c974365a735a0195d372cbdf9b87eba371123fbfa35dd221aea6712"
+  },
+  {
+    "file": "prep-ask-about-present.mp3",
+    "expected": "She is asking about the damage.",
+    "heard": "She is asking about the damage",
+    "matched": true,
+    "sha256": "e63df0dc66b9acd12e6ba06d29ba69ae2cef984e991e866899ec70593688bc6b"
+  },
+  {
+    "file": "prep-ask-about-past.mp3",
+    "expected": "The reporter asked about the damage.",
+    "heard": "The reporter asked about the damage",
+    "matched": true,
+    "sha256": "5731f2a92b8bc214bb2443be15d9811cde8a80796fd5e5731f15f0c39a383d0b"
+  },
+  {
+    "file": "prep-hear-question.mp3",
+    "expected": "Did they learn that an event happened, or receive a message from someone?",
+    "heard": "Did they learn that an event happened or receive a message from someone?",
+    "matched": true,
+    "sha256": "e885f5f8ba03dcfcc0627a1227e156634a68a0fa3df79380d931b7b0c61adc2d"
+  },
+  {
+    "file": "prep-hear-about.mp3",
+    "expected": "hear about",
+    "heard": "hear about",
+    "matched": true,
+    "sha256": "3f4769250c5b983bc2c58573af3d4666df043288d61644a7f8c27905cf0b6ce9"
+  },
+  {
+    "file": "prep-hear-about-present.mp3",
+    "expected": "They hear about the wildfire on the news.",
+    "heard": "They hear about the wildfire on the news",
+    "matched": true,
+    "sha256": "168bcba37ade385ccf7c3f919a31d2bc79c69cb1779fffd1eebfac3684554d8e"
+  },
+  {
+    "file": "prep-hear-about-past.mp3",
+    "expected": "They heard about the wildfire on the news.",
+    "heard": "They heard about the wildfire on the news.",
+    "matched": true,
+    "sha256": "047f7b9c206fe5802f0c9451fd29a43e94ca8e4ef1bb22c18797036cadc24b4c"
+  },
+  {
+    "file": "prep-hear-from-present.mp3",
+    "expected": "She finally hears from her son.",
+    "heard": "She finally hears from her son",
+    "matched": true,
+    "sha256": "352e57ca5828f1723a2b95c776a610f040069f5222b2e8ddb3fe81e353ce0340"
+  },
+  {
+    "file": "prep-hear-from.mp3",
+    "expected": "hear from",
+    "heard": "Hear from",
+    "matched": true,
+    "sha256": "6625589794fbe9183da2946f91b73318b68e0ed1a5f3263abd77ec129f582fd8"
+  },
+  {
+    "file": "prep-hear-from-past.mp3",
+    "expected": "She finally heard from her son.",
+    "heard": "She finally heard from her son",
+    "matched": true,
+    "sha256": "a90bb27016e874859eacc3cdb161881a0a5df755c4f5ad3555baa6d7918bf79d"
+  },
+  {
+    "file": "prep-report-question.mp3",
+    "expected": "Is someone covering a news story, or arriving to receive instructions?",
+    "heard": "Is someone covering a news story or arriving to receive instructions?",
+    "matched": true,
+    "sha256": "30e3e78964f377c3acfe508859fa873dd2932a44d9bd4e1e7c693d82badf9b9f"
+  },
+  {
+    "file": "prep-report-on.mp3",
+    "expected": "report on",
+    "heard": "report on",
+    "matched": true,
+    "sha256": "432f17b7ce1ee596d0b71ae38e3fad3b27ab397ffd0c2917441538338d54e357"
+  },
+  {
+    "file": "prep-report-on-present.mp3",
+    "expected": "She is reporting on the flood.",
+    "heard": "She is reporting on the flood.",
+    "matched": true,
+    "sha256": "cbb816249cfc39bca84ce207c436c07f05ddfdb047117befd1220d7ceb2623ea"
+  },
+  {
+    "file": "prep-report-on-past.mp3",
+    "expected": "The reporter reported on the flood.",
+    "heard": "The reporter reported on the flood",
+    "matched": true,
+    "sha256": "3088539c131ac2a016ceb4c4cc83ef9d1179fd4d12b3c9a729c00a9e24e760ba"
+  },
+  {
+    "file": "prep-report-to.mp3",
+    "expected": "report to",
+    "heard": "Report to",
+    "matched": true,
+    "sha256": "c8a6f7220db1577b9bd88511072d84054888736bccdbdd9d4a90dd2bb74268ac"
+  },
+  {
+    "file": "prep-report-to-present.mp3",
+    "expected": "They report to the shelter coordinator.",
+    "heard": "They report to the shelter coordinator",
+    "matched": true,
+    "sha256": "9fe254f77fa59f03df63e5352dc5b62dc9d8452099b193dd47d9bb63734c3b93"
+  },
+  {
+    "file": "prep-report-to-past.mp3",
+    "expected": "The volunteers reported to the shelter coordinator.",
+    "heard": "The volunteers reported to the shelter coordinator.",
+    "matched": true,
+    "sha256": "e7107404c32e31e8bb592509823e6ea727a34dcbabba6ca608307b3bdb12ddc7"
+  },
+  {
+    "file": "prep-warn-question.mp3",
+    "expected": "Does the warning name a danger, or advise people not to do something?",
+    "heard": "Does the warning name a danger or advise people not to do something?",
+    "matched": true,
+    "sha256": "d0a5483fb373a7d9849cacd4c1c996df200538b0b101ec5a51924f31ff6f1a71"
+  },
+  {
+    "file": "prep-warn-about.mp3",
+    "expected": "warn about",
+    "heard": "warn about",
+    "matched": true,
+    "sha256": "01ada204df63353e51ab0f056d086b47d9d37bb7af44e24e58a375c6996b01cc"
+  },
+  {
+    "file": "prep-warn-about-present.mp3",
+    "expected": "He warns people about the approaching storm.",
+    "heard": "He warns people about the approaching storm.",
+    "matched": true,
+    "sha256": "4aea15a80c4759025e050474961b7091979436886c4d0a7c88c920903d626b39"
+  },
+  {
+    "file": "prep-warn-against.mp3",
+    "expected": "warn against",
+    "heard": "warn against",
+    "matched": true,
+    "sha256": "b42b898e97154e8bdea71ffc48e509cbd0105b80ff20da70394b83940010d7f4"
+  },
+  {
+    "file": "prep-warn-about-past.mp3",
+    "expected": "He warned people about the approaching storm.",
+    "heard": "He warned people about the approaching storm.",
+    "matched": true,
+    "sha256": "c171ec070f1081acce8878551193a851106456bb84d2b799f24bd8aabee68f9d"
+  },
+  {
+    "file": "prep-warn-against-present.mp3",
+    "expected": "He warns people against walking through floodwater.",
+    "heard": "He warns people against walking through floodwater",
+    "matched": true,
+    "sha256": "13aa6aa51b277d1710177dea0e09363e6ee9f720c18c83a5e379600fbd2fdfde"
+  },
+  {
+    "file": "prep-warn-against-past.mp3",
+    "expected": "He warned people against walking through floodwater.",
+    "heard": "He warned people against walking through floodwater.",
+    "matched": true,
+    "sha256": "5ed4fe818924eac103d8a119ea7de1aba2096093718432fee60b2c02f3da14dc"
+  },
+  {
+    "file": "prep-care-for.mp3",
+    "expected": "care for",
+    "heard": "Care for",
+    "matched": true,
+    "sha256": "26000f5e3ccbe60f9fe2d94bb40644af71a08aca135448a468ffc95ae1158bd8"
+  },
+  {
+    "file": "prep-care-question.mp3",
+    "expected": "Is someone providing practical care, or showing that people matter to them?",
+    "heard": "Is someone providing practical care or showing that people matter to them?",
+    "matched": true,
+    "sha256": "99672dbbc0c4593908a1c34960262b168c541582e2930bdcc45a281188831e3a"
+  },
+  {
+    "file": "prep-care-for-past.mp3",
+    "expected": "The nurse cared for injured people.",
+    "heard": "The nurse cared for injured people.",
+    "matched": true,
+    "sha256": "4b90555b23c08af4c0aedd4ab9543d62770163aafc1f29f2015e149fed239bb8"
+  },
+  {
+    "file": "prep-care-for-present.mp3",
+    "expected": "She is caring for injured people.",
+    "heard": "She is caring for injured people",
+    "matched": true,
+    "sha256": "78f2a5ba50b535957cbb5532bc7fba71e0ff26f63974e82c3eea5ccc1d239014"
+  },
+  {
+    "file": "prep-care-about.mp3",
+    "expected": "care about",
+    "heard": "care about",
+    "matched": true,
+    "sha256": "0ec55432298d90dad1e663a9a4fd2dbe7ea94991fe90a4062274a0110f90483d"
+  },
+  {
+    "file": "prep-care-about-present.mp3",
+    "expected": "They care about the affected families.",
+    "heard": "They care about the affected families.",
+    "matched": true,
+    "sha256": "c50b13ce9939dfa5bea7803d892ccdfbb7aacf6f8add113f7cb676e0345470b1"
+  },
+  {
+    "file": "prep-work-question.mp3",
+    "expected": "Does the sentence name an employer, or a task being completed?",
+    "heard": "Does the sentence name an employer or a task being completed?",
+    "matched": true,
+    "sha256": "1876e98fd1608e252a55eea7ea2d30ba5c366fa28cede4fc09b69a2a82d6a4f8"
+  },
+  {
+    "file": "prep-care-about-past.mp3",
+    "expected": "The neighbours cared about the affected families.",
+    "heard": "The neighbors cared about the affected families.",
+    "matched": true,
+    "sha256": "cc8d7c53d88ccc488c4217bb3b90612b848b830bc13f2052a1a45170e47809f9"
+  },
+  {
+    "file": "prep-work-for.mp3",
+    "expected": "work for",
+    "heard": "work for",
+    "matched": true,
+    "sha256": "fb31c9da2b82d1b0fcfea8ce918ef703b3f129b0a4eed03b27fd9216c75d0b6a"
+  },
+  {
+    "file": "prep-work-for-present.mp3",
+    "expected": "She works for a news channel.",
+    "heard": "She works for a news channel",
+    "matched": true,
+    "sha256": "7993772157e87ab50e55fa7979fd7378dba1b128e18d909039bfdbe37cd03933"
+  },
+  {
+    "file": "prep-work-on.mp3",
+    "expected": "work on",
+    "heard": "Work on",
+    "matched": true,
+    "sha256": "ba1aa73ca46440d90ec1a3d2d79b908c58c267ce5ea55805e6ca0486f1882ae2"
+  },
+  {
+    "file": "prep-work-for-past.mp3",
+    "expected": "She worked for a news channel.",
+    "heard": "She worked for a news channel",
+    "matched": true,
+    "sha256": "57a7345d31e6a9c9e9e893d71ebff7aa16f88ecca452bbee5d8d0f729089e92f"
+  },
+  {
+    "file": "prep-work-on-present.mp3",
+    "expected": "They are working on repairs to the bridge.",
+    "heard": "They are working on repairs to the bridge.",
+    "matched": true,
+    "sha256": "119e693a4b07b6e193c418e48c471cc78b62ada054ef48fb29a6bdfe68c1a7e8"
+  },
+  {
+    "file": "prep-work-on-past.mp3",
+    "expected": "They worked on repairs to the bridge.",
+    "heard": "They worked on repairs to the bridge.",
+    "matched": true,
+    "sha256": "bc3bfd4e73ede1c0451d633fd140bbea52004a79b76a2aeb0c4cc978668c2549"
+  },
+  {
+    "file": "prep-learn-about.mp3",
+    "expected": "learn about",
+    "heard": "Learn about",
+    "matched": true,
+    "sha256": "eff13473633223f8d0e8e531530c9578e237633532e17ccaaf0c923e009725f1"
+  },
+  {
+    "file": "prep-learn-question.mp3",
+    "expected": "Are we naming the topic, or the experience that teaches a lesson?",
+    "heard": "Are we naming the topic or the experience that teaches a lesson?",
+    "matched": true,
+    "sha256": "a11b82f1306e6a6383ec88ee9f7f0a7600f8309c2cde388b4c35ba9ef3c135f8"
+  },
+  {
+    "file": "prep-learn-about-present.mp3",
+    "expected": "They are learning about floods.",
+    "heard": "They are learning about floods.",
+    "matched": true,
+    "sha256": "2665d7258ffb379aeae0c775f76bc67f544b395985e6b927e217153dafa76f91"
+  },
+  {
+    "file": "prep-learn-about-past.mp3",
+    "expected": "The students learned about floods.",
+    "heard": "The students learned about floods",
+    "matched": true,
+    "sha256": "2ebc885b3c189610768b52189042b4c703e9f7bcadc21c90257d345d3245b216"
+  },
+  {
+    "file": "prep-learn-from.mp3",
+    "expected": "learn from",
+    "heard": "Learn from",
+    "matched": true,
+    "sha256": "58a4f98f8ebcd30149aa34138de1bdba2959ae94305ddbd497a47ae8a6ba2d06"
+  },
+  {
+    "file": "prep-learn-from-present.mp3",
+    "expected": "They are learning from past mistakes.",
+    "heard": "They are learning from past mistakes.",
+    "matched": true,
+    "sha256": "f8dff8d7021cefe83a0113dbf0812ccabc7362c1e13b02f61da676e1a867120a"
+  },
+  {
+    "file": "prep-learn-from-past.mp3",
+    "expected": "The planners learned from past mistakes.",
+    "heard": "The planners learned from past mistakes.",
+    "matched": true,
+    "sha256": "a6a2419651ef728d3cef6c174bea75c86ef39a55b595cb7f9add6025a867fd90"
+  },
+  {
+    "file": "prep-complain-question.mp3",
+    "expected": "Are we naming the problem, or the person who receives the complaint?",
+    "heard": "Are we naming the problem or the person who receives the complaint?",
+    "matched": true,
+    "sha256": "294bed5e8ccab88180fd58e988e949d9c19650d653f8b3ffe692866e2508a367"
+  },
+  {
+    "file": "prep-complain-about.mp3",
+    "expected": "complain about",
+    "heard": "complain about",
+    "matched": true,
+    "sha256": "5d4f61030e0ee1c2bc21a9ee5af2807740e3c58f22b8cbec9d9925d2b39d4bea"
+  },
+  {
+    "file": "prep-complain-about-present.mp3",
+    "expected": "They are complaining about the lack of clean water.",
+    "heard": "They are complaining about the lack of clean water.",
+    "matched": true,
+    "sha256": "e568e8cad266dbe91cba997c31e70126f4685dcf5c66ad8552d04399f6df296e"
+  },
+  {
+    "file": "prep-complain-about-past.mp3",
+    "expected": "The residents complained about the lack of clean water.",
+    "heard": "The residents complained about the lack of clean water",
+    "matched": true,
+    "sha256": "5a5ee4d6377b59e22a12b2a360cb40885b1a68dadc7095b9eb189bceca322186"
+  },
+  {
+    "file": "prep-complain-to.mp3",
+    "expected": "complain to",
+    "heard": "Complain to",
+    "matched": true,
+    "sha256": "c06fc581caf4d1f0dcf02bad77e25a1fe861336b9403149ebece112c42ddc28d"
+  },
+  {
+    "file": "prep-complain-to-present.mp3",
+    "expected": "She is complaining to the mayor.",
+    "heard": "She is complaining to the mayor",
+    "matched": true,
+    "sha256": "c4807e7dd8f268fb904f69d91e3a76cbfbf2312434290200640f14cffed138ea"
+  },
+  {
+    "file": "prep-complain-to-past.mp3",
+    "expected": "The representative complained to the mayor.",
+    "heard": "The representative complained to the mayor.",
+    "matched": true,
+    "sha256": "7dd206dc8b59f46657baa7f8a9d3b3865e99034d9fd8e81d6515d64de154912e"
   }
 ]

@@ -4,7 +4,7 @@ import re
 import audit_first_visit_audio as audit
 
 def normalize(text):
-    text = text.lower().replace("’", "\'").replace("rumour", "rumor").replace("travelled", "traveled").replace("judgement", "judgment").replace("flood water", "floodwater")
+    text = text.lower().replace("’", "\'").replace("rumour", "rumor").replace("travelled", "traveled").replace("judgement", "judgment").replace("flood water", "floodwater").replace("neighbour", "neighbor")
     return re.sub("[^a-z0-9]+", " ", text).strip()
 
 if __name__ == "__main__":

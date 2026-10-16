@@ -1,0 +1,185 @@
+{
+  "mode": "built-in image_gen",
+  "images": [
+    {
+      "id": "look-for",
+      "prompt": "Use case: illustration-story. Create ONE landscape 3:2 educational editorial illustration for intermediate English Unit 6, fictional disaster news. Scene: two adult search-and-rescue workers wearing helmets and high visibility jackets actively LOOKING FOR survivors after an earthquake. One carefully shines a flashlight into a gap beneath a damaged building, another scans a doorway and calls out. Their searching action is unmistakable; no survivor visible, no gore or bodies. Show coherent safe foreground, dusty damaged town street and rescue equipment in background. Detailed realistic painterly textbook illustration, natural daylight, readable composition for a classroom television, diverse adults, warm humane tone. No text, no letters, no labels, no logo, no borders, no collage. Full scene with subjects fully framed, 1536x1024 landscape.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/look-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 366596,
+      "sha256": "7abfd71c1588be2fe1841beb1e10230eedb4cb4dc7a4eaa04c12f4db4be5d513"
+    },
+    {
+      "id": "listen-for",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A helmeted firefighter crouches near a gap in earthquake rubble, staying motionless and LISTENING FOR faint cries for help. He cups one ear and raises his other hand to request silence from colleagues. No radio, headphones or loudspeaker. Distant workers have paused; no injured bodies.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/listen-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 264500,
+      "sha256": "786da736de518b5c2f18ccfa671b6b77af8a440559aefd1ac8b9047b3d0ecea2"
+    },
+    {
+      "id": "look-at",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Two helmeted rescue workers in an outdoor emergency command area LOOK AT a large paper map together. Both sets of eyes and pointing finger clearly focus on the visible map spread on a table. Rescue trucks and distant earthquake damage behind; no searching in rubble.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/look-at-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 245296,
+      "sha256": "76859dfb4ee1994334025947ae7f195fd83112c4a5857b27abb8ce59bf6adff3"
+    },
+    {
+      "id": "ask-for",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Inside a temporary community shelter, an adult parent ASKING FOR blankets points toward neatly folded blankets at a distribution table and holds out empty hands. A volunteer behind the table offers a folded blanket. Cots in background. The requested object is clear.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/ask-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 219400,
+      "sha256": "79543954c64dcd266af925c2f3b2b17c2080592501ad677eae6e1f3c07bcbbfa"
+    },
+    {
+      "id": "listen-to",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A family of three inside a dry home intently LISTENS TO a small battery radio on the kitchen table, which is broadcasting emergency instructions. One adult leans toward the radio, another gestures for quiet. Rain on window outside. Radio is visually central.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/listen-to-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 198204,
+      "sha256": "63e4ddaa187573ddcc26c5474792ecb34e48f28755c1a65d3a4f08d7aa5425e1"
+    },
+    {
+      "id": "ask-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Outside a flooded neighbourhood, a female news reporter ASKS a rescue official ABOUT damage. She holds a microphone toward him and gestures questioningly to damaged houses behind him. The official answers with open hand gesture; a camera operator films.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/ask-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 263350,
+      "sha256": "fb6a3c3c37f9ba161aa5793d46675561d79ff001ef70ec25a7b902717c1e66cc"
+    },
+    {
+      "id": "hear-from",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Inside a quiet home, a relieved mother receives a smartphone video call FROM her adult son who is safe inside a community shelter. Show mother visibly relieved, phone screen clearly containing only son's face and shelter cots behind him, no interface text. The communication FROM a loved one is central.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/hear-from-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 220636,
+      "sha256": "d1124ee3a16b3ae20344235aba6301372805973e5237e64ea47bb5bd5e93ffb8"
+    },
+    {
+      "id": "report-on",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Female television reporter holding a microphone REPORTS ON a flood, addressing a professional video camera on tripod on dry high ground. Flooded street and rescue boat behind her. Cameraman at camera. She visibly narrates event, not interviewing someone. No lettering.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/report-on-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 289866,
+      "sha256": "781cc10c19417f47bc91f2e9a19733ded6531cd3edb476968290e3277e7b5103"
+    },
+    {
+      "id": "hear-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Two adults in a living room HEAR ABOUT a wildfire from a television news broadcast. Clearly visible TV shows a reporter with smoky forest fire imagery in a single screen. Viewers surprised and attentive, both looking at TV. No readable lettering.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/hear-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 212710,
+      "sha256": "5facc1a1c0f240a720ed94a630880932614a649c404ed995da2acf47084e60ee"
+    },
+    {
+      "id": "report-to",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Three new adult volunteers arrive at a shelter reception and REPORT TO a coordinator to receive instructions. Coordinator stands behind a desk with clipboard and points to duty assignments represented by simple pictograms. Volunteers face coordinator attentively, backpacks on, clearly arriving for work.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/report-to-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 185292,
+      "sha256": "a30cdd8cc8b031d25536a391af20b953541d366b805659f6fda85ff56cb6e8cc"
+    },
+    {
+      "id": "warn-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Weather presenter inside a television weather studio WARNS viewers ABOUT an approaching storm. He gestures gravely at a large weather map showing storm clouds moving toward a coastal town, with thundercloud symbols and rain bands. No written labels or digits.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/warn-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 273472,
+      "sha256": "924491c9e4425beb8eb878bac5220476acd89622fc90586f23d7fe2030bce8f0"
+    },
+    {
+      "id": "care-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Residents at a community meeting show sincere concern ABOUT families whose houses were destroyed in a flood. They listen compassionately to a parent showing a photograph of a damaged home; a community member leans forward with empathetic open hand. Calm expressive faces; no medical treatment.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/care-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 222498,
+      "sha256": "592e701ca09647b699f84c3cad5cf61075845b4141905639805f5b2b8a295adf"
+    },
+    {
+      "id": "warn-against",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A firefighter on dry ground WARNS an adult pedestrian AGAINST walking through deep floodwater. Firefighter holds a clear stop-hand gesture and indicates flooded street ahead; pedestrian stops behind barrier on safe pavement. Water visibly covers road, no one in water.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/warn-against-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 318374,
+      "sha256": "814f2608dee76892e8ceba720c1e128ed7a31994882c9403b280c057f7ab3e1f"
+    },
+    {
+      "id": "work-for",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A female journalist visibly working FOR a local television news organisation stands inside its newsroom among studio cameras and editors. She wears a plain photo identity badge, holds a broadcast microphone, preparing beside an anchor desk. No actual company logos or legible text.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/work-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 164242,
+      "sha256": "efceddd3fcd0c57cac819ba88ac0bc3314877e8b7f3dd1021f6c02dbb10df5d0"
+    },
+    {
+      "id": "work-on",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Two helmeted civil engineers and a construction worker WORK ON repairs to a storm-damaged bridge. On a safe closed work platform they examine repair blueprints, point to damaged railing and place replacement components. Visible tools and partially repaired bridge; no reckless behaviour.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/work-on-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 340832,
+      "sha256": "17781a57cf451db8ebdcf749c0787ec43c68a1d22b3aa3f947f37e0f1b275be4"
+    },
+    {
+      "id": "care-for",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A female nurse CARES FOR an adult with a lightly bandaged forearm at a community shelter first-aid station. Nurse gently adjusts clean bandage, patient seated calm, blankets and medical kit nearby. Professional compassionate action, no blood or gore.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/care-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 211878,
+      "sha256": "d3097742e205f63c9b73c271a01e7755700b5b885bb49d5a9e801b80bc1b2f4d"
+    },
+    {
+      "id": "learn-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Adult English students in a bright classroom LEARN ABOUT floods. Teacher points to a large illustrated diagram showing rain, rising river and flooded lowland houses. Students attentively take notes. Visual diagram only, no words, numbers or writing legible.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/learn-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 203126,
+      "sha256": "35ea9c4141af1ebe939fcb5d73863e29897ef03a34b53eb4bd6b6d03741e067f"
+    },
+    {
+      "id": "learn-from",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Emergency planners LEARN FROM mistakes in a past evacuation, reviewing two photographs on a meeting table: one of congested evacuation traffic, another of an overcrowded shelter. One planner points at the problem in the photograph while another revises a simple route map. Clearly a retrospective debrief, not active disaster.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/learn-from-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 201122,
+      "sha256": "eabc4c4471778bc3b06ed1c8ab9533dcc8a975e986fbe9841bc62a044a9f67bf"
+    },
+    {
+      "id": "complain-about",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: Residents outside homes in a drought-stricken town COMPLAIN ABOUT lack of clean water. One points to an empty water container and a dry outdoor tap, another gestures with frustration, third holds an empty bucket. No official present. Convey shortage, no unsafe drinking.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/complain-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 311962,
+      "sha256": "5e658904676da73f58602bef47057fe1981c831d09cf5414c2a16fef58a59531"
+    },
+    {
+      "id": "complain-to",
+      "prompt": "Use case: illustration-story. ONE 1536x1024 landscape 3:2 image for an intermediate English classroom, fictional Unit 6 disaster-news lesson. Detailed realistic editorial textbook illustration, natural believable lighting, diverse adults, clear meaningful gestures and storytelling, coherent anatomy, full uncropped scene, humane non-graphic tone. No text, no letters, no captions, no logos, no watermarks, no borders, no collage. Scene: A community representative formally COMPLAINS TO the mayor in a town-hall office. She presents a petition and photograph of empty water containers across a desk; the mayor in a suit listens seriously and takes notes. Two distinct roles clearly visible. No legible text.",
+      "file": "assets/img/english-intermediate-2/unit-6/prepositions/complain-to-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 179726,
+      "sha256": "89e0bbeae4559b7dfbcc8c5d6d6ca9119fa6034999c378d6aa86752ef1a8a079"
+    }
+  ]
+}

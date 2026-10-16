@@ -87,3 +87,18 @@
  .ie2-unit6-theory-page main .u6-scene img{max-height:260px}
  .u6-group-body{padding:0 .65rem .65rem}
 }
+
+/* Contrastive verb/preposition pairs: bounded images and two useful columns. */
+.u6-prep-scene mark{background:#fff0c7;color:var(--ie2-navy);border-radius:4px;padding:0 .18em}
+.u6-prep-scene .u6-prep-definition{font-weight:700;color:var(--ie2-teal)}
+.u6-prep-question{font-size:1.15rem;font-weight:700}
+.u6-project-pair{margin:.5rem 0}
+.u6-prep-pair .u4-card{min-width:0}
+.u6-prep-pair .u6-support{margin-bottom:0}
+.u6-pair-view .u4-project-text>h2{font-size:clamp(1.5rem,2.5vw,2.3rem)}
+.u6-pair-view .u4-project-description p{font-size:clamp(1rem,1.4vw,1.4rem);line-height:1.5}
+.u6-pair-view .u4-project-description h3{font-size:clamp(1.4rem,2vw,2rem);margin:.1rem 0}
+.u6-pair-view .u6-section-image img{width:100%;height:auto;max-height:280px;object-fit:contain}
+.u6-pair-view .u6-prep-question{margin-top:0}
+.u6-pair-view .u4-card-copy{padding:.7rem 1rem}
+.u6-pair-view .u4-note{margin-top:.8rem}

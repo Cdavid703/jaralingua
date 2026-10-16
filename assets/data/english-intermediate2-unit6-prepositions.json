@@ -1,0 +1,86 @@
+{
+  "title": "One verb, two prepositions",
+  "intro": "Compare two pictures. Notice how the preposition changes the action or the information that follows the verb. Learn each combination in context. Then use a past form to report what happened.",
+  "pairs": [
+    {
+      "verb": "look", "question": "Are they trying to find someone, or directing their eyes towards something?",
+      "contrast": "Look for means try to find. Look at means direct your eyes towards something. The preposition changes the action.",
+      "scenes": [
+        {"id": "look-for", "preposition": "for", "spanish": "buscar a alguien o algo", "definition": "Try to find someone or something.", "context": "After an earthquake, rescuers search the damaged buildings. They have not found everyone yet.", "model": "They are looking for survivors.", "past": "The rescuers looked for survivors.", "alt": "Helmeted rescuers search gaps and doorways among earthquake-damaged buildings for survivors."},
+        {"id": "look-at", "preposition": "at", "spanish": "mirar a alguien o algo", "definition": "Direct your eyes towards someone or something.", "context": "At the command post, the rescue team studies a map of the affected area.", "model": "They are looking at a map.", "past": "The rescuers looked at a map.", "alt": "Two rescuers look directly at a map spread on a table at an emergency command post."}
+      ]
+    },
+    {
+      "verb": "listen", "question": "Are they paying attention to a message, or trying to detect a sound?",
+      "contrast": "Listen to identifies what you pay attention to. Listen for identifies the sound you are waiting to detect; you may not hear it yet.",
+      "scenes": [
+        {"id": "listen-to", "preposition": "to", "spanish": "escuchar con atención a alguien o algo", "definition": "Pay attention to a person, message or sound.", "context": "A family follows emergency instructions broadcast on a battery radio.", "model": "They are listening to the instructions.", "past": "The family listened to the instructions.", "alt": "A family listens attentively to a battery radio on a kitchen table while rain falls outside."},
+        {"id": "listen-for", "preposition": "for", "spanish": "estar atento para detectar un sonido", "definition": "Try to detect a particular sound.", "context": "A firefighter asks everyone to be quiet so he can detect calls from beneath the rubble.", "model": "He is listening for cries for help.", "past": "The firefighter listened for cries for help.", "alt": "A firefighter cups his ear beside earthquake rubble and signals for silence to detect cries for help."}
+      ]
+    },
+    {
+      "verb": "ask", "question": "Do they want to receive something, or get information about a topic?",
+      "contrast": "Ask for introduces what you request. Ask about introduces the topic of your question. Ask for information requests information; ask about the damage names its topic.",
+      "scenes": [
+        {"id": "ask-for", "preposition": "for", "spanish": "pedir o solicitar algo", "definition": "Request something that you need or want.", "context": "At a shelter, a family needs blankets for the night and requests them from a volunteer.", "model": "They are asking for blankets.", "past": "The family asked for blankets.", "alt": "A parent requests folded blankets from a volunteer at a shelter distribution table."},
+        {"id": "ask-about", "preposition": "about", "spanish": "preguntar acerca de algo", "definition": "Ask questions on a particular topic.", "context": "A reporter wants to know what the flood did to the houses.", "model": "She is asking about the damage.", "past": "The reporter asked about the damage.", "alt": "A reporter with a microphone questions a rescue official beside flood-damaged houses."}
+      ]
+    },
+    {
+      "verb": "hear", "question": "Did they learn that an event happened, or receive a message from someone?",
+      "contrast": "Hear about introduces news or information. Hear from identifies the person who contacted you. Hear is often used in the simple form here, not the continuous.",
+      "scenes": [
+        {"id": "hear-about", "preposition": "about", "spanish": "enterarse de algo; recibir información sobre algo", "definition": "Receive news or information about an event.", "context": "People first learn of a wildfire through a television news report.", "model": "They hear about the wildfire on the news.", "past": "They heard about the wildfire on the news.", "alt": "Two adults learn about a wildfire from a television showing a forest-fire news report."},
+        {"id": "hear-from", "preposition": "from", "spanish": "recibir noticias o un mensaje de alguien", "definition": "Receive a call, letter or message from someone.", "context": "After hours without contact, a mother receives a call from her son at a shelter.", "model": "She finally hears from her son.", "past": "She finally heard from her son.", "alt": "A relieved mother receives a smartphone video call from her son inside a shelter."}
+      ]
+    },
+    {
+      "verb": "report", "question": "Is someone covering a news story, or arriving to receive instructions?",
+      "contrast": "Report on introduces the topic of a report. In this scene, report to means present yourself to someone for instructions. It can also name the person you answer to at work.",
+      "scenes": [
+        {"id": "report-on", "preposition": "on", "spanish": "informar sobre un tema", "definition": "Give information about a subject or event.", "context": "A television reporter describes the flood to viewers from a dry location.", "model": "She is reporting on the flood.", "past": "The reporter reported on the flood.", "alt": "A television reporter addresses a camera from dry high ground overlooking a flooded street."},
+        {"id": "report-to", "preposition": "to", "spanish": "presentarse ante alguien para recibir instrucciones", "definition": "Present yourself to someone for instructions, in this context.", "context": "New volunteers arrive at the shelter and meet the coordinator before starting their duties.", "model": "They report to the shelter coordinator.", "past": "The volunteers reported to the shelter coordinator.", "alt": "New volunteers arrive at a shelter reception desk to receive instructions from the coordinator."}
+      ]
+    },
+    {
+      "verb": "warn", "question": "Does the warning name a danger, or advise people not to do something?",
+      "contrast": "Warn someone about a danger draws attention to it. Warn someone against doing something advises them not to do it. After against, use an -ing form: against walking.",
+      "scenes": [
+        {"id": "warn-about", "preposition": "about", "spanish": "advertir a alguien sobre un peligro", "definition": "Tell someone about a possible danger or problem.", "context": "A weather presenter explains that a powerful storm is approaching the coast.", "model": "He warns people about the approaching storm.", "past": "He warned people about the approaching storm.", "alt": "A weather presenter points to an approaching coastal storm on a studio weather map."},
+        {"id": "warn-against", "preposition": "against", "spanish": "advertir a alguien que no haga algo", "definition": "Advise someone not to do a dangerous or unwise action.", "context": "A firefighter stops a pedestrian before the flooded street and tells them not to enter the water.", "model": "He warns people against walking through floodwater.", "past": "He warned people against walking through floodwater.", "alt": "A firefighter signals stop to a pedestrian on dry pavement before a flooded street."}
+      ]
+    },
+    {
+      "verb": "care", "question": "Is someone providing practical care, or showing that people matter to them?",
+      "contrast": "Here, care for means look after someone. Care about expresses concern or importance. These are the meanings in these scenes; other contexts can use care for to express affection or preference.",
+      "scenes": [
+        {"id": "care-for", "preposition": "for", "spanish": "cuidar o atender a alguien", "definition": "Look after someone and meet their needs.", "context": "A nurse treats people with minor injuries at a temporary shelter.", "model": "She is caring for injured people.", "past": "The nurse cared for injured people.", "alt": "A nurse gently adjusts a clean bandage on a seated adult's forearm at a shelter first-aid station."},
+        {"id": "care-about", "preposition": "about", "spanish": "preocuparse por; considerar importante", "definition": "Feel that someone or something matters.", "context": "At a community meeting, neighbours express concern for families who lost their homes.", "model": "They care about the affected families.", "past": "The neighbours cared about the affected families.", "alt": "Residents listen with concern to a parent showing a photograph of a flood-damaged home."}
+      ]
+    },
+    {
+      "verb": "work", "question": "Does the sentence name an employer, or a task being completed?",
+      "contrast": "Work for can name the organisation that employs someone. Work on introduces the task or project receiving their effort. The work is not necessarily happening at this exact moment when we use works for.",
+      "scenes": [
+        {"id": "work-for", "preposition": "for", "spanish": "trabajar para una persona u organización", "definition": "Be employed by a person or organisation, in this context.", "context": "A journalist is employed by a local television news channel.", "model": "She works for a news channel.", "past": "She worked for a news channel.", "alt": "A journalist with an identity badge and microphone stands in the newsroom of her television employer."},
+        {"id": "work-on", "preposition": "on", "spanish": "trabajar en una tarea o proyecto", "definition": "Spend time and effort on a task or project.", "context": "Engineers and workers repair a bridge damaged by the storm.", "model": "They are working on repairs to the bridge.", "past": "They worked on repairs to the bridge.", "alt": "Engineers and a construction worker review plans and repair a storm-damaged bridge."}
+      ]
+    },
+    {
+      "verb": "learn", "question": "Are we naming the topic, or the experience that teaches a lesson?",
+      "contrast": "Learn about introduces the subject studied. Learn from introduces the person or experience that teaches you something. Both can appear together: learn about floods from a teacher.",
+      "scenes": [
+        {"id": "learn-about", "preposition": "about", "spanish": "aprender acerca de un tema", "definition": "Gain knowledge of a subject.", "context": "Students study how heavy rain can cause rivers to overflow.", "model": "They are learning about floods.", "past": "The students learned about floods.", "alt": "Adult students study an illustrated explanation of rain, rising rivers and floods in a classroom."},
+        {"id": "learn-from", "preposition": "from", "spanish": "aprender de alguien o de una experiencia", "definition": "Use an experience or another person's knowledge to learn.", "context": "Emergency planners review problems in a previous evacuation to improve the next plan.", "model": "They are learning from past mistakes.", "past": "The planners learned from past mistakes.", "alt": "Emergency planners review photographs of past evacuation problems while revising a route map."}
+      ]
+    },
+    {
+      "verb": "complain", "question": "Are we naming the problem, or the person who receives the complaint?",
+      "contrast": "Complain about introduces the problem. Complain to introduces the listener or organisation receiving the complaint. Both can appear together: complain to the mayor about the water shortage.",
+      "scenes": [
+        {"id": "complain-about", "preposition": "about", "spanish": "quejarse de algo", "definition": "Express dissatisfaction with a situation.", "context": "Residents have no clean water and express frustration about the shortage.", "model": "They are complaining about the lack of clean water.", "past": "The residents complained about the lack of clean water.", "alt": "Residents express frustration beside a dry tap and empty water containers during a water shortage."},
+        {"id": "complain-to", "preposition": "to", "spanish": "presentar una queja ante alguien", "definition": "Address a complaint to a person or organisation.", "context": "A community representative takes the residents' complaint to the mayor.", "model": "She is complaining to the mayor.", "past": "The representative complained to the mayor.", "alt": "A community representative presents a water-shortage complaint to the mayor across an office desk."}
+      ]
+    }
+  ]
+}

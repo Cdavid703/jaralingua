@@ -12,7 +12,7 @@ const models=JSON.parse(fs.readFileSync('ingles/intermediate-2/audio/unit-6-expl
    await page.locator('.jl-page-qr-open').waitFor();
    await page.waitForFunction(()=>{const img=document.querySelector('.jl-page-qr-card img');return img&&img.complete&&img.naturalWidth>0;});
    assert(await page.locator('.u4-hero .intermediate2-button,.u4-hero .ie2-overview-chips span').evaluateAll(es=>es.every(e=>{const r=e.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth+1})), 'clipped hero controls '+width);
-   assert.equal(await page.locator('.ie2-theory-topic').count(),10);assert.equal(await page.locator('details[open]').count(),0);
+   assert.equal(await page.locator('.ie2-theory-topic').count(),11);assert.equal(await page.locator('details[open]').count(),0);
    assert(await page.locator('.jl-page-qr-card img').evaluate(e=>e.complete&&e.naturalWidth>0));
    await page.locator('.jl-page-qr-open').click();await page.locator('.jl-page-qr-dialog').waitFor({state:'visible'});await page.keyboard.press('Escape');
    await page.evaluate(()=>document.querySelectorAll('.ie2-theory-topic').forEach(e=>e.open=true));
@@ -24,7 +24,7 @@ const models=JSON.parse(fs.readFileSync('ingles/intermediate-2/audio/unit-6-expl
    }
    await page.evaluate(()=>document.querySelectorAll('main .u6-topic-group').forEach(d=>d.open=true));
    const previews=await page.locator('main .u6-scene img').evaluateAll(imgs=>imgs.map(i=>({height:i.getBoundingClientRect().height,fit:getComputedStyle(i).objectFit})));
-   assert.equal(previews.length,13);assert(previews.every(i=>i.height>0&&i.height<=(width<=760?261:321)&&i.fit==='contain'),'oversized or cropped reading images '+width);
+   assert.equal(previews.length,33);assert(previews.every(i=>i.height>0&&i.height<=(width<=760?261:321)&&i.fit==='contain'),'oversized or cropped reading images '+width);
    if(width>=900)assert(await page.locator('#news .u6-scene').evaluate(e=>{const i=e.querySelector('img').getBoundingClientRect(),c=e.querySelector('.u4-card-copy').getBoundingClientRect();return c.left>=i.right-1&&Math.abs(c.top-i.top)<3;}),'scene explanation must sit next to image');
    await page.evaluate(()=>document.querySelectorAll('main .u6-topic-group').forEach(d=>d.open=false));
 

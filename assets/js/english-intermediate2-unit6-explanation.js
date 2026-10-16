@@ -54,15 +54,17 @@
  let group=[],index=0,opener=null,textOnly=false,ownsFullscreen=false;
  function draw(){
   stop();status();hideTip();const source=group[index];
+  const pairMode=source.matches('.u6-prep-pair');
   dialog.classList.toggle('u6-text-only',textOnly);
+  dialog.classList.toggle('u6-pair-view',pairMode);
   const large=dialog.querySelector('img'),img=source.querySelector('img');
   large.onerror=()=>{if(!textOnly)status('Image could not load. Close and open the picture to retry.');};
   if(!textOnly){large.src=img.src;large.alt=img.alt;}else large.removeAttribute('src');
-  dialog.querySelector('h2').textContent=textOnly?source.querySelector('h2').textContent:source.dataset.projectTitle;
-  const copy=source.querySelector(textOnly?'.ie2-theory-body':'.u4-card-copy').cloneNode(true);
+  dialog.querySelector('h2').textContent=pairMode?source.querySelector('summary').textContent:(textOnly?source.querySelector('h2').textContent:source.dataset.projectTitle);
+  const copy=source.querySelector(pairMode?'.u6-group-body':(textOnly?'.ie2-theory-body':'.u4-card-copy')).cloneNode(true);
   copy.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
   copy.querySelectorAll('[aria-describedby]').forEach(e=>e.removeAttribute('aria-describedby'));
-  copy.querySelectorAll('.u6-project-section').forEach(e=>e.remove());
+  copy.querySelectorAll('.u6-project-section,.u6-project-pair').forEach(e=>e.remove());
   if(textOnly){
    // Section projection includes its illustrations without inert enlarge buttons.
    copy.querySelectorAll('.u4-project-open').forEach(button=>{
@@ -76,7 +78,7 @@
    if(heading){dialog.querySelector('h2').replaceChildren(...heading.childNodes);heading.remove();}
   }
   dialog.querySelector('.u4-project-description').replaceChildren(copy);
-  dialog.querySelector('#u6-project-count').textContent=textOnly?'Lesson explanation':(index+1)+' / '+group.length;
+  dialog.querySelector('#u6-project-count').textContent=pairMode?'Pair '+(index+1)+' / '+group.length:(textOnly?'Lesson explanation':(index+1)+' / '+group.length);
   dialog.querySelector('[data-u6-prev]').disabled=index===0;dialog.querySelector('[data-u6-next]').disabled=index===group.length-1;
   dialog.querySelector('.u4-project-stage').scrollTop=0;
   document.querySelectorAll('[data-u6-speed]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.u6Speed)===rate)));sync();
@@ -87,6 +89,18 @@
   const cards=container.matches('.u6-grid')?[...container.querySelectorAll(':scope > .u6-scene')]:[card];open(button,cards,cards.indexOf(card),false);
  }));
  document.querySelectorAll('.u6-project-section').forEach(button=>button.addEventListener('click',()=>open(button,[button.closest('.ie2-theory-topic')],0,true)));
+ document.querySelectorAll('.u6-project-pair').forEach(button=>button.addEventListener('click',()=>{
+  const pairs=[...document.querySelectorAll('main .u6-prep-pair')];
+  open(button,pairs,pairs.indexOf(button.closest('.u6-prep-pair')),true);
+ }));
+ // Direct topic/pair links reveal their collapsed ancestors, including on initial load.
+ function revealHash(){
+  const target=document.getElementById(location.hash.slice(1));
+  if(!target||!target.closest('#unit6-content'))return;
+  let node=target;while(node){if(node.matches('details'))node.open=true;node=node.parentElement;}
+  requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));
+ }
+ window.addEventListener('hashchange',revealHash);revealHash();
  dialog.querySelector('[data-u6-close]').addEventListener('click',()=>dialog.close());
  function move(delta){if(index+delta>=0&&index+delta<group.length){index+=delta;draw();}}
  dialog.querySelector('[data-u6-prev]').addEventListener('click',()=>move(-1));dialog.querySelector('[data-u6-next]').addEventListener('click',()=>move(1));
