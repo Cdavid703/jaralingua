@@ -53,7 +53,8 @@ const models=JSON.parse(fs.readFileSync('ingles/intermediate-2/audio/unit-6-expl
    assert.equal(await dialog.locator('.u4-project-open').count(),0,'inert enlargement controls in section projection');
    assert.equal(await dialog.locator('.u6-topic-group[open]').count(),4);
    assert(await dialog.evaluate(e=>e.scrollWidth<=innerWidth+1),'illustrated section overflow');
-   await page.keyboard.press('Escape');assert.equal(await page.locator('main .u6-topic-group[open]').count(),0,'projection changed source groups');
+   // Hover help consumes Escape first; use Close when testing preservation of source groups.
+   await dialog.locator('[data-u6-close]').click();await dialog.waitFor({state:'hidden'});assert.equal(await page.locator('main .u6-topic-group[open]').count(),0,'projection changed source groups');
    await page.locator('#disasters .u6-topic-group > summary').first().click();
    await page.locator('#disasters .u4-project-open').first().click();await dialog.waitFor({state:'visible'});
    assert.equal(await dialog.locator('#u6-project-title [data-u6-say]').count(),1,'word pronunciation lost from single title');

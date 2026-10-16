@@ -985,5 +985,131 @@
     "heard": "The representative complained to the mayor.",
     "matched": true,
     "sha256": "7dd206dc8b59f46657baa7f8a9d3b3865e99034d9fd8e81d6515d64de154912e"
+  },
+  {
+    "file": "rs-meaning.mp3",
+    "expected": "Indirect speech lets us pass on another person's message. Direct speech repeats their exact words. Indirect speech tells us who spoke and expresses the message from the reporter's point of view. Keep the meaning, even when the grammar changes.",
+    "heard": "Indirect speech lets us pass on another person's message. Direct speech repeats their exact words. Indirect speech tells us who spoke and expresses the message from the reporter's point of view. Keep the meaning even when the grammar changes.",
+    "matched": true,
+    "sha256": "17a3dc811ccfd06ae89677fe633f27ad0656a99e7c2dceb1c6266fd57d7e9bc5"
+  },
+  {
+    "file": "rs-four-steps.mp3",
+    "expected": "Maya says, I am worried about my family. Later, Luis reports her message. First, name the speaker: Maya said. Next, identify the people: I means Maya, and my means Maya's. Then, use a past reporting form: am becomes was. Finally, join the ideas without quotation marks. Maya said that she was worried about her family.",
+    "heard": "Maya says, \"I am worried about my family.\" Later, Luis reports her message. First, name the speaker, \"Maya said.\" Next, identify the people. I means Maya, and my means Maya's. Then use a past reporting form. Am becomes was. Finally, join the ideas without quotation marks. Maya said that she was worried about her family.",
+    "matched": true,
+    "sha256": "9674a4937e4a7a29dc970e67820841fdd66dbcc135e4b1014caf95c2d799d0f8"
+  },
+  {
+    "file": "rs-family-direct.mp3",
+    "expected": "I am worried about my family.",
+    "heard": "I am worried about my family",
+    "matched": true,
+    "sha256": "9001f43e86634915802412316c6e1f5b07b401d8514ded0786ec658e66fffd85"
+  },
+  {
+    "file": "rs-family-report.mp3",
+    "expected": "Maya said that she was worried about her family.",
+    "heard": "Maya said that she was worried about her family",
+    "matched": true,
+    "sha256": "e38149063e78ff100f6c393713afd906cef49bb9ef236e2227123e5bf22a8f8f"
+  },
+  {
+    "file": "rs-negative-direct.mp3",
+    "expected": "We do not have electricity.",
+    "heard": "We do not have electricity",
+    "matched": true,
+    "sha256": "db76bc079573b379587d0bf182741d01f4f1ff5e097df3eae6b00a3047c7e43a"
+  },
+  {
+    "file": "rs-sentence-parts.mp3",
+    "expected": "Maya told Luis that she was worried. Maya is the original speaker. Told is the reporting verb. Luis is the listener. That connects the two parts. She was worried is the message. The message needs its own subject and verb.",
+    "heard": "Maya told Luis that she was worried. Maya is the original speaker. Told is the reporting verb. Luis is the listener. That connects the two parts. She was worried is the message. The message needs its own subject and verb.",
+    "matched": true,
+    "sha256": "61cdc90163ab0d2afb99eba086359e95cf024a1673540bd9cf57dda6e7277858"
+  },
+  {
+    "file": "rs-negative-report.mp3",
+    "expected": "The residents said that they did not have electricity.",
+    "heard": "The residents said that they did not have electricity.",
+    "matched": true,
+    "sha256": "e16f0b6d3d46b842ab693bbec2d1bdfe8dd6bca3c4a8375f3e0e4b91c8c4e705"
+  },
+  {
+    "file": "rs-pronouns.mp3",
+    "expected": "Ask who each word refers to. Maya tells Luis, I can help you. Luis reports, Maya told me that she could help me. I becomes she because it refers to Maya. You becomes me because Luis was the listener and is now the reporter.",
+    "heard": "Ask who each word refers to. Maya tells Luis, \"I can help you.\" Luis reports, \"Maya told me that she could help me.\" I becomes she because it refers to Maya. You becomes me because Luis was the listener and is now the reporter",
+    "matched": true,
+    "sha256": "b3c8b7b1ef05d629abaece28b396b2594c81e66ba86ec578f5f13497ae7c20fe"
+  },
+  {
+    "file": "rs-reference-report.mp3",
+    "expected": "Maya told me that she could help me.",
+    "heard": "Maya told me that she could help me.",
+    "matched": true,
+    "sha256": "e249a23a9efc2a88e27b6dd7a99eec19d4b013b714f63054ed965058232238af"
+  },
+  {
+    "file": "rs-present-direct.mp3",
+    "expected": "We need clean water.",
+    "heard": "We need clean water.",
+    "matched": true,
+    "sha256": "d1b7d0057f4bfb60a2ee20296cb5c4e727eeb3c240502d8a80727163bebe3075"
+  },
+  {
+    "file": "rs-present-report.mp3",
+    "expected": "The residents said that they needed clean water.",
+    "heard": "The residents said that they needed clean water.",
+    "matched": true,
+    "sha256": "e45c4ac5831d48650717d7fe16b7ae9e7ca8313dfa1196e1f1498179e21ece0f"
+  },
+  {
+    "file": "rs-continuous-direct.mp3",
+    "expected": "We are checking the roof.",
+    "heard": "We are checking the roof",
+    "matched": true,
+    "sha256": "71aeb6091f6872a0b8bafe71c479c6640eaf99b190b1881ca8387efa35ec569d"
+  },
+  {
+    "file": "rs-continuous-report.mp3",
+    "expected": "The engineers said that they were checking the roof.",
+    "heard": "The engineers said that they were checking the roof.",
+    "matched": true,
+    "sha256": "aef667b9c36cfb77d07bd8ab254d2d70d43f39901b1408dde7a9f10bb9576ad3"
+  },
+  {
+    "file": "rs-perfect-direct.mp3",
+    "expected": "I have checked the source.",
+    "heard": "I have checked the source",
+    "matched": true,
+    "sha256": "f475406132b80f657b3673a202860a123da1e71b638705ce34b94b6b3424c2b5"
+  },
+  {
+    "file": "rs-perfect-report.mp3",
+    "expected": "The journalist said that she had checked the source.",
+    "heard": "The journalist said that she had checked the source.",
+    "matched": true,
+    "sha256": "561fb51b818af5c5f47e7368c48865b4a6e3bec9a3bb86422c392102fd788de5"
+  },
+  {
+    "file": "rs-calendar.mp3",
+    "expected": "On Tuesday, the spokesperson says, We will publish the repair plan tomorrow. Tomorrow means Wednesday. On Thursday, a reporter says, The spokesperson said they would publish the repair plan the following day. The following day means the day after Tuesday: Wednesday. The report repeats the promise; it does not confirm that the plan was published.",
+    "heard": "On Tuesday, the spokesperson says, \"We will publish the repair plan tomorrow.\" Tomorrow means Wednesday. On Thursday, a reporter says, \"The spokesperson said they would publish the repair plan the following day.\" The following day means the day after Tuesday, Wednesday. The report repeats the promise. It does not confirm that the plan was published",
+    "matched": true,
+    "sha256": "97fa7e4ad3f3399920273f0a8f3d5c3ea7dca267be5cfb56be2929f395b36256"
+  },
+  {
+    "file": "rs-no-backshift.mp3",
+    "expected": "Backshift is common after said or told, but it is not automatic in every situation. Maya says that she is worried reports a current message. If information is still true, a present form can remain appropriate after said. A past form in a report does not, by itself, mean that the situation has ended.",
+    "heard": "Backshift is common after said or told, but it is not automatic in every situation. Maya says that she is worried reports a current message. If information is still true, a present form can remain appropriate after said. A past form in a report does not, by itself, mean that the situation has ended.",
+    "matched": true,
+    "sha256": "7f8209ad12558bebe39b30956eb6cb51fd9bfd94f44732f4bf83aeab6f298098"
+  },
+  {
+    "file": "rs-question-command.mp3",
+    "expected": "First identify the message. A statement gives information: Maya said that the road was closed. A question asks for information: Maya asked where the shelter was. An instruction asks someone to act: The officer told us to wait. These messages use different reporting patterns.",
+    "heard": "First, identify the message. A statement gives information. Maya said that the road was closed. A question asks for information. Maya asked where the shelter was. An instruction asks someone to act. The officer told us to wait. These messages use different reporting patterns.",
+    "matched": true,
+    "sha256": "b7b0eb83052e6d0639c38769ef3eb512b264a76027753b4e8ee2779f6851b49e"
   }
 ]
