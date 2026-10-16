@@ -123,7 +123,9 @@ Nueve bloques cortos desplegables con proyección independiente y navegación de
 
 18 audios nuevos Sarah de catálogo / ElevenLabs Multilingual v2, con auditoría Scribe y hashes; inventario activo de la explicación: 154. No se alteran los 136 guiones ni grabaciones anteriores. Contenido canónico y nuevos guiones en `tools/build_intermediate2_unit6_reported_support.py`, importado por el constructor de la explicación. Prueba nueva `tools/test_intermediate2_reported_support.cjs`: siete tamaños/orientaciones, nueve bloques, enlaces, navegación, audio real, decodificación de los 18 archivos y recuperación tras error. Conservar también regresiones de explicación y preposiciones y contrato de 56 páginas.
 
-## Ruta «Clase de septiembre 17»
+## Ruta «Clase de octubre 17»
+
+Nombre corregido por el docente a octubre 17 en el botón, los cuatro pasos y las etiquetas accesibles. Se conserva el identificador interno del enlace anterior para mantener compatibles los enlaces ya compartidos.
 
 Botón solicitado con ese nombre exacto en Course Overview, con ruta desplegable `#class-september-17`. Orden: 1) explicación de los diez pares de verbos/preposiciones (`#verb-prepositions`); 2) cuento interactivo After the Storm de Practice Lab; 3) explicación de discurso indirecto (`#direct-reported`, seguida de `#say-tell` y `#changes`); 4) What did they say?, ejemplo y diez imágenes para describir en presente y reportar lo dicho por el compañero. La etiqueta es una ruta docente, no modifica el calendario oficial ni las evaluaciones.
 
