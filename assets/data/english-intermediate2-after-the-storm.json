@@ -59,9 +59,9 @@
             "worked on"
           ],
           "feedback": {
-            "worked on": "Work on se refiere a una tarea o proyecto. Aquí hablamos de la organización que empleaba a Maya: work for."
+            "worked on": "Work on describes a task or project. Here, the news channel is the organisation that employed Maya, so use work for."
           },
-          "success": "Work for = trabajar para. El canal era su empleador.",
+          "success": "Work for names your employer. The news channel employed Maya.",
           "sentence": "Before her first assignment, Maya worked for a news channel."
         },
         {
@@ -74,9 +74,9 @@
             "worked on"
           ],
           "feedback": {
-            "worked for": "Work for indica un empleador o beneficiario. Las reparaciones son la tarea que realizaban: work on."
+            "worked for": "Work for names an employer or someone you help. The bridge repairs were the task the engineers were doing, so use work on."
           },
-          "success": "Work on = trabajar en una tarea o proyecto.",
+          "success": "Work on describes the task or project you are doing.",
           "sentence": "The engineers worked on repairs to the bridge."
         }
       ],
@@ -145,9 +145,9 @@
             "heard from"
           ],
           "feedback": {
-            "heard from": "Hear from indica recibir una comunicación de una persona. Aquí la inundación es el tema de la noticia: hear about."
+            "heard from": "Hear from means to receive a message from someone. The flood is the topic of the news, so use hear about."
           },
-          "success": "Hear about = enterarse de un suceso.",
+          "success": "Hear about means to receive information about an event or topic.",
           "sentence": "The families heard about the flooding on the news."
         },
         {
@@ -160,9 +160,9 @@
             "heard from"
           ],
           "feedback": {
-            "heard about": "Hear about es enterarse de algo sobre alguien. Elena llamó directamente a Maya: hear from."
+            "heard about": "Hear about means to receive information about someone or something. Elena called Maya directly, so use hear from."
           },
-          "success": "Hear from = recibir noticias o un mensaje de alguien.",
+          "success": "Hear from means to receive news or a message directly from someone.",
           "sentence": "Maya finally heard from Elena when her phone rang."
         }
       ],
@@ -231,9 +231,9 @@
             "listened for"
           ],
           "feedback": {
-            "listened for": "Listen for significa estar atento para detectar un sonido. La familia ya oía las instrucciones y prestaba atención a su contenido: listen to."
+            "listened for": "Listen for means to wait and try to detect a sound. The family could already hear the instructions and was paying attention to them, so use listen to."
           },
-          "success": "Listen to = escuchar con atención.",
+          "success": "Listen to means to pay attention to a sound or message.",
           "sentence": "The family listened to the instructions on the radio."
         },
         {
@@ -246,9 +246,9 @@
             "listened for"
           ],
           "feedback": {
-            "listened to": "Listen to es escuchar un sonido ya presente. En el silencio, el bombero intentaba detectar una posible voz: listen for."
+            "listened to": "Listen to means to pay attention to a sound that is already there. In the silence, the firefighter was trying to detect a possible voice, so use listen for."
           },
-          "success": "Listen for = estar atento para detectar un sonido.",
+          "success": "Listen for means to wait and try to detect a particular sound.",
           "sentence": "In complete silence, the firefighter listened for cries for help."
         }
       ],
@@ -317,9 +317,9 @@
             "looking at"
           ],
           "feedback": {
-            "looking at": "Look at es dirigir la mirada hacia algo que ya puedes ver. Aún no habían localizado al vecino: look for."
+            "looking at": "Look at means to direct your eyes towards something you can see. The rescuers had not found the missing neighbour yet, so use look for."
           },
-          "success": "Look for = buscar a alguien o algo.",
+          "success": "Look for means to try to find someone or something.",
           "sentence": "The rescuers were looking for the missing neighbour."
         },
         {
@@ -332,9 +332,9 @@
             "looking at"
           ],
           "feedback": {
-            "looking for": "Look for es buscar algo que no has localizado. El mapa ya estaba sobre la mesa y lo examinaban: look at."
+            "looking for": "Look for means to try to find something. The map was already on the table and the rescuers were examining it, so use look at."
           },
-          "success": "Look at = mirar a alguien o algo.",
+          "success": "Look at means to direct your eyes towards someone or something.",
           "sentence": "To choose their route, the rescuers were looking at a map."
         }
       ],
@@ -403,9 +403,9 @@
             "asked about"
           ],
           "feedback": {
-            "asked about": "Ask about es pedir información sobre algo. La familia necesitaba recibir mantas para abrigarse: ask for."
+            "asked about": "Ask about means to request information about a topic. The family needed blankets to keep warm, so use ask for."
           },
-          "success": "Ask for = pedir o solicitar algo.",
+          "success": "Ask for means to request something you want or need.",
           "sentence": "Because they were cold, the family asked for blankets."
         },
         {
@@ -418,9 +418,9 @@
             "asked about"
           ],
           "feedback": {
-            "asked for": "Ask for es solicitar algo. Maya no pedía que le dieran daños; quería información sobre ellos: ask about."
+            "asked for": "Ask for means to request something. Maya did not want someone to give her damage; she wanted information about it, so use ask about."
           },
-          "success": "Ask about = preguntar acerca de un tema.",
+          "success": "Ask about means to request information about a topic.",
           "sentence": "During the interview, Maya asked about the damage."
         }
       ],
@@ -489,9 +489,9 @@
             "reported to"
           ],
           "feedback": {
-            "reported to": "Report to señala a la persona responsable ante la que te presentas o rindes cuentas. La inundación era el tema del reportaje: report on."
+            "reported to": "Report to names the person you answer to or receive instructions from. The flood was the topic of the broadcast, so use report on."
           },
-          "success": "Report on = informar sobre un tema.",
+          "success": "Report on means to give information about a topic or event.",
           "sentence": "During her live broadcast, Maya reported on the flood."
         },
         {
@@ -504,9 +504,9 @@
             "reported to"
           ],
           "feedback": {
-            "reported on": "Report on es informar sobre un tema. Los voluntarios se presentaron ante su responsable para recibir instrucciones: report to."
+            "reported on": "Report on means to give information about a topic. The volunteers went to their coordinator for instructions, so use report to."
           },
-          "success": "Report to = presentarse ante alguien para recibir instrucciones.",
+          "success": "Report to can mean to go to a person in charge to receive instructions.",
           "sentence": "On arrival, the volunteers reported to the shelter coordinator for instructions."
         }
       ],
@@ -575,9 +575,9 @@
             "warned people against"
           ],
           "feedback": {
-            "warned people against": "Warn against desaconseja una acción. Aquí el presentador alertaba de un peligro que se acercaba: warn people about."
+            "warned people against": "Warn against advises someone not to do something. Here, the presenter was telling viewers about an approaching danger, so use warn people about."
           },
-          "success": "Warn someone about = advertir a alguien sobre un peligro.",
+          "success": "Warn someone about means to tell them about a possible danger.",
           "sentence": "To alert viewers to the danger, the presenter warned people about the approaching storm."
         },
         {
@@ -590,9 +590,9 @@
             "warned people against"
           ],
           "feedback": {
-            "warned people about": "Warn about puede informar de un riesgo. En esta escena el bombero impide el cruce y pide evitar esa acción: warn people against walking."
+            "warned people about": "Warn about can describe a risk. Here, the firefighter specifically tells people not to cross the water. To emphasise avoiding that action, choose warn people against walking."
           },
-          "success": "Warn someone against doing something = advertirle que no lo haga. Después de against usamos -ing.",
+          "success": "Warn someone against doing something means to advise them not to do it. Use an -ing form after against.",
           "sentence": "The firefighter warned people against walking through floodwater."
         }
       ],
@@ -661,9 +661,9 @@
             "cared about"
           ],
           "feedback": {
-            "cared about": "Care about expresa interés o preocupación. La enfermera estaba atendiendo físicamente a las personas heridas: care for."
+            "cared about": "Care about expresses concern or interest. The nurse was treating injuries and giving practical care, so use care for."
           },
-          "success": "Care for = cuidar o atender a alguien.",
+          "success": "Care for means to look after someone or give them practical care.",
           "sentence": "By treating their injuries, the nurse cared for injured people."
         },
         {
@@ -676,9 +676,9 @@
             "cared about"
           ],
           "feedback": {
-            "cared for": "Care for es cuidar o atender. Aquí se destaca la preocupación de los vecinos por el bienestar de las familias: care about."
+            "cared for": "Care for means to look after someone. This sentence focuses on the neighbours’ concern for the families’ well-being, so use care about."
           },
-          "success": "Care about = preocuparse por; considerar importante.",
+          "success": "Care about means to feel concerned about someone or consider them important.",
           "sentence": "Their concern showed that the neighbours cared about the affected families."
         }
       ],
@@ -747,9 +747,9 @@
             "complained to"
           ],
           "feedback": {
-            "complained to": "Complain to indica a quién se dirige una queja. La falta de agua es el problema del que se quejan: complain about."
+            "complained to": "Complain to names the person who receives your complaint. The lack of clean water was the problem, so use complain about."
           },
-          "success": "Complain about = quejarse de una situación.",
+          "success": "Complain about introduces the problem you are unhappy with.",
           "sentence": "The frustrated residents complained about the lack of clean water."
         },
         {
@@ -762,9 +762,9 @@
             "complained to"
           ],
           "feedback": {
-            "complained about": "Complain about indica el tema de una queja. Elena se dirigió al alcalde para presentarla: complain to."
+            "complained about": "Complain about introduces the topic of a complaint. Elena addressed the mayor directly, so use complain to."
           },
-          "success": "Complain to = presentar una queja ante alguien.",
+          "success": "Complain to names the person you tell about a problem.",
           "sentence": "To present the residents’ grievance, Elena complained to the mayor."
         }
       ],
@@ -833,9 +833,9 @@
             "learned from"
           ],
           "feedback": {
-            "learned from": "Learn from indica de quién o de qué experiencia extraes una lección. Aquí las inundaciones eran el tema de la clase: learn about."
+            "learned from": "Learn from introduces a person or experience that teaches you a lesson. Floods were the topic of the class, so use learn about."
           },
-          "success": "Learn about = aprender acerca de un tema.",
+          "success": "Learn about means to gain knowledge of a topic.",
           "sentence": "During the lesson, the students learned about floods."
         },
         {
@@ -848,9 +848,9 @@
             "learned from"
           ],
           "feedback": {
-            "learned about": "Learn about significa adquirir información sobre un tema. Los planificadores usan errores anteriores para mejorar: learn from."
+            "learned about": "Learn about means to gain information about a topic. The planners used past mistakes to improve their next response, so use learn from."
           },
-          "success": "Learn from = aprender de una experiencia o persona.",
+          "success": "Learn from means to use a person’s example or an experience to understand something and improve.",
           "sentence": "To improve the next evacuation, the planners learned from past mistakes."
         }
       ],
