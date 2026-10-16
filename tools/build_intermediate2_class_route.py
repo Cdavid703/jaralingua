@@ -9,17 +9,19 @@ STEPS = [
  ('After the Storm', 'reading-unit-6-after-the-storm.html#class-step-2', 'Read the interactive book and choose the expression that fits each blank.'),
  ('Reported speech', 'unit-6-news-and-natural-disasters.html#direct-reported', 'Understand the message, build a report and check what changes.'),
  ('What did they say?', 'speaking-unit-6-what-did-they-say.html#class-step-4', 'Student A describes the picture. Student B reports what A said.'),
+ ('After the Flood', 'listening-unit-6-after-the-flood.html#class-step-5', 'Listen to the news, answer eight questions and report what a speaker said.'),
 ]
 
 def step_nav(step):
+    total = len(STEPS)
     title, _, description = STEPS[step-1]
     back = STEPS[step-2][1] if step > 1 else 'course-overview.html#class-september-17'
-    next_url = STEPS[step][1] if step < 4 else 'course-overview.html#class-september-17'
-    next_label = f'Next: {STEPS[step][0]} →' if step < 4 else 'Finish · return to the class route'
+    next_url = STEPS[step][1] if step < total else 'course-overview.html#class-september-17'
+    next_label = f'Next: {STEPS[step][0]} →' if step < total else 'Finish · return to the class route'
     support = ''
     if step == 3:
         support = '<p class="ie2-class-substeps">Read in order: <a href="#direct-reported">1. What is it?</a> → <a href="#say-tell">2. Said / told</a> → <a href="#changes">3. What changes?</a></p>'
-    return f'''<nav class="ie2-class-step" id="class-step-{step}" aria-label="October 17 class, step {step} of 4"><div><p class="ie2-class-label"><span lang="es">Clase de octubre 17</span> · Step {step} / 4</p><strong>{title}</strong><p>{description}</p>{support}</div><div class="ie2-class-actions"><a href="{back}" data-class-back>← Previous step</a><a class="ie2-class-next" href="{next_url}" data-class-next>{next_label}</a><a href="course-overview.html#class-september-17">View all four steps</a></div></nav>'''
+    return f'''<nav class="ie2-class-step" id="class-step-{step}" aria-label="October 17 class, step {step} of {total}"><div><p class="ie2-class-label"><span lang="es">Clase de octubre 17</span> · Step {step} / {total}</p><strong>{title}</strong><p>{description}</p>{support}</div><div class="ie2-class-actions"><a href="{back}" data-class-back>← Previous step</a><a class="ie2-class-next" href="{next_url}" data-class-next>{next_label}</a><a href="course-overview.html#class-september-17">View all {total} steps</a></div></nav>'''
 
 def overview():
     items = ''.join(f'<li><a href="{url}"><b>{i}. {title}</b><span>{description}</span></a></li>' for i, (title,url,description) in enumerate(STEPS,1))
@@ -45,6 +47,7 @@ if __name__ == '__main__':
     insert('course-overview.html','overview',overview(),'<section class="intermediate2-search course-search-panel"')
     insert('reading-unit-6-after-the-storm.html','story',step_nav(2),'<section class="fv-panel st-example">')
     insert('speaking-unit-6-what-did-they-say.html','speaking',step_nav(4),'<section class="rs-intro"')
+    insert('listening-unit-6-after-the-flood.html','listening',step_nav(5),'<section class="ie2-listening-block ie2-search-item" id="before-listening"')
     p=ROOT/'ingles/intermediate-2/course-overview.html'
     text=p.read_text()
     button='<a class="intermediate2-button primary" lang="es" href="#class-september-17">Clase de octubre 17</a>'

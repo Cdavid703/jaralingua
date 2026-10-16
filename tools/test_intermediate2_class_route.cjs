@@ -15,7 +15,7 @@ const base=origin+'/ingles/intermediate-2/';
    assert.equal(await page.locator('#class-september-17').evaluate(d=>d.open),false);
    await page.locator('.ie2-overview-hero a[href="#class-september-17"]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
-   assert.equal(await page.locator('#class-september-17 li').count(),4);await layout();
+   assert.equal(await page.locator('#class-september-17 li').count(),5);await layout();
    if([390,1440].includes(width))await page.screenshot({path:'/private/tmp/class-september17-'+width+'.png'});
    await qr();await page.locator('#class-september-17 .ie2-class-next').click();
    await page.waitForFunction(()=>document.querySelector('#verb-prepositions').open);
@@ -42,13 +42,27 @@ const base=origin+'/ingles/intermediate-2/';
    await page.locator('[data-project="guide"]').click();
    await page.locator('dialog[open]').waitFor({state:'visible'});await page.keyboard.press('Escape');
    await page.locator('#class-step-4 [data-class-next]').click();
+   await page.waitForURL('**/listening-unit-6-after-the-flood.html#class-step-5');await layout();await qr();
+   assert.match(await page.locator('#class-step-5 .ie2-class-label').innerText(),/Step 5 \/ 5/);
+   assert.equal(await page.locator('#listening-check fieldset').count(),8);
+   assert(await page.locator('#teacherTools').isHidden(),'teacher transcript must remain protected');
+   await page.locator('[data-audio-speed="0.75"]').click();
+   await page.locator('#impressionAudio').evaluate(a=>a.play());
+   await page.waitForFunction(()=>document.querySelector('#impressionAudio').currentTime>0);
+   assert.equal(await page.locator('#impressionAudio').evaluate(a=>a.playbackRate),.75);
+   await page.locator('#impressionAudio').evaluate(a=>a.pause());
+   await page.locator('#class-step-5 [data-class-back]').click();
+   await page.waitForURL('**/speaking-unit-6-what-did-they-say.html#class-step-4');
+   await page.locator('#class-step-4 [data-class-next]').click();
+   await page.waitForURL('**/listening-unit-6-after-the-flood.html#class-step-5');
+   await page.locator('#class-step-5 [data-class-next]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
    assert.equal(new URL(page.url()).origin,origin);assert.deepEqual(errors,[]);
    // Clicking the hero link again also reopens a manually closed route.
    await page.locator('#class-september-17 > summary').click();
    await page.locator('.ie2-overview-hero a[href="#class-september-17"]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
-   console.log('PASS four-step class route, activities, projection and QR at',width);await page.close();
+   console.log('PASS five-step class route, listening audio, activities, projection and QR at',width);await page.close();
   }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});
