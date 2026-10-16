@@ -1,0 +1,20 @@
+.ie2-class-overview,.ie2-class-step{box-sizing:border-box;width:100%;max-width:1200px;margin:1.5rem auto;padding:1.25rem;border:1px solid #b4cdce;border-radius:16px;background:#f2f8f7;color:#173c42;font-size:1rem;line-height:1.55;scroll-margin-top:5rem}
+.ie2-class-overview{width:calc(100% - 2rem)}
+.ie2-class-overview>summary{cursor:pointer;font-weight:750;font-size:1.15rem;color:#123d51;padding:.4rem}
+.ie2-class-overview>div{padding:.5rem}
+.ie2-class-overview h2{font-size:1.5rem;color:#123d51}
+.ie2-class-overview ol{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;list-style:none;margin:1rem 0;padding:0}
+.ie2-class-overview li a{display:block;height:100%;box-sizing:border-box;padding:1rem;border:1px solid #bfd2d2;border-radius:10px;background:white;color:#173c42;text-decoration:none}
+.ie2-class-overview li span{display:block;margin-top:.4rem}
+.ie2-class-step{display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.ie2-class-step>div{min-width:0}
+.ie2-class-step p{margin:.4rem 0}
+.ie2-class-step strong{font-size:1.2rem}
+.ie2-class-label{font-size:.9rem;font-weight:700;color:#1f6466}
+.ie2-class-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;max-width:430px}
+.ie2-class-actions a,.ie2-class-next{display:inline-flex;align-items:center;min-height:44px;padding:.55rem .85rem;border:1px solid #789a9d;border-radius:8px;color:#173c42;background:white;font:inherit;text-decoration:none;box-sizing:border-box;overflow-wrap:anywhere}
+.ie2-class-actions .ie2-class-next,.ie2-class-overview .ie2-class-next{background:#124f58;color:white;border-color:#124f58;font-weight:700}
+.ie2-class-substeps a{color:#134f69;text-decoration:underline;text-underline-offset:3px}
+.ie2-class-overview a:focus-visible,.ie2-class-step a:focus-visible,.ie2-class-overview summary:focus-visible{outline:3px solid #a45b10;outline-offset:3px}
+body> .ie2-class-step{width:calc(100% - 2rem)}
+@media(max-width:760px){.ie2-class-overview ol{grid-template-columns:1fr}.ie2-class-step{flex-direction:column;align-items:stretch;gap:.6rem;padding:1rem}.ie2-class-actions{max-width:none}.ie2-class-actions a{max-width:100%}}

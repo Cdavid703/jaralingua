@@ -64,7 +64,7 @@
   const copy=source.querySelector(pairMode?'.u6-group-body':(textOnly?(source.matches('.u6-explainer')?'.u6-explainer-body':'.ie2-theory-body'):'.u4-card-copy')).cloneNode(true);
   copy.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
   copy.querySelectorAll('[aria-describedby]').forEach(e=>e.removeAttribute('aria-describedby'));
-  copy.querySelectorAll('.u6-project-section,.u6-project-pair,.u6-project-explainer').forEach(e=>e.remove());
+  copy.querySelectorAll('.u6-project-section,.u6-project-pair,.u6-project-explainer,.ie2-class-step').forEach(e=>e.remove());
   if(textOnly){
    // Section projection includes its illustrations without inert enlarge buttons.
    copy.querySelectorAll('.u4-project-open').forEach(button=>{

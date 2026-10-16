@@ -21,7 +21,7 @@ async function reachable(locator, label) {
   assert(r.width > 0 && r.height > 0 && r.left >= 0 && r.right <= result.vw+1 && r.top >= 0 && r.bottom <= result.vh+1 && result.hit, label+': clipped, off-screen or covered '+JSON.stringify(result));
 }
 (async()=>{
- const browser=await chromium.launch({headless:true});
+ const browser=await chromium.launch({headless:true,...(process.env.AUTH_CHROME ? {channel:'chrome'} : {})});
  try {
   for(const width of widths){
    const page=await browser.newPage({viewport:{width,height:900}});
