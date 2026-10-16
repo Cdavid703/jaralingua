@@ -48,3 +48,22 @@
 @media(max-width:900px){.storm-page .fv-reader-head{gap:8px}.storm-page .fv-reader-head>div{flex-wrap:wrap;justify-content:flex-end}.storm-page .fv-reader-foot{gap:6px}.storm-page .fv-reader-foot select{max-width:200px}}
 @media(max-width:680px){.storm-page .fv-reader{overflow:auto}.storm-page .fv-stage{flex:1 0 auto}.storm-page .fv-spread{height:auto;display:flex;flex-direction:column}.st-visual{height:34dvh;min-height:230px}.storm-page .fv-copy{overflow:visible}.storm-page .fv-reader-head{position:sticky;top:0;z-index:3}.storm-page .fv-reader-head h2{max-width:45%;margin:0}.storm-page .fv-reader-head>div{max-width:55%}.storm-page .fv-stages{display:grid;grid-template-columns:1fr 1fr;gap:4px}.storm-page .fv-reader-foot select{max-width:140px}.storm-page .fv-reader-foot button{font-size:.8rem;padding:9px}.storm-page .fv-audio-row{flex-wrap:wrap}.storm-page .fv-reader-foot{position:sticky;bottom:0;z-index:2}.storm-page .fv-projector header{flex-wrap:wrap;gap:8px}.storm-page .fv-projector header>div{display:flex;gap:6px;flex-wrap:wrap}.storm-page .fv-projector header button{font-size:.85rem}.storm-page .fv-hero figure img{max-height:260px}}
 @media(prefers-reduced-motion:reduce){.storm-page .fv-leaf{animation:none!important}.storm-page *{scroll-behavior:auto!important}}
+/* The printed story is the activity: two inline blanks, one choice at a time. */
+.st-story-flow{font-family:Georgia,serif}
+.st-story-flow .st-story{font-size:calc(clamp(1.15rem,1.7vw,1.6rem) * var(--st-scale,1));line-height:1.8;margin:1em 0}
+.st-reading-cue,.st-audio-hint{font-size:.85rem;line-height:1.5;color:#52645e}
+.storm-page .st-blank{display:inline;min-height:0;font:inherit;font-weight:700;line-height:inherit;padding:0 .25em;border:0;border-bottom:2px dashed #9b741f;border-radius:3px;background:#fff0c6;color:#513b0a;vertical-align:baseline}
+.storm-page .st-blank.is-solved{background:#e0f0de;color:#225435;border-bottom:2px solid #488459}
+.st-choice-box{font-family:system-ui,sans-serif;padding:12px 16px;border:1px solid #bbccb9;border-radius:10px;background:#edf4e8;margin:0 0 1em}
+.st-choice-box .fv-eyebrow{font-size:.75em;letter-spacing:.03em}
+.st-choice-box .st-feedback{padding:10px;margin:10px 0 0}
+.st-choice-box .st-options{margin-bottom:0}
+.storm-page .fv-leaf{inset:0 0 0 55%;transform-origin:left center;background:#fffaf0;overflow:hidden}
+.storm-page .fv-leaf>.fv-copy{height:100%;box-sizing:border-box;overflow:hidden}
+.storm-page .fv-projector .st-story-flow .st-story{font:inherit;font-family:Georgia,serif;line-height:1.7}
+.storm-page .fv-projector .st-choice-box{background:#edf4e8;color:#233a36;font-size:.8em}
+.storm-page .fv-projector .st-blank{font:inherit;font-weight:700}
+.storm-page .fv-projector .st-audio-hint,.storm-page .fv-projector .st-reading-cue{color:#c8d9d2}
+.storm-page .fv-projector details{margin-top:20px}
+@media(max-width:900px){.storm-page .fv-leaf{left:52%}}
+@media(max-width:680px){.storm-page .fv-leaf{inset:0}.st-story-flow .st-story{font-size:calc(1.2rem * var(--st-scale,1))}.st-choice-box{padding:12px}.storm-page .fv-reader-foot{border-top:1px solid #b4c3b0}}
