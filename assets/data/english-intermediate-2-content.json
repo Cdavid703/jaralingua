@@ -1397,6 +1397,39 @@
         "news",
         "vocabulary"
       ]
+    },
+    {
+      "id": "unit-6-after-the-storm-story",
+      "unit": 6,
+      "order": 1.5,
+      "type": "reading",
+      "skillLabel": "Interactive story · Vocabulary",
+      "title": "After the Storm",
+      "subtitle": "A Reporter’s First Story",
+      "summary": "Explore twenty news scenes, listen to Maya’s story and choose the right past-tense verb for twenty preposition challenges. Learn from specific feedback and review your mistakes.",
+      "cardSummary": "10 pages · 20 scenes · 20 verb challenges · Vocabulary with Spanish and audio.",
+      "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/hero-v1.webp",
+      "workshopHref": "/ingles/intermediate-2/reading-unit-6-after-the-storm.html",
+      "duration": "25–40 minutes",
+      "product": "20 contextual verb challenges and oral predictions",
+      "questionCount": 20,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "audioProvider": "ElevenLabs",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL",
+      "searchKeywords": [
+        "Unit 6",
+        "story",
+        "storybook",
+        "verbs",
+        "prepositions",
+        "news",
+        "flood",
+        "After the Storm"
+      ]
     }
   ]
 }

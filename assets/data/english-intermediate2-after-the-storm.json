@@ -1,0 +1,897 @@
+{
+  "title": "After the Storm",
+  "subtitle": "A Reporter’s First Story",
+  "pages": [
+    {
+      "number": 1,
+      "title": "The first assignment",
+      "verb": "work",
+      "text": "Maya's first morning at the local news channel began with a surprise. An overnight storm had damaged the old bridge. Her editor handed her a microphone and a notebook. 'Show our viewers what happened, and check every detail,' he said. At the river, engineers were already repairing the broken railing. Maya took her first photograph. Her first report was beginning, but she did not yet know whose lives it would change.",
+      "predict": "What might Maya discover when she reaches the flooded neighbourhood?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "overnight",
+          "spanish": "durante la noche",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-overnight.mp3"
+        },
+        {
+          "term": "editor",
+          "spanish": "editor; responsable de la redacción",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-editor.mp3"
+        },
+        {
+          "term": "viewers",
+          "spanish": "televidentes",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-viewers.mp3"
+        },
+        {
+          "term": "railing",
+          "spanish": "barandilla",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-railing.mp3"
+        },
+        {
+          "term": "notebook",
+          "spanish": "cuaderno",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-notebook.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "work-for",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/work-for-v1.webp",
+          "alt": "Maya stands in the newsroom with her microphone and identity badge."
+        },
+        {
+          "id": "work-on",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/work-on-v1.webp",
+          "alt": "Engineers examine plans and repair the railing of a storm-damaged bridge."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "work-for",
+          "before": "Before her first assignment, Maya",
+          "after": "for a news channel.",
+          "answer": "worked",
+          "options": [
+            "asked",
+            "worked",
+            "listened"
+          ],
+          "feedback": {
+            "listened": "Listen significa escuchar. Listen for se usa para intentar detectar un sonido, no para decir quién empleaba a Maya.",
+            "asked": "Ask for significa pedir algo. Maya no estaba solicitando un canal; el canal era la organización que la empleaba."
+          },
+          "hint": "Name the relationship between Maya and her employer.",
+          "success": "Work for = trabajar para. El canal era su empleador.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-work-for.mp3",
+          "sentence": "Before her first assignment, Maya worked for a news channel."
+        },
+        {
+          "id": "work-on",
+          "before": "The engineers",
+          "after": "on repairs to the bridge.",
+          "answer": "worked",
+          "options": [
+            "cared",
+            "worked",
+            "heard"
+          ],
+          "feedback": {
+            "cared": "Care for significa cuidar; care about expresa preocupación. Care on no expresa realizar reparaciones.",
+            "heard": "Hear on no expresa dedicar esfuerzo a una tarea. Los ingenieros estaban realizando las reparaciones."
+          },
+          "hint": "They spent time and effort repairing the bridge.",
+          "success": "Work on = trabajar en una tarea o proyecto.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-work-on.mp3",
+          "sentence": "The engineers worked on repairs to the bridge."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-01.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-01.mp3"
+    },
+    {
+      "number": 2,
+      "title": "An unexpected call",
+      "verb": "hear",
+      "text": "Across Greenford, families discovered the extent of the flooding through a television bulletin. Several streets were underwater. Maya's phone suddenly rang. It was Elena, her friend, calling from the community shelter. 'I'm safe,' Elena said. 'But our elderly neighbour, Mr Reed, hasn't arrived.' Maya felt relief and worry at the same time. She wrote his name in her notebook and passed the information to the rescue coordinator.",
+      "predict": "What should Maya do with information that has not yet been confirmed?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "extent",
+          "spanish": "alcance; magnitud",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-extent.mp3"
+        },
+        {
+          "term": "bulletin",
+          "spanish": "boletín informativo",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-bulletin.mp3"
+        },
+        {
+          "term": "underwater",
+          "spanish": "bajo el agua",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-underwater.mp3"
+        },
+        {
+          "term": "shelter",
+          "spanish": "refugio",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-shelter.mp3"
+        },
+        {
+          "term": "relief",
+          "spanish": "alivio",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-relief.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "hear-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/hear-about-v1.webp",
+          "alt": "Families receive television news about storm flooding in Greenford."
+        },
+        {
+          "id": "hear-from",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/hear-from-v1.webp",
+          "alt": "Maya receives a video call from her friend Elena inside a shelter."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "hear-about",
+          "before": "The families",
+          "after": "about the flooding on the news.",
+          "answer": "heard",
+          "options": [
+            "asked",
+            "heard",
+            "warned"
+          ],
+          "feedback": {
+            "asked": "Ask about significa hacer preguntas sobre un tema. Las familias recibieron la noticia del televisor; no estaban haciendo preguntas.",
+            "warned": "Warn about significa advertir sobre un peligro. Aquí las familias recibieron información, no emitieron una advertencia."
+          },
+          "hint": "They received the news for the first time.",
+          "success": "Hear about = enterarse de un suceso.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-hear-about.mp3",
+          "sentence": "The families heard about the flooding on the news."
+        },
+        {
+          "id": "hear-from",
+          "before": "Maya finally",
+          "after": "from Elena when her phone rang.",
+          "answer": "heard",
+          "options": [
+            "cared",
+            "reported",
+            "heard"
+          ],
+          "feedback": {
+            "cared": "Care for y care about expresan cuidado o preocupación. Care from no significa recibir una llamada.",
+            "reported": "Report from puede indicar desde qué lugar informa alguien. Elena es la persona que llamó, no el lugar de una transmisión."
+          },
+          "hint": "Elena contacted Maya by phone.",
+          "success": "Hear from = recibir noticias o un mensaje de alguien.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-hear-from.mp3",
+          "sentence": "Maya finally heard from Elena when her phone rang."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-02.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-02.mp3"
+    },
+    {
+      "number": 3,
+      "title": "A sound in the silence",
+      "verb": "listen",
+      "text": "At home, a family paid close attention to a battery radio. The official instructions explained which streets were closed. Near Mr Reed's house, a firefighter raised one hand. Everyone became quiet. He turned his head towards an upstairs window, hoping to detect a faint voice. Maya stayed on the dry lane. She could see a curtain move, but she could not tell whether anyone was behind it.",
+      "predict": "What could the moving curtain mean? Suggest two possibilities.",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "battery",
+          "spanish": "pila; batería",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-battery.mp3"
+        },
+        {
+          "term": "upstairs",
+          "spanish": "en el piso de arriba",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-upstairs.mp3"
+        },
+        {
+          "term": "faint",
+          "spanish": "débil; apenas perceptible",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-faint.mp3"
+        },
+        {
+          "term": "curtain",
+          "spanish": "cortina",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-curtain.mp3"
+        },
+        {
+          "term": "lane",
+          "spanish": "calle estrecha; camino",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-lane.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "listen-to",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/listen-to-v1.webp",
+          "alt": "A family pays attention to emergency instructions on a battery radio."
+        },
+        {
+          "id": "listen-for",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/listen-for-v1.webp",
+          "alt": "A firefighter asks for silence and tries to detect a voice from an upper window."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "listen-to",
+          "before": "The family",
+          "after": "to the instructions on the radio.",
+          "answer": "listened",
+          "options": [
+            "looked",
+            "listened",
+            "asked"
+          ],
+          "feedback": {
+            "looked": "Look at se usa para mirar. Look to puede significar recurrir a alguien para orientación, pero aquí la familia prestó atención a un mensaje sonoro.",
+            "asked": "Ask significa preguntar o pedir. Asked to the instructions no expresa prestar atención al audio."
+          },
+          "hint": "They paid attention to a spoken message.",
+          "success": "Listen to = escuchar con atención.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-listen-to.mp3",
+          "sentence": "The family listened to the instructions on the radio."
+        },
+        {
+          "id": "listen-for",
+          "before": "In complete silence, the firefighter",
+          "after": "for cries for help.",
+          "answer": "listened",
+          "options": [
+            "worked",
+            "cared",
+            "listened"
+          ],
+          "feedback": {
+            "worked": "Work for puede indicar un empleador o un objetivo. Los gritos no son un empleador: aquí el bombero intenta detectar un sonido.",
+            "cared": "Care for significa cuidar o atender. Los gritos no son personas a las que atender; son sonidos que el bombero espera detectar."
+          },
+          "hint": "He was trying to detect a sound that might not be audible yet.",
+          "success": "Listen for = estar atento para detectar un sonido.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-listen-for.mp3",
+          "sentence": "In complete silence, the firefighter listened for cries for help."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-03.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-03.mp3"
+    },
+    {
+      "number": 4,
+      "title": "The missing neighbour",
+      "verb": "look",
+      "text": "The rescue boat moved slowly between the houses. The crew searched each window for a sign of the missing neighbour. At the command post, two rescuers studied a map to choose a route around the fallen branches. Then a small light appeared upstairs. Mr Reed was there with his dog. Maya waited while the crew brought them to dry ground. Her notebook now contained something better than a guess: a confirmed rescue.",
+      "predict": "What might Mr Reed and his dog need when they arrive at the shelter?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "crew",
+          "spanish": "equipo; tripulación",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-crew.mp3"
+        },
+        {
+          "term": "route",
+          "spanish": "ruta; recorrido",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-route.mp3"
+        },
+        {
+          "term": "branches",
+          "spanish": "ramas",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-branches.mp3"
+        },
+        {
+          "term": "missing",
+          "spanish": "desaparecido; que no se encuentra",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-missing.mp3"
+        },
+        {
+          "term": "confirmed",
+          "spanish": "confirmado",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-confirmed.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "look-for",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/look-for-v1.webp",
+          "alt": "Rescuers search upper windows from a boat; a small light is visible upstairs."
+        },
+        {
+          "id": "look-at",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/look-at-v1.webp",
+          "alt": "Rescuers study a street map at a dry flood-response command post."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "look-for",
+          "before": "Before they found Mr Reed, the rescuers",
+          "after": "for the missing neighbour.",
+          "answer": "looked",
+          "options": [
+            "cared",
+            "looked",
+            "worked"
+          ],
+          "feedback": {
+            "cared": "Care for significa cuidar o atender. Todavía no habían encontrado al vecino; intentaban localizarlo.",
+            "worked": "Work for significa trabajar para alguien o por un objetivo. Esta frase describe la búsqueda de una persona, no una relación de trabajo."
+          },
+          "hint": "Which verb expresses searching for someone?",
+          "success": "Look for = buscar a alguien o algo.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-look-for.mp3",
+          "sentence": "Before they found Mr Reed, the rescuers looked for the missing neighbour."
+        },
+        {
+          "id": "look-at",
+          "before": "To choose their route, the rescuers",
+          "after": "at a map.",
+          "answer": "looked",
+          "options": [
+            "asked",
+            "cared",
+            "looked"
+          ],
+          "feedback": {
+            "asked": "Ask about a map sería preguntar sobre un mapa. Aquí observaron el mapa; asked at a map no expresa esa acción.",
+            "cared": "Care for y care about expresan cuidado o preocupación. Care at no expresa dirigir la mirada hacia el mapa."
+          },
+          "hint": "They directed their eyes towards the map.",
+          "success": "Look at = mirar a alguien o algo.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-look-at.mp3",
+          "sentence": "To choose their route, the rescuers looked at a map."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-04.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-04.mp3"
+    },
+    {
+      "number": 5,
+      "title": "At the shelter",
+      "verb": "ask",
+      "text": "The shelter was busy but welcoming. A parent pointed to a pile of blankets and held out her hands. Her family was cold after the journey. Mr Reed sat nearby with his dog and a cup of tea. Outside, Maya interviewed a rescue official. She wanted details of the damage, not rumours. 'Which homes are affected?' she said. The official explained what the crew had checked and what was still unknown.",
+      "predict": "Which details should Maya check before presenting her news report?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "blankets",
+          "spanish": "mantas; cobijas",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-blankets.mp3"
+        },
+        {
+          "term": "journey",
+          "spanish": "viaje; recorrido",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-journey.mp3"
+        },
+        {
+          "term": "damage",
+          "spanish": "daños",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-damage.mp3"
+        },
+        {
+          "term": "rumours",
+          "spanish": "rumores",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-rumours.mp3"
+        },
+        {
+          "term": "unknown",
+          "spanish": "desconocido; aún sin confirmar",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-unknown.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "ask-for",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/ask-for-v1.webp",
+          "alt": "A parent requests blankets from a volunteer at the shelter."
+        },
+        {
+          "id": "ask-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/ask-about-v1.webp",
+          "alt": "Maya interviews an official beside flood-damaged houses."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "ask-for",
+          "before": "Because they were cold, the family",
+          "after": "for blankets.",
+          "answer": "asked",
+          "options": [
+            "looked",
+            "asked",
+            "cared"
+          ],
+          "feedback": {
+            "looked": "Look for blankets es buscar mantas. En esta escena las mantas están a la vista y la familia se las solicita a una voluntaria.",
+            "cared": "Care for significa cuidar o atender. La familia necesitaba recibir mantas, no cuidarlas."
+          },
+          "hint": "They requested the blankets from the volunteer.",
+          "success": "Ask for = pedir o solicitar algo.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-ask-for.mp3",
+          "sentence": "Because they were cold, the family asked for blankets."
+        },
+        {
+          "id": "ask-about",
+          "before": "During the interview, Maya",
+          "after": "about the damage.",
+          "answer": "asked",
+          "options": [
+            "cared",
+            "warned",
+            "asked"
+          ],
+          "feedback": {
+            "cared": "Care about expresa que algo importa. Aquí Maya formuló preguntas para obtener detalles, no solo expresó preocupación.",
+            "warned": "Warn about significa advertir. Maya estaba solicitando información al oficial, no alertándolo sobre un peligro."
+          },
+          "hint": "She wanted answers to her questions.",
+          "success": "Ask about = preguntar acerca de un tema.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-ask-about.mp3",
+          "sentence": "During the interview, Maya asked about the damage."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-05.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-05.mp3"
+    },
+    {
+      "number": 6,
+      "title": "More than a headline",
+      "verb": "report",
+      "text": "By lunchtime, Maya was ready for her first broadcast. She stood on dry ground with the camera crew. She described the flood and explained how Mr Reed had reached safety. Meanwhile, new volunteers arrived at the shelter. They went straight to the coordinator, who gave them their duties. One would organise food; another would prepare beds. Maya realised that behind every headline there were people doing patient, practical work.",
+      "predict": "What other information might viewers need after this broadcast?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "broadcast",
+          "spanish": "transmisión; emisión",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-broadcast.mp3"
+        },
+        {
+          "term": "headline",
+          "spanish": "titular",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-headline.mp3"
+        },
+        {
+          "term": "duties",
+          "spanish": "tareas; responsabilidades",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-duties.mp3"
+        },
+        {
+          "term": "meanwhile",
+          "spanish": "mientras tanto",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-meanwhile.mp3"
+        },
+        {
+          "term": "safety",
+          "spanish": "seguridad; lugar seguro",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-safety.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "report-on",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/report-on-v1.webp",
+          "alt": "Maya delivers a flood report to a television camera from dry ground."
+        },
+        {
+          "id": "report-to",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/report-to-v1.webp",
+          "alt": "Volunteers present themselves to the shelter coordinator for instructions."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "report-on",
+          "before": "During her live broadcast, Maya",
+          "after": "on the flood.",
+          "answer": "reported",
+          "options": [
+            "worked",
+            "reported",
+            "listened"
+          ],
+          "feedback": {
+            "worked": "Work on significa dedicar esfuerzo a una tarea. Aquí Maya estaba informando a los televidentes mediante una transmisión.",
+            "listened": "Listen to se usa para escuchar un mensaje. Maya era quien presentaba la noticia, no quien escuchaba."
+          },
+          "hint": "She gave viewers information about the event.",
+          "success": "Report on = informar sobre un tema.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-report-on.mp3",
+          "sentence": "During her live broadcast, Maya reported on the flood."
+        },
+        {
+          "id": "report-to",
+          "before": "On arrival, the volunteers",
+          "after": "to the shelter coordinator for instructions.",
+          "answer": "reported",
+          "options": [
+            "heard",
+            "reported",
+            "cared"
+          ],
+          "feedback": {
+            "cared": "Care for expresa cuidar a alguien. Cared to the coordinator no expresa presentarse para recibir instrucciones.",
+            "heard": "Hear from significa recibir noticias de alguien. Heard to no expresa presentarse ante la coordinadora para recibir instrucciones."
+          },
+          "hint": "They presented themselves to the person in charge.",
+          "success": "Report to = presentarse ante alguien para recibir instrucciones.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-report-to.mp3",
+          "sentence": "On arrival, the volunteers reported to the shelter coordinator for instructions."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-06.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-06.mp3"
+    },
+    {
+      "number": 7,
+      "title": "The dangerous shortcut",
+      "verb": "warn",
+      "text": "The sky darkened again. On television, a weather presenter explained that another storm was approaching. Near the shelter, a pedestrian tried to take a shortcut through a flooded street. A firefighter raised his hand and stopped her at the barrier. She returned to the dry path. Maya included the official warning in her next update. A dramatic picture was useful, but clear information could help someone make a safer decision.",
+      "predict": "How can a reporter share a warning without making an unverified claim?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "approaching",
+          "spanish": "que se aproxima",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-approaching.mp3"
+        },
+        {
+          "term": "shortcut",
+          "spanish": "atajo",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-shortcut.mp3"
+        },
+        {
+          "term": "barrier",
+          "spanish": "barrera",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-barrier.mp3"
+        },
+        {
+          "term": "pedestrian",
+          "spanish": "peatón",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-pedestrian.mp3"
+        },
+        {
+          "term": "warning",
+          "spanish": "advertencia",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-warning.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "warn-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/warn-about-v1.webp",
+          "alt": "A weather presenter shows an approaching storm on a weather map."
+        },
+        {
+          "id": "warn-against",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/warn-against-v1.webp",
+          "alt": "A firefighter stops a pedestrian before a flooded street."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "warn-about",
+          "before": "To alert viewers to the danger, the presenter",
+          "after": "people about the approaching storm.",
+          "answer": "warned",
+          "options": [
+            "asked",
+            "warned",
+            "heard"
+          ],
+          "feedback": {
+            "asked": "Ask people about a storm significa hacerles preguntas. El presentador estaba alertando a la audiencia sobre un peligro, no interrogándola.",
+            "heard": "Hear people puede significar oír a personas, pero aquí el presentador emitía una advertencia dirigida a ellas."
+          },
+          "hint": "He told people about a possible danger.",
+          "success": "Warn someone about = advertir a alguien sobre un peligro.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-warn-about.mp3",
+          "sentence": "To alert viewers to the danger, the presenter warned people about the approaching storm."
+        },
+        {
+          "id": "warn-against",
+          "before": "The firefighter",
+          "after": "people against walking through floodwater.",
+          "answer": "warned",
+          "options": [
+            "cared",
+            "worked",
+            "warned"
+          ],
+          "feedback": {
+            "cared": "Care about expresa preocupación, pero cared people against no forma una advertencia en inglés.",
+            "worked": "Work against puede expresar trabajar en contra de algo. Worked people against walking no significa advertirles que no caminen por el agua."
+          },
+          "hint": "He advised people not to do a dangerous action.",
+          "success": "Warn someone against doing something = advertirle que no lo haga. Después de against usamos -ing.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-warn-against.mp3",
+          "sentence": "The firefighter warned people against walking through floodwater."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-07.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-07.mp3"
+    },
+    {
+      "number": 8,
+      "title": "People who help",
+      "verb": "care",
+      "text": "Inside the shelter, a nurse gently wrapped a bandage around a man's injured arm. Nearby, residents gathered around Elena as she showed a photograph of her damaged home. They listened patiently and discussed what her family would need in the coming weeks. Mr Reed's dog slept under a chair. Maya put down her microphone for a moment. The story was no longer only about water and broken buildings. It was about people who mattered to one another.",
+      "predict": "What support might families need after the immediate emergency has ended?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "bandage",
+          "spanish": "vendaje; venda",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-bandage.mp3"
+        },
+        {
+          "term": "injured",
+          "spanish": "herido",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-injured.mp3"
+        },
+        {
+          "term": "gently",
+          "spanish": "con suavidad; con cuidado",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-gently.mp3"
+        },
+        {
+          "term": "gathered",
+          "spanish": "se reunieron",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-gathered.mp3"
+        },
+        {
+          "term": "mattered",
+          "spanish": "importaban; eran importantes",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-mattered.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "care-for",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/care-for-v1.webp",
+          "alt": "A nurse dresses an injured adult’s arm at the shelter."
+        },
+        {
+          "id": "care-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/care-about-v1.webp",
+          "alt": "Neighbours listen with concern to a woman showing a photograph of her damaged home."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "care-for",
+          "before": "By treating their injuries, the nurse",
+          "after": "for injured people.",
+          "answer": "cared",
+          "options": [
+            "asked",
+            "cared",
+            "looked"
+          ],
+          "feedback": {
+            "asked": "Ask for people significa solicitar que vengan o pedir por ellos. La enfermera ya estaba atendiendo sus heridas.",
+            "looked": "Look for significa buscar. La enfermera ya estaba junto a los heridos y los atendía."
+          },
+          "hint": "She looked after them and met their medical needs.",
+          "success": "Care for = cuidar o atender a alguien.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-care-for.mp3",
+          "sentence": "By treating their injuries, the nurse cared for injured people."
+        },
+        {
+          "id": "care-about",
+          "before": "Their concern showed that the neighbours",
+          "after": "about the affected families.",
+          "answer": "cared",
+          "options": [
+            "asked",
+            "cared",
+            "reported"
+          ],
+          "feedback": {
+            "asked": "Ask about es hacer preguntas. La oración destaca que las familias les importaban, no que estuvieran pidiendo información.",
+            "reported": "Report about puede introducir el tema de un informe. Aquí los vecinos expresaban preocupación y afecto, no presentaban una noticia."
+          },
+          "hint": "The families mattered to their neighbours.",
+          "success": "Care about = preocuparse por; considerar importante.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-care-about.mp3",
+          "sentence": "Their concern showed that the neighbours cared about the affected families."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-08.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-08.mp3"
+    },
+    {
+      "number": 9,
+      "title": "A question for the mayor",
+      "verb": "complain",
+      "text": "Two days later, some homes still had no clean water. Outside their muddy houses, residents held empty containers and expressed their frustration. Elena agreed to speak for the neighbourhood. At the town hall, she presented their complaint to the mayor, together with photographs and a written request. Maya recorded the meeting. The mayor promised an update that afternoon. Maya wrote down the promise, but she knew she would need to check what happened next.",
+      "predict": "Is a promise the same as a completed action? What should Maya check next?",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "containers",
+          "spanish": "recipientes",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-containers.mp3"
+        },
+        {
+          "term": "frustration",
+          "spanish": "frustración",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-frustration.mp3"
+        },
+        {
+          "term": "town hall",
+          "spanish": "alcaldía; ayuntamiento",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-town-hall.mp3"
+        },
+        {
+          "term": "complaint",
+          "spanish": "queja",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-complaint.mp3"
+        },
+        {
+          "term": "request",
+          "spanish": "solicitud",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-request.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "complain-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/complain-about-v1.webp",
+          "alt": "Residents express frustration about a dry tap and empty water containers outside flood-damaged homes."
+        },
+        {
+          "id": "complain-to",
+          "image": "/assets/img/english-intermediate-2/unit-6/after-the-storm/complain-to-v1.webp",
+          "alt": "Elena presents a water-shortage complaint to the mayor with photographs and a petition."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "complain-about",
+          "before": "The frustrated residents",
+          "after": "about the lack of clean water.",
+          "answer": "complained",
+          "options": [
+            "heard",
+            "complained",
+            "asked"
+          ],
+          "feedback": {
+            "heard": "Hear about significa enterarse. Los vecinos ya conocían el problema y estaban expresando su descontento.",
+            "asked": "Ask about significa pedir información. En esta frase se destaca que expresaron una queja por la falta de agua."
+          },
+          "hint": "They expressed dissatisfaction with the situation.",
+          "success": "Complain about = quejarse de una situación.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-complain-about.mp3",
+          "sentence": "The frustrated residents complained about the lack of clean water."
+        },
+        {
+          "id": "complain-to",
+          "before": "To present the residents’ grievance, Elena",
+          "after": "to the mayor.",
+          "answer": "complained",
+          "options": [
+            "learned",
+            "complained",
+            "cared"
+          ],
+          "feedback": {
+            "learned": "Learn from alguien significa aprender de esa persona. Learned to the mayor no significa presentarle una queja.",
+            "cared": "Care about expresa preocupación. Cared to the mayor no expresa dirigir una queja al alcalde."
+          },
+          "hint": "She addressed her complaint to a particular person.",
+          "success": "Complain to = presentar una queja ante alguien.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-complain-to.mp3",
+          "sentence": "To present the residents’ grievance, Elena complained to the mayor."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-09.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-09.mp3"
+    },
+    {
+      "number": 10,
+      "title": "A different kind of ending",
+      "verb": "learn",
+      "text": "A week later, clean water deliveries had reached the neighbourhood, and Maya checked the delivery records before sharing the update. At the community centre, students explored how rivers overflow. In another room, emergency planners reviewed photographs of crowded routes and shelters from the previous evacuation. They discussed what to improve. Mr Reed arrived with his dog and thanked the rescue crew. Maya closed her notebook. Her first assignment had taught her that a good report follows the story beyond the headline.",
+      "predict": "What did Maya learn about responsible reporting? Retell three events using the verbs from the book.",
+      "observe": "Describe the people, objects and actions in these two pictures. How do the people seem to feel? Give a visual clue.",
+      "vocabulary": [
+        {
+          "term": "deliveries",
+          "spanish": "entregas; repartos",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-deliveries.mp3"
+        },
+        {
+          "term": "records",
+          "spanish": "registros",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-records.mp3"
+        },
+        {
+          "term": "overflow",
+          "spanish": "desbordarse",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-overflow.mp3"
+        },
+        {
+          "term": "crowded",
+          "spanish": "lleno de gente; congestionado",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-crowded.mp3"
+        },
+        {
+          "term": "beyond",
+          "spanish": "más allá de",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/word-beyond.mp3"
+        }
+      ],
+      "scenes": [
+        {
+          "id": "learn-about",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/learn-about-v1.webp",
+          "alt": "Students study diagrams explaining how rainfall causes rivers to flood."
+        },
+        {
+          "id": "learn-from",
+          "image": "/assets/img/english-intermediate-2/unit-6/prepositions/learn-from-v1.webp",
+          "alt": "Emergency planners review past evacuation problems and improve a route map."
+        }
+      ],
+      "challenges": [
+        {
+          "id": "learn-about",
+          "before": "During the lesson, the students",
+          "after": "about floods.",
+          "answer": "learned",
+          "options": [
+            "complained",
+            "learned",
+            "warned"
+          ],
+          "feedback": {
+            "complained": "Complain about expresa descontento. Los estudiantes estaban adquiriendo conocimientos, no formulando una queja.",
+            "warned": "Warn about expresa una advertencia. Aquí los estudiantes estudiaban el tema, no alertaban a otras personas."
+          },
+          "hint": "They gained knowledge of a subject.",
+          "success": "Learn about = aprender acerca de un tema.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-learn-about.mp3",
+          "sentence": "During the lesson, the students learned about floods."
+        },
+        {
+          "id": "learn-from",
+          "before": "To improve the next evacuation, the planners",
+          "after": "from past mistakes.",
+          "answer": "learned",
+          "options": [
+            "asked",
+            "worked",
+            "learned"
+          ],
+          "feedback": {
+            "asked": "Ask about mistakes sería preguntar sobre los errores. Asked from past mistakes no expresa obtener una lección de la experiencia.",
+            "worked": "Work from puede indicar el lugar o material de partida de un trabajo. Aquí se trata de obtener una lección de errores anteriores."
+          },
+          "hint": "They used previous experience to improve.",
+          "success": "Learn from = aprender de una experiencia o persona.",
+          "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/answer-learn-from.mp3",
+          "sentence": "To improve the next evacuation, the planners learned from past mistakes."
+        }
+      ],
+      "audio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/page-10.mp3",
+      "predictionAudio": "/ingles/intermediate-2/audio/unit-6-after-the-storm/prediction-10.mp3"
+    }
+  ],
+  "hero": "/assets/img/english-intermediate-2/unit-6/after-the-storm/hero-v1.webp"
+}

@@ -1,0 +1,646 @@
+[
+  {
+    "file": "guide.mp3",
+    "expected": "Look at the pictures. Read or listen to the story. Choose a verb and fit it into each gap. Check your answer and use the feedback to try again. Then predict what will happen next.",
+    "heard": "Look at the pictures. Read or listen to the story. Choose a verb and fit it into each gap. Check your answer and use the feedback to try again. Then predict what will happen next",
+    "matched": true,
+    "sha256": "e9559187c5a7747bb1293e65e5b0b546adadaf642d1bead4063ef0549e084fe5"
+  },
+  {
+    "file": "example.mp3",
+    "expected": "The reporter looked at a photograph. Look at means direct your eyes towards something. The preposition stays after the verb.",
+    "heard": "The reporter looked at a photograph. Look at means direct your eyes towards something. The preposition stays after the verb",
+    "matched": true,
+    "sha256": "39a5392c0489e5e058b13ac13d763438bf7229b0ebdf5197cfe4b3afb14151c1"
+  },
+  {
+    "file": "prediction-01.mp3",
+    "expected": "What might Maya discover when she reaches the flooded neighbourhood?",
+    "heard": "What might Maya discover when she reaches the flooded neighborhood?",
+    "matched": true,
+    "sha256": "2f583a672db101cc09b1632ef6efa07a89a075659a253df815a47f432fd0181e"
+  },
+  {
+    "file": "page-01.mp3",
+    "expected": "Maya's first morning at the local news channel began with a surprise. An overnight storm had damaged the old bridge. Her editor handed her a microphone and a notebook. 'Show our viewers what happened, and check every detail,' he said. At the river, engineers were already repairing the broken railing. Maya took her first photograph. Her first report was beginning, but she did not yet know whose lives it would change.",
+    "heard": "Maya's first morning at the local news channel began with a surprise. An overnight storm had damaged the old bridge. Her editor handed her a microphone and a notebook. \"Show our viewers what happened and check every detail,\" he said. At the river, engineers were already repairing the broken railing. Maya took her first photograph. Her first report was beginning, but she did not yet know whose lives it would change.",
+    "matched": true,
+    "sha256": "84660c98048cc2eb492204bc704a5fccc0e6652f9347ba574991a37580551077"
+  },
+  {
+    "file": "word-overnight.mp3",
+    "expected": "overnight",
+    "heard": "Overnight",
+    "matched": true,
+    "sha256": "48d2fedafcb49f2ec3ddf2c4be04c0b8f5db3c41ea24bde20e64c7b48b93f9e5"
+  },
+  {
+    "file": "word-editor.mp3",
+    "expected": "editor",
+    "heard": "Editor",
+    "matched": true,
+    "sha256": "055f635b073ce30081e6003532e1da04ecf5621c36b56546c68b98f3800da1ee"
+  },
+  {
+    "file": "word-viewers.mp3",
+    "expected": "viewers",
+    "heard": "viewers",
+    "matched": true,
+    "sha256": "6a9f911cb4a4336954d8677eea6bbc72c20255c387f29cde32f5a6a2165b1320"
+  },
+  {
+    "file": "word-railing.mp3",
+    "expected": "railing",
+    "heard": "Railing",
+    "matched": true,
+    "sha256": "42fbd5264bc6ce15f48e537a35de6d5dd572159c687ba396666e4d23e1c64992"
+  },
+  {
+    "file": "word-notebook.mp3",
+    "expected": "notebook",
+    "heard": "Notebook",
+    "matched": true,
+    "sha256": "aba8cf3d58d8687d524f655a6a52e1177de4e597294766cc34c9e987a53fdc50"
+  },
+  {
+    "file": "answer-work-for.mp3",
+    "expected": "Before her first assignment, Maya worked for a news channel.",
+    "heard": "Before her first assignment, Maya worked for a news channel.",
+    "matched": true,
+    "sha256": "8565a7dd784444ebc43eaaab4d835b43742638f8c04f73f03a7e76445452ca1e"
+  },
+  {
+    "file": "answer-work-on.mp3",
+    "expected": "The engineers worked on repairs to the bridge.",
+    "heard": "The engineers worked on repairs to the bridge.",
+    "matched": true,
+    "sha256": "c18a1cf7d802a98b891d2c9e12008aa05aea7de15688fa880a599d37d01cf4b1"
+  },
+  {
+    "file": "prediction-02.mp3",
+    "expected": "What should Maya do with information that has not yet been confirmed?",
+    "heard": "What should Maya do with information that has not yet been confirmed?",
+    "matched": true,
+    "sha256": "09580605079e54c6246eb117c57e9edc3c6970f4302d63f0ca00feef539d4d34"
+  },
+  {
+    "file": "page-02.mp3",
+    "expected": "Across Greenford, families discovered the extent of the flooding through a television bulletin. Several streets were underwater. Maya's phone suddenly rang. It was Elena, her friend, calling from the community shelter. 'I'm safe,' Elena said. 'But our elderly neighbour, Mr Reed, hasn't arrived.' Maya felt relief and worry at the same time. She wrote his name in her notebook and passed the information to the rescue coordinator.",
+    "heard": "Across Greenford, families discovered the extent of the flooding through a television bulletin. Several streets were underwater. Maya's phone suddenly rang. It was Elena, her friend, calling from the community shelter. \"I'm safe,\" Elena said, \"but our elderly neighbor, Mr. Reed, hasn't arrived.\" Maya felt relief and worry at the same time. She wrote his name in her notebook and passed the information to the rescue coordinator.",
+    "matched": true,
+    "sha256": "fbc0fbdb2d7b38171bb5e3b7b34326f0dcd9aabd817cc127530b6cabd0c74343"
+  },
+  {
+    "file": "word-extent.mp3",
+    "expected": "extent",
+    "heard": "Extent",
+    "matched": true,
+    "sha256": "a494789da5cdf4c472f0bc2ad119cfa26157c0f5e1603124d29fe0ae43fcdfc8"
+  },
+  {
+    "file": "word-bulletin.mp3",
+    "expected": "bulletin",
+    "heard": "Bulletin",
+    "matched": true,
+    "sha256": "7a8925d7dad76078e0b50121dcb197b04ef6ed7491597d4036644ab0a01fbb58"
+  },
+  {
+    "file": "word-underwater.mp3",
+    "expected": "underwater",
+    "heard": "Underwater",
+    "matched": true,
+    "sha256": "923dc1312ef1bb05fcbe1593b9e3d854bf27095730b56ca4aff75fc2a2cee5f5"
+  },
+  {
+    "file": "word-shelter.mp3",
+    "expected": "shelter",
+    "heard": "Shelter",
+    "matched": true,
+    "sha256": "2acb4a93f43ec946de245406d630e90f827d795cf3d33bfd1bd533fb99a8fd57"
+  },
+  {
+    "file": "answer-hear-about.mp3",
+    "expected": "The families heard about the flooding on the news.",
+    "heard": "The families heard about the flooding on the news.",
+    "matched": true,
+    "sha256": "665b75fb4fb60686520dae01dfccca5155c4c77c46686245663ba150880ea988"
+  },
+  {
+    "file": "answer-hear-from.mp3",
+    "expected": "Maya finally heard from Elena when her phone rang.",
+    "heard": "Maya finally heard from Elena when her phone rang.",
+    "matched": true,
+    "sha256": "cf61d6b9b9d4c98515b6c6daccf45d7f05d2e4f660263ecaa4f2d7a4e6953acb"
+  },
+  {
+    "file": "page-03.mp3",
+    "expected": "At home, a family paid close attention to a battery radio. The official instructions explained which streets were closed. Near Mr Reed's house, a firefighter raised one hand. Everyone became quiet. He turned his head towards an upstairs window, hoping to detect a faint voice. Maya stayed on the dry lane. She could see a curtain move, but she could not tell whether anyone was behind it.",
+    "heard": "At home, a family paid close attention to a battery radio. The official instructions explained which streets were closed. Near Mr. Reed's house, a firefighter raised one hand. Everyone became quiet. He turned his head towards an upstairs window, hoping to detect a faint voice. Maya stayed on the dry lane. She could see a curtain move, but she could not tell whether anyone was behind it.",
+    "matched": true,
+    "sha256": "566eae6af1f5135332b0a50c35ed3cdfeb55775a9eb9693a8aa63678b768a21f"
+  },
+  {
+    "file": "word-relief.mp3",
+    "expected": "relief",
+    "heard": "Relief",
+    "matched": true,
+    "sha256": "0c3dd17b13ac3aad3bbeb9555bc6e14313c6d67cd57908e2d67c313ba4c59ebd"
+  },
+  {
+    "file": "prediction-03.mp3",
+    "expected": "What could the moving curtain mean? Suggest two possibilities.",
+    "heard": "What could the moving curtain mean? Suggest two possibilities.",
+    "matched": true,
+    "sha256": "eb99c55f4cd74f0d2753431eb5b29944f8d532b3094b61fb4fc3655d4fd7b108"
+  },
+  {
+    "file": "word-battery.mp3",
+    "expected": "battery",
+    "heard": "Battery",
+    "matched": true,
+    "sha256": "5231f0cbd2f496672262b0565b9089fd8b31397d7e70dfadacdae50ae83bdec4"
+  },
+  {
+    "file": "word-upstairs.mp3",
+    "expected": "upstairs",
+    "heard": "Upstairs",
+    "matched": true,
+    "sha256": "f1886e0297d758850d813189e54b9d1d0767db824ec7e748795604f36be6b35e"
+  },
+  {
+    "file": "word-faint.mp3",
+    "expected": "faint",
+    "heard": "Faint",
+    "matched": true,
+    "sha256": "3e889b07a4d42a3283604ef55f588f2a666ec9b61be5258b32343c88e287b749"
+  },
+  {
+    "file": "word-curtain.mp3",
+    "expected": "curtain",
+    "heard": "Curtain",
+    "matched": true,
+    "sha256": "9e18030a7e8658a01394eee1c75abaa2fbebad1e9123edc3698fba78381a020a"
+  },
+  {
+    "file": "word-lane.mp3",
+    "expected": "lane",
+    "heard": "Lane",
+    "matched": true,
+    "sha256": "c70835f4b187d731f57ab33816cfb8a178126a863175c1e5942df657ba2748ed"
+  },
+  {
+    "file": "answer-listen-to.mp3",
+    "expected": "The family listened to the instructions on the radio.",
+    "heard": "The family listened to the instructions on the radio.",
+    "matched": true,
+    "sha256": "37949b33f3b242b3ffbc175a3eb72346e1cd632a7cb6e4a137369a9cda92bcd0"
+  },
+  {
+    "file": "answer-listen-for.mp3",
+    "expected": "In complete silence, the firefighter listened for cries for help.",
+    "heard": "In complete silence, the firefighter listened for cries for help.",
+    "matched": true,
+    "sha256": "06bb8aa4cf0ef0bed60506cb3c67efb22e5b86897f300270e1a4dfb3f793af29"
+  },
+  {
+    "file": "page-04.mp3",
+    "expected": "The rescue boat moved slowly between the houses. The crew searched each window for a sign of the missing neighbour. At the command post, two rescuers studied a map to choose a route around the fallen branches. Then a small light appeared upstairs. Mr Reed was there with his dog. Maya waited while the crew brought them to dry ground. Her notebook now contained something better than a guess: a confirmed rescue.",
+    "heard": "The rescue boat moved slowly between the houses. The crew searched each window for a sign of the missing neighbor. At the command post, two rescuers studied a map to choose a route around the fallen branches. Then a small light appeared upstairs. Mr. Reed was there with his dog. Maya waited while the crew brought them to dry ground. Her notebook now contained something better than a guess, a confirmed rescue.",
+    "matched": true,
+    "sha256": "89b2f8af60d6fe53fe4d61ed241c6ba31c4c8d7d1bd4c128afdb2342b356f8ad"
+  },
+  {
+    "file": "prediction-04.mp3",
+    "expected": "What might Mr Reed and his dog need when they arrive at the shelter?",
+    "heard": "What might Mr. Reed and his dog need when they arrive at the shelter?",
+    "matched": true,
+    "sha256": "0fe9fb9da2fd1f70ce392b9feaf208b9cf987ad36bfb88a34f5b5c4aed8319b0"
+  },
+  {
+    "file": "word-route.mp3",
+    "expected": "route",
+    "heard": "Route",
+    "matched": true,
+    "sha256": "254bf5a2b581a5d910e22c163d311720e381c14759b68842c910d19c63ebc753"
+  },
+  {
+    "file": "word-crew.mp3",
+    "expected": "crew",
+    "heard": "crew",
+    "matched": true,
+    "sha256": "ddd7988aad8a8f75de4f9d9ac89846b5f1ce7dab0f1eb478f6ba24fffb8be20a"
+  },
+  {
+    "file": "word-branches.mp3",
+    "expected": "branches",
+    "heard": "Branches",
+    "matched": true,
+    "sha256": "de20cd1adde4e0f3a26c1024bb778a82ea488e4136e380671432915adcf6add1"
+  },
+  {
+    "file": "word-missing.mp3",
+    "expected": "missing",
+    "heard": "Missing",
+    "matched": true,
+    "sha256": "706ed59d955a4dd4c843b8c043740c2be374e15cadcb555a2dbe21fc2db8ab52"
+  },
+  {
+    "file": "word-confirmed.mp3",
+    "expected": "confirmed",
+    "heard": "Confirmed",
+    "matched": true,
+    "sha256": "78b74c5290fd1aad65023f7d877bde13a72e637259c8178351b61111af723e6f"
+  },
+  {
+    "file": "answer-look-for.mp3",
+    "expected": "Before they found Mr Reed, the rescuers looked for the missing neighbour.",
+    "heard": "Before they found Mr. Reed, the rescuers looked for the missing neighbor.",
+    "matched": true,
+    "sha256": "602cc5c43625b302c05383af6bfc19fc78244d71b00be7307c6f9b6ab5c19363"
+  },
+  {
+    "file": "answer-look-at.mp3",
+    "expected": "To choose their route, the rescuers looked at a map.",
+    "heard": "To choose their route, the rescuers looked at a map.",
+    "matched": true,
+    "sha256": "1b800326ccf8712976217d3d522304cce2b5974b349af9521ab7e267e1ec42c0"
+  },
+  {
+    "file": "prediction-05.mp3",
+    "expected": "Which details should Maya check before presenting her news report?",
+    "heard": "Which details should Maya check before presenting her news report?",
+    "matched": true,
+    "sha256": "678c163d3f2de18e7c72cd2c7310d2f47f8f782a817b3b3e089e244471c7c3d0"
+  },
+  {
+    "file": "page-05.mp3",
+    "expected": "The shelter was busy but welcoming. A parent pointed to a pile of blankets and held out her hands. Her family was cold after the journey. Mr Reed sat nearby with his dog and a cup of tea. Outside, Maya interviewed a rescue official. She wanted details of the damage, not rumours. 'Which homes are affected?' she said. The official explained what the crew had checked and what was still unknown.",
+    "heard": "The shelter was busy but welcoming. A parent pointed to a pile of blankets and held out her hands. Her family was cold after the journey. Mr. Reed sat nearby with his dog and a cup of tea. Outside, Maya interviewed a rescue official. She wanted details of the damage, not rumors. \"Which homes are affected?\" she said. The official explained what the crew had checked and what was still unknown.",
+    "matched": true,
+    "sha256": "61906ca72216d02497f57be1805e642c44384091291b698a3c2a4bf2dd12b785"
+  },
+  {
+    "file": "word-blankets.mp3",
+    "expected": "blankets",
+    "heard": "Blankets",
+    "matched": true,
+    "sha256": "54675b40aedac14c6be34e399e4ddfc0a0620e34b59432a3a61709f1a58badef"
+  },
+  {
+    "file": "word-damage.mp3",
+    "expected": "damage",
+    "heard": "Damage",
+    "matched": true,
+    "sha256": "6f97db5424a61def27b265fa00b8b85ce95dd0b61ce0416690ed4a1be7d18f30"
+  },
+  {
+    "file": "word-journey.mp3",
+    "expected": "journey",
+    "heard": "Journey",
+    "matched": true,
+    "sha256": "5e0551095a4d1374dd9fb1154e048d505cde92b6d1be93153c3bdb368bfed314"
+  },
+  {
+    "file": "word-rumours.mp3",
+    "expected": "rumours",
+    "heard": "Rumors",
+    "matched": true,
+    "sha256": "f22c8caa37d47f954235b8a8500a808d257f9d572a5ec693ca9b6776dc8282d3"
+  },
+  {
+    "file": "word-unknown.mp3",
+    "expected": "unknown",
+    "heard": "Unknown",
+    "matched": true,
+    "sha256": "ef1d5f8b59d0dbd2ad848df915d5f8e5d83f6a643e1668c8c15818718eeb3534"
+  },
+  {
+    "file": "answer-ask-for.mp3",
+    "expected": "Because they were cold, the family asked for blankets.",
+    "heard": "Because they were cold, the family asked for blankets.",
+    "matched": true,
+    "sha256": "adbb9dd2ec1f6e308f466fb01c85fdba6cafd2e7bb52b224b9554869c4dfb3ef"
+  },
+  {
+    "file": "answer-ask-about.mp3",
+    "expected": "During the interview, Maya asked about the damage.",
+    "heard": "During the interview, Maya asked about the damage",
+    "matched": true,
+    "sha256": "1491f714428282d3d5fb880eefe13f8a7161847cb177646b94304404133f6eab"
+  },
+  {
+    "file": "prediction-06.mp3",
+    "expected": "What other information might viewers need after this broadcast?",
+    "heard": "What other information might viewers need after this broadcast?",
+    "matched": true,
+    "sha256": "b07dfe65df3c593f3f3df32d90d297f359df0f7ad4b8758f5bd0c52776af9bca"
+  },
+  {
+    "file": "page-06.mp3",
+    "expected": "By lunchtime, Maya was ready for her first broadcast. She stood on dry ground with the camera crew. She described the flood and explained how Mr Reed had reached safety. Meanwhile, new volunteers arrived at the shelter. They went straight to the coordinator, who gave them their duties. One would organise food; another would prepare beds. Maya realised that behind every headline there were people doing patient, practical work.",
+    "heard": "By lunchtime, Maya was ready for her first broadcast. She stood on dry ground with the camera crew. She described the flood and explained how Mr. Reed had reached safety. Meanwhile, new volunteers arrived at the shelter. They went straight to the coordinator, who gave them their duties. One would organize food, another would prepare beds. Maya realized that behind every headline, there were people doing patient, practical work",
+    "matched": true,
+    "sha256": "e1cb3d2056ed531bd60557a000d83d68cf5b33d7ebc29dff9a64c0a5d7d0aecf"
+  },
+  {
+    "file": "word-broadcast.mp3",
+    "expected": "broadcast",
+    "heard": "Broadcast",
+    "matched": true,
+    "sha256": "8976be27c06efabfef9afcb3563abcc4fc2145bc9611809d97a8085898d143e9"
+  },
+  {
+    "file": "word-headline.mp3",
+    "expected": "headline",
+    "heard": "Headline",
+    "matched": true,
+    "sha256": "f294403b6e4333a789ab86a0420f7e23ced43aca315d4698717324c3ab2881af"
+  },
+  {
+    "file": "word-duties.mp3",
+    "expected": "duties",
+    "heard": "Duties",
+    "matched": true,
+    "sha256": "84461d3ad1bf5518e09f473d16eff67cbd5829967a021b4a54741f148d36d6e2"
+  },
+  {
+    "file": "word-meanwhile.mp3",
+    "expected": "meanwhile",
+    "heard": "Meanwhile",
+    "matched": true,
+    "sha256": "a61b100d443a7ab8f462a2eee627d061beb444e25ed40ee3da47ecb91cb5f9ae"
+  },
+  {
+    "file": "word-safety.mp3",
+    "expected": "safety",
+    "heard": "Safety",
+    "matched": true,
+    "sha256": "2332c0acf8b38d027ac01b35fd7faf095304d5b6413e2b2c69e4c6431f0043b4"
+  },
+  {
+    "file": "answer-report-on.mp3",
+    "expected": "During her live broadcast, Maya reported on the flood.",
+    "heard": "During her live broadcast, Maya reported on the flood",
+    "matched": true,
+    "sha256": "96f520b3639428e2642b3224ddb6cfc7d594946623ef01e88d21e3d0c7ad03b3"
+  },
+  {
+    "file": "answer-report-to.mp3",
+    "expected": "On arrival, the volunteers reported to the shelter coordinator for instructions.",
+    "heard": "On arrival, the volunteers reported to the shelter coordinator for instructions.",
+    "matched": true,
+    "sha256": "c3cdd3d8837eb534f628311cb80634dffe48dca2575d57449dbc245c687cf42e"
+  },
+  {
+    "file": "page-07.mp3",
+    "expected": "The sky darkened again. On television, a weather presenter explained that another storm was approaching. Near the shelter, a pedestrian tried to take a shortcut through a flooded street. A firefighter raised his hand and stopped her at the barrier. She returned to the dry path. Maya included the official warning in her next update. A dramatic picture was useful, but clear information could help someone make a safer decision.",
+    "heard": "The sky darkened again. On television, a weather presenter explained that another storm was approaching. Near the shelter, a pedestrian tried to take a shortcut through a flooded street. A firefighter raised his hand and stopped her at the barrier. She returned to the dry path. Maya included the official warning in her next update. A dramatic picture was useful, but clear information could help someone make a safer decision",
+    "matched": true,
+    "sha256": "c45d60e5c2acdaa60d4d3d2436b3650a60665bd0fc4d43953489fc781534d704"
+  },
+  {
+    "file": "prediction-07.mp3",
+    "expected": "How can a reporter share a warning without making an unverified claim?",
+    "heard": "How can a reporter share a warning without making an unverified claim?",
+    "matched": true,
+    "sha256": "80ab955a3307eb16ca3071ba97ce7737321af4f8e8797ad15137da1cd2aef742"
+  },
+  {
+    "file": "word-approaching.mp3",
+    "expected": "approaching",
+    "heard": "Approaching",
+    "matched": true,
+    "sha256": "188d6dcc3a6997c186097133b52ae2eb97cc66fc1def08ea5709073cb04b77fa"
+  },
+  {
+    "file": "word-shortcut.mp3",
+    "expected": "shortcut",
+    "heard": "Shortcut",
+    "matched": true,
+    "sha256": "c2ec5d5461d5e71dea40db5b1c42e21bf0222a324b8d6afab37452357216f2da"
+  },
+  {
+    "file": "word-barrier.mp3",
+    "expected": "barrier",
+    "heard": "Barrier",
+    "matched": true,
+    "sha256": "96a069c22063193d9327cd44bff85332822550a2505654d9292168dd16cc3f36"
+  },
+  {
+    "file": "word-pedestrian.mp3",
+    "expected": "pedestrian",
+    "heard": "Pedestrian",
+    "matched": true,
+    "sha256": "71a110b460ce8c5464d5cd27daf2f1a8e73b689a6f6add9c602fdd14d96e4dfe"
+  },
+  {
+    "file": "word-warning.mp3",
+    "expected": "warning",
+    "heard": "Warning",
+    "matched": true,
+    "sha256": "46df30c3c3d9ed9f5d9be5912bbecad288ed3538641a7e88f8285950be991033"
+  },
+  {
+    "file": "answer-warn-about.mp3",
+    "expected": "To alert viewers to the danger, the presenter warned people about the approaching storm.",
+    "heard": "To alert viewers to the danger, the presenter warned people about the approaching storm.",
+    "matched": true,
+    "sha256": "9b654e2093cce7f3bf8251c9d4ef79495d2e2e1803b89283f06a6b88f1856406"
+  },
+  {
+    "file": "answer-warn-against.mp3",
+    "expected": "The firefighter warned people against walking through floodwater.",
+    "heard": "The firefighter warned people against walking through floodwater",
+    "matched": true,
+    "sha256": "097b9ca0d0910a57a3c384887c3b47ea703db7e768b7d23ed4fc595949f18e5e"
+  },
+  {
+    "file": "page-08.mp3",
+    "expected": "Inside the shelter, a nurse gently wrapped a bandage around a man's injured arm. Nearby, residents gathered around Elena as she showed a photograph of her damaged home. They listened patiently and discussed what her family would need in the coming weeks. Mr Reed's dog slept under a chair. Maya put down her microphone for a moment. The story was no longer only about water and broken buildings. It was about people who mattered to one another.",
+    "heard": "Inside the shelter, a nurse gently wrapped a bandage around a man's injured arm. Nearby, residents gathered around Elena as she showed a photograph of her damaged home. They listened patiently and discussed what her family would need in the coming weeks. Mr. Reed's dog slept under a chair. Maya put down her microphone for a moment. The story was no longer only about water and broken buildings. It was about people who mattered to one another.",
+    "matched": true,
+    "sha256": "528b6df5a1a0ba881f6cc51937a2a6949b48594c4c7995fc91664c99ee1c2000"
+  },
+  {
+    "file": "prediction-08.mp3",
+    "expected": "What support might families need after the immediate emergency has ended?",
+    "heard": "What support might families need after the immediate emergency has ended?",
+    "matched": true,
+    "sha256": "c830934168c31185351fe72b3d80bb4de3e277982ffb96d837702edaf0b339bb"
+  },
+  {
+    "file": "word-bandage.mp3",
+    "expected": "bandage",
+    "heard": "bandage",
+    "matched": true,
+    "sha256": "899d542874c7e41495e3c014bdec77062c5af3a99e78cab4fcba23d13147bbfa"
+  },
+  {
+    "file": "word-injured.mp3",
+    "expected": "injured",
+    "heard": "injured",
+    "matched": true,
+    "sha256": "1ac1d3f05a3c729b13119ee088108f6d3a46ecc30ef4e283d169e9c30d547681"
+  },
+  {
+    "file": "word-gently.mp3",
+    "expected": "gently",
+    "heard": "Gently",
+    "matched": true,
+    "sha256": "74f16d32851d697b0d56716e8ef226af47412508704061b5c1794f799d113cf7"
+  },
+  {
+    "file": "word-gathered.mp3",
+    "expected": "gathered",
+    "heard": "gathered",
+    "matched": true,
+    "sha256": "a5a9d638424d7631013de3a2e9310516ce8520d4c7945c96b557656ff6964d6c"
+  },
+  {
+    "file": "word-mattered.mp3",
+    "expected": "mattered",
+    "heard": "mattered",
+    "matched": true,
+    "sha256": "0a93a30e6646a178ab196c5f8e409d1b4e043476ad56fb865e358a3a787aa017"
+  },
+  {
+    "file": "answer-care-for.mp3",
+    "expected": "By treating their injuries, the nurse cared for injured people.",
+    "heard": "By treating their injuries, the nurse cared for injured people.",
+    "matched": true,
+    "sha256": "789e05a55af2c74567df2963d32451c6a6c9d88dd4ab8c7166e8c4c5bc0d0aea"
+  },
+  {
+    "file": "answer-care-about.mp3",
+    "expected": "Their concern showed that the neighbours cared about the affected families.",
+    "heard": "Their concern showed that the neighbors cared about the affected families.",
+    "matched": true,
+    "sha256": "0f6d89322b0634e49dd72c313a8eab147f25c7b2b47bf7606a3c4aca8a13818f"
+  },
+  {
+    "file": "prediction-09.mp3",
+    "expected": "Is a promise the same as a completed action? What should Maya check next?",
+    "heard": "Is a promise the same as a completed action? What should Maya check next?",
+    "matched": true,
+    "sha256": "7a9caf0bfaa853c15b0de7d0cf6b1e6011a9598e92a7fa4677cfc9923e6383fb"
+  },
+  {
+    "file": "page-09.mp3",
+    "expected": "Two days later, some homes still had no clean water. Outside their muddy houses, residents held empty containers and expressed their frustration. Elena agreed to speak for the neighbourhood. At the town hall, she presented their complaint to the mayor, together with photographs and a written request. Maya recorded the meeting. The mayor promised an update that afternoon. Maya wrote down the promise, but she knew she would need to check what happened next.",
+    "heard": "Two days later, some homes still had no clean water. Outside their muddy houses, residents held empty containers and expressed their frustration. Elena agreed to speak for the neighborhood. At the town hall, she presented their complaint to the mayor, together with photographs and a written request. Maya recorded the meeting. The mayor promised an update that afternoon. Maya wrote down the promise, but she knew she would need to check what happened next.",
+    "matched": true,
+    "sha256": "547194fd893e3799dc0bbcd9902152e86baa06799b558f06af1d5ae3ddacc08c"
+  },
+  {
+    "file": "word-containers.mp3",
+    "expected": "containers",
+    "heard": "Containers",
+    "matched": true,
+    "sha256": "4e752954ea5d21aa9456bea41a9cb46ce3b803f14e6d33b08789459814a13e49"
+  },
+  {
+    "file": "word-frustration.mp3",
+    "expected": "frustration",
+    "heard": "Frustration",
+    "matched": true,
+    "sha256": "2e847700e6e8a60358fac80edf42ff29edb15d3908a886b4e9f29dc82b9c162a"
+  },
+  {
+    "file": "word-town-hall.mp3",
+    "expected": "town hall",
+    "heard": "Town Hall",
+    "matched": true,
+    "sha256": "9af049f7beb10b0dc6aa3582861a511f272b53cee3075049e13a3b64d8c0bb88"
+  },
+  {
+    "file": "word-complaint.mp3",
+    "expected": "complaint",
+    "heard": "Complaint",
+    "matched": true,
+    "sha256": "f71f142abcf0e5757c5559ff87394ef9556e24b3a01b4640b377794bd23ed8ab"
+  },
+  {
+    "file": "word-request.mp3",
+    "expected": "request",
+    "heard": "Request",
+    "matched": true,
+    "sha256": "b71fe5f9861645410a5e3c9de659b1b9439e6610159deb83295d9c702decdfbd"
+  },
+  {
+    "file": "answer-complain-about.mp3",
+    "expected": "The frustrated residents complained about the lack of clean water.",
+    "heard": "The frustrated residents complained about the lack of clean water.",
+    "matched": true,
+    "sha256": "61fb335c7c34143f2bdf9d466dabc08e34aee305add4fc17773433f075ad35bd"
+  },
+  {
+    "file": "answer-complain-to.mp3",
+    "expected": "To present the residents’ grievance, Elena complained to the mayor.",
+    "heard": "To present the residents' grievance, Elena complained to the mayor.",
+    "matched": true,
+    "sha256": "8bff0c81929f82d2670d52afa86ffeb498e59aa85233b4d344ec2c361a79f61a"
+  },
+  {
+    "file": "page-10.mp3",
+    "expected": "A week later, clean water deliveries had reached the neighbourhood, and Maya checked the delivery records before sharing the update. At the community centre, students explored how rivers overflow. In another room, emergency planners reviewed photographs of crowded routes and shelters from the previous evacuation. They discussed what to improve. Mr Reed arrived with his dog and thanked the rescue crew. Maya closed her notebook. Her first assignment had taught her that a good report follows the story beyond the headline.",
+    "heard": "A week later, clean water deliveries had reached the neighborhood, and Maya checked the delivery records before sharing the update. At the community center, students explored how rivers overflow. In another room, emergency planners reviewed photographs of crowded routes and shelters from the previous evacuation. They discussed what to improve. Mr. Reed arrived with his dog and thanked the rescue crew. Maya closed her notebook. Her first assignment had taught her that a good report follows the story beyond the headline.",
+    "matched": true,
+    "sha256": "ca1301746d7cf66c99eb2c096bd1f9f33012a94c33df6b7fd3fa028333953135"
+  },
+  {
+    "file": "prediction-10.mp3",
+    "expected": "What did Maya learn about responsible reporting? Retell three events using the verbs from the book.",
+    "heard": "What did Maya learn about responsible reporting? Retell three events using the verbs from the book.",
+    "matched": true,
+    "sha256": "dcf0334e7ee2ce11d4e9890c97cfc6f2c3a74db42f0eccf028f2ae2880d2838d"
+  },
+  {
+    "file": "word-deliveries.mp3",
+    "expected": "deliveries",
+    "heard": "Deliveries",
+    "matched": true,
+    "sha256": "b8ea6f190759e364a752843f70b5d5a5770d121626245ca73546bca16f87839f"
+  },
+  {
+    "file": "word-records.mp3",
+    "expected": "records",
+    "heard": "Records",
+    "matched": true,
+    "sha256": "f4cdd65d4abf86604439af4eb9f477730e06ba793348f7e94f8f0b5b1b5bb9b3"
+  },
+  {
+    "file": "word-overflow.mp3",
+    "expected": "overflow",
+    "heard": "Overflow",
+    "matched": true,
+    "sha256": "9aa753feff35baffa3058696da1d472780c1ebf7ee01197033bf0a3a9d013906"
+  },
+  {
+    "file": "word-crowded.mp3",
+    "expected": "crowded",
+    "heard": "Crowded",
+    "matched": true,
+    "sha256": "8aac01f39a91c7ccfd8db4361a736b783882fc256996320bcdebcc4cac20b28e"
+  },
+  {
+    "file": "word-beyond.mp3",
+    "expected": "beyond",
+    "heard": "Beyond",
+    "matched": true,
+    "sha256": "c3e27d3bf402f78e0d5223abec38978728cb7e0f65730b96e5ba342484619360"
+  },
+  {
+    "file": "answer-learn-about.mp3",
+    "expected": "During the lesson, the students learned about floods.",
+    "heard": "During the lesson, the students learned about floods.",
+    "matched": true,
+    "sha256": "4bf15081a59b5d7eead1462246d546592335d02bb482de1a7e56a8b743a323aa"
+  },
+  {
+    "file": "answer-learn-from.mp3",
+    "expected": "To improve the next evacuation, the planners learned from past mistakes.",
+    "heard": "To improve the next evacuation, the planners learned from past mistakes.",
+    "matched": true,
+    "sha256": "0251d2f11b8b443649a7517693efab193c3390aeca9208dfae70672257484e9c"
+  }
+]

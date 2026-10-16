@@ -1,0 +1,100 @@
+{
+  "mode": "built-in image_gen",
+  "generated": [
+    {
+      "id": "hear-about",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Two adults in a living room learn about overnight river flooding through a large television news broadcast. TV shows a weather presenter and a flooded town street with rain, not fire. Rainy morning outside window, adults attentive and concerned. The television is clear central visual focus.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-3a2f29e3-5f44-41f5-a60c-fd06ca60419e.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/hear-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 282164,
+      "sha256": "07d10a92b88d899508fa577ccb7678c04825dd4df66c3fc9d867ddd57efba032"
+    },
+    {
+      "id": "hear-from",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Maya, a young adult Latina journalist with shoulder-length wavy dark brown hair and navy rain jacket, receives a video call from her adult female friend Elena at a community shelter. Maya stands in a quiet newsroom corner. Phone screen clearly shows one smiling brown-haired woman with cots behind her. Maya looks visibly relieved. No interface letters.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-23f4f438-1e2b-4338-8f99-9c159191c75b.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/hear-from-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 188608,
+      "sha256": "826eb1857b4925f8a2b8dd423eafd89dd73c1b14465b93134a9f9e6691487485"
+    },
+    {
+      "id": "listen-for",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. A helmeted firefighter in black turnout gear and yellow stripes stands on a dry raised lane beside houses damaged by storm flooding. He cups his ear and signals silence, trying to detect cries for help from a dark upper window. Colleagues wait quietly with a rescue boat nearby. Mud, branches, water below the raised lane; no earthquake rubble, no fire, no bodies.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-10611705-bc11-4fff-a202-f37169b57b04.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/listen-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 372398,
+      "sha256": "3f79e597f110579317a60c320d85b75044f5118d39933694ec57a60954b6f549"
+    },
+    {
+      "id": "hero",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Wide view from a dry bridge at dawn after a storm: Maya, a young adult Latina journalist with shoulder-length wavy dark brown hair, navy waterproof jacket and small plain microphone, stands thoughtfully overlooking a fictional small town flooded by a river. A rescue boat brings neighbours toward a bright community shelter in distance, volunteers and damaged houses, clouds beginning to clear. She is learning that a news story is about people. A beautiful coherent book-cover scene, no written title.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-185785aa-c902-4609-b89a-036639015b2f.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/hero-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 343722,
+      "sha256": "f7fd2c3245848719a2465edfcadd7f88aa550ca60a9fb41351ddaf31eea27eb0"
+    },
+    {
+      "id": "look-for",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Two helmeted rescue workers in high visibility jackets search for a missing elderly neighbour after a river flood. They carefully scan upper windows of flooded houses from a rescue boat. One shines a flashlight toward a window, another calls out with hand by mouth. A faint warm light is visible upstairs but no person yet. Detailed flood-street environment, non-graphic.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-41be45d9-8051-44df-9544-043752629446.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/look-for-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 304862,
+      "sha256": "82d87dd29ff2814024194c5a1d290397897a75f7e2385d2362e3d8a5dd92c51f"
+    },
+    {
+      "id": "look-at",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Two rescue workers in high visibility clothing, one with red-orange jacket and helmet, study a large paper street map on a table at a dry outdoor command post after river flooding. Both point and look directly at map. Behind them rescue boat, sandbags, muddy buildings and flooded street. No earthquake damage. Coherent detailed map with no legible words.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-b994f813-8519-4576-83d0-8072a239ecbb.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/look-at-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 321388,
+      "sha256": "fb1e9bc1e15260b708ed6fbdc6ce3d4e3c4d1a0bd4887ffd9736c12a9be47686"
+    },
+    {
+      "id": "complain-about",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. Residents complain about lack of clean water after a storm flood. Outside muddy houses with a visible floodwater mark, they point with frustration to an empty water container and a dry communal tap. One holds an empty bucket. Cloudy wet town, debris and branches on pavement, no drought landscape, no official present.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-549c3894-1a99-433f-8954-6d2f2ee15e8f.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/complain-about-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 403176,
+      "sha256": "8575867d7ce6333b93904089aab9330654dff83fcd935c3a383b6e61c0406845"
+    },
+    {
+      "id": "complain-to",
+      "prompt": "Use case: illustration-story. Generate ONE 1536x1024 landscape 3:2 realistic editorial textbook illustration for an adult intermediate English interactive storybook called After the Storm. Fictional Greenford town. Natural photographic lighting, clear readable body language and detailed coherent environment, diverse people, humane tone, anatomically correct, no gore. Entire scene fits frame, no borders, no captions, no lettering, no logo, no watermark. In a neutral fictional small-town mayor's office, a woman community representative complains to the mayor about lack of clean water after a flood. She presents a petition and photograph of muddy flood-damaged houses and empty water containers. Mayor in suit listens and takes notes. Two clear roles across a desk, no national flags, no legible text.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-883ef43f-f58d-4ad7-9b14-17abdafe8264.png",
+      "file": "assets/img/english-intermediate-2/unit-6/after-the-storm/complain-to-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 182508,
+      "sha256": "9327cb37d513dec34981a2115fea3c50f805033dd78f50505effd6df2f291241"
+    }
+  ],
+  "reused": [
+    "/assets/img/english-intermediate-2/unit-6/prepositions/work-for-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/work-on-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/listen-to-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/ask-for-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/ask-about-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/report-on-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/report-to-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/warn-about-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/warn-against-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/care-for-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/care-about-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/learn-about-v1.webp",
+    "/assets/img/english-intermediate-2/unit-6/prepositions/learn-from-v1.webp"
+  ]
+}
