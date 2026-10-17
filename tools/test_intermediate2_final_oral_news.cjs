@@ -6,7 +6,7 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
  const browser=await chromium.launch({headless:true,channel:'chrome'});
  try{
  let fixture;
- for(const width of [320,390,768,1024,1440]){
+ for(const width of (process.env.NEWS_WIDTHS||'320,390,768,1024,1440').split(',').map(Number)){
   const page=await browser.newPage({viewport:{width,height:950}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(origin+'/ingles/intermediate-2/final-oral-live-news-report.html');
@@ -66,7 +66,8 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   assert.equal(await page.locator('#newsProjection [id]').count(),0);await page.keyboard.press('Escape');
   await page.locator('#newsReset').click();assert.equal(await page.locator('[data-reveal]').count(),6);assert.equal(await page.locator('[data-reveal]:disabled').count(),5);
   assert.deepEqual(errors,[]);
-  const md=await page.request.get(origin+'/ingles/intermediate-2/downloads/live-news-report-video-prompts.md');assert.equal(md.status(),200);assert.equal(((await md.text()).match(/```text/g)||[]).length,3);
+  const md=await page.request.get(origin+'/ingles/intermediate-2/downloads/live-news-report-video-prompts.txt');assert.equal(md.status(),200);assert.equal(((await md.text()).match(/```text/g)||[]).length,3);
+  assert.equal(await page.locator('a[download="live-news-report-video-prompts.md"]').first().getAttribute('download'),'live-news-report-video-prompts.md');await page.locator('a[download="live-news-report-video-prompts.md"]').first().click();await page.locator('[data-auth-panel]').waitFor({state:'visible'});await page.keyboard.press('Escape');assert.equal(await md.text(),fs.readFileSync(require('node:path').join(__dirname,'../ingles/intermediate-2/downloads/live-news-report-video-prompts.md'),'utf8'));
   console.log('PASS news model '+width+': ordered cards, projection, vocabulary, roles, rehearsal, QR and real local video playback');await page.close();
  }
  }finally{await browser.close();}

@@ -29,3 +29,7 @@ Interview: “The same man wears dark navy waterproof jacket over black shirt, h
 Use `tools/test_intermediate2_final_oral_news.cjs` for five viewport sizes, sequential reveal, keyboard/projector, rehearsal separation, names, hover/focus vocabulary, local file rejection, real WebM playback, remove clip, QR, projected guide and Markdown download. The video fixture is an ephemeral test recording, not a teaching asset. Run the 57-page contract and all-course Sign in test at mobile/tablet/desktop. Check the published page and hashes after selective deployment.
 
 Canonical QR URL: https://www.jaralingua.com/ingles/intermediate-2/final-oral-live-news-report.html
+
+The static publisher accepts `.txt`, not `.md`. The public `.txt` is an exact byte copy of the canonical Markdown; page links use `download="live-news-report-video-prompts.md"`. Verify both copies stay identical. No publisher policy was modified.
+
+The existing shared Sign in download gate remains in effect for the webpage download. The canonical Markdown is also delivered directly in the chat. The page opts out of shared draft capture via `data-jaralingua-managed-draft`; cast names, rehearsal state and local video selection are intentionally ephemeral.
