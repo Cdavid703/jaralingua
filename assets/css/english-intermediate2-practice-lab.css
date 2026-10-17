@@ -11,6 +11,16 @@
   --lab-soft: #f4f7fb;
   --lab-shadow: 0 16px 38px rgba(7, 31, 79, 0.1);
 }
+.ie2-lab-card.ie2-lab-kahoot{border:2px solid #a993e8;background:#f6f0ff;scroll-margin-top:5rem}
+.ie2-lab-kahoot .ie2-lab-card-body{align-content:start}
+.ie2-lab-kahoot .ie2-lab-tag{background:#e8dafa;color:#492080}
+.ie2-lab-kahoot a{border-radius:9px;min-height:44px;box-sizing:border-box;font-weight:750;text-decoration:none}
+.ie2-lab-kahoot-open{display:flex;align-items:center;justify-content:center;padding:.65rem;background:#5825a8;color:#fff;box-shadow:0 3px 0 #32135f}
+.ie2-lab-kahoot-route{display:flex;flex-wrap:wrap;gap:.4rem}
+.ie2-lab-kahoot-route a{display:flex;align-items:center;padding:.5rem .6rem;background:#e1ecff;color:#183f78;font-size:.8rem}
+.ie2-lab-kahoot-route [data-class-next]{background:#5825a8;color:#fff}
+.ie2-lab-kahoot a:focus-visible{outline:3px solid #924400;outline-offset:3px}
+.ie2-lab-card.ie2-lab-kahoot:hover{transform:none}
 .ie2-lab-page {
   overflow-x: hidden;
   background: var(--lab-soft);

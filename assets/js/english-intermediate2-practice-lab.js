@@ -33,6 +33,15 @@
     const shortReview = item.cardSummary
       ? `<p class="ie2-lab-card-summary">${escapeHtml(item.cardSummary)}</p>`
       : "";
+    if (item.classRoute) {
+      const route = item.classRoute;
+      return `<article class="ie2-lab-card ie2-lab-kahoot" id="class-step-${Number(route.step)}" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(searchText(item))}">
+        <figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="A flooded street after heavy rain" loading="lazy" /></figure>
+        <div class="ie2-lab-card-body"><span class="ie2-lab-tag ie2-class-label">Kahoot · Step ${Number(route.step)} / ${Number(route.total)}</span><h3>${escapeHtml(item.title)}</h3>${shortReview}
+          <a class="ie2-lab-kahoot-open" href="${escapeHtml(item.workshopHref)}" target="_blank" rel="noopener noreferrer">Open Kahoot · Teacher ↗</a>
+          <nav aria-label="October 17 class, step ${Number(route.step)} of ${Number(route.total)}"><div class="ie2-lab-kahoot-route"><a href="${escapeHtml(route.back)}" data-class-back>← Previous</a><a href="${escapeHtml(route.next)}" data-class-next>Final assessment →</a></div></nav>
+        </div></article>`;
+    }
     return `<a class="ie2-lab-card" href="${escapeHtml(item.workshopHref)}" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(searchText(item))}" aria-label="Open ${escapeHtml(item.title)}">
       <figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /></figure>
       <div class="ie2-lab-card-body"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || item.type)}</span><h3>${escapeHtml(item.title)}</h3>${shortReview}</div>
@@ -75,6 +84,7 @@
       total.textContent = String(published.filter((item) => units.some((unit) => unit.number === Number(item.unit))).length);
       activeUnitTotal.textContent = String(new Set(published.map((item) => Number(item.unit)).filter((number) => units.some((unit) => unit.number === number))).size);
       update();
+      openUnitHash();
     } catch (_) {
       units.filter(unit => unit.grid).forEach((unit) => { unit.grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>'; });
       resultCount.textContent = "Catalog unavailable";
@@ -88,7 +98,19 @@
     filters.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
     update();
   }));
-  function openUnitHash() { const node = document.getElementById(location.hash.slice(1)); if (node && node.matches("details.ie2-lab-folder")) node.open = true; }
+  function openUnitHash() {
+    const node = document.getElementById(location.hash.slice(1));
+    if (!node) return;
+    if (node.matches("details.ie2-lab-folder")) node.open = true;
+    else if (node.matches(".ie2-lab-card")) {
+      search.value = "";
+      activeFilter = "all";
+      filters.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.labFilter === "all")));
+      update();
+      node.closest("details.ie2-lab-folder").open = true;
+      requestAnimationFrame(() => node.scrollIntoView({block: "start"}));
+    }
+  }
   window.addEventListener("hashchange", openUnitHash); openUnitHash();
   load();
 }());

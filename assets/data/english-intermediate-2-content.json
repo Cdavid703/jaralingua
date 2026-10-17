@@ -1430,6 +1430,39 @@
         "flood",
         "After the Storm"
       ]
+    },
+    {
+      "id": "unit-6-kahoot-flood-news",
+      "unit": 6,
+      "order": 5.5,
+      "type": "grammar",
+      "skillLabel": "Kahoot · Class review",
+      "title": "Kahoot · Flood News",
+      "cardSummary": "20 questions: flood vocabulary and verb + preposition pairs.",
+      "summary": "Review Unit 6 together before the final oral assessment.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/flood-v1.webp",
+      "workshopHref": "https://create.kahoot.it/details/unit-6-flood-news-words-verb-partners/3a98457b-131b-42cd-b286-6e3947c5282f",
+      "status": "published",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "searchKeywords": [
+        "Unit 6",
+        "Kahoot",
+        "flood",
+        "vocabulary",
+        "verbs",
+        "prepositions",
+        "quiz",
+        "game"
+      ],
+      "classRoute": {
+        "step": 7,
+        "total": 8,
+        "back": "listening-unit-6-after-the-flood.html#class-step-6",
+        "next": "final-oral-live-news-report.html#class-step-8"
+      }
     }
   ]
 }

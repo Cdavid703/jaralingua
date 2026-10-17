@@ -1,6 +1,7 @@
 """Shared, static navigation for the teacher's October 17 lesson."""
 from pathlib import Path
 import re
+import json
 
 ROOT = Path(__file__).resolve().parents[1]
 STYLE = '<link rel="stylesheet" href="../../assets/css/english-intermediate2-class-route.css?v=20261017-2">'
@@ -11,7 +12,7 @@ STEPS = [
  ('What did they say?', 'speaking-unit-6-what-did-they-say.html#class-step-4', 'Student A describes the picture. Student B reports what A said.'),
  ('Disaster News Memory', 'game-unit-6-disaster-news-memory.html#class-step-5', 'Match pictures and give one news headline in the past, in your own words.'),
  ('After the Flood', 'listening-unit-6-after-the-flood.html#class-step-6', 'Listen to the news, answer eight questions and report what a speaker said.'),
- ('Kahoot · Flood News Review', 'course-overview.html#class-step-7', 'Review flood vocabulary and verb + preposition combinations before the final assessment.'),
+ ('Kahoot · Flood News Review', 'practice-lab.html#class-step-7', 'Review flood vocabulary and verb + preposition combinations before the final assessment.'),
  ('Final Oral Assessment · Live News Report', 'final-oral-live-news-report.html#class-step-8', 'Assign the roles, reveal the scene cards in order and perform the classroom example together.'),
 ]
 
@@ -28,13 +29,11 @@ def step_nav(step):
         support = '<p>For a short classroom round, choose <b>Help · 5 pairs</b> in the Vocabulary menu.</p>'
     if step == 8:
         support = '<p>Read the model together, then try <b>Rehearsal · pictures only</b>. During the final assessment, speak without reading.</p><p class="ie2-class-substeps"><a href="#exam">Assessment instructions</a> · <a href="#topics">Choose your news story</a> · <a href="#scenes">Reveal the scene cards</a></p>'
-    if step == 7:
-        support = '<p><b>20 questions · Play together.</b> Teacher: open your saved Kahoot and choose <b>Present live</b>. Students: join at <a href="https://kahoot.it/" target="_blank" rel="noopener noreferrer">kahoot.it ↗</a> with the game PIN.</p><p><a class="ie2-class-launch" href="https://create.kahoot.it/details/unit-6-flood-news-words-verb-partners/3a98457b-131b-42cd-b286-6e3947c5282f" target="_blank" rel="noopener noreferrer">Open Kahoot · Teacher ↗</a></p><p class="ie2-class-note">Opens in a new tab. Sign in to the teacher account that owns this private Kahoot. After the game, return here and continue to the final assessment.</p>'
     return f'''<nav class="ie2-class-step" data-class-tone="{step}" id="class-step-{step}" aria-label="October 17 class, step {step} of {total}"><div><p class="ie2-class-label"><span lang="en">October 17 Class</span> · Step {step} / {total}</p><strong>{title}</strong><p>{description}</p>{support}</div><div class="ie2-class-actions"><a href="{back}" data-class-back>← Previous step</a><a class="ie2-class-next" href="{next_url}" data-class-next>{next_label}</a><a href="course-overview.html#class-september-17">View all {total} steps</a></div></nav>'''
 
 def overview():
     items = ''.join(f'<li><a data-class-tone="{i}" href="{url}"><b>{i}. {title}</b><span>{description}</span></a></li>' for i, (title,url,description) in enumerate(STEPS,1))
-    return f'''<details class="ie2-class-overview" id="class-september-17"><summary lang="en">October 17 Class</summary><div><h2>Your class, step by step</h2><p>Follow this order. Each explanation or activity includes a link to the next step.</p><ol>{items}</ol><a class="ie2-class-next" href="{STEPS[0][1]}">Start the class →</a></div></details>{step_nav(7)}'''
+    return f'''<details class="ie2-class-overview" id="class-september-17"><summary lang="en">October 17 Class</summary><div><h2>Your class, step by step</h2><p>Follow this order. Each explanation or activity includes a link to the next step.</p><ol>{items}</ol><a class="ie2-class-next" href="{STEPS[0][1]}">Start the class →</a></div></details>'''
 
 def marked(key, content):
     return f'<!-- class-route:{key}:start -->{content}<!-- class-route:{key}:end -->'
@@ -65,8 +64,14 @@ if __name__ == '__main__':
     text=p.read_text()
     button='<a class="intermediate2-button primary" lang="en" href="#class-september-17">October 17 Class</a>'
     if button not in text:text=text.replace('<a class="intermediate2-button primary" href="./unit-1',button+'<a class="intermediate2-button primary" href="./unit-1',1)
-    script='<script src="../../assets/js/english-intermediate2-class-route.js?v=20261017-2"></script>'
+    script='<script src="../../assets/js/english-intermediate2-class-route.js?v=20261017-3"></script>'
     if 'english-intermediate2-class-route.js?' in text:
         text = re.sub(r'<script src="../../assets/js/english-intermediate2-class-route.js[^"]*"></script>', script, text)
     else:text=text.replace('</body>',script+'</body>')
     p.write_text(text)
+
+    catalog = ROOT/'assets/data/english-intermediate-2-content.json'
+    payload = json.loads(catalog.read_text())
+    kahoot = next(item for item in payload['items'] if item['id'] == 'unit-6-kahoot-flood-news')
+    kahoot['classRoute'] = {'step': 7, 'total': len(STEPS), 'back': STEPS[5][1], 'next': STEPS[7][1]}
+    catalog.write_text(json.dumps(payload, ensure_ascii=False, indent=2)+'\n')

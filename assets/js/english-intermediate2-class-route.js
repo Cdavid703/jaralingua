@@ -2,6 +2,7 @@
 (()=>{
  'use strict';
  function reveal(){
+  if(location.hash==='#class-step-7'){location.replace('practice-lab.html#class-step-7');return;}
   if(location.hash!=='#class-september-17')return;
   const route=document.getElementById('class-september-17');
   if(!route)return;
