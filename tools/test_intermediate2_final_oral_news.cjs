@@ -1,15 +1,21 @@
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
-const fs=require('node:fs');
 const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:'chrome'});
  try{
- let fixture;
  for(const width of (process.env.NEWS_WIDTHS||'320,390,768,1024,1440').split(',').map(Number)){
   const page=await browser.newPage({viewport:{width,height:950}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(origin+'/ingles/intermediate-2/final-oral-live-news-report.html');
+  await page.goto(origin+'/ingles/intermediate-2/evaluations.html');
+  assert.match(await page.locator('#finalOralNews h3').innerText(),/Final Oral Assessment/);
+  await page.locator('#finalOralNews a').click();
+  await page.waitForURL('**/final-oral-live-news-report.html');
+  assert.equal(await page.locator('h1').innerText(),'Final Oral Assessment');
+  assert.match(await page.locator('.news-hero').innerText(),/20% of your course grade/);
+  assert.equal(await page.locator('a[download],a[href*="video-prompts"],input[type="file"]').count(),0);
+  assert.equal(await page.locator('.news-shell > section').first().getAttribute('id'),'exam');
+
   await page.locator('[data-reveal="0"]').waitFor();
   assert.equal(await page.locator('[data-reveal]').count(),6);
   assert.equal(await page.locator('[data-reveal]:disabled').count(),5);
@@ -60,35 +66,16 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   assert.equal(await page.locator('#newsProjection .news-lines').count(),0);
   await page.locator('#newsClose').click();
   await page.locator('#newsRehearsal').uncheck();
-  await page.locator('.news-details').first().locator('summary').click();
+  await page.locator('#newsClassroomSetup summary').click();
   await page.locator('[data-role="desk"]').fill('Learner <img src=x>');
-  await page.locator('[data-clip="0"]').setInputFiles({name:'bad.txt',mimeType:'text/plain',buffer:Buffer.from('invalid')});
-  assert.match(await page.locator('#newsClipStatus0').innerText(),/Choose an MP4/);
-  if(!fixture){
-   const bytes=await page.evaluate(async()=>{
-    const c=document.createElement('canvas');c.width=320;c.height=180;const ctx=c.getContext('2d');ctx.fillStyle='#0f766e';ctx.fillRect(0,0,320,180);
-    const stream=c.captureStream(10),rec=new MediaRecorder(stream,{mimeType:'video/webm'}),chunks=[];
-    rec.ondataavailable=e=>chunks.push(e.data);
-    const result=new Promise(resolve=>rec.onstop=async()=>resolve(Array.from(new Uint8Array(await new Blob(chunks,{type:'video/webm'}).arrayBuffer()))));
-    rec.start();const timer=setInterval(()=>{ctx.fillRect(0,0,320,180);},80);await new Promise(r=>setTimeout(r,900));rec.stop();clearInterval(timer);stream.getTracks().forEach(t=>t.stop());return result;
-   });fixture=Buffer.from(bytes);fs.writeFileSync('/private/tmp/news-video-fixture.webm',fixture);
-  }
-  for(let slot=0;slot<3;slot++)await page.locator('[data-clip="'+slot+'"]').setInputFiles({name:'test-'+slot+'.webm',mimeType:'video/webm',buffer:fixture});
-  assert.match(await page.locator('#newsClipStatus0').innerText(),/Ready on this device/);
-  await page.locator('#newsCard0 [data-scene]').first().click();
-  await page.locator('#newsProjection video').evaluate(v=>v.play());
-  await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);
-  await page.locator('#newsClose').click();
-  for(const [scene,slot] of [[1,2],[2,1]]){await page.locator('#newsCard'+scene+' [data-scene]').first().click();assert.match(await page.locator('#newsProjection figcaption').innerText(),new RegExp('test-'+slot));await page.locator('#newsProjection video').evaluate(v=>v.play());await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);await page.locator('#newsClose').click();}
-  await page.locator('[data-remove-clip="0"]').click();
-  await page.locator('#newsCard0 [data-scene]').first().click();assert.match(await page.locator('#newsProjection video').getAttribute('src'),/01-studio-heygen-v1/);await page.keyboard.press('Escape');
+  await page.locator('#newsCard1 [data-scene]').first().click();await page.locator('#newsShowDialogue').click();
+  assert.match(await page.locator('#newsProjection').innerText(),/Learner <img src=x>/);
+  assert.equal(await page.locator('#newsProjection .news-lines img').count(),0);await page.keyboard.press('Escape');
   await page.locator('[data-project-section="language"]').click();
   assert.equal(await page.locator('#newsProjection [id]').count(),0);await page.keyboard.press('Escape');
   await page.locator('#newsReset').click();assert.equal(await page.locator('[data-reveal]').count(),6);assert.equal(await page.locator('[data-reveal]:disabled').count(),5);
   assert.deepEqual(errors,[]);
-  const md=await page.request.get(origin+'/ingles/intermediate-2/downloads/live-news-report-video-prompts.txt');assert.equal(md.status(),200);assert.equal(((await md.text()).match(/```text/g)||[]).length,3);
-  assert.equal(await page.locator('a[download="live-news-report-video-prompts.md"]').first().getAttribute('download'),'live-news-report-video-prompts.md');await page.locator('a[download="live-news-report-video-prompts.md"]').first().click();await page.locator('[data-auth-panel]').waitFor({state:'visible'});await page.keyboard.press('Escape');assert.equal(await md.text(),fs.readFileSync(require('node:path').join(__dirname,'../ingles/intermediate-2/downloads/live-news-report-video-prompts.md'),'utf8'));
-  console.log('PASS hosted videos and news model '+width+': ordered cards, projection, vocabulary, roles, rehearsal, QR and real local video playback');await page.close();
+  console.log('PASS hosted videos and news model '+width+': ordered cards, projection, vocabulary, roles, rehearsal, QR, official exam entry and hosted video playback');await page.close();
  }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

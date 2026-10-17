@@ -18,7 +18,7 @@ Three completed HeyGen videos are hosted locally and on the site under `assets/v
 
 The user canceled the interview video in favor of flood footage. Cards 4–6 retain still images and live dialogue; no opening or field narration is reused for the closing. The two speaking clips retain HeyGen’s free-plan watermark. The earlier Remotion animated still is historical and not used by this page.
 
-Reveal a card for native video controls, or open its projector. No autoplay; only one video plays at a time. Rehearsal mode shows still images only, hiding both model dialogue and video answers. The projector offers “Show still image” for live speech, and a playback error falls back to the image. Optional local file overrides use object URLs for this visit only; “Use published clip” restores the hosted video. No student file is uploaded. The three prompt downloads remain optional templates for student projects, including the original silent interview concept, rather than a manifest of these delivered demonstrations.
+Reveal a card for native video controls, or open its projector. No autoplay; only one video plays at a time. Rehearsal mode shows still images only, hiding both model dialogue and video answers. The projector offers “Show still image” for live speech, and a playback error falls back to the image. The teacher requested a student-facing cleanup: published videos are the only clip source, and the local-file override controls and Markdown downloads are retired. Students prepare a prompt for one short event clip and speak live during the assessment.
 
 ## Image provenance
 
@@ -34,15 +34,11 @@ Interview: “The same man wears dark navy waterproof jacket over black shirt, h
 
 ## Validation
 
-Use `tools/test_intermediate2_final_oral_news.cjs` for five viewport sizes, actual hosted playback in cards and projector, restored hosted clips, sequential reveal, keyboard/projector, rehearsal separation, names, hover/focus vocabulary, local file rejection, real WebM playback, remove clip, QR, projected guide and Markdown download. The video fixture is an ephemeral test recording, not a teaching asset. Run the 57-page contract and all-course Sign in test at mobile/tablet/desktop. Check the published page and hashes after selective deployment.
+Use `tools/test_intermediate2_final_oral_news.cjs` for five viewport sizes, actual hosted playback in cards and projector, the official Evaluations entry, no legacy downloads or file inputs, sequential reveal, keyboard/projector, rehearsal separation, names, hover/focus vocabulary, real hosted video playback, QR and projected guide. Run the 57-page contract and all-course Sign in test at mobile/tablet/desktop. Check the published page and hashes after selective deployment.
 
 Canonical QR URL: https://www.jaralingua.com/ingles/intermediate-2/final-oral-live-news-report.html
 
-The static publisher accepts `.txt`, not `.md`. The public `.txt` is an exact byte copy of the canonical Markdown; page links use `download="live-news-report-video-prompts.md"`. Verify both copies stay identical. No publisher policy was modified.
-
-The existing shared Sign in download gate remains in effect for the webpage download. The canonical Markdown is also delivered directly in the chat. The page opts out of shared draft capture via `data-jaralingua-managed-draft`; cast names, rehearsal state and local video selection are intentionally ephemeral.
-
-Each of the three video sections now repeats the complete preparation checklist and identifies its own output filename, so it can be shared independently. The interview prompt explicitly separates the original portrait (reporter identity) from the additional scene/reference image (location and Ana). Keep the Markdown and public text copies identical.
+The former Markdown and text prompt files are historical resources and have no active links on the exam page. The teacher retired this download workflow. The page opts out of shared draft capture via `data-jaralingua-managed-draft`; cast names and rehearsal state are ephemeral.
 
 ## First studio video with Chris (16 October 2026)
 
@@ -55,3 +51,9 @@ The teacher expanded the assessment to one natural disaster **or another Unit 6 
 The language guide now projects four separate slides: preposition combinations, direct/reported comparison, a practice sentence with a revealable answer, and a concert example. Topic choices project one at a time (eight slides); assessment instructions project in five short steps. Navigation uses Previous/Next or arrow keys, with a counter and full-screen control. Only one slide is visible; body text reaches 34 px at 1366 px and 44 px at 1920 px. Guide navigation does not reveal story cards, and returning to a story restores its video/dialogue controls.
 
 `tools/test_intermediate2_news_guides.cjs` checks all slides at phone, tablet, 1366×768 and 1920×1080, including TV text size and no required scrolling, eight topic options, answer reveal, focus return and separation from the story/video controls. Keep the existing video regression and 57-page contract checks.
+
+## Student-facing final assessment audit (16 October 2026)
+
+The teacher asked to remove obsolete content and clearly identify the page as the final evaluation. Evaluations now labels and links “Final Oral Assessment — Live News Report”; Course Overview uses the same assessment wording. The page hero states “Final Oral Assessment” and the 20% weight. The brief and eight topic choices precede the classroom demonstration, with clear hero links to instructions, topics and example.
+
+Removed both Markdown download links, download/sign-in instructions, local video upload/replacement controls and their JavaScript. Retained role assignment, three hosted videos, eight topics, readable projectors and grading criteria. Preparation now asks for one approximately eight-second event video, with optional ambient sound, plus still studio/interview images. The narrated demonstrations do not replace students’ live exam speech. No exam activation, grading or account permissions changed.

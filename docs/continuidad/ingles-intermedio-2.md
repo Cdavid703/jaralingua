@@ -148,3 +148,8 @@ El docente autorizó integrar y publicar los tres videos terminados de HeyGen. T
 ### Examen oral · proyección legible y elección de tema
 
 El docente amplió el tema: un desastre **o evento noticioso de Unidad 6**. La página ofrece flood, earthquake, hurricane, drought, wildfire, landslide, anuncio del concejo sobre reparación de la biblioteca y anuncio de concierto. Cada opción tiene contexto sencillo, vocabulario y combinaciones verbo/preposición. La entrevista puede ser a un testigo, residente, participante o fan según el evento; se conservan los requisitos individuales y la prohibición de leer. «Make the language work for you» se proyecta en cuatro pantallas con letra grande, una idea por pantalla, navegación y respuesta revelable; temas en ocho y consignas en cinco. Prueba específica: `tools/test_intermediate2_news_guides.cjs`.
+
+
+### Examen final oral · limpieza de la página para estudiantes
+
+Por solicitud del docente, se retiraron las dos descargas Markdown y la carga manual de clips del modelo. Los tres videos alojados permanecen en las tarjetas. La página abre con «Final Oral Assessment», peso 20%, instrucciones y ocho temas antes del ejemplo. Evaluations y Course Overview la identifican explícitamente como evaluación final oral. El alumno envía al profesor un prompt para **un video de unos ocho segundos del evento elegido**, con sonido ambiental opcional y sin diálogo; estudio y entrevista pueden apoyarse en imágenes. Los videos narrados del ejemplo no reemplazan la intervención oral en vivo. Los archivos de prompts antiguos quedan históricos sin enlaces activos. Se conservan criterios, roles, guías proyectables y estado de los demás exámenes.

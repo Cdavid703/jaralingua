@@ -10,8 +10,7 @@ const publishedClips=[
  {url:videoRoot+'02-field-heygen-v1.mp4',name:'Field reporter · Chris'},
  {url:videoRoot+'03-flood-heygen-v1.mp4',name:'The flood · ambient sound'}
 ];
-const clips=[null,null,null]; const clipNames=['Studio introduction · scene 1','Field reporter · scene 3','Flood footage · scene 2'];
-function selectedClip(scene){return !rehearsal&&Number.isInteger(scene.clip)?clips[scene.clip]||publishedClips[scene.clip]:null;}
+function selectedClip(scene){return !rehearsal&&Number.isInteger(scene.clip)?publishedClips[scene.clip]:null;}
 function poster(scene){return scene.poster?imgRoot+scene.poster:imgRoot+scene.image+'-v1.webp';}
 function videoMarkup(scene,projection){const clip=selectedClip(scene);return '<video controls playsinline preload="'+(projection?'metadata':'none')+'" poster="'+poster(scene)+'" src="'+esc(clip.url)+'" aria-label="'+esc(clip.name)+'"></video>';}
 function cardVisual(scene,index){return selectedClip(scene)?'<div class="news-card-video">'+videoMarkup(scene,false)+'</div>':'<button class="news-card-visual" data-scene="'+index+'" aria-label="Project scene '+(index+1)+': '+esc(scene.title)+'"><img src="'+poster(scene)+'" width="1672" height="941" alt="'+esc(scene.title)+'" loading="lazy"></button>';}
@@ -46,13 +45,13 @@ function renderProjection(){
  $('#newsShowDialogue').textContent=showDialogue?'Picture / video only':'Show dialogue';
  $('#newsShowDialogue').setAttribute('aria-pressed',String(showDialogue));$('#newsShowDialogue').disabled=rehearsal;
  $('#newsProjectStatus').textContent='';
- const video=dialog.querySelector('video');if(video){video.addEventListener('error',()=>{showStill('This video could not play. Use the still image, or choose a local video in Teacher setup.');});}
+ const video=dialog.querySelector('video');if(video){video.addEventListener('error',()=>{showStill('This video could not play. Use the still image for the live classroom example, or reload the page to try again.');});}
 }
 function openScene(i,opener){current=i;returnFocus=opener||document.activeElement;showDialogue=false;renderProjection();if(!dialog.open)dialog.showModal();}
 function navigate(delta){const next=current+delta;if(next<0||next>=scenes.length)return;current=next;if(next>revealed){revealed=next;renderCards();}renderProjection();}
 $('#newsCards').addEventListener('click',e=>{const reveal=e.target.closest('[data-reveal]'),project=e.target.closest('[data-scene]');if(reveal){const i=Number(reveal.dataset.reveal);if(i!==revealed+1)return;revealed=i;renderCards();$('#newsCard'+i+' [data-scene]').focus();$('#newsStatus').textContent='Scene '+(i+1)+' revealed. Open the projector or continue to the next card.';}else if(project)openScene(Number(project.dataset.scene),project);});
 $('#newsRehearsal').addEventListener('change',e=>{rehearsal=e.target.checked;showDialogue=false;renderCards();$('#newsStatus').textContent=rehearsal?'Rehearsal: dialogue hidden. Speak in your own words.':'Classroom model: dialogue available.';});
-$('#newsReset').addEventListener('click',()=>{if(dialog.open)dialog.close();revealed=-1;current=0;showDialogue=false;renderCards();$('#newsCards [data-reveal="0"]').focus();$('#newsStatus').textContent='All six cards are face down. Roles and chosen videos have been kept.';});
+$('#newsReset').addEventListener('click',()=>{if(dialog.open)dialog.close();revealed=-1;current=0;showDialogue=false;renderCards();$('#newsCards [data-reveal="0"]').focus();$('#newsStatus').textContent='All six cards are face down. Assigned roles have been kept.';});
 $('#newsPrev').addEventListener('click',()=>sectionMode?navigateGuide(-1):navigate(-1));$('#newsNext').addEventListener('click',()=>sectionMode?navigateGuide(1):navigate(1));
 $('#newsShowDialogue').addEventListener('click',()=>{if(rehearsal)return;showDialogue=!showDialogue;renderProjection();});
 $('#newsClose').addEventListener('click',()=>dialog.close());
@@ -83,15 +82,6 @@ document.querySelectorAll('[data-project-section]').forEach(b=>b.addEventListene
 }));
 $('#newsCast').innerHTML=Object.entries(roles).map(([role,label])=>'<label>'+esc(label)+'<input maxlength="60" data-role="'+role+'" value="'+esc(actors[role])+'" placeholder="Student’s first name" autocomplete="off"></label>').join('');
 $('#newsCast').addEventListener('input',e=>{if(e.target.dataset.role){actors[e.target.dataset.role]=e.target.value.trim();if(scenes.length)renderCards();}});
-$('#newsFiles').innerHTML=clipNames.map((n,i)=>'<div class="news-file"><label>Clip '+(i+1)+' · '+n+'<input type="file" accept="video/mp4,video/webm,video/ogg" data-clip="'+i+'"></label><p id="newsClipStatus'+i+'" role="status">Published video ready.</p><button type="button" data-remove-clip="'+i+'" hidden>Use published clip</button></div>').join('');
-$('#newsFiles').addEventListener('change',async e=>{
- if(!e.target.matches('[data-clip]'))return;const i=Number(e.target.dataset.clip),file=e.target.files[0],status=$('#newsClipStatus'+i);if(!file)return;
- if(!(/\.(mp4|webm|og[gv])$/i.test(file.name)&&(!file.type||file.type.startsWith('video/')))){status.textContent='Choose an MP4, WebM or Ogg video file.';e.target.value='';return;}
- if(file.size>300*1024*1024){status.textContent='Choose a video smaller than 300 MB.';e.target.value='';return;}
- if(clips[i])URL.revokeObjectURL(clips[i].url);clips[i]={url:URL.createObjectURL(file),name:file.name};status.textContent='Ready on this device: '+file.name;$('#newsFiles [data-remove-clip="'+i+'"]').hidden=false;renderCards();
-});
-$('#newsFiles').addEventListener('click',e=>{const b=e.target.closest('[data-remove-clip]');if(!b)return;const i=Number(b.dataset.removeClip);if(clips[i])URL.revokeObjectURL(clips[i].url);clips[i]=null;$('#newsFiles [data-clip="'+i+'"]').value='';$('#newsClipStatus'+i).textContent='Published video ready.';b.hidden=true;renderCards();});
 $('#newsCopyImagePrompt').addEventListener('click',async()=>{const text=$('#newsImagePrompt').textContent;try{await navigator.clipboard.writeText(text);$('#newsStatus').textContent='Image prompt copied.';$('#newsCopyImagePrompt').textContent='Copied';}catch{const range=document.createRange();range.selectNodeContents($('#newsImagePrompt'));const selection=getSelection();selection.removeAllRanges();selection.addRange(range);$('#newsCopyImagePrompt').textContent='Text selected · copy it';}});
-addEventListener('beforeunload',()=>clips.forEach(c=>{if(c)URL.revokeObjectURL(c.url);}));
 fetch('../../assets/data/english-intermediate2-final-oral-news.json?v=20261016-hosted-videos').then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{scenes=data.scenes;renderCards();}).catch(()=>{$('#newsStatus').className='news-error';$('#newsStatus').textContent='The scenes could not load. Reload this page to try again. The assessment brief is still available below.';});
 })();
