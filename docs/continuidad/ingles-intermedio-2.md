@@ -143,3 +143,8 @@ Seis tarjetas inicialmente boca abajo, revelado secuencial y proyección con ima
 ### Videos del modelo final oral · 16 de octubre de 2026
 
 El docente autorizó integrar y publicar los tres videos terminados de HeyGen. Tarjeta 1: introducción de estudio con Chris; tarjeta 2: inundación de ocho segundos con sonido ambiental; tarjeta 3: reportero con Chris. Las tarjetas 4–6 conservan imágenes para la entrevista, discurso indirecto y cierre en vivo. El docente canceló el video de entrevista para utilizar la última generación en la inundación. Los MP4 están alojados en el sitio y funcionan también en local, con controles en las tarjetas y el proyector, sin carga manual obligatoria. Las sustituciones locales son opcionales y se pueden restablecer al video publicado. Conservar las marcas de agua de HeyGen y no reutilizar la introducción hablada en el cierre. El Remotion anterior queda histórico. Ver detalles y referencias en `docs/english-intermediate2-final-oral-news.md`.
+
+
+### Examen oral · proyección legible y elección de tema
+
+El docente amplió el tema: un desastre **o evento noticioso de Unidad 6**. La página ofrece flood, earthquake, hurricane, drought, wildfire, landslide, anuncio del concejo sobre reparación de la biblioteca y anuncio de concierto. Cada opción tiene contexto sencillo, vocabulario y combinaciones verbo/preposición. La entrevista puede ser a un testigo, residente, participante o fan según el evento; se conservan los requisitos individuales y la prohibición de leer. «Make the language work for you» se proyecta en cuatro pantallas con letra grande, una idea por pantalla, navegación y respuesta revelable; temas en ocho y consignas en cinco. Prueba específica: `tools/test_intermediate2_news_guides.cjs`.
