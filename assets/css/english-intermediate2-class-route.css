@@ -18,3 +18,26 @@
 .ie2-class-overview a:focus-visible,.ie2-class-step a:focus-visible,.ie2-class-overview summary:focus-visible{outline:3px solid #a45b10;outline-offset:3px}
 body> .ie2-class-step{width:calc(100% - 2rem)}
 @media(max-width:760px){.ie2-class-overview ol{grid-template-columns:1fr}.ie2-class-step{flex-direction:column;align-items:stretch;gap:.6rem;padding:1rem}.ie2-class-actions{max-width:none}.ie2-class-actions a{max-width:100%}}
+/* Bright, scoped lesson navigation. Labels remain meaningful without color. */
+.ie2-class-overview,.ie2-class-step{border:2px solid #c7c7ed;background:linear-gradient(120deg,#f5f3ff,#edf7ff);box-shadow:0 8px 24px #243a7212}
+.ie2-class-overview>summary{color:#4933a0;font-size:1.3rem}
+.ie2-overview-hero a.intermediate2-button[href="#class-september-17"]{background:linear-gradient(120deg,#6236c9,#3c2995);color:#fff;border:2px solid #b9a4ff;box-shadow:0 5px 0 #24165e;font-weight:800}
+.ie2-class-overview li a{border:2px solid #c5d3ef;border-left:7px solid #2860a5;border-radius:14px;transition:transform .15s,box-shadow .15s}
+.ie2-class-overview li a[data-class-tone="2"],.ie2-class-overview li a[data-class-tone="4"],.ie2-class-overview li a[data-class-tone="6"]{border-left-color:#087566;background:#f0fdfa}
+.ie2-class-overview li a[data-class-tone="7"]{border-color:#a993e8;border-left-color:#6331b5;background:#f3edff;color:#412078}
+.ie2-class-overview li a[data-class-tone="8"]{border-color:#e5b566;border-left-color:#a35a07;background:#fff4d9;color:#633600}
+.ie2-class-step[data-class-tone="7"]{border-color:#a993e8;background:#f3edff}
+.ie2-class-step[data-class-tone="8"]{border-color:#e5b566;background:#fff4d9}
+.ie2-class-step>div:first-child{flex:1}
+.ie2-class-actions{flex:0 1 380px}
+.ie2-class-actions a,.ie2-class-next,.ie2-class-launch{border-radius:12px;min-height:48px;padding:.7rem 1rem;font-weight:750;line-height:1.4;transition:transform .15s,box-shadow .15s}
+.ie2-class-actions a[data-class-back]{background:#e1ecff;color:#183f78;border:2px solid #a0b9e5}
+.ie2-class-actions .ie2-class-next,.ie2-class-overview .ie2-class-next{background:linear-gradient(120deg,#6236c9,#3c2995);border:2px solid #6236c9;color:#fff;box-shadow:0 4px 0 #2c1c70}
+.ie2-class-actions a:last-child{background:#fff;color:#374269;border:2px solid #bbc3d9}
+.ie2-class-launch{display:inline-flex;align-items:center;box-sizing:border-box;max-width:100%;text-decoration:none;background:#5825a8;color:#fff;border:2px solid #5825a8;box-shadow:0 4px 0 #32135f}
+.ie2-class-step .ie2-class-note{font-size:.95rem;color:#4c4061;margin-top:1rem}
+.ie2-class-step a:not([class]):not([data-class-back]){text-underline-offset:3px}
+.ie2-class-overview a:focus-visible,.ie2-class-step a:focus-visible{outline:3px solid #924400;outline-offset:4px}
+@media(hover:hover){.ie2-class-overview li a:hover,.ie2-class-actions a:hover,.ie2-class-launch:hover{transform:translateY(-2px);box-shadow:0 6px 16px #24165525}}
+@media(max-width:760px){.ie2-class-actions{flex:initial}.ie2-class-actions a{width:100%}.ie2-class-overview>div{padding:0}}
+@media(prefers-reduced-motion:reduce){.ie2-class-overview li a,.ie2-class-actions a,.ie2-class-launch{transition:none;transform:none!important}}
