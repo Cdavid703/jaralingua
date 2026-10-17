@@ -2,11 +2,12 @@
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const origin=process.env.CLASS_ORIGIN||'http://127.0.0.1:8139';
+const widths=(process.env.CLASS_WIDTHS||'320,390,768,1024,1440').split(',').map(Number);
 const base=origin+'/ingles/intermediate-2/';
 (async()=>{
  const browser=await chromium.launch({headless:true,channel:'chrome'});
  try{
-  for(const width of [320,390,768,1024,1440]){
+  for(const width of widths){
    const page=await browser.newPage({viewport:{width,height:900}}),errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    async function layout(){assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'overflow '+width);}
@@ -15,7 +16,7 @@ const base=origin+'/ingles/intermediate-2/';
    assert.equal(await page.locator('#class-september-17').evaluate(d=>d.open),false);
    await page.locator('.ie2-overview-hero a[href="#class-september-17"]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
-   assert.equal(await page.locator('#class-september-17 li').count(),6);await layout();
+   assert.equal(await page.locator('#class-september-17 li').count(),7);await layout();
    if([390,1440].includes(width))await page.screenshot({path:'/private/tmp/class-september17-'+width+'.png'});
    await qr();await page.locator('#class-september-17 .ie2-class-next').click();
    await page.waitForFunction(()=>document.querySelector('#verb-prepositions').open);
@@ -43,7 +44,7 @@ const base=origin+'/ingles/intermediate-2/';
    await page.locator('dialog[open]').waitFor({state:'visible'});await page.keyboard.press('Escape');
    await page.locator('#class-step-4 [data-class-next]').click();
    await page.waitForURL('**/game-unit-6-disaster-news-memory.html#class-step-5');await layout();await qr();
-   assert.match(await page.locator('#class-step-5 .ie2-class-label').innerText(),/Step 5 \/ 6/);
+   assert.match(await page.locator('#class-step-5 .ie2-class-label').innerText(),/Step 5 \/ 7/);
    await page.waitForFunction(()=>document.querySelectorAll('#memoryBoard button').length===40);
    assert.equal(await page.locator('.vocab-word').count(),20);
    await page.locator('#memoryGroup').selectOption('help');
@@ -57,7 +58,7 @@ const base=origin+'/ingles/intermediate-2/';
    assert.equal(await page.locator('#game .ie2-class-step').count(),0,'class navigation must stay outside the projected game');
    await page.locator('#class-step-5 [data-class-next]').click();
    await page.waitForURL('**/listening-unit-6-after-the-flood.html#class-step-6');await layout();await qr();
-   assert.match(await page.locator('#class-step-6 .ie2-class-label').innerText(),/Step 6 \/ 6/);
+   assert.match(await page.locator('#class-step-6 .ie2-class-label').innerText(),/Step 6 \/ 7/);
    assert.equal(await page.locator('#listening-check fieldset').count(),8);
    assert(await page.locator('#teacherTools').isHidden(),'teacher transcript must remain protected');
    await page.locator('[data-audio-speed="0.75"]').click();
@@ -74,13 +75,28 @@ const base=origin+'/ingles/intermediate-2/';
    await page.locator('#class-step-5 [data-class-next]').click();
    await page.waitForURL('**/listening-unit-6-after-the-flood.html#class-step-6');
    await page.locator('#class-step-6 [data-class-next]').click();
+   await page.waitForURL('**/final-oral-live-news-report.html#class-step-7');await layout();await qr();
+   assert.match(await page.locator('#class-step-7 .ie2-class-label').innerText(),/Step 7 \/ 7/);
+   assert.equal(await page.locator('h1').innerText(),'Final Oral Assessment');
+   await page.locator('#class-step-7 a[href="#exam"]').click();
+   await page.waitForURL('**/final-oral-live-news-report.html#exam');
+   await page.locator('#class-step-7 a[href="#topics"]').click();
+   await page.waitForURL('**/final-oral-live-news-report.html#topics');
+   await page.locator('#class-step-7 a[href="#scenes"]').click();
+   await page.locator('[data-reveal="0"]').click();
+   assert.equal(await page.locator('[data-reveal="1"]').isEnabled(),true);
+   await page.locator('#class-step-7 [data-class-back]').click();
+   await page.waitForURL('**/listening-unit-6-after-the-flood.html#class-step-6');
+   await page.locator('#class-step-6 [data-class-next]').click();
+   await page.waitForURL('**/final-oral-live-news-report.html#class-step-7');
+   await page.locator('#class-step-7 [data-class-next]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
    assert.equal(new URL(page.url()).origin,origin);assert.deepEqual(errors,[]);
    // Clicking the hero link again also reopens a manually closed route.
    await page.locator('#class-september-17 > summary').click();
    await page.locator('.ie2-overview-hero a[href="#class-september-17"]').click();
    await page.waitForFunction(()=>document.querySelector('#class-september-17').open);
-   console.log('PASS six-step route, memory match/headline, listening audio, projection and QR at',width);await page.close();
+   console.log('PASS seven-step route with final assessment cards, memory match/headline, listening audio, projection and QR at',width);await page.close();
   }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

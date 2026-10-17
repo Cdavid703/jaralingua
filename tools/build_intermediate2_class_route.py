@@ -11,6 +11,7 @@ STEPS = [
  ('What did they say?', 'speaking-unit-6-what-did-they-say.html#class-step-4', 'Student A describes the picture. Student B reports what A said.'),
  ('Disaster News Memory', 'game-unit-6-disaster-news-memory.html#class-step-5', 'Match pictures and give one news headline in the past, in your own words.'),
  ('After the Flood', 'listening-unit-6-after-the-flood.html#class-step-6', 'Listen to the news, answer eight questions and report what a speaker said.'),
+ ('Final Oral Assessment · Live News Report', 'final-oral-live-news-report.html#class-step-7', 'Assign the roles, reveal the scene cards in order and perform the classroom example together.'),
 ]
 
 def step_nav(step):
@@ -24,6 +25,8 @@ def step_nav(step):
         support = '<p class="ie2-class-substeps">Read in order: <a href="#direct-reported">1. What is it?</a> → <a href="#say-tell">2. Said / told</a> → <a href="#changes">3. What changes?</a></p>'
     if step == 5:
         support = '<p>For a short classroom round, choose <b>Help · 5 pairs</b> in the Vocabulary menu.</p>'
+    if step == 7:
+        support = '<p>Read the model together, then try <b>Rehearsal · pictures only</b>. During the final assessment, speak without reading.</p><p class="ie2-class-substeps"><a href="#exam">Assessment instructions</a> · <a href="#topics">Choose your news story</a> · <a href="#scenes">Reveal the scene cards</a></p>'
     return f'''<nav class="ie2-class-step" id="class-step-{step}" aria-label="October 17 class, step {step} of {total}"><div><p class="ie2-class-label"><span lang="en">October 17 Class</span> · Step {step} / {total}</p><strong>{title}</strong><p>{description}</p>{support}</div><div class="ie2-class-actions"><a href="{back}" data-class-back>← Previous step</a><a class="ie2-class-next" href="{next_url}" data-class-next>{next_label}</a><a href="course-overview.html#class-september-17">View all {total} steps</a></div></nav>'''
 
 def overview():
@@ -52,6 +55,7 @@ if __name__ == '__main__':
     insert('speaking-unit-6-what-did-they-say.html','speaking',step_nav(4),'<section class="rs-intro"')
     insert('game-unit-6-disaster-news-memory.html','memory','<div class="dm-back">'+step_nav(5)+'</div>','<section class="game-shell"')
     insert('listening-unit-6-after-the-flood.html','listening',step_nav(6),'<section class="ie2-listening-block ie2-search-item" id="before-listening"')
+    insert('final-oral-live-news-report.html','assessment',step_nav(7),'<section id="scenes" class="news-example">')
     p=ROOT/'ingles/intermediate-2/course-overview.html'
     text=p.read_text()
     button='<a class="intermediate2-button primary" lang="en" href="#class-september-17">October 17 Class</a>'
