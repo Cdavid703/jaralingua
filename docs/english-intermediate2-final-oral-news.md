@@ -18,7 +18,7 @@ Three completed HeyGen videos are hosted locally and on the site under `assets/v
 
 The user canceled the interview video in favor of flood footage. Cards 4–6 retain still images and live dialogue; no opening or field narration is reused for the closing. The two speaking clips retain HeyGen’s free-plan watermark. The earlier Remotion animated still is historical and not used by this page.
 
-Reveal a card for native video controls, or open its projector. No autoplay; only one video plays at a time. The projector offers “Show still image” for live speech, and a playback error falls back to the image. Optional local file overrides use object URLs for this visit only; “Use published clip” restores the hosted video. No student file is uploaded. The three prompt downloads remain optional templates for student projects, including the original silent interview concept, rather than a manifest of these delivered demonstrations.
+Reveal a card for native video controls, or open its projector. No autoplay; only one video plays at a time. Rehearsal mode shows still images only, hiding both model dialogue and video answers. The projector offers “Show still image” for live speech, and a playback error falls back to the image. Optional local file overrides use object URLs for this visit only; “Use published clip” restores the hosted video. No student file is uploaded. The three prompt downloads remain optional templates for student projects, including the original silent interview concept, rather than a manifest of these delivered demonstrations.
 
 ## Image provenance
 

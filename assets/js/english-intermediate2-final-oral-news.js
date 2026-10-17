@@ -11,7 +11,7 @@ const publishedClips=[
  {url:videoRoot+'03-flood-heygen-v1.mp4',name:'The flood · ambient sound'}
 ];
 const clips=[null,null,null]; const clipNames=['Studio introduction · scene 1','Field reporter · scene 3','Flood footage · scene 2'];
-function selectedClip(scene){return Number.isInteger(scene.clip)?clips[scene.clip]||publishedClips[scene.clip]:null;}
+function selectedClip(scene){return !rehearsal&&Number.isInteger(scene.clip)?clips[scene.clip]||publishedClips[scene.clip]:null;}
 function poster(scene){return scene.poster?imgRoot+scene.poster:imgRoot+scene.image+'-v1.webp';}
 function videoMarkup(scene,projection){const clip=selectedClip(scene);return '<video controls playsinline preload="'+(projection?'metadata':'none')+'" poster="'+poster(scene)+'" src="'+esc(clip.url)+'" aria-label="'+esc(clip.name)+'"></video>';}
 function cardVisual(scene,index){return selectedClip(scene)?'<div class="news-card-video">'+videoMarkup(scene,false)+'</div>':'<button class="news-card-visual" data-scene="'+index+'" aria-label="Project scene '+(index+1)+': '+esc(scene.title)+'"><img src="'+poster(scene)+'" width="1672" height="941" alt="'+esc(scene.title)+'" loading="lazy"></button>';}

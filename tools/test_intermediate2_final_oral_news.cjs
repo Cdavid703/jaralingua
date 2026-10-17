@@ -55,6 +55,7 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   for(const scene of [3,4,5]){await page.locator('#newsCard'+scene+' [data-scene]').first().click();assert.equal(await page.locator('#newsProjection video').count(),0);await page.locator('#newsClose').click();}
   await page.locator('#newsRehearsal').check();
   assert.equal(await page.locator('.news-card-model').count(),0);
+  assert.equal(await page.locator('.news-card video').count(),0);
   await page.locator('#newsCard3 [data-scene]').first().click();assert(await page.locator('#newsShowDialogue').isDisabled());
   assert.equal(await page.locator('#newsProjection .news-lines').count(),0);
   await page.locator('#newsClose').click();
