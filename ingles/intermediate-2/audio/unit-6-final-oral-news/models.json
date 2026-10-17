@@ -1,0 +1,22 @@
+{
+  "provider": "ElevenLabs",
+  "voiceId": "iP95p4xoKVk53GoZ742B",
+  "voiceName": "Chris",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "01-studio-chris.mp3",
+      "text": "Good evening! Welcome to Greenford News. I’m David. Today we are reporting on a flood in Greenford. Heavy rain filled the streets this morning. Our team is looking at the damage. Mia, what happened?",
+      "kind": "section",
+      "voiceSettings": {
+        "stability": 0.6,
+        "similarity_boost": 0.75,
+        "style": 0.25,
+        "use_speaker_boost": true,
+        "speed": 0.93
+      },
+      "bytes": 198155,
+      "sha256": "ed75c7909d073fc285b435bd82e514074dea176eefdb96e8f63d7ff27ebcd7a3"
+    }
+  ]
+}
