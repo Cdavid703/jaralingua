@@ -33,3 +33,5 @@ Canonical QR URL: https://www.jaralingua.com/ingles/intermediate-2/final-oral-li
 The static publisher accepts `.txt`, not `.md`. The public `.txt` is an exact byte copy of the canonical Markdown; page links use `download="live-news-report-video-prompts.md"`. Verify both copies stay identical. No publisher policy was modified.
 
 The existing shared Sign in download gate remains in effect for the webpage download. The canonical Markdown is also delivered directly in the chat. The page opts out of shared draft capture via `data-jaralingua-managed-draft`; cast names, rehearsal state and local video selection are intentionally ephemeral.
+
+Each of the three video sections now repeats the complete preparation checklist and identifies its own output filename, so it can be shared independently. The interview prompt explicitly separates the original portrait (reporter identity) from the additional scene/reference image (location and Ana). Keep the Markdown and public text copies identical.

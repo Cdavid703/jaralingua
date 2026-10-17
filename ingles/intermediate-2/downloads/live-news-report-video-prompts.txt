@@ -2,7 +2,13 @@
 
 Teacher resource · Intermediate English 2 · Fictional Greenford flood
 
-## Before generating
+Each section is self-contained. Use its preparation checklist and copy its complete prompt for a separate generation.
+
+## 1. Studio introduction
+
+Use for the first card and the return to the studio.
+
+### Before generating this clip
 
 - Attach your original portrait to every generation. Use a photograph you own or have permission to use.
 - Request a horizontal 16:9 clip of approximately eight seconds. Available durations and features depend on your video tool and account.
@@ -12,9 +18,9 @@ Teacher resource · Intermediate English 2 · Fictional Greenford flood
 - In the example, David illustrates both presenter and reporter roles. Students assign these roles to their own team members.
 - Save the files as `01-studio.mp4`, `02-location.mp4` and `03-interview.mp4`. In the exam page, open **Teacher setup → Load the three clips**. File selection is local to the current visit and does not publish or upload the files.
 
-## 1. Studio introduction
+**Save this clip as `01-studio.mp4`.**
 
-Use for the first card and the return to the studio.
+### Prompt to copy
 
 ```text
 Create an approximately 8-second photorealistic video in horizontal 16:9 format for a fictional classroom news broadcast.
@@ -32,6 +38,20 @@ No dialogue, narration, music, written headlines, subtitles, logos or teleprompt
 
 The teacher plays this clip when the studio journalist introduces the disaster, then uses it for the connection to the field reporter.
 
+### Before generating this clip
+
+- Attach your original portrait to every generation. Use a photograph you own or have permission to use.
+- Request a horizontal 16:9 clip of approximately eight seconds. Available durations and features depend on your video tool and account.
+- Keep faces, clothing and location consistent. Review each result; an identity-preservation prompt cannot guarantee an identical face.
+- For the interview, attach the previous location frame or the provided interview image as an additional reference if your tool supports it. Identify the original portrait as the face reference and the scene image as the setting/reference for Ana.
+- These clips are visual support for live classroom speech: no generated dialogue, narration, subtitles or teleprompter.
+- In the example, David illustrates both presenter and reporter roles. Students assign these roles to their own team members.
+- Save the files as `01-studio.mp4`, `02-location.mp4` and `03-interview.mp4`. In the exam page, open **Teacher setup → Load the three clips**. File selection is local to the current visit and does not publish or upload the files.
+
+**Save this clip as `02-location.mp4`.**
+
+### Prompt to copy
+
 ```text
 Create an approximately 8-second photorealistic video in horizontal 16:9 format for a fictional news report from Greenford after a flood.
 
@@ -48,10 +68,26 @@ Natural daylight under a grey sky. Soft water and distant rescue activity sounds
 
 Use for the interview card. Students provide all questions and answers live.
 
+### Before generating this clip
+
+- Attach your original portrait to every generation. Use a photograph you own or have permission to use.
+- Request a horizontal 16:9 clip of approximately eight seconds. Available durations and features depend on your video tool and account.
+- Keep faces, clothing and location consistent. Review each result; an identity-preservation prompt cannot guarantee an identical face.
+- For the interview, attach the previous location frame or the provided interview image as an additional reference if your tool supports it. Identify the original portrait as the face reference and the scene image as the setting/reference for Ana.
+- These clips are visual support for live classroom speech: no generated dialogue, narration, subtitles or teleprompter.
+- In the example, David illustrates both presenter and reporter roles. Students assign these roles to their own team members.
+- Save the files as `01-studio.mp4`, `02-location.mp4` and `03-interview.mp4`. In the exam page, open **Teacher setup → Load the three clips**. File selection is local to the current visit and does not publish or upload the files.
+
+**Save this clip as `03-interview.mp4`.**
+
+### Prompt to copy
+
 ```text
 Create an approximately 8-second photorealistic video in horizontal 16:9 format showing the beginning of a fictional news interview after the Greenford flood.
 
 Use the attached photograph as the identity reference for the male reporter. Preserve his facial identity, facial proportions, beard, hairline, skin tone and apparent age. He wears the same dark navy waterproof jacket over a plain black shirt and holds an unbranded microphone.
+
+If an additional location frame or interview image is attached, use it only as the setting and Ana reference. The original portrait is the male reporter’s face reference. Match the previous location’s flooded street, low houses, rescue boat, grey daylight and clothing.
 
 Beside him stands Ana, a fictional adult woman with medium brown skin, shoulder-length dark curly hair, a yellow raincoat, blue jeans and a small dark blue bag. She looks worried but safe. They stand on dry, raised ground near her house. A muddy flooded street and a rescue boat are visible behind them.
 
