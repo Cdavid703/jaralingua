@@ -1,0 +1,273 @@
+{
+  "title": "The Greenford Report",
+  "scenes": [
+    {
+      "title": "Good evening, Greenford",
+      "role": "anchor",
+      "image": "studio",
+      "clip": 0,
+      "goal": "Welcome viewers, introduce the headline and invite the studio journalist.",
+      "words": [
+        [
+          "flood",
+          "inundación"
+        ],
+        [
+          "heavy rain",
+          "lluvia intensa"
+        ],
+        [
+          "report on",
+          "informar sobre"
+        ],
+        [
+          "hear from",
+          "recibir noticias de"
+        ],
+        [
+          "safe",
+          "a salvo"
+        ]
+      ],
+      "lines": [
+        [
+          "anchor",
+          "Good evening! Welcome to Greenford News. I’m David. Today we are reporting on a flood in Greenford. Heavy rain filled the streets this morning. Our team is looking at the damage. Mia, what happened?"
+        ]
+      ],
+      "cue": "David opens the programme. The teacher can read this role in the demonstration."
+    },
+    {
+      "title": "The story from the studio",
+      "role": "desk",
+      "image": "studio",
+      "clip": 1,
+      "goal": "Explain what happened, where and when. Show the location clip while you speak.",
+      "words": [
+        [
+          "damaged",
+          "dañado"
+        ],
+        [
+          "leave",
+          "salir / abandonar"
+        ],
+        [
+          "clean water",
+          "agua potable"
+        ],
+        [
+          "ask for",
+          "pedir"
+        ],
+        [
+          "look for",
+          "buscar"
+        ]
+      ],
+      "lines": [
+        [
+          "desk",
+          "Thank you, David. The flood started early this morning after heavy rain. Water entered several homes. Families left their houses and asked for help. Rescuers are looking for people who need help. Let’s look at these pictures."
+        ],
+        [
+          "anchor",
+          "We heard from a rescue worker earlier. He said that the main road was closed. Leo, are the families safe now?"
+        ]
+      ],
+      "cue": "Play clip 2 here, then keep the picture visible. The presenter’s rescue-worker statement is part of this fictional model."
+    },
+    {
+      "title": "Live from the scene",
+      "role": "field",
+      "image": "field",
+      "clip": 1,
+      "goal": "Describe the place, explain the help and introduce a witness.",
+      "words": [
+        [
+          "shelter",
+          "refugio"
+        ],
+        [
+          "blankets",
+          "mantas"
+        ],
+        [
+          "listen to",
+          "escuchar"
+        ],
+        [
+          "care for",
+          "cuidar"
+        ],
+        [
+          "injured",
+          "herido"
+        ]
+      ],
+      "lines": [
+        [
+          "field",
+          "Yes, David. I’m on dry ground near the river. You can see water in the street behind me. Families are going to a shelter. They are listening to the rescue team. Helpers are caring for injured people. I’m here with Ana. She lives on this street. Ana, can I ask you about this morning?"
+        ],
+        [
+          "witness",
+          "Yes, of course."
+        ]
+      ],
+      "cue": "Describe only what the image or the fictional story supports. Invite the witness to speak."
+    },
+    {
+      "title": "What did you experience?",
+      "role": "witness",
+      "image": "interview",
+      "clip": 2,
+      "goal": "Ask about the moment of the flood. Listen and ask a follow-up question.",
+      "words": [
+        [
+          "frightened",
+          "asustado"
+        ],
+        [
+          "rise",
+          "subir"
+        ],
+        [
+          "hold",
+          "sostener"
+        ],
+        [
+          "hear about",
+          "enterarse de"
+        ],
+        [
+          "learn from",
+          "aprender de"
+        ]
+      ],
+      "lines": [
+        [
+          "field",
+          "Where were you when the flood started?"
+        ],
+        [
+          "witness",
+          "I was at home with my brother. I was making breakfast when water entered the kitchen."
+        ],
+        [
+          "field",
+          "How did you feel?"
+        ],
+        [
+          "witness",
+          "I was frightened. My brother said that he was afraid too. We heard about the shelter on the radio. He helped me leave the house."
+        ],
+        [
+          "field",
+          "How did he help you?"
+        ],
+        [
+          "witness",
+          "He held my hand and carried my bag. We listened to the rescue team and walked to dry ground. Now we are safe, but we need clean water. We are asking for blankets too."
+        ],
+        [
+          "field",
+          "Thank you, Ana. What did you learn from this experience?"
+        ],
+        [
+          "witness",
+          "I learned that I need to listen to warnings and ask for help early."
+        ]
+      ],
+      "cue": "The question “How did he help you?” follows Ana’s answer. In the assessment, add a question based on what your partner actually says."
+    },
+    {
+      "title": "Tell the studio what she said",
+      "role": "field",
+      "image": "field",
+      "clip": 1,
+      "goal": "Report the witness’s message. Keep the same meaning and check the pronouns.",
+      "words": [
+        [
+          "said that",
+          "dijo que"
+        ],
+        [
+          "told me",
+          "me dijo"
+        ],
+        [
+          "needed",
+          "necesitaban"
+        ],
+        [
+          "worried",
+          "preocupado"
+        ],
+        [
+          "affected families",
+          "familias afectadas"
+        ]
+      ],
+      "lines": [
+        [
+          "desk",
+          "Leo, what did Ana tell you?"
+        ],
+        [
+          "field",
+          "Ana said that they were safe, but they needed clean water. She told me that they were asking for blankets too."
+        ],
+        [
+          "desk",
+          "Thank you. So the family is safe, but they still need help. We care about the affected families. David, how can people help?"
+        ]
+      ],
+      "cue": "Ana: “We are safe, but we need clean water.” → Leo: “Ana said that they were safe, but they needed clean water.” Practise this backshift; do not invent extra facts."
+    },
+    {
+      "title": "Back to the studio",
+      "role": "anchor",
+      "image": "studio",
+      "clip": 0,
+      "goal": "Summarise the news, mention help and close the programme.",
+      "words": [
+        [
+          "bring",
+          "traer"
+        ],
+        [
+          "supplies",
+          "suministros"
+        ],
+        [
+          "stay safe",
+          "mantenerse a salvo"
+        ],
+        [
+          "warn about",
+          "advertir sobre"
+        ],
+        [
+          "care about",
+          "preocuparse por"
+        ]
+      ],
+      "lines": [
+        [
+          "anchor",
+          "People can bring clean water and blankets to the shelter. Mia, what is the most important message from the interview?"
+        ],
+        [
+          "desk",
+          "Ana said that her family needed clean water. We must listen to people and understand what they need."
+        ],
+        [
+          "anchor",
+          "Thank you, Mia and Leo. Today we learned about the flood and heard from Ana. Families are getting help. Thank you for watching Greenford News. Stay safe."
+        ]
+      ],
+      "cue": "Finish together. This short model shows the structure; your own report needs balanced speaking time and your own ideas."
+    }
+  ]
+}
