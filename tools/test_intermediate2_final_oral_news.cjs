@@ -20,8 +20,15 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   if(width===390)await page.screenshot({path:'/private/tmp/news-mobile-hero.png'});
   await page.locator('[data-reveal="0"]').click();
   assert.equal(await page.locator('[data-reveal="1"]').isEnabled(),true);
+  assert.match(await page.locator('#newsCard0 video').getAttribute('src'),/01-studio-heygen-v1/);
+  assert.equal(await page.locator('#newsCard0 video').getAttribute('autoplay'),null);
+  await page.locator('#newsCard0 video').evaluate(v=>v.play());
+  await page.waitForFunction(()=>document.querySelector('#newsCard0 video').currentTime>0);
+
   await page.locator('#newsCard0 [data-scene]').first().click();
   await page.locator('#newsProjector').waitFor({state:'visible'});
+  assert(await page.locator('#newsCard0 video').evaluate(v=>v.paused));
+
   assert.equal(await page.locator('#newsProjection .news-lines').count(),0);
   await page.locator('#newsShowDialogue').click();
   assert.match(await page.locator('#newsProjection').innerText(),/Good evening/);
@@ -34,6 +41,18 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   await page.locator('#newsShowDialogue').click(); // hide at final scene
   await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#newsProjectTitle').innerText(),/^5 \/ 6/);
   await page.keyboard.press('Escape');
+  for(const [scene,file] of [[0,'01-studio'],[1,'03-flood'],[2,'02-field']]){
+   const card=page.locator('#newsCard'+scene+' video');assert.match(await card.getAttribute('src'),new RegExp(file));
+   await card.evaluate(v=>v.play());await page.waitForFunction(i=>document.querySelector('#newsCard'+i+' video').currentTime>0,scene);
+   await page.locator('#newsCard'+scene+' [data-scene]').first().click();
+   assert(await card.evaluate(v=>v.paused));
+   const projected=page.locator('#newsProjection video');assert.match(await projected.getAttribute('src'),new RegExp(file));
+   await projected.evaluate(v=>v.play());await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);
+   await page.locator('[data-still-image]').click();assert.equal(await page.locator('#newsProjection video').count(),0);
+   assert(await page.locator('#newsProjection img').evaluate(i=>i.complete&&i.naturalWidth>0));
+   await page.locator('#newsClose').click();
+  }
+  for(const scene of [3,4,5]){await page.locator('#newsCard'+scene+' [data-scene]').first().click();assert.equal(await page.locator('#newsProjection video').count(),0);await page.locator('#newsClose').click();}
   await page.locator('#newsRehearsal').check();
   assert.equal(await page.locator('.news-card-model').count(),0);
   await page.locator('#newsCard3 [data-scene]').first().click();assert(await page.locator('#newsShowDialogue').isDisabled());
@@ -59,16 +78,16 @@ const origin=process.env.NEWS_ORIGIN||'http://127.0.0.1:8139';
   await page.locator('#newsProjection video').evaluate(v=>v.play());
   await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);
   await page.locator('#newsClose').click();
-  for(const [scene,slot] of [[1,1],[3,2]]){await page.locator('#newsCard'+scene+' [data-scene]').first().click();assert.match(await page.locator('#newsProjection figcaption').innerText(),new RegExp('test-'+slot));await page.locator('#newsProjection video').evaluate(v=>v.play());await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);await page.locator('#newsClose').click();}
+  for(const [scene,slot] of [[1,2],[2,1]]){await page.locator('#newsCard'+scene+' [data-scene]').first().click();assert.match(await page.locator('#newsProjection figcaption').innerText(),new RegExp('test-'+slot));await page.locator('#newsProjection video').evaluate(v=>v.play());await page.waitForFunction(()=>document.querySelector('#newsProjection video').currentTime>0);await page.locator('#newsClose').click();}
   await page.locator('[data-remove-clip="0"]').click();
-  await page.locator('#newsCard0 [data-scene]').first().click();assert.equal(await page.locator('#newsProjection video').count(),0);await page.keyboard.press('Escape');
+  await page.locator('#newsCard0 [data-scene]').first().click();assert.match(await page.locator('#newsProjection video').getAttribute('src'),/01-studio-heygen-v1/);await page.keyboard.press('Escape');
   await page.locator('[data-project-section="language"]').click();
   assert.equal(await page.locator('#newsProjection [id]').count(),0);await page.keyboard.press('Escape');
   await page.locator('#newsReset').click();assert.equal(await page.locator('[data-reveal]').count(),6);assert.equal(await page.locator('[data-reveal]:disabled').count(),5);
   assert.deepEqual(errors,[]);
   const md=await page.request.get(origin+'/ingles/intermediate-2/downloads/live-news-report-video-prompts.txt');assert.equal(md.status(),200);assert.equal(((await md.text()).match(/```text/g)||[]).length,3);
   assert.equal(await page.locator('a[download="live-news-report-video-prompts.md"]').first().getAttribute('download'),'live-news-report-video-prompts.md');await page.locator('a[download="live-news-report-video-prompts.md"]').first().click();await page.locator('[data-auth-panel]').waitFor({state:'visible'});await page.keyboard.press('Escape');assert.equal(await md.text(),fs.readFileSync(require('node:path').join(__dirname,'../ingles/intermediate-2/downloads/live-news-report-video-prompts.md'),'utf8'));
-  console.log('PASS news model '+width+': ordered cards, projection, vocabulary, roles, rehearsal, QR and real local video playback');await page.close();
+  console.log('PASS hosted videos and news model '+width+': ordered cards, projection, vocabulary, roles, rehearsal, QR and real local video playback');await page.close();
  }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1);});

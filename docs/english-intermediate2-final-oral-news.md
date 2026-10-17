@@ -10,7 +10,15 @@ Teacher setup assigns actor names for this visit, with no persistence or submiss
 
 ## Videos and delivery limits
 
-Three AI-generated still images exist. At initial delivery, video clips had not been generated because no video-generation capability was connected. The first Remotion demonstration clip is now available as described below; clips 2 and 3 remain pending. The teacher was told this and requested three prompts. `downloads/live-news-report-video-prompts.md` contains those three prompts and instructions. Local file inputs accept MP4/WebM/Ogg, use object URLs and do not upload; videos must be reselected after reloading. A loaded video is played by the teacher through native controls in the projector. Switching scenes/closing stops playback; replacement/removal revokes old URLs. Unsupported playback produces a recoverable message. Still images remain available when no clip is loaded. The teacher will supply actual generated clips for later editing/permanent hosting.
+Three completed HeyGen videos are hosted locally and on the site under `assets/video/english-intermediate-2/final-oral-news/`. The teacher explicitly requested their integration, commit, push and publication on 16 October 2026, including the portrait-based presenter and reporter.
+
+- Card 1: `01-studio-heygen-v1.mp4`, 12.288 seconds, 1280 × 720, Chris, HeyGen `deb454e1c457d64f08bd790870112b22`.
+- Card 2: `03-flood-heygen-v1.mp4`, 8.083 seconds, 1344 × 768, ambient flood footage, HeyGen `c70a28a8e7ac4cf78b583a14f5301570`. Its poster is a frame extracted from this video.
+- Card 3: `02-field-heygen-v1.mp4`, 19.080 seconds, 1280 × 720, Chris, HeyGen `17fcb53a6ba993e68c3423a92cab5957`.
+
+The user canceled the interview video in favor of flood footage. Cards 4–6 retain still images and live dialogue; no opening or field narration is reused for the closing. The two speaking clips retain HeyGen’s free-plan watermark. The earlier Remotion animated still is historical and not used by this page.
+
+Reveal a card for native video controls, or open its projector. No autoplay; only one video plays at a time. The projector offers “Show still image” for live speech, and a playback error falls back to the image. Optional local file overrides use object URLs for this visit only; “Use published clip” restores the hosted video. No student file is uploaded. The three prompt downloads remain optional templates for student projects, including the original silent interview concept, rather than a manifest of these delivered demonstrations.
 
 ## Image provenance
 
@@ -26,7 +34,7 @@ Interview: “The same man wears dark navy waterproof jacket over black shirt, h
 
 ## Validation
 
-Use `tools/test_intermediate2_final_oral_news.cjs` for five viewport sizes, sequential reveal, keyboard/projector, rehearsal separation, names, hover/focus vocabulary, local file rejection, real WebM playback, remove clip, QR, projected guide and Markdown download. The video fixture is an ephemeral test recording, not a teaching asset. Run the 57-page contract and all-course Sign in test at mobile/tablet/desktop. Check the published page and hashes after selective deployment.
+Use `tools/test_intermediate2_final_oral_news.cjs` for five viewport sizes, actual hosted playback in cards and projector, restored hosted clips, sequential reveal, keyboard/projector, rehearsal separation, names, hover/focus vocabulary, local file rejection, real WebM playback, remove clip, QR, projected guide and Markdown download. The video fixture is an ephemeral test recording, not a teaching asset. Run the 57-page contract and all-course Sign in test at mobile/tablet/desktop. Check the published page and hashes after selective deployment.
 
 Canonical QR URL: https://www.jaralingua.com/ingles/intermediate-2/final-oral-live-news-report.html
 

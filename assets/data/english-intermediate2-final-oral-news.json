@@ -41,7 +41,7 @@
       "title": "The story from the studio",
       "role": "desk",
       "image": "studio",
-      "clip": 1,
+      "clip": 2,
       "goal": "Explain what happened, where and when. Show the location clip while you speak.",
       "words": [
         [
@@ -75,7 +75,8 @@
           "We heard from a rescue worker earlier. He said that the main road was closed. Leo, are the families safe now?"
         ]
       ],
-      "cue": "Play clip 2 here, then keep the picture visible. The presenter’s rescue-worker statement is part of this fictional model."
+      "cue": "Play the flood footage here while Mia speaks live. The presenter’s rescue-worker statement is part of this fictional model.",
+      "poster": "flood-video-v1.png"
     },
     {
       "title": "Live from the scene",
@@ -121,7 +122,7 @@
       "title": "What did you experience?",
       "role": "witness",
       "image": "interview",
-      "clip": 2,
+      "clip": null,
       "goal": "Ask about the moment of the flood. Listen and ask a follow-up question.",
       "words": [
         [
@@ -185,7 +186,7 @@
       "title": "Tell the studio what she said",
       "role": "field",
       "image": "field",
-      "clip": 1,
+      "clip": null,
       "goal": "Report the witness’s message. Keep the same meaning and check the pronouns.",
       "words": [
         [
@@ -229,7 +230,7 @@
       "title": "Back to the studio",
       "role": "anchor",
       "image": "studio",
-      "clip": 0,
+      "clip": null,
       "goal": "Summarise the news, mention help and close the programme.",
       "words": [
         [
