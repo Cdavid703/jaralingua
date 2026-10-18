@@ -110,3 +110,7 @@ Seis retos extensos de repaso, cuatro etapas por reto: Grammar, Vocabulary, List
 ## Final Adventure, todas las unidades — 18 de octubre de 2026
 
 Por corrección expresa del docente, unidades 1–6 en **una sola página**, conservando `adventure-unit-1.html` para enlaces y progreso existentes. Selector interno de seis unidades, seis retos por unidad: 36 retos / 144 etapas / 541 preguntas, 96 aplicaciones escritas y producción oral/escrita. Mantiene el diseño de trofeos tipo News Quest con colores de Básico 2. Añade 35 audios profesionales autorizados de catálogo y recordatorios internos por unidad. Progreso total y por unidad; sin migrar ni borrar registros previos. Games y Practice Lab enlazan a la misma aventura. Ver [implementación y pruebas](../basic2-adventure-unit1.md). No escribe notas oficiales; speaking/writing continúan con auto-revisión guiada.
+
+## Pronunciación Unidad 1 — recuperación de puntaje, 18 de octubre de 2026
+
+Reporte con captura de `pronunciation-unit-1-weather-going-out.html`, no de Final Adventure. Se restaura el resultado y Next al recargar; promedio parcial desde el primer intento; contador de siete partes y acceso directo a la sección. Reintento del mismo audio ante fallo/espera del análisis, y el almacenamiento local no bloquea mostrar el resultado. Mantiene claves de progreso y permite avanzar con puntuación baja. Ver [diagnóstico y pruebas](../basic2-unit1-pronunciation-recovery.md). No modifica notas ni el servidor de evaluación.

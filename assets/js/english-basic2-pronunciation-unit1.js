@@ -53,6 +53,8 @@
   let submitPanelController = null;
   let discardRecording = false;
   let analyzing = false;
+  let lastBlob = null;
+  let storageWarning = false;
   let audioContext = null;
   let analyser = null;
   let meterFrame = null;
@@ -87,6 +89,13 @@
   retryButton.innerHTML = '<i class="bi bi-arrow-repeat"></i> Try this section again';
   retryButton.hidden = true;
   nextButton.insertAdjacentElement("beforebegin", retryButton);
+  const retryAnalysis = document.createElement("button");
+  retryAnalysis.type = "button";
+  retryAnalysis.className = "action-button";
+  retryAnalysis.textContent = "Retry analysis of this recording";
+  retryAnalysis.hidden = true;
+  studentAudio.insertAdjacentElement("afterend", retryAnalysis);
+  retryAnalysis.addEventListener("click", () => { if (lastBlob && !analyzing) transcribeAndEvaluate(lastBlob); });
   const wordHelp = document.createElement("div");
   wordHelp.className = "word-help";
   wordHelp.hidden = true;
@@ -165,7 +174,8 @@
   }
 
   function saveProgress() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentStageIndex, stageScores, attemptHistory }));
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ currentStageIndex, stageScores, attemptHistory })); storageWarning = false; }
+    catch (_) { storageWarning = true; }
   }
 
   function pronunciationTip(word) {
@@ -328,6 +338,11 @@
     stopButton.disabled = !recording || busy;
     resetButton.disabled = busy;
     microphoneSelect.disabled = recording || busy;
+    nextButton.disabled = recording || busy;
+    retryButton.disabled = recording || busy;
+    retryAnalysis.disabled = recording || busy;
+    const fullReset = submitMount.querySelector('[data-submit-reset]');
+    if (fullReset) fullReset.disabled = recording || busy;
     micButton.querySelector("i").className = recording ? "bi bi-soundwave" : "bi bi-mic-fill";
   }
 
@@ -351,7 +366,7 @@
     const overall = clamp(accuracy * .55 + completeness * .3 + fluency * .15);
     const displayWords = currentStage().text.split(/\s+/).map(spokenWord).filter(Boolean);
     const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
-    const previousAttempt = attemptHistory[currentStageIndex].at(-1) || null;
+    const previousAttempt = attemptHistory[currentStageIndex][attemptHistory[currentStageIndex].length - 1] || null;
     const attempt = {
       overall,
       accuracy,
@@ -368,6 +383,13 @@
     attemptHistory[currentStageIndex].push(attempt);
     stageScores[currentStageIndex] = attempt;
     saveProgress();
+    displayAttempt(attempt, previousAttempt);
+  }
+
+  function displayAttempt(attempt, previousAttempt = null) {
+    const { overall, accuracy, completeness, fluency, wpm, transcript, missedWords: missed = [] } = attempt;
+    const aligned = align(tokens(currentStage().text), tokens(transcript || ""));
+    liveTranscript.textContent = transcript || "";
     renderReference(aligned.states);
     document.getElementById("accuracyScore").textContent = `${accuracy}%`;
     document.getElementById("completenessScore").textContent = `${completeness}%`;
@@ -391,6 +413,7 @@
     if (currentStage().final) renderFinalSummary();
     if (submitPanelController) submitPanelController.update();
     stageProgress.children[currentStageIndex]?.classList.add("is-done");
+    if (stageProgress.children[currentStageIndex]) stageProgress.children[currentStageIndex].textContent = overall;
     results.hidden = false;
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
@@ -411,12 +434,16 @@
   async function transcribeAndEvaluate(blob) {
     analyzing = true;
     setControls(false, true);
-    recordStatus.textContent = "Analyzing this section locally...";
+    lastBlob = blob;
+    retryAnalysis.hidden = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 90000);
+    recordStatus.textContent = "Analyzing this recording… Please keep this page open.";
     liveTranscript.textContent = "Transcribing...";
     try {
-      const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
+      const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob, signal: controller.signal });
       const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || `Server error (${response.status}).`);
+      if (!response.ok) throw new Error(response.status === 429 ? "The service is busy. Wait a moment, then retry this recording." : response.status >= 500 ? "The analysis service is temporarily unavailable. Retry this recording." : payload.error || `Server error (${response.status}).`);
       const transcript = (payload.text || "").trim();
       const audioStats = payload.audio || {};
       if (!transcript) {
@@ -425,11 +452,14 @@
       }
       liveTranscript.textContent = transcript;
       evaluate(transcript);
-      recordStatus.textContent = `${currentStage().label} evaluated. Check your result.`;
+      recordStatus.textContent = `${currentStage().label} evaluated. Check your result.${storageWarning ? " Browser storage is unavailable. Keep this page open to retain your progress." : ""}`;
     } catch (error) {
       recordStatus.textContent = "The analysis could not be completed.";
-      liveTranscript.textContent = error.message || "Transcription error.";
+      liveTranscript.textContent = error.name === "AbortError" ? "The analysis took too long. Your recording is still here. Select Retry analysis." : error.message || "Connection failed. Retry this recording.";
+      retryAnalysis.hidden = false;
+      retryAnalysis.scrollIntoView({behavior:"smooth", block:"center"});
     } finally {
+      clearTimeout(timeout);
       analyzing = false;
       setControls(false, false);
     }
@@ -449,7 +479,7 @@
 
   async function start() {
     if (analyzing) return;
-    resetAttempt(false);
+    resetAttempt(true);
     try {
       if (!window.isSecureContext) {
         const error = new Error("secure_context");
@@ -492,7 +522,8 @@
       mediaRecorder.onstop = async () => {
         const blob = new Blob(chunks, { type: mediaRecorder.mimeType || "audio/webm" });
         stopTracks();
-        if (discardRecording || !blob.size) return;
+        if (discardRecording) return;
+        if (!blob.size) { recordStatus.textContent = "The recording was empty. Please record again."; setControls(false, false); return; }
         if (objectUrl) URL.revokeObjectURL(objectUrl);
         objectUrl = URL.createObjectURL(blob);
         studentAudio.src = objectUrl;
@@ -565,6 +596,7 @@
     levelMeterValue.textContent = "Waiting";
     setControls(false, false);
     if (clearAudio) {
+      lastBlob = null; retryAnalysis.hidden = true;
       studentAudio.hidden = true;
       studentAudio.removeAttribute("src");
       if (objectUrl) URL.revokeObjectURL(objectUrl);
@@ -573,6 +605,7 @@
   }
 
   function advanceStage() {
+    if (analyzing || mediaRecorder?.state === "recording") return;
     if (currentStage().final) {
       resetAllProgress();
     } else {
@@ -581,6 +614,8 @@
     saveProgress();
     resetAttempt(true);
     updateStageUI();
+    if (stageScores[currentStageIndex]) displayAttempt(stageScores[currentStageIndex]);
+    submitPanelController?.update();
     stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
@@ -588,8 +623,7 @@
     currentStageIndex = 0;
     stageScores.fill(null);
     attemptHistory.forEach((attempts) => attempts.splice(0));
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(SUBMISSION_KEY);
+    try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(SUBMISSION_KEY); } catch (_) {}
   }
 
   function readStoredUser(key, provider) {
@@ -612,10 +646,13 @@
   }
 
   function readUser() {
+    const current = window.JaraLinguaAuth?.getUser?.();
+    if (current?.credential) return current;
     return readStoredUser(GOOGLE_USER_KEY, "google") || readStoredUser(MICROSOFT_USER_KEY, "microsoft") || readStoredUser(LOCAL_USER_KEY, "local");
   }
 
   function openLoginPanel() {
+    if (window.JaraLinguaAuth?.openPanel) { window.JaraLinguaAuth.openPanel(); return; }
     const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
     if (trigger) trigger.click();
   }
@@ -631,9 +668,11 @@
       <h3><i class="bi bi-send-check"></i> Send to teacher</h3>
       <p>This pronunciation follow-up sends a written report to the teacher: scores, transcript, missed words, and unit focus. It has weight 0 and does not affect the accumulated percentage.</p>
       <div class="pronunciation-submit-metrics">
-        <span><b data-submit-score>--</b><small>Activity average</small></span>
+        <span><b data-submit-score>--</b><small>Practice average so far / 100</small></span>
         <span><b data-submit-grade>--</b><small>Reference grade / 5</small></span>
       </div>
+      <p data-completion-count></p>
+      <button type="button" class="action-button" data-resume-practice>Return to current section</button>
       <div class="pronunciation-submit-actions">
         <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reset full challenge</button>
         <button type="button" class="action-button submit-grade" data-submit-teacher disabled><i class="bi bi-send-fill"></i> Send to teacher</button>
@@ -671,15 +710,19 @@
 
     function update() {
       const report = completeReport();
+      const completed = stageScores.filter(score => score && Number.isFinite(Number(score.overall)));
+      panel.querySelector('[data-completion-count]').textContent = `${completed.length}/${STAGES.length} parts completed (6 sections + final challenge).`;
+      panel.querySelector('[data-resume-practice]').textContent = stageScores[currentStageIndex] ? "See my result and continue →" : "Go to the section to record →";
       if (!report) {
         panel.classList.remove("is-submitted");
         panel.querySelector(".pronunciation-delivery-preview")?.remove();
-        scoreNode.textContent = "--";
-        gradeNode.textContent = "--";
+        const average = completed.length ? Math.round(completed.reduce((sum,score) => sum + Number(score.overall),0)/completed.length) : null;
+        scoreNode.textContent = average === null ? "No attempts yet" : average + "/100";
+        gradeNode.textContent = average === null ? "Pending" : gradeFromScore(average).toFixed(2) + "/5 (partial)";
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
         if (submitState !== "submitted" && submitState !== "error") {
-          setStatus("Complete the 6 sections and the final challenge first. Then this button will unlock so you can send the report to the teacher.", "pending");
+          setStatus("Record each section and select Finish and evaluate to get its practice score. Use Next section below your result. Sending unlocks after all 7 parts; a low score does not block progress.", "pending");
         }
         return;
       }
@@ -775,6 +818,10 @@
       setStatus("Full pronunciation challenge reset. You can start again.", "pending");
       stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
     });
+    panel.querySelector('[data-resume-practice]').addEventListener('click', () => {
+      if (stageScores[currentStageIndex] && !analyzing && mediaRecorder?.state !== 'recording') displayAttempt(stageScores[currentStageIndex]);
+      (stageScores[currentStageIndex] ? results : stagePanel).scrollIntoView({behavior:'smooth',block:'center'});
+    });
     submitButton.addEventListener("click", submit);
     update();
     return { panel, update };
@@ -828,6 +875,10 @@
   setPlaybackRate(1);
   updateStageUI();
   resetAttempt(false);
+  if (stageScores[currentStageIndex]) {
+    displayAttempt(stageScores[currentStageIndex]);
+    recordStatus.textContent = "Saved result restored. Continue to the next section or try again.";
+  }
   if (location.protocol === "file:") {
     unsupported.hidden = false;
     micButton.disabled = true;
