@@ -1,8 +1,8 @@
-# Basic 2 — Unit 1 Adventure
+# Basic 2 — Final Adventure, Units 1–6
 
 Requested 18 October 2026: six substantial challenges, approximately 20–25 minutes each, preserving Basic 2 navy/red/white and account-based progress. Duration is a pedagogical estimate, not a lock or measured student median. This is formative review; it never writes course grades.
 
-## Content
+## Original Unit 1 content
 
 `ingles/basico-2/adventure-unit-1.html`, linked from Games and Unit 1 Practice Lab. Six challenges, four stages each:
 
@@ -40,8 +40,26 @@ Seven ElevenLabs files: four listening recordings (about 34–46 seconds each) a
 - Existing generic header scripts contain Windows-specific browser paths and expect a fixed header; this page deliberately uses a compact scrolling header, permitted by Basic 2 standard. Equivalent relevant checks are in the dedicated portable test.
 - Production release must selectively deploy static assets, back up API and module, compare the source API hash before replacement, restart only for the module integration, then verify unauthenticated protection and asset hashes. Never deploy private academic records or the whole site.
 
-Limits: writing/speaking use guided self-review, not teacher grading or speech analysis. Only Unit 1 is available. Timing still needs real learner calibration.
+Limits: writing/speaking use guided self-review, not teacher grading or speech analysis. All six units are available after the expansion below. Timing still needs real learner calibration.
 
 ## News Quest presentation — 18 October 2026
 
 Teacher requested the Intermediate 2 News Quest visual/interaction style. Basic 2 now has six trophy cards, a separate game view, large A/B/C choices, one question at a time, immediate explanatory feedback, Check/Continue controls, question progress, and brief optional confetti at stage completion. A trophy means all four stages are completed; it is not a language grade. The 101 questions, 16 transfer tasks, extended production, audio, account IDs, stage IDs, storage and API remain unchanged. Existing saved work is loaded without migration. Stage selectors preserve their open state during background sync. Initial view shows the trophy map; entering a quiz resumes at the first unanswered question. Effects can be disabled and animations respect reduced motion.
+
+## One-page six-unit expansion — 18 October 2026
+
+Teacher requested all units in this same adventure, without separate pages. The original URL, database, account keys and 24 Unit 1 stage IDs are retained. `unit1` in internal file names is a compatibility detail. Six unit selectors update the same trophy map; each unit has six challenges and 24 stages. Course totals and selected-unit totals are displayed separately. Reopening selects the most recently edited unfinished stage’s unit; changing units never resets answers. Next-stage navigation can cross a unit boundary within the same page. Language reminders are inline and unit-specific.
+
+Totals: 36 challenges, 144 stages, 541 closed questions, 96 short application texts, 24 speaking stages and 24 extended writing stages. Approximate duration remains 20–25 minutes per challenge (12–15 hours for the whole course), with no enforced timer. Learner pace may vary. New content follows existing unit teaching plans and the reviewed Basic 2 Hangman vocabulary bank:
+
+- Unit 2: clothes, demonstratives, shopping, fit, sizes and prices.
+- Unit 3: places, origins, comparatives, superlatives and travel.
+- Unit 4: regular/irregular simple past, did questions/negatives, sequencing and -ed models.
+- Unit 5: was/were, feelings, memories, completed actions and go/get expressions.
+- Unit 6: food, countability, quantities, containers, polite ordering and restaurant experiences.
+
+This is cumulative final-course review: natural listening/reading contexts can reuse language from other units. Travel comparisons are explicitly fictional. Original Unit 1 questions and requirements are unchanged. Unit 2–6 stage IDs use `uN-` prefixes, with no data migration. Games links to the same adventure; Practice Lab places the single shared adventure above unit folders.
+
+Added 35 ElevenLabs catalogue-voice recordings: 20 listening scenes and 15 pronunciation models. Teacher explicitly authorized sending these fictional scripts to ElevenLabs. The canonical new source is `server/private_assets/basic2-adventure-units2-6-audio.md`; teacher-only transcript endpoint now combines both script files. Automated Scribe transcription review matched the scripts with normal numeral/name spelling differences and no spoken role labels. This is not a human auditory quality review. Student recordings remain private and are not sent to ElevenLabs.
+
+Validation extended to six-unit state persistence/isolation, full content structure and all audio references, same-URL navigation, resuming a later unit, legacy Unit 1 progress, responsive layouts, offline drafts, conflict resolution and recordings. Tests use synthetic accounts and temporary databases, never live student data.

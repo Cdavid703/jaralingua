@@ -51,12 +51,28 @@ class PracticeTests(unittest.TestCase):
   game.handle(handler,{'email':'outsider@test.invalid','_studentIdClaim':'A'},urlparse(game.PREFIX+'state'),api)
   self.assertEqual(output[-1][0],403)
  def test_content_structure_and_models(self):
-  data=json.loads(game.CONTENT.read_text());self.assertEqual(len(data['challenges']),6)
-  self.assertEqual(len(game.catalog()),24)
+  data=json.loads(game.CONTENT.read_text());self.assertEqual(len(data['challenges']),36)
+  self.assertEqual(len(game.catalog()),144)
+  self.assertEqual([u['id'] for u in data['units']],list(range(1,7)))
+  for unit in range(1,7):self.assertEqual(sum(c['unit']==unit for c in data['challenges']),6)
   for c in data['challenges']:
    self.assertEqual(len(c['stages']),4)
    for s in c['stages']:
     for q in s['questions']:
      if q.get('options'):self.assertIn(q['answers'][0],q['options']);self.assertEqual(len(set(q['options'])),len(q['options']))
+
+ def test_all_units_preserve_independent_stage_records(self):
+  for unit in range(1,7):
+   stage=('' if unit==1 else f'u{unit}-')+'grammar-1';spec=game.catalog()[stage]
+   answers={q['id']:q['answers'][0] for q in spec['questions']}
+   code,r=self.svc.save('A',self.payload(stage,operation=f'unit-save-operation-{unit}',answers=answers,text='practice '*25,done=True))
+   self.assertEqual(code,200);self.assertEqual(r['record']['data']['score'],len(answers))
+  self.assertEqual(len(self.svc.state('A')['records']),6)
+  self.assertEqual(self.svc.state('B')['records'],{})
+ def test_referenced_audio_exists(self):
+  root=game.CONTENT.parents[2]/'ingles/basico-2/audio/adventure-unit1'
+  for s in game.catalog().values():
+   files=([s['audio']] if s.get('audio') else [])+[m[0] for m in s.get('models',[])]
+   for name in files:self.assertGreater((root/(name+'.mp3')).stat().st_size,1000)
 
 if __name__=='__main__':unittest.main()

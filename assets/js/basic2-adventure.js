@@ -1,4 +1,4 @@
-/* Unit 1 practice: private per-account drafts, ordered retries and explicit conflicts. */
+/* Six-unit practice: private per-account drafts, ordered retries and explicit conflicts. */
 (() => {
   'use strict';
   const $ = s => document.querySelector(s);
@@ -8,6 +8,7 @@
   const keyFor = u => String(u?.email || u?.sub || '').toLowerCase();
   let content, user, account = '', epoch = 0, cache = {}, active = null, busy = false, ready = false, db;
   let syncTimer, recorder, stream, chunks = [], recordingStart, recordingTimer, recordingStage;
+  let selectedUnit = 1;
   let questionCursor = 0, checkedQuestions = new Set(), lastMapHTML = null;
   let sound = true, replayed = false, modelHeard = new Set();
   const status = message => { $('#save-status').textContent = message; };
@@ -46,6 +47,7 @@
     } finally { clearTimeout(timeout); }
   }
   function stageById(id) { return content.challenges.flatMap(c => c.stages).find(s => s.id === id); }
+  function unitOf(s) { return content.challenges.find(c => c.stages.includes(s))?.unit || 1; }
   function state(s) { return cache[s.id]?.data || {}; }
   function pending() { return Object.values(cache).some(r => r.dirty || r.pending || r.conflict); }
   async function change(patch) {
@@ -104,7 +106,7 @@
     const next = window.JaraLinguaAuth?.getUser();
     if (next?.credential && keyFor(next) === account && ready) { user = next; sync(); return; }
     epoch++; const run = epoch; stopRecording(); clearTimeout(syncTimer);
-    user = next; account = keyFor(next); cache = {}; active = null; ready = false;
+    user = next; account = keyFor(next); cache = {}; active = null; selectedUnit = 1; ready = false;
     $('#workspace').innerHTML = ''; document.body.classList.remove('in-challenge'); $('#teacher-tools').hidden = true; $('#transcript').textContent = ''; $('#account-gate').hidden = Boolean(next?.credential); renderMap();
     if (!next?.credential) { status('Sign in to save and continue your adventure.'); return; }
     status('Loading your saved adventure…');
@@ -121,22 +123,32 @@
       ready = true; $('#teacher-tools').hidden = !remote.teacher; await persist(); renderMap();
       const recent = Object.entries(cache).filter(([id,r]) => stageById(id) && !r.data?.done).sort((a,b) => Date.parse(b[1].localUpdatedAt || b[1].updatedAt || 0) - Date.parse(a[1].localUpdatedAt || a[1].updatedAt || 0))[0];
       const first = (recent && stageById(recent[0])) || content.challenges.flatMap(c => c.stages).find(s => !state(s).done) || content.challenges[0].stages[0];
-      active = first; showMap(false); status(remote.preview ? 'Teacher practice space · no student progress or grades are changed.' : 'Your saved progress is ready.'); sync();
+      active = first; selectedUnit = unitOf(first); showMap(false); status(remote.preview ? 'Teacher practice space · no student progress or grades are changed.' : 'Your saved progress is ready.'); sync();
     } catch (error) {
       if (run !== epoch) return;
       if (Object.keys(cache).length && ![401,403].includes(error.code)) {
-        ready = true; renderMap(); active = stageById(content.challenges.flatMap(c => c.stages).find(s => !state(s).done)?.id || 'grammar-1'); showMap(false);
+        ready = true; renderMap(); active = stageById(content.challenges.flatMap(c => c.stages).find(s => !state(s).done)?.id || 'grammar-1'); selectedUnit = unitOf(active); showMap(false);
         status('Offline practice · changes will sync when you reconnect.');
       } else status(error.code === 403 ? 'Use your registered Basic 2 account. Contact your teacher if access is missing.' : error.code === 401 ? 'Please sign in again. Your session expired.' : 'Could not load account progress. Check your connection and select Retry sync.');
     }
   }
   function renderMap() {
     if (!content) return;
-    let completed = 0, mastery = 0;
+    let completed = 0;
+    const unit = content.units.find(u => u.id === selectedUnit);
+    const challenges = content.challenges.filter(c => c.unit === selectedUnit);
+    const totalDone = content.challenges.flatMap(c => c.stages).filter(s => state(s).done).length;
+    $('#course-stats').textContent = `Whole course: ${totalDone}/144 stages · ${totalDone * 25} XP · ${content.challenges.filter(c => c.stages.every(s => state(s).done)).length}/36 trophies`;
+    $('#unit-title').textContent = `Unit ${unit.id} · ${unit.title}`;
+    $('#unit-goal').textContent = unit.goal;
+    $('#unit-selector').querySelectorAll('[data-unit]').forEach(b => {
+      const id = Number(b.dataset.unit), done = content.challenges.filter(c => c.unit === id).flatMap(c => c.stages).filter(s => state(s).done).length;
+      b.setAttribute('aria-pressed', String(id === selectedUnit));
+      b.querySelector('.unit-progress').textContent = `${done}/24 stages${done === 24 ? ' · ✓' : ''}`;
+    });
     const opened = [...$('#challenge-map').querySelectorAll('.stage-picker')].map(d => d.open);
-    const mapHTML = content.challenges.map((c, i) => {
+    const mapHTML = challenges.map((c, i) => {
       const done = c.stages.filter(s => state(s).done).length; completed += done;
-      mastery += c.stages.filter(s => s.kind === 'quiz' && state(s).done && score(s) === s.questions.length).length;
       const resume = c.stages.find(s => !state(s).done) || c.stages[0];
       const icons = ['✦', 'Aa', '♫', '▤', '🎙', '✎'];
       return `<article class="adventure-card ${done === 4 ? 'is-earned' : ''}"><span class="challenge-label">CHALLENGE ${i+1}</span><div class="trophy-medallion" aria-hidden="true">${done === 4 ? '🏆' : icons[i]}</div><h2>${escape(c.title)}</h2><p>${escape(c.goal)}</p><p class="meta">About ${c.minutes} min · ${done}/4 stages</p><progress max="4" value="${done}" aria-label="${escape(c.title)} progress"></progress><p class="trophy-state">${done === 4 ? '🏆 Completion trophy earned' : done ? 'Your trophy is getting closer!' : 'Four stages. One trophy.'}</p><button class="challenge-start" type="button" data-stage="${resume.id}" ${!ready ? 'disabled' : ''}>${done === 4 ? 'Practise again ↻' : Object.keys(state(resume)).length || done ? 'Continue challenge →' : 'Start challenge →'}</button><details class="stage-picker"><summary>Choose a stage</summary><div class="stage-buttons">${c.stages.map((s,j) => `<button type="button" data-stage="${s.id}" ${!ready ? 'disabled' : ''}>${state(s).done ? '✓ ' : ''}${j+1}. ${escape(s.title)}</button>`).join('')}</div></details></article>`;
@@ -145,23 +157,25 @@
       $('#challenge-map').innerHTML = mapHTML; lastMapHTML = mapHTML;
       $('#challenge-map').querySelectorAll('.stage-picker').forEach((d,i) => { d.open = Boolean(opened[i]); });
     }
-    $('#journey-stats').textContent = `${completed}/24 stages completed · ${completed * 25} XP · ${content.challenges.filter(c => c.stages.every(s => state(s).done)).length}/6 trophies`;
+    $('#journey-stats').textContent = `Unit ${selectedUnit}: ${completed}/24 stages completed · ${completed * 25} XP · ${challenges.filter(c => c.stages.every(s => state(s).done)).length}/6 trophies`;
     $('#journey-progress').value = completed;
     $('#challenge-map').querySelectorAll('[data-stage]').forEach(b => b.onclick = () => openStage(b.dataset.stage));
     $('#celebration').hidden = completed !== 24;
+    $('#celebration-title').textContent = totalDone === 144 ? 'Whole adventure complete! ★' : `Unit ${selectedUnit} complete! ★`;
+    $('#celebration-message').textContent = totalDone === 144 ? 'You completed all 36 challenges. Revisit any stage to improve your English.' : 'Six trophies earned. Choose another unit above, or revisit a stage to improve your English.';
   }
   function openStage(id, scroll = true) {
     if (!ready) return;
     if (recorder?.state === 'recording') { status('Stop your recording before moving to another stage.'); return; }
     document.body.classList.add('in-challenge');
-    active = stageById(id); questionCursor = active.kind === 'quiz' ? Math.max(0, active.questions.findIndex(q => !state(active).answers?.[q.id])) : 0; checkedQuestions = new Set(); replayed = false; modelHeard = new Set(); renderStage(); renderMap();
+    active = stageById(id); selectedUnit = unitOf(active); $('#workspace').querySelectorAll('audio').forEach(a => a.pause()); questionCursor = active.kind === 'quiz' ? Math.max(0, active.questions.findIndex(q => !state(active).answers?.[q.id])) : 0; checkedQuestions = new Set(); replayed = false; modelHeard = new Set(); renderStage(); renderMap();
     if (scroll) $('#workspace').scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   function score(s) { const d = state(s); return s.questions.filter(q => q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id]))).length; }
   function players(src) { return `<audio controls preload="metadata" src="${escape(src)}"></audio><label class="speed-label">Speed <select class="speed" aria-label="Audio speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option></select></label>`; }
   function renderStage() {
     if (!active) return;
-    const s = active, d = state(s), c = content.challenges.find(c => c.stages.includes(s));
+    const s = active, d = state(s), c = content.challenges.find(c => c.stages.includes(s)), unit = content.units.find(u => u.id === c.unit);
     let support = `<p>${escape(s.help)}</p>`;
     if (s.text) support += `<div class="reading-text">${escape(s.text)}</div>`;
     if (s.audio) support += `<div class="audio-box">${players('audio/adventure-unit1/' + s.audio + '.mp3')}<p>Listen first for meaning. Replay for details. Your answers remain editable.</p></div>`;
@@ -175,11 +189,11 @@
       if (s.kind === 'writing') activity += `<label for="written-answer">Your writing</label><textarea id="written-answer" rows="12" maxlength="12000">${escape(d.text || '')}</textarea><p id="word-count">${wordCount(d.text)} words · at least ${s.minWords}</p>`;
       if (s.kind === 'speaking') activity += `<div class="recorder"><button id="record" type="button">🎙 Record</button> <button id="stop" type="button" disabled>Stop</button><p id="record-status">Maximum 2 minutes per recording. Re-recording replaces this stage’s previous audio.</p><label>Or upload your recording (up to 2 MB, 2 minutes)<input type="file" id="audio-upload" accept="audio/*"></label>${d.audio ? `<audio id="playback" controls src="${escape(d.audio)}"></audio>` : ''}<label for="reflection">After replaying: what did you improve?</label><textarea id="reflection" rows="3" maxlength="12000">${escape(d.text || '')}</textarea></div>`;
       activity += `<fieldset class="self-review"><legend>Self-review</legend>${s.checklist.map((label,i) => `<label><input type="checkbox" data-check="${i}" ${d.checks?.[i] ? 'checked' : ''}> ${escape(label)}</label>`).join('')}</fieldset>`;
-      if (s.model && d.done) activity += `<details><summary>Compare with a corrected model</summary><p>${escape(s.model)}</p><p>Your two original sentences can be different.</p></details>`;
+      if (s.model && d.done) activity += `<details><summary>Compare with a corrected model</summary><p>${escape(s.model)}</p><p>Your original sentences can be different.</p></details>`;
     }
     if (s.applyPrompt) activity += `<div class="apply-task"><h3>Apply it in your own words</h3><p>${escape(s.applyPrompt)}</p><label for="apply-answer">Write at least ${s.applyMinWords} words. Read it aloud and check your verbs.</label><textarea id="apply-answer" rows="5" maxlength="12000">${escape(d.text || '')}</textarea><p id="apply-count">${wordCount(d.text)} words</p><p class="meta">This short writing task is self-reviewed; it does not receive an automatic language score.</p></div>`;
     const conflict = cache[s.id]?.conflict;
-    $('#workspace').innerHTML = `<div class="stage-heading"><div><p class="eyebrow">${escape(c.title)} · Stage ${c.stages.indexOf(s)+1}/4</p><h2 tabindex="-1">${escape(s.title)}</h2></div><button id="back-map" type="button">🏆 Trophy map</button></div>${conflict ? '<div class="conflict" role="alert"><h3>This stage changed on another device</h3><p>Your local work is preserved. Compare the other version before choosing.</p><button id="download-local">Download my device copy</button> <button id="download-cloud">Download account copy</button><p><button id="keep-local">Keep this device’s version</button> <button id="keep-cloud">Use account version</button></p></div>' : ''}<div class="round-meter"><span>Stage ${c.stages.indexOf(s)+1} of 4</span><progress max="4" value="${c.stages.filter(x => state(x).done).length}" aria-label="Challenge stages completed"></progress><span class="round-xp">${c.stages.filter(x => state(x).done).length*25} / 100 XP</span></div><div class="stage-layout ${s.text || s.audio || s.image || s.models?.length ? 'has-stimulus' : 'compact-stimulus'}"><aside>${support}<details><summary>Unit 1 language reminders</summary><p>Habits: I play / she plays. Questions: Do you play? Does she play?</p><p>Now: I am playing / she is playing / they are playing. Negative: She is not playing. Question: Is she playing?</p><p>Weather: sunny, cloudy, windy, rainy, stormy, hot, cold, pouring.</p><a href="unit-1-going-out.html" target="_blank" rel="noopener">Open the full Unit 1 lesson</a></details></aside><div class="stage-work">${s.kind === 'quiz' ? '<div class="question-meter"><span id="question-count"></span><progress id="question-progress" aria-label="Question progress"></progress></div>' : ''}${activity}${s.kind === 'quiz' ? '<div id="question-feedback" role="status" aria-live="polite"></div><div class="question-actions"><button id="question-back" type="button">← Back</button><button id="question-check" class="quest-primary" type="button">Check answer</button><button id="question-continue" class="quest-primary" type="button" hidden>Continue →</button></div>' : ''}<p id="stage-result" role="status">${d.done ? s.kind === 'quiz' ? `${score(s)}/${s.questions.length} correct. ${score(s) === s.questions.length ? 'Stage mastered!' : 'Stage completed. Review the explanations and retry to build mastery.'}` : 'Practice completed · self-reviewed. This is not a teacher grade.' : ''}</p><div class="actions"><button id="finish" type="button">${s.kind === 'quiz' ? 'Complete stage ✓' : 'Complete practice ✓'}</button><button id="next" type="button">Next stage →</button></div></div></div>`;
+    $('#workspace').innerHTML = `<div class="stage-heading"><div><p class="eyebrow">Unit ${c.unit} · ${escape(c.title)} · Stage ${c.stages.indexOf(s)+1}/4</p><h2 tabindex="-1">${escape(s.title)}</h2></div><button id="back-map" type="button">🏆 Trophy map</button></div>${conflict ? '<div class="conflict" role="alert"><h3>This stage changed on another device</h3><p>Your local work is preserved. Compare the other version before choosing.</p><button id="download-local">Download my device copy</button> <button id="download-cloud">Download account copy</button><p><button id="keep-local">Keep this device’s version</button> <button id="keep-cloud">Use account version</button></p></div>' : ''}<div class="round-meter"><span>Stage ${c.stages.indexOf(s)+1} of 4</span><progress max="4" value="${c.stages.filter(x => state(x).done).length}" aria-label="Challenge stages completed"></progress><span class="round-xp">${c.stages.filter(x => state(x).done).length*25} / 100 XP</span></div><div class="stage-layout ${s.text || s.audio || s.image || s.models?.length ? 'has-stimulus' : 'compact-stimulus'}"><aside>${support}<details><summary>Unit ${unit.id} language reminders</summary><p>${escape(unit.guide)}</p></details></aside><div class="stage-work">${s.kind === 'quiz' ? '<div class="question-meter"><span id="question-count"></span><progress id="question-progress" aria-label="Question progress"></progress></div>' : ''}${activity}${s.kind === 'quiz' ? '<div id="question-feedback" role="status" aria-live="polite"></div><div class="question-actions"><button id="question-back" type="button">← Back</button><button id="question-check" class="quest-primary" type="button">Check answer</button><button id="question-continue" class="quest-primary" type="button" hidden>Continue →</button></div>' : ''}<p id="stage-result" role="status">${d.done ? s.kind === 'quiz' ? `${score(s)}/${s.questions.length} correct. ${score(s) === s.questions.length ? 'Stage mastered!' : 'Stage completed. Review the explanations and retry to build mastery.'}` : 'Practice completed · self-reviewed. This is not a teacher grade.' : ''}</p><div class="actions"><button id="finish" type="button">${s.kind === 'quiz' ? 'Complete stage ✓' : 'Complete practice ✓'}</button><button id="next" type="button">Next stage →</button></div></div></div>`;
     bindStage();
     if (s.kind === 'quiz') showQuestion();
   }
@@ -332,8 +346,11 @@
   function chime() { if(!sound)return; try{const ctx=new AudioContext();[440,660,880].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f;g.gain.value=.035;o.connect(g).connect(ctx.destination);o.start(ctx.currentTime+i*.1);o.stop(ctx.currentTime+i*.1+.12);});setTimeout(()=>ctx.close(),600);}catch{} }
   async function start() {
     try {
-      [content, db] = await Promise.all([fetch('/assets/data/basic2-adventure-unit1.json?v=20261018-1').then(r=>{if(!r.ok)throw Error();return r.json();}),openDB()]);
+      [content, db] = await Promise.all([fetch('/assets/data/basic2-adventure-unit1.json?v=20261018-all-units-1').then(r=>{if(!r.ok)throw Error();return r.json();}),openDB()]);
+      $('#unit-selector').innerHTML = content.units.map(u => `<button type="button" data-unit="${u.id}" aria-pressed="${u.id === selectedUnit}"><span class="unit-number">${u.id}</span><span><strong>${escape(u.title)}</strong><small class="unit-progress">0/24 stages</small></span></button>`).join('');
+      $('#unit-selector').querySelectorAll('[data-unit]').forEach(b => b.onclick = () => { selectedUnit = Number(b.dataset.unit); lastMapHTML = null; renderMap(); });
       $('#load-transcript').onclick = async () => { try { const r = await api('transcript'); $('#transcript').textContent = r.text; } catch { status('Transcripts are available only to authorized teachers.'); } };
+      document.querySelectorAll('a[href="#unit-selector"]').forEach(a => a.onclick = e => { e.preventDefault(); showMap(false); if (recorder?.state !== 'recording') $('#unit-selector').scrollIntoView({behavior:'smooth'}); });
       $('#sign-in').onclick=()=>window.JaraLinguaAuth?.openPanel();
       $('#retry-sync').onclick=()=>ready ? sync() : loadAccount();
       $('#sound-toggle').onclick=()=>{sound=!sound;$('#sound-toggle').textContent=sound?'Effects on':'Effects off';$('#sound-toggle').setAttribute('aria-pressed',String(sound));};

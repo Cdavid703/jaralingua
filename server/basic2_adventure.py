@@ -148,7 +148,7 @@ def handle(handler, profile, parsed, api, payload=None):
         elif handler.command == 'POST' and route == 'save':
             status, result = service.save(owner, payload)
         elif handler.command == 'GET' and route == 'transcript' and role in ('teacher', 'admin'):
-            status, result = 200, {'text': (Path(__file__).parent / 'private_assets/basic2-adventure-unit1-audio.md').read_text()}
+            status, result = 200, {'text': '\n\n'.join((Path(__file__).parent / 'private_assets' / name).read_text() for name in ('basic2-adventure-unit1-audio.md', 'basic2-adventure-units2-6-audio.md'))}
         else:
             raise AdventureError(404, 'not_found')
         api['json_response'](handler, status, result)
