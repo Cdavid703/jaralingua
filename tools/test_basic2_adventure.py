@@ -69,6 +69,13 @@ class PracticeTests(unittest.TestCase):
    self.assertEqual(code,200);self.assertEqual(r['record']['data']['score'],len(answers))
   self.assertEqual(len(self.svc.state('A')['records']),6)
   self.assertEqual(self.svc.state('B')['records'],{})
+ def test_database_connections_close_on_success_and_error(self):
+  with self.svc.db() as con:con.execute('SELECT 1')
+  with self.assertRaises(game.sqlite3.ProgrammingError):con.execute('SELECT 1')
+  try:
+   with self.svc.db() as failed:raise RuntimeError('synthetic failure')
+  except RuntimeError:pass
+  with self.assertRaises(game.sqlite3.ProgrammingError):failed.execute('SELECT 1')
  def test_referenced_audio_exists(self):
   root=game.CONTENT.parents[2]/'ingles/basico-2/audio/adventure-unit1'
   for s in game.catalog().values():

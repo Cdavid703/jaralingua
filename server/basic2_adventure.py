@@ -3,6 +3,7 @@
 Each stage is independently saved. An operation receipt makes network retries
 idempotent; stale writes return the current record instead of overwriting it.
 """
+from contextlib import contextmanager
 import base64
 import hashlib
 import json
@@ -87,11 +88,16 @@ class Adventure:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
 
+    @contextmanager
     def db(self):
         con = sqlite3.connect(self.path, timeout=15)
-        con.execute('CREATE TABLE IF NOT EXISTS records (owner TEXT, stage TEXT, revision INTEGER, record TEXT, PRIMARY KEY(owner,stage))')
-        con.execute('CREATE TABLE IF NOT EXISTS receipts (owner TEXT, operation TEXT, digest TEXT, result TEXT, PRIMARY KEY(owner,operation))')
-        return con
+        try:
+            with con:
+                con.execute('CREATE TABLE IF NOT EXISTS records (owner TEXT, stage TEXT, revision INTEGER, record TEXT, PRIMARY KEY(owner,stage))')
+                con.execute('CREATE TABLE IF NOT EXISTS receipts (owner TEXT, operation TEXT, digest TEXT, result TEXT, PRIMARY KEY(owner,operation))')
+                yield con
+        finally:
+            con.close()
 
     def state(self, owner):
         with self.db() as con:

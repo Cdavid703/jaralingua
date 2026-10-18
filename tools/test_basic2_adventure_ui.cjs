@@ -38,7 +38,7 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
  }
  try{
   const context=await browser.newContext();await setup(context);const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);
+  await page.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);
   assert.equal(await page.locator('.adventure-card').count(),6);
   assert.equal(await page.locator('.site-header [data-jaralingua-auth-nav]').count(),1);
   assert.equal(await page.locator('body > .jaralingua-auth').count(),0);
@@ -65,7 +65,7 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
    assert.equal(records[`u${unit}-grammar-1`].data.answers['1'],q.answers[0]);assert.equal(page.url(),originalURL);
    await page.locator('#back-map').click();assert.equal(await page.locator('.adventure-card').count(),6);assert.match(await page.locator('#unit-title').innerText(),new RegExp(`Unit ${unit}`));
   }
-  await page.reload();await page.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);
+  await page.reload();await page.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);
   assert.match(await page.locator('#unit-title').innerText(),/Unit 6/);
   await chooseStage(page,'grammar-1');
   assert.equal(await page.locator('.question:visible').count(),1);
@@ -78,7 +78,7 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
   await page.locator('#finish').click();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));
   assert(records['grammar-1'].data.done);assert.equal(await page.locator('.stage-celebration').isVisible(),true);assert.match(await page.locator('#journey-stats').innerText(),/1\/24/);
   // Account data resumes on another device with no local storage.
-  const second=await browser.newContext();await setup(second);const page2=await second.newPage();await page2.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page2.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);assert.match(await page2.locator('#course-stats').innerText(),/1\/144/);await second.close();
+  const second=await browser.newContext();await setup(second);const page2=await second.newPage();await page2.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page2.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);assert.match(await page2.locator('#course-stats').innerText(),/1\/144/);await second.close();
   await chooseStage(page,'writing-1');await page.locator('#written-answer').fill('My usual weekend starts with a walk.');
   await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));
   offline=true;await page.locator('#written-answer').fill('Offline draft survives a reload and will sync later.');await page.waitForTimeout(1000);await page.reload();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('Offline practice'));
@@ -94,11 +94,11 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
   // Supported recording saves a playable private draft, then resumes on reload.
   await chooseStage(page,'speaking-2');await page.locator('#record').click();await page.waitForFunction(()=>document.querySelector('#stop')?.disabled===false);await page.waitForTimeout(1200);await page.locator('#stop').click();await page.waitForSelector('#playback');await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));assert(records['speaking-2'].data.audio.startsWith('data:audio/'));
   await page.locator('#finish').click();assert.match(await page.locator('#stage-result').innerText(),/Record at least/);
-  await page.reload();await page.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);await chooseStage(page,'speaking-2');assert.equal(await page.locator('#playback').count(),1);
+  await page.reload();await page.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);await chooseStage(page,'speaking-2');assert.equal(await page.locator('#playback').count(),1);
   // Separate account cannot see saved answers or audio.
-  const other=await browser.newContext();await setup(other,'synthetic-b@example.invalid');const p3=await other.newPage();await p3.goto(base+'/ingles/basico-2/adventure-unit-1.html');await p3.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);assert.match(await p3.locator('#journey-stats').innerText(),/0\/24/);await other.close();
+  const other=await browser.newContext();await setup(other,'synthetic-b@example.invalid');const p3=await other.newPage();await p3.goto(base+'/ingles/basico-2/adventure-unit-1.html');await p3.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);assert.match(await p3.locator('#journey-stats').innerText(),/0\/24/);await other.close();
   for(const s of content.challenges[0].stages) records[s.id]={revision:1,data:{done:true,text:'practice '.repeat(25),answers:Object.fromEntries(s.questions.map(q=>[q.id,q.answers[0]]))}};
-  const trophyContext=await browser.newContext({reducedMotion:'reduce'});await setup(trophyContext);const trophyPage=await trophyContext.newPage();await trophyPage.goto(base+'/ingles/basico-2/adventure-unit-1.html');await trophyPage.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);await trophyPage.locator('[data-unit="1"]').click();assert.equal(await trophyPage.locator('.adventure-card.is-earned').count(),1);assert.match(await trophyPage.locator('#journey-stats').innerText(),/1\/6 trophies/);await trophyContext.close();
+  const trophyContext=await browser.newContext({reducedMotion:'reduce'});await setup(trophyContext);const trophyPage=await trophyContext.newPage();await trophyPage.goto(base+'/ingles/basico-2/adventure-unit-1.html');await trophyPage.waitForFunction(()=>document.querySelector('.challenge-start')?.disabled===false);await trophyPage.locator('[data-unit="1"]').click();assert.equal(await trophyPage.locator('.adventure-card.is-earned').count(),1);assert.match(await trophyPage.locator('#journey-stats').innerText(),/1\/6 trophies/);await trophyContext.close();
   assert.deepEqual(errors,[]);await context.close();console.log('PASS: responsive, header auth, scoring, cross-device resume, offline reload, conflict, recording and account isolation');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
