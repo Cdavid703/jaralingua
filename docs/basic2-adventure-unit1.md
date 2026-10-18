@@ -41,3 +41,7 @@ Seven ElevenLabs files: four listening recordings (about 34–46 seconds each) a
 - Production release must selectively deploy static assets, back up API and module, compare the source API hash before replacement, restart only for the module integration, then verify unauthenticated protection and asset hashes. Never deploy private academic records or the whole site.
 
 Limits: writing/speaking use guided self-review, not teacher grading or speech analysis. Only Unit 1 is available. Timing still needs real learner calibration.
+
+## News Quest presentation — 18 October 2026
+
+Teacher requested the Intermediate 2 News Quest visual/interaction style. Basic 2 now has six trophy cards, a separate game view, large A/B/C choices, one question at a time, immediate explanatory feedback, Check/Continue controls, question progress, and brief optional confetti at stage completion. A trophy means all four stages are completed; it is not a language grade. The 101 questions, 16 transfer tasks, extended production, audio, account IDs, stage IDs, storage and API remain unchanged. Existing saved work is loaded without migration. Stage selectors preserve their open state during background sync. Initial view shows the trophy map; entering a quiz resumes at the first unanswered question. Effects can be disabled and animations respect reduced motion.

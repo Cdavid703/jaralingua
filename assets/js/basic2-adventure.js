@@ -8,7 +8,8 @@
   const keyFor = u => String(u?.email || u?.sub || '').toLowerCase();
   let content, user, account = '', epoch = 0, cache = {}, active = null, busy = false, ready = false, db;
   let syncTimer, recorder, stream, chunks = [], recordingStart, recordingTimer, recordingStage;
-  let sound = false, replayed = false, modelHeard = new Set();
+  let questionCursor = 0, checkedQuestions = new Set(), lastMapHTML = null;
+  let sound = true, replayed = false, modelHeard = new Set();
   const status = message => { $('#save-status').textContent = message; };
   function openDB() {
     return new Promise((resolve, reject) => {
@@ -104,7 +105,7 @@
     if (next?.credential && keyFor(next) === account && ready) { user = next; sync(); return; }
     epoch++; const run = epoch; stopRecording(); clearTimeout(syncTimer);
     user = next; account = keyFor(next); cache = {}; active = null; ready = false;
-    $('#workspace').innerHTML = ''; $('#teacher-tools').hidden = true; $('#transcript').textContent = ''; $('#account-gate').hidden = Boolean(next?.credential); renderMap();
+    $('#workspace').innerHTML = ''; document.body.classList.remove('in-challenge'); $('#teacher-tools').hidden = true; $('#transcript').textContent = ''; $('#account-gate').hidden = Boolean(next?.credential); renderMap();
     if (!next?.credential) { status('Sign in to save and continue your adventure.'); return; }
     status('Loading your saved adventure…');
     try {
@@ -120,11 +121,11 @@
       ready = true; $('#teacher-tools').hidden = !remote.teacher; await persist(); renderMap();
       const recent = Object.entries(cache).filter(([id,r]) => stageById(id) && !r.data?.done).sort((a,b) => Date.parse(b[1].localUpdatedAt || b[1].updatedAt || 0) - Date.parse(a[1].localUpdatedAt || a[1].updatedAt || 0))[0];
       const first = (recent && stageById(recent[0])) || content.challenges.flatMap(c => c.stages).find(s => !state(s).done) || content.challenges[0].stages[0];
-      openStage(first.id, false); status(remote.preview ? 'Teacher practice space · no student progress or grades are changed.' : 'Your saved progress is ready.'); sync();
+      active = first; showMap(false); status(remote.preview ? 'Teacher practice space · no student progress or grades are changed.' : 'Your saved progress is ready.'); sync();
     } catch (error) {
       if (run !== epoch) return;
       if (Object.keys(cache).length && ![401,403].includes(error.code)) {
-        ready = true; renderMap(); openStage(content.challenges.flatMap(c => c.stages).find(s => !state(s).done)?.id || 'grammar-1', false);
+        ready = true; renderMap(); active = stageById(content.challenges.flatMap(c => c.stages).find(s => !state(s).done)?.id || 'grammar-1'); showMap(false);
         status('Offline practice · changes will sync when you reconnect.');
       } else status(error.code === 403 ? 'Use your registered Basic 2 account. Contact your teacher if access is missing.' : error.code === 401 ? 'Please sign in again. Your session expired.' : 'Could not load account progress. Check your connection and select Retry sync.');
     }
@@ -132,12 +133,19 @@
   function renderMap() {
     if (!content) return;
     let completed = 0, mastery = 0;
-    $('#challenge-map').innerHTML = content.challenges.map((c, i) => {
+    const opened = [...$('#challenge-map').querySelectorAll('.stage-picker')].map(d => d.open);
+    const mapHTML = content.challenges.map((c, i) => {
       const done = c.stages.filter(s => state(s).done).length; completed += done;
       mastery += c.stages.filter(s => s.kind === 'quiz' && state(s).done && score(s) === s.questions.length).length;
-      return `<article class="adventure-card"><span class="adventure-number">${String(i + 1).padStart(2, '0')}</span><h2>${escape(c.title)}</h2><p>${escape(c.goal)}</p><p class="meta">About ${c.minutes} min · ${done}/4 stages</p><progress max="4" value="${done}" aria-label="${escape(c.title)} progress"></progress><div class="stage-buttons">${c.stages.map((s,j) => `<button type="button" data-stage="${s.id}" ${!ready ? 'disabled' : ''} ${active?.id === s.id ? 'aria-current="step"' : ''}>${state(s).done ? '✓ ' : ''}${j+1}. ${escape(s.title)}</button>`).join('')}</div></article>`;
+      const resume = c.stages.find(s => !state(s).done) || c.stages[0];
+      const icons = ['✦', 'Aa', '♫', '▤', '🎙', '✎'];
+      return `<article class="adventure-card ${done === 4 ? 'is-earned' : ''}"><span class="challenge-label">CHALLENGE ${i+1}</span><div class="trophy-medallion" aria-hidden="true">${done === 4 ? '🏆' : icons[i]}</div><h2>${escape(c.title)}</h2><p>${escape(c.goal)}</p><p class="meta">About ${c.minutes} min · ${done}/4 stages</p><progress max="4" value="${done}" aria-label="${escape(c.title)} progress"></progress><p class="trophy-state">${done === 4 ? '🏆 Completion trophy earned' : done ? 'Your trophy is getting closer!' : 'Four stages. One trophy.'}</p><button class="challenge-start" type="button" data-stage="${resume.id}" ${!ready ? 'disabled' : ''}>${done === 4 ? 'Practise again ↻' : Object.keys(state(resume)).length || done ? 'Continue challenge →' : 'Start challenge →'}</button><details class="stage-picker"><summary>Choose a stage</summary><div class="stage-buttons">${c.stages.map((s,j) => `<button type="button" data-stage="${s.id}" ${!ready ? 'disabled' : ''}>${state(s).done ? '✓ ' : ''}${j+1}. ${escape(s.title)}</button>`).join('')}</div></details></article>`;
     }).join('');
-    $('#journey-stats').textContent = `${completed}/24 stages completed · ${completed * 25} XP · ${mastery}/16 quiz stages mastered`;
+    if (mapHTML !== lastMapHTML) {
+      $('#challenge-map').innerHTML = mapHTML; lastMapHTML = mapHTML;
+      $('#challenge-map').querySelectorAll('.stage-picker').forEach((d,i) => { d.open = Boolean(opened[i]); });
+    }
+    $('#journey-stats').textContent = `${completed}/24 stages completed · ${completed * 25} XP · ${content.challenges.filter(c => c.stages.every(s => state(s).done)).length}/6 trophies`;
     $('#journey-progress').value = completed;
     $('#challenge-map').querySelectorAll('[data-stage]').forEach(b => b.onclick = () => openStage(b.dataset.stage));
     $('#celebration').hidden = completed !== 24;
@@ -145,7 +153,8 @@
   function openStage(id, scroll = true) {
     if (!ready) return;
     if (recorder?.state === 'recording') { status('Stop your recording before moving to another stage.'); return; }
-    active = stageById(id); replayed = false; modelHeard = new Set(); renderStage(); renderMap();
+    document.body.classList.add('in-challenge');
+    active = stageById(id); questionCursor = active.kind === 'quiz' ? Math.max(0, active.questions.findIndex(q => !state(active).answers?.[q.id])) : 0; checkedQuestions = new Set(); replayed = false; modelHeard = new Set(); renderStage(); renderMap();
     if (scroll) $('#workspace').scrollIntoView({behavior: 'smooth', block: 'start'});
   }
   function score(s) { const d = state(s); return s.questions.filter(q => q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id]))).length; }
@@ -160,7 +169,7 @@
     if (s.models?.length) support += s.models.map(([file, line], i) => `<div class="model"><p>${escape(line)}</p><div data-model="${i}">${players('audio/adventure-unit1/' + file + '.mp3')}</div></div>`).join('');
     let activity = '';
     if (s.kind === 'quiz') {
-      activity = s.questions.map(q => `<fieldset class="question"><legend>${q.id}. ${escape(q.prompt)}</legend>${q.options ? ordered(q.options, Number(q.id)).map((o,i) => `<label class="option"><input type="radio" name="q-${q.id}" value="${escape(o)}" ${d.answers?.[q.id] === o ? 'checked' : ''}> <span>${escape(o)}</span></label>`).join('') : `<input type="text" data-answer="${q.id}" aria-label="Answer ${q.id}" maxlength="1000" value="${escape(d.answers?.[q.id] || '')}" autocomplete="off" spellcheck="false">`}${d.done ? `<p class="feedback ${q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id])) ? 'correct' : 'review'}">${q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id])) ? '✓ Correct.' : 'Review: ' + escape(q.answers[0]) + '.'} ${escape(q.explanation)}</p>` : ''}</fieldset>`).join('');
+      activity = s.questions.map(q => `<fieldset class="question"><legend>${q.id}. ${escape(q.prompt)}</legend>${q.options ? ordered(q.options, Number(q.id)).map((o,i) => `<label class="option"><input type="radio" name="q-${q.id}" value="${escape(o)}" ${d.answers?.[q.id] === o ? 'checked' : ''}> <b class="option-letter">${String.fromCharCode(65+i)}</b><span>${escape(o)}</span></label>`).join('') : `<input type="text" data-answer="${q.id}" aria-label="Answer ${q.id}" maxlength="1000" value="${escape(d.answers?.[q.id] || '')}" autocomplete="off" spellcheck="false">`}${d.done ? `<p class="feedback ${q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id])) ? 'correct' : 'review'}">${q.answers.some(a => normalize(a) === normalize(d.answers?.[q.id])) ? '✓ Correct.' : 'Review: ' + escape(q.answers[0]) + '.'} ${escape(q.explanation)}</p>` : ''}</fieldset>`).join('');
     } else {
       activity = `<p class="task-prompt">${escape(s.prompt)}</p>`;
       if (s.kind === 'writing') activity += `<label for="written-answer">Your writing</label><textarea id="written-answer" rows="12" maxlength="12000">${escape(d.text || '')}</textarea><p id="word-count">${wordCount(d.text)} words · at least ${s.minWords}</p>`;
@@ -170,14 +179,17 @@
     }
     if (s.applyPrompt) activity += `<div class="apply-task"><h3>Apply it in your own words</h3><p>${escape(s.applyPrompt)}</p><label for="apply-answer">Write at least ${s.applyMinWords} words. Read it aloud and check your verbs.</label><textarea id="apply-answer" rows="5" maxlength="12000">${escape(d.text || '')}</textarea><p id="apply-count">${wordCount(d.text)} words</p><p class="meta">This short writing task is self-reviewed; it does not receive an automatic language score.</p></div>`;
     const conflict = cache[s.id]?.conflict;
-    $('#workspace').innerHTML = `<div class="stage-heading"><div><p class="eyebrow">${escape(c.title)} · Stage ${c.stages.indexOf(s)+1}/4</p><h2 tabindex="-1">${escape(s.title)}</h2></div><a href="#challenge-map">Back to map ↑</a></div>${conflict ? '<div class="conflict" role="alert"><h3>This stage changed on another device</h3><p>Your local work is preserved. Compare the other version before choosing.</p><button id="download-local">Download my device copy</button> <button id="download-cloud">Download account copy</button><p><button id="keep-local">Keep this device’s version</button> <button id="keep-cloud">Use account version</button></p></div>' : ''}<div class="stage-layout"><aside>${support}<details><summary>Unit 1 language reminders</summary><p>Habits: I play / she plays. Questions: Do you play? Does she play?</p><p>Now: I am playing / she is playing / they are playing. Negative: She is not playing. Question: Is she playing?</p><p>Weather: sunny, cloudy, windy, rainy, stormy, hot, cold, pouring.</p><a href="unit-1-going-out.html" target="_blank" rel="noopener">Open the full Unit 1 lesson</a></details></aside><div class="stage-work">${activity}<p id="stage-result" role="status">${d.done ? s.kind === 'quiz' ? `${score(s)}/${s.questions.length} correct. ${score(s) === s.questions.length ? 'Stage mastered!' : 'Stage completed. Review the explanations and retry to build mastery.'}` : 'Practice completed · self-reviewed. This is not a teacher grade.' : ''}</p><div class="actions"><button id="finish" type="button">${s.kind === 'quiz' ? 'Check answers' : 'Complete practice'}</button><button id="next" type="button">Next stage →</button></div></div></div>`;
+    $('#workspace').innerHTML = `<div class="stage-heading"><div><p class="eyebrow">${escape(c.title)} · Stage ${c.stages.indexOf(s)+1}/4</p><h2 tabindex="-1">${escape(s.title)}</h2></div><button id="back-map" type="button">🏆 Trophy map</button></div>${conflict ? '<div class="conflict" role="alert"><h3>This stage changed on another device</h3><p>Your local work is preserved. Compare the other version before choosing.</p><button id="download-local">Download my device copy</button> <button id="download-cloud">Download account copy</button><p><button id="keep-local">Keep this device’s version</button> <button id="keep-cloud">Use account version</button></p></div>' : ''}<div class="round-meter"><span>Stage ${c.stages.indexOf(s)+1} of 4</span><progress max="4" value="${c.stages.filter(x => state(x).done).length}" aria-label="Challenge stages completed"></progress><span class="round-xp">${c.stages.filter(x => state(x).done).length*25} / 100 XP</span></div><div class="stage-layout ${s.text || s.audio || s.image || s.models?.length ? 'has-stimulus' : 'compact-stimulus'}"><aside>${support}<details><summary>Unit 1 language reminders</summary><p>Habits: I play / she plays. Questions: Do you play? Does she play?</p><p>Now: I am playing / she is playing / they are playing. Negative: She is not playing. Question: Is she playing?</p><p>Weather: sunny, cloudy, windy, rainy, stormy, hot, cold, pouring.</p><a href="unit-1-going-out.html" target="_blank" rel="noopener">Open the full Unit 1 lesson</a></details></aside><div class="stage-work">${s.kind === 'quiz' ? '<div class="question-meter"><span id="question-count"></span><progress id="question-progress" aria-label="Question progress"></progress></div>' : ''}${activity}${s.kind === 'quiz' ? '<div id="question-feedback" role="status" aria-live="polite"></div><div class="question-actions"><button id="question-back" type="button">← Back</button><button id="question-check" class="quest-primary" type="button">Check answer</button><button id="question-continue" class="quest-primary" type="button" hidden>Continue →</button></div>' : ''}<p id="stage-result" role="status">${d.done ? s.kind === 'quiz' ? `${score(s)}/${s.questions.length} correct. ${score(s) === s.questions.length ? 'Stage mastered!' : 'Stage completed. Review the explanations and retry to build mastery.'}` : 'Practice completed · self-reviewed. This is not a teacher grade.' : ''}</p><div class="actions"><button id="finish" type="button">${s.kind === 'quiz' ? 'Complete stage ✓' : 'Complete practice ✓'}</button><button id="next" type="button">Next stage →</button></div></div></div>`;
     bindStage();
+    if (s.kind === 'quiz') showQuestion();
   }
   // Rotate and reverse options deterministically, avoiding a fixed answer position.
   function ordered(options, seed) { const a = [...options]; if (seed % 2) a.reverse(); const n = seed % a.length; return [...a.slice(n), ...a.slice(0,n)]; }
   function wordCount(text) { return String(text || '').trim().split(/\s+/).filter(Boolean).length; }
   function bindStage() {
     const s = active;
+    $('#back-map').onclick = () => showMap();
+    if (s.kind === 'quiz') bindQuestion();
     $('#workspace').querySelectorAll('audio').forEach(audio => {
       audio.addEventListener('error', () => status('Audio could not load. Check your connection and reload this stage. Your work is saved separately.'));
       audio.addEventListener('ended', () => {
@@ -192,6 +204,7 @@
       change({answers: {...state(s).answers, [id]: input.value}, done: false});
       $('#stage-result').textContent = 'Answer changed. Check again when ready.';
       $('#workspace').querySelectorAll('.feedback').forEach(el => el.remove());
+      checkedQuestions.delete(questionCursor); $('#question-feedback').textContent = ''; $('#question-continue').hidden = true; $('#question-check').hidden = false;
     }));
     $('#apply-answer')?.addEventListener('input', e => { change({text: e.target.value, done: false}); $('#apply-count').textContent = `${wordCount(e.target.value)} words`; });
     $('#written-answer')?.addEventListener('input', e => { change({text: e.target.value, done: false}); $('#word-count').textContent = `${wordCount(e.target.value)} words · at least ${s.minWords}`; });
@@ -213,12 +226,12 @@
         if (s.checklist.some((_,i) => !d.checks?.[i])) error += ' Complete the self-review checklist.';
       }
       if (error) { $('#stage-result').textContent = error; return; }
-      await change({done: true, attempts: (d.attempts || 0) + 1}); renderStage(); renderMap(); chime();
+      await change({done: true, attempts: (d.attempts || 0) + 1}); renderStage(); renderMap(); chime(); celebrateStage();
     };
     $('#next').onclick = () => {
       if (!state(s).done) { $('#stage-result').textContent = 'Complete this stage first, or choose another stage from the map.'; return; }
       const all = content.challenges.flatMap(c => c.stages), next = all[all.findIndex(x => x.id === s.id)+1];
-      if (next) openStage(next.id); else $('#challenge-map').scrollIntoView({behavior: 'smooth'});
+      if (next) openStage(next.id); else showMap();
     };
     if ($('#record')) { $('#record').onclick = record; $('#stop').onclick = stopRecording; $('#audio-upload').onchange = upload; }
     if (cache[s.id]?.conflict) {
@@ -227,6 +240,55 @@
       $('#keep-local').onclick = async () => { const r = cache[s.id]; r.revision = r.conflict.revision; delete r.conflict; delete r.pending; r.dirty = true; await persist(); renderStage(); sync(); };
       $('#keep-cloud').onclick = async () => { cache[s.id] = cache[s.id].conflict; await persist(); renderStage(); renderMap(); sync(); };
     }
+  }
+  function showMap(scroll = true) {
+    if (recorder?.state === 'recording') { status('Stop your recording before returning to the map.'); return; }
+    $('#workspace').querySelectorAll('audio').forEach(a => a.pause());
+    document.body.classList.remove('in-challenge'); renderMap();
+    if (scroll) $('#map-intro').scrollIntoView({behavior: 'smooth', block: 'start'});
+  }
+  function showQuestion() {
+    const s = active, last = questionCursor >= s.questions.length;
+    $('#workspace').querySelectorAll('.question').forEach((q,i) => q.hidden = i !== questionCursor);
+    $('.apply-task').hidden = !last;
+    $('#question-count').textContent = last ? 'Final task · Make it your own' : `Question ${questionCursor+1} of ${s.questions.length}`;
+    $('#question-progress').max = s.questions.length+1; $('#question-progress').value = questionCursor;
+    $('#question-check').hidden = last || checkedQuestions.has(questionCursor);
+    $('#question-continue').hidden = last || !checkedQuestions.has(questionCursor);
+    $('#question-back').disabled = questionCursor === 0;
+    $('#finish').hidden = !last; $('#next').hidden = !last || !state(s).done;
+    $('#stage-result').hidden = !last; $('#question-feedback').textContent = '';
+    if (!last && checkedQuestions.has(questionCursor)) feedbackQuestion();
+  }
+  function feedbackQuestion() {
+    const q = active.questions[questionCursor], answer = state(active).answers?.[q.id];
+    const correct = q.answers.some(a => normalize(a) === normalize(answer));
+    $('#question-feedback').className = correct ? 'correct' : 'review';
+    $('#question-feedback').innerHTML = `<strong>${correct ? '✓ Nicely done!' : '↻ Let’s learn from this'}</strong><p>${correct ? '' : `Model: <b>${escape(q.answers[0])}</b>. `}${escape(q.explanation)}</p>${correct ? '' : '<small>You can change your answer and check again, or continue and revisit it later.</small>'}`;
+  }
+  function bindQuestion() {
+    $('#question-check').onclick = () => {
+      const q = active.questions[questionCursor];
+      if (!state(active).answers?.[q.id]?.trim()) { $('#question-feedback').className = 'review'; $('#question-feedback').textContent = 'Choose or write an answer first.'; return; }
+      if (active.audio && !state(active).listened) { $('#question-feedback').className = 'review'; $('#question-feedback').textContent = 'Listen to the whole recording first. You can replay it as often as you need.'; return; }
+      checkedQuestions.add(questionCursor); feedbackQuestion();
+      $('#question-check').hidden = true; $('#question-continue').hidden = false;
+      if (active.questions[questionCursor].answers.some(a => normalize(a) === normalize(state(active).answers[q.id]))) chime();
+    };
+    $('#question-continue').onclick = () => { questionCursor++; showQuestion(); $('.stage-work').scrollIntoView({behavior: 'smooth', block: 'start'}); };
+    $('#question-back').onclick = () => { questionCursor = Math.max(0,questionCursor-1); showQuestion(); };
+  }
+  function celebrateStage() {
+    const c = content.challenges.find(c => c.stages.includes(active));
+    const earned = c.stages.every(s => state(s).done);
+    const panel = document.createElement('div'); panel.className = 'stage-celebration'; panel.setAttribute('role','status');
+    panel.innerHTML = `<span class="reward-cup" aria-hidden="true">${earned ? '🏆' : '★'}</span><div><strong>${earned ? escape(c.title) + ' trophy earned!' : 'Stage complete!'}</strong><p>${earned ? 'Four stages completed. Your practice is growing.' : '25 XP for this stage. Keep going toward your trophy.'}</p><small>Completion reward · self-reviewed speaking and writing are not automatic grades.</small></div>`;
+    $('.stage-work').prepend(panel);
+    if (sound && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      for (let i=0;i<24;i++) { const bit=document.createElement('i');bit.style.setProperty('--x',`${(i*37)%100}%`);bit.style.setProperty('--delay',`${(i%6)*.06}s`);bit.style.setProperty('--color',['#ba3046','#e4af38','#142b49'][i%3]);panel.append(bit); }
+      setTimeout(()=>panel.querySelectorAll('i').forEach(b=>b.remove()),2000);
+    }
+    panel.scrollIntoView({behavior:'smooth',block:'center'});
   }
   function download(data, name) { const url = URL.createObjectURL(new Blob([JSON.stringify(data,null,2)], {type:'application/json'})); const a = document.createElement('a'); a.href=url; a.download=name+'.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); }
   function dataURL(blob) { return new Promise((resolve,reject) => { const r = new FileReader(); r.onload=()=>resolve(r.result); r.onerror=reject; r.readAsDataURL(blob); }); }
@@ -274,7 +336,7 @@
       $('#load-transcript').onclick = async () => { try { const r = await api('transcript'); $('#transcript').textContent = r.text; } catch { status('Transcripts are available only to authorized teachers.'); } };
       $('#sign-in').onclick=()=>window.JaraLinguaAuth?.openPanel();
       $('#retry-sync').onclick=()=>ready ? sync() : loadAccount();
-      $('#sound-toggle').onclick=()=>{sound=!sound;$('#sound-toggle').textContent=sound?'Sound on':'Sound off';$('#sound-toggle').setAttribute('aria-pressed',String(sound));};
+      $('#sound-toggle').onclick=()=>{sound=!sound;$('#sound-toggle').textContent=sound?'Effects on':'Effects off';$('#sound-toggle').setAttribute('aria-pressed',String(sound));};
       window.addEventListener('jaralingua:auth-changed',loadAccount);
       window.addEventListener('online',()=>ready?sync():loadAccount());
       window.addEventListener('beforeunload',e=>{if(pending()||recorder?.state==='recording'){e.preventDefault();e.returnValue='';}});

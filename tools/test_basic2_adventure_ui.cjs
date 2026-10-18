@@ -28,9 +28,15 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
    return route.fulfill({json:result});
   });
  }
+ async function chooseStage(page,id){
+  if(await page.locator('#back-map').isVisible())await page.locator('#back-map').click();
+  const button=page.locator(`.stage-buttons [data-stage="${id}"]`);
+  if (!await button.locator('xpath=ancestor::details').evaluate(d=>d.open)) await button.locator('xpath=ancestor::details').locator('summary').click();
+  await button.click();
+ }
  try{
   const context=await browser.newContext();await setup(context);const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page.waitForSelector('#workspace .question').catch(async e=>{console.log(await page.locator('#save-status').innerText(),errors,await page.evaluate(()=>({user:!!window.JaraLinguaAuth?.getUser(),body:document.body.innerText.slice(-400)})));throw e;});
+  await page.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);
   assert.equal(await page.locator('.adventure-card').count(),6);
   assert.equal(await page.locator('.site-header [data-jaralingua-auth-nav]').count(),1);
   assert.equal(await page.locator('body > .jaralingua-auth').count(),0);
@@ -39,33 +45,44 @@ const executablePath = process.env.CHROME_BIN || '/Applications/Google Chrome.ap
    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`overflow ${width}`);
    assert.equal(await page.locator('.adventure-hero').evaluate(e=>getComputedStyle(e).position),'static');
    await page.screenshot({path:`/tmp/basic2-adventure-${width}.png`,fullPage:false});
-   await page.locator('#workspace').scrollIntoViewIfNeeded(); await page.screenshot({path:`/tmp/basic2-adventure-work-${width}.png`,fullPage:false});
-   assert(await page.locator('.adventure-hero').evaluate(e=>e.getBoundingClientRect().bottom<0),'Hero must leave viewport on scroll');
+   await page.locator('#challenge-map').evaluate(e=>e.scrollIntoView({block:'start'}));await page.screenshot({path:`/tmp/basic2-trophy-map-${width}.png`,fullPage:false});
+   await chooseStage(page,'grammar-1'); await page.locator('#workspace').scrollIntoViewIfNeeded(); await page.screenshot({path:`/tmp/basic2-adventure-work-${width}.png`,fullPage:false});
+   assert.equal(await page.locator('.adventure-hero').isVisible(),false,'Game view hides the hero');
+   await page.locator('#back-map').click();
    await page.evaluate(()=>scrollTo(0,0));
   }
-  await page.locator('#finish').click();assert.match(await page.locator('#stage-result').innerText(),/every question/);
-  for(const q of content.challenges[0].stages[0].questions)await page.locator(`input[name="q-${q.id}"]`).filter({visible:true}).evaluateAll((els,value)=>els.find(e=>e.value===value).click(),q.answers[0]);
+  await chooseStage(page,'grammar-1');
+  assert.equal(await page.locator('.question:visible').count(),1);
+  await page.locator('#question-check').click();assert.match(await page.locator('#question-feedback').innerText(),/answer first/);
+  for(const q of content.challenges[0].stages[0].questions){
+   await page.locator(`input[name="q-${q.id}"]`).evaluateAll((els,value)=>els.find(e=>e.value===value).click(),q.answers[0]);
+   await page.locator('#question-check').click();assert.match(await page.locator('#question-feedback').innerText(),/Nicely done/);await page.locator('#question-continue').click();
+  }
   await page.locator('#apply-answer').fill('I usually play soccer with my friends on Sundays. Today I am staying at home because it is raining. My sister is reading a book.');
   await page.locator('#finish').click();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));
-  assert(records['grammar-1'].data.done);assert.match(await page.locator('#journey-stats').innerText(),/1\/24/);
+  assert(records['grammar-1'].data.done);assert.equal(await page.locator('.stage-celebration').isVisible(),true);assert.match(await page.locator('#journey-stats').innerText(),/1\/24/);
   // Account data resumes on another device with no local storage.
-  const second=await browser.newContext();await setup(second);const page2=await second.newPage();await page2.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page2.waitForSelector('#workspace .question');assert.match(await page2.locator('#journey-stats').innerText(),/1\/24/);await second.close();
-  await page.locator('[data-stage="writing-1"]').click();await page.locator('#written-answer').fill('My usual weekend starts with a walk.');
+  const second=await browser.newContext();await setup(second);const page2=await second.newPage();await page2.goto(base+'/ingles/basico-2/adventure-unit-1.html');await page2.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);assert.match(await page2.locator('#journey-stats').innerText(),/1\/24/);await second.close();
+  await chooseStage(page,'writing-1');await page.locator('#written-answer').fill('My usual weekend starts with a walk.');
   await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));
   offline=true;await page.locator('#written-answer').fill('Offline draft survives a reload and will sync later.');await page.waitForTimeout(1000);await page.reload();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('Offline practice'));
-  await page.locator('[data-stage="writing-1"]').click();assert.equal(await page.locator('#written-answer').inputValue(),'Offline draft survives a reload and will sync later.');
+  await chooseStage(page,'writing-1');assert.equal(await page.locator('#written-answer').inputValue(),'Offline draft survives a reload and will sync later.');
   offline=false;await page.locator('#retry-sync').click();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));
   assert.equal(records['writing-1'].data.text,'Offline draft survives a reload and will sync later.');
   // Stale writes require a choice rather than silent overwrite.
-  await page.locator('[data-stage="grammar-2"]').click();conflict=true;await page.locator('[data-answer="1"]').fill('making');await page.waitForSelector('#keep-local');await page.locator('#keep-local').click();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));assert.equal(records['grammar-2'].data.answers['1'],'making');assert.equal(records['grammar-2'].revision,100);
+  await chooseStage(page,'grammar-2');conflict=true;await page.locator('[data-answer="1"]').fill('making');await page.waitForSelector('#keep-local');await page.locator('#keep-local').click();await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));assert.equal(records['grammar-2'].data.answers['1'],'making');assert.equal(records['grammar-2'].revision,100);
+  // Wrong answers show explanatory feedback and allow another try.
+  await chooseStage(page,'vocabulary-1'); await page.locator('input[name="q-1"]').evaluateAll(els=>els.find(e=>e.value==='cloudy').click()); await page.locator('#question-check').click(); assert.match(await page.locator('#question-feedback').innerText(),/Model: windy/); await page.locator('input[name="q-1"]').evaluateAll(els=>els.find(e=>e.value==='windy').click()); assert.equal(await page.locator('#question-check').isVisible(),true);
   // Listening and completion guards.
-  await page.locator('[data-stage="listening-1"]').click();assert.equal(await page.locator('audio').count(),1);await page.locator('.speed').selectOption('0.75');assert.equal(await page.locator('audio').evaluate(e=>e.playbackRate),.75);
+  await chooseStage(page,'listening-1');assert.equal(await page.locator('audio').count(),1);await page.locator('.speed').selectOption('0.75');assert.equal(await page.locator('audio').evaluate(e=>e.playbackRate),.75);
   // Supported recording saves a playable private draft, then resumes on reload.
-  await page.locator('[data-stage="speaking-2"]').click();await page.locator('#record').click();await page.waitForFunction(()=>document.querySelector('#stop')?.disabled===false);await page.waitForTimeout(1200);await page.locator('#stop').click();await page.waitForSelector('#playback');await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));assert(records['speaking-2'].data.audio.startsWith('data:audio/'));
+  await chooseStage(page,'speaking-2');await page.locator('#record').click();await page.waitForFunction(()=>document.querySelector('#stop')?.disabled===false);await page.waitForTimeout(1200);await page.locator('#stop').click();await page.waitForSelector('#playback');await page.waitForFunction(()=>document.querySelector('#save-status').textContent.includes('All progress saved'));assert(records['speaking-2'].data.audio.startsWith('data:audio/'));
   await page.locator('#finish').click();assert.match(await page.locator('#stage-result').innerText(),/Record at least/);
-  await page.reload();await page.waitForSelector('#workspace .stage-work');await page.locator('[data-stage="speaking-2"]').click();assert.equal(await page.locator('#playback').count(),1);
+  await page.reload();await page.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);await chooseStage(page,'speaking-2');assert.equal(await page.locator('#playback').count(),1);
   // Separate account cannot see saved answers or audio.
-  const other=await browser.newContext();await setup(other,'synthetic-b@example.invalid');const p3=await other.newPage();await p3.goto(base+'/ingles/basico-2/adventure-unit-1.html');await p3.waitForSelector('#workspace .question');assert.match(await p3.locator('#journey-stats').innerText(),/0\/24/);await other.close();
+  const other=await browser.newContext();await setup(other,'synthetic-b@example.invalid');const p3=await other.newPage();await p3.goto(base+'/ingles/basico-2/adventure-unit-1.html');await p3.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);assert.match(await p3.locator('#journey-stats').innerText(),/0\/24/);await other.close();
+  for(const s of content.challenges[0].stages) records[s.id]={revision:1,data:{done:true,text:'practice '.repeat(25),answers:Object.fromEntries(s.questions.map(q=>[q.id,q.answers[0]]))}};
+  const trophyContext=await browser.newContext({reducedMotion:'reduce'});await setup(trophyContext);const trophyPage=await trophyContext.newPage();await trophyPage.goto(base+'/ingles/basico-2/adventure-unit-1.html');await trophyPage.waitForFunction(()=>!document.querySelector('.challenge-start').disabled);assert.equal(await trophyPage.locator('.adventure-card.is-earned').count(),1);assert.match(await trophyPage.locator('#journey-stats').innerText(),/1\/6 trophies/);await trophyContext.close();
   assert.deepEqual(errors,[]);await context.close();console.log('PASS: responsive, header auth, scoring, cross-device resume, offline reload, conflict, recording and account isolation');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
