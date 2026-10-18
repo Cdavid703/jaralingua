@@ -102,3 +102,7 @@ Preparación del final oral en Evaluations and Exam Practice: diez destinos reco
 ## Final Oral Exam — 6 de octubre de 2026
 
 [Travel and Tourism](../basic2-final-oral-travel.md): examen oficial en parejas, nota individual y peso 20%. Mínimo dos minutos para toda la pareja. Registro inmediato para ambas cuentas, abierto desde ahora por decisión explícita del docente; esta excepción sustituye el cierre inicial habitual solo para este examen. Excluye a César, Santiago y Gabriela únicamente del examen oral. Roles preparables de antemano; memorización permitida sin prescribirla. La conversación admite cualquier destino; se guarda una imagen de apoyo y la decisión final del turista, y varias parejas pueden elegir el mismo destino. Audios profesionales ElevenLabs, imágenes/PDF/PPTX proyectables y rúbrica solo para docente, con publicación individual a Grades. Ver el documento de implementación para límites, recuperación, privacidad y pruebas sintéticas.
+
+## Unit 1 Adventure — 18 de octubre de 2026
+
+Seis retos extensos de repaso, cuatro etapas por reto: Grammar, Vocabulary, Listening, Reading, Speaking y Writing. Duración orientativa 20–25 minutos por reto; sin cuenta regresiva ni nota oficial. Progreso privado vinculado a la cuenta, borradores IndexedDB y persistencia SQLite por etapa con revisión e idempotencia; grabaciones guardadas sin enviarlas a transcripción. Acceso en Games y Practice Lab de Unidad 1. Ver [contenido, guardado, pruebas y límites](../basic2-adventure-unit1.md). Las unidades 2–6 aún no están implementadas en esta aventura.

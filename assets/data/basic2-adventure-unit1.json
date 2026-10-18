@@ -1,0 +1,1502 @@
+{
+  "version": 1,
+  "challenges": [
+    {
+      "id": "grammar",
+      "title": "Grammar Lab",
+      "goal": "Choose meaning, build questions, correct mistakes and spell -ing forms.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "grammar-1",
+          "title": "Habits or happening now?",
+          "help": "Read the time clues. Simple present describes routines; present continuous describes actions in progress.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "Every Friday, Mia ___ soccer.",
+              "answers": [
+                "plays"
+              ],
+              "explanation": "Every Friday is a routine. With she/he, add -s.",
+              "options": [
+                "plays",
+                "is playing",
+                "play"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Look! The children ___ in the rain.",
+              "answers": [
+                "are running"
+              ],
+              "explanation": "Look points to an action happening now.",
+              "options": [
+                "are running",
+                "run",
+                "is running"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "I usually ___ home when it is stormy.",
+              "answers": [
+                "stay"
+              ],
+              "explanation": "Usually describes a habit.",
+              "options": [
+                "stay",
+                "am staying",
+                "stays"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Today, Leo ___ a coat because it is cold.",
+              "answers": [
+                "is wearing"
+              ],
+              "explanation": "Today describes what he has on now.",
+              "options": [
+                "is wearing",
+                "wear",
+                "are wearing"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "We ___ outside on Sundays. It is our routine.",
+              "answers": [
+                "work out"
+              ],
+              "explanation": "A regular routine uses simple present.",
+              "options": [
+                "work out",
+                "are working out",
+                "works out"
+              ]
+            },
+            {
+              "id": "6",
+              "prompt": "Listen! It ___ heavily.",
+              "answers": [
+                "is raining"
+              ],
+              "explanation": "Listen points to what is happening now.",
+              "options": [
+                "is raining",
+                "rains",
+                "rain"
+              ]
+            },
+            {
+              "id": "7",
+              "prompt": "My sister ___ coffee every morning.",
+              "answers": [
+                "drinks"
+              ],
+              "explanation": "Every morning is habitual; sister takes drinks.",
+              "options": [
+                "drinks",
+                "is drinking",
+                "drink"
+              ]
+            },
+            {
+              "id": "8",
+              "prompt": "Right now, I ___ for the bus.",
+              "answers": [
+                "am waiting"
+              ],
+              "explanation": "I takes am + verb-ing.",
+              "options": [
+                "am waiting",
+                "waits",
+                "wait"
+              ]
+            }
+          ],
+          "applyPrompt": "Write four sentences: two about your usual weekends and two about what people are doing now. Make the difference in meaning clear.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "grammar-2",
+          "title": "Build the -ing form",
+          "help": "Type only the -ing word. Read the explanation after checking, then correct your answer.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "make →",
+              "answers": [
+                "making"
+              ],
+              "explanation": "Drop silent -e before -ing."
+            },
+            {
+              "id": "2",
+              "prompt": "run →",
+              "answers": [
+                "running"
+              ],
+              "explanation": "Double the final consonant after a short stressed vowel."
+            },
+            {
+              "id": "3",
+              "prompt": "play →",
+              "answers": [
+                "playing"
+              ],
+              "explanation": "Keep y and add -ing."
+            },
+            {
+              "id": "4",
+              "prompt": "swim →",
+              "answers": [
+                "swimming"
+              ],
+              "explanation": "Double m after the short vowel."
+            },
+            {
+              "id": "5",
+              "prompt": "dance →",
+              "answers": [
+                "dancing"
+              ],
+              "explanation": "Drop silent -e."
+            },
+            {
+              "id": "6",
+              "prompt": "sit →",
+              "answers": [
+                "sitting"
+              ],
+              "explanation": "Double t."
+            },
+            {
+              "id": "7",
+              "prompt": "study →",
+              "answers": [
+                "studying"
+              ],
+              "explanation": "Keep y before -ing."
+            },
+            {
+              "id": "8",
+              "prompt": "lie →",
+              "answers": [
+                "lying"
+              ],
+              "explanation": "Change -ie to -y, then add -ing."
+            },
+            {
+              "id": "9",
+              "prompt": "write →",
+              "answers": [
+                "writing"
+              ],
+              "explanation": "Drop silent -e."
+            },
+            {
+              "id": "10",
+              "prompt": "go →",
+              "answers": [
+                "going"
+              ],
+              "explanation": "Add -ing; do not double the vowel."
+            }
+          ],
+          "applyPrompt": "Write five sentences about a busy park. Use making, running, playing, sitting and walking correctly.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "grammar-3",
+          "title": "Questions and negatives",
+          "help": "Complete each gap. Use the subject and the time expression.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "___ she playing tennis now?",
+              "answers": [
+                "Is"
+              ],
+              "explanation": "Put is before she in a present continuous question."
+            },
+            {
+              "id": "2",
+              "prompt": "___ they usually meet at the café?",
+              "answers": [
+                "Do"
+              ],
+              "explanation": "Use do with they for simple present questions."
+            },
+            {
+              "id": "3",
+              "prompt": "He ___ working out now. (negative, two words)",
+              "answers": [
+                "is not",
+                "isn't"
+              ],
+              "explanation": "Use is not + verb-ing; isn’t is also correct."
+            },
+            {
+              "id": "4",
+              "prompt": "She ___ go out on Mondays. (negative)",
+              "answers": [
+                "does not",
+                "doesn't"
+              ],
+              "explanation": "After does not, use the base verb."
+            },
+            {
+              "id": "5",
+              "prompt": "What ___ you wearing right now?",
+              "answers": [
+                "are"
+              ],
+              "explanation": "You takes are."
+            },
+            {
+              "id": "6",
+              "prompt": "Where ___ Leo usually play soccer?",
+              "answers": [
+                "does"
+              ],
+              "explanation": "Use does with he/Leo for a routine."
+            },
+            {
+              "id": "7",
+              "prompt": "We ___ staying in today. (negative)",
+              "answers": [
+                "are not",
+                "aren't"
+              ],
+              "explanation": "We takes are not + verb-ing."
+            },
+            {
+              "id": "8",
+              "prompt": "___ I speaking too quickly?",
+              "answers": [
+                "Am"
+              ],
+              "explanation": "I takes am, including in questions."
+            }
+          ],
+          "applyPrompt": "Write a short exchange with two questions, two answers and one negative. Ask about routines and current actions.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "grammar-4",
+          "title": "Repair the message",
+          "help": "Rewrite the whole sentence correctly. Keep its meaning and time expression.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "She are wearing a jacket.",
+              "answers": [
+                "She is wearing a jacket."
+              ],
+              "explanation": "She takes is."
+            },
+            {
+              "id": "2",
+              "prompt": "They playing soccer now.",
+              "answers": [
+                "They are playing soccer now."
+              ],
+              "explanation": "Continuous needs a form of be."
+            },
+            {
+              "id": "3",
+              "prompt": "He go out every Friday.",
+              "answers": [
+                "He goes out every Friday."
+              ],
+              "explanation": "Use goes with he for a routine."
+            },
+            {
+              "id": "4",
+              "prompt": "Are you wait for Emma?",
+              "answers": [
+                "Are you waiting for Emma?"
+              ],
+              "explanation": "After are, use waiting."
+            },
+            {
+              "id": "5",
+              "prompt": "We are runing in the park.",
+              "answers": [
+                "We are running in the park."
+              ],
+              "explanation": "Double n in running."
+            },
+            {
+              "id": "6",
+              "prompt": "Does she wears a coat every day?",
+              "answers": [
+                "Does she wear a coat every day?"
+              ],
+              "explanation": "After does, use wear."
+            },
+            {
+              "id": "7",
+              "prompt": "I not am going out today.",
+              "answers": [
+                "I am not going out today."
+              ],
+              "explanation": "Place not after am."
+            },
+            {
+              "id": "8",
+              "prompt": "They are makeing dinner.",
+              "answers": [
+                "They are making dinner."
+              ],
+              "explanation": "Drop e in making."
+            }
+          ],
+          "applyPrompt": "Write a message to a friend about your usual activities and what is happening today. Include a question and a negative.",
+          "applyMinWords": 25
+        }
+      ]
+    },
+    {
+      "id": "vocabulary",
+      "title": "Vocabulary in Action",
+      "goal": "Use weather, activities, phrasal verbs and idioms in real situations.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "vocabulary-1",
+          "title": "Weather clues",
+          "help": "Read the situation and choose the most precise weather word.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "The trees are moving strongly. Hold your hat!",
+              "answers": [
+                "windy"
+              ],
+              "explanation": "Wind moves trees and hats.",
+              "options": [
+                "windy",
+                "cloudy",
+                "hot"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "The sky is full of gray clouds, but there is no rain.",
+              "answers": [
+                "cloudy"
+              ],
+              "explanation": "Cloudy does not necessarily mean rainy.",
+              "options": [
+                "cloudy",
+                "snowy",
+                "sunny"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Rain is falling extremely heavily. It is ___.",
+              "answers": [
+                "pouring"
+              ],
+              "explanation": "Pouring means raining very heavily.",
+              "options": [
+                "pouring",
+                "sunny",
+                "cold"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "There is thunder, lightning and strong wind.",
+              "answers": [
+                "stormy"
+              ],
+              "explanation": "A storm can include thunder and lightning.",
+              "options": [
+                "stormy",
+                "warm",
+                "cloudy"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "The sun is bright and the sky is clear.",
+              "answers": [
+                "sunny"
+              ],
+              "explanation": "Sunshine is the key clue.",
+              "options": [
+                "sunny",
+                "foggy",
+                "rainy"
+              ]
+            },
+            {
+              "id": "6",
+              "prompt": "You need a warm coat and gloves. It is very ___.",
+              "answers": [
+                "cold"
+              ],
+              "explanation": "Warm clothes protect you from cold weather.",
+              "options": [
+                "cold",
+                "hot",
+                "warm"
+              ]
+            },
+            {
+              "id": "7",
+              "prompt": "The temperature is high. You want water and shade.",
+              "answers": [
+                "hot"
+              ],
+              "explanation": "High temperature means hot.",
+              "options": [
+                "hot",
+                "cold",
+                "snowy"
+              ]
+            },
+            {
+              "id": "8",
+              "prompt": "Small drops of water are falling from the sky.",
+              "answers": [
+                "rainy"
+              ],
+              "explanation": "Rainy describes weather with rain.",
+              "options": [
+                "rainy",
+                "windy",
+                "sunny"
+              ]
+            }
+          ],
+          "applyPrompt": "Describe two different weather situations. Explain what people are wearing and doing in each situation.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "vocabulary-2",
+          "title": "Plans with friends",
+          "help": "Choose the expression that fits the social situation.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "Visit me at my home tonight. Please ___.",
+              "answers": [
+                "come over"
+              ],
+              "explanation": "Come over means visit someone at their home or location.",
+              "options": [
+                "come over",
+                "call off",
+                "work out"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "We want to spend relaxed time together. Let’s ___.",
+              "answers": [
+                "hang out"
+              ],
+              "explanation": "Hang out means spend informal time together.",
+              "options": [
+                "hang out",
+                "call off",
+                "pack up"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "The storm is dangerous. We must ___ the outdoor match.",
+              "answers": [
+                "call off"
+              ],
+              "explanation": "Call off means cancel.",
+              "options": [
+                "call off",
+                "meet up",
+                "go out"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Let’s ___ at the café after class.",
+              "answers": [
+                "meet up"
+              ],
+              "explanation": "Meet up means meet socially at an agreed place.",
+              "options": [
+                "meet up",
+                "stay in",
+                "call off"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "I do not want to leave home. I want to ___.",
+              "answers": [
+                "stay in"
+              ],
+              "explanation": "Stay in means remain at home.",
+              "options": [
+                "stay in",
+                "go out",
+                "come over"
+              ]
+            },
+            {
+              "id": "6",
+              "prompt": "We want to leave home and have fun. Let’s ___.",
+              "answers": [
+                "go out"
+              ],
+              "explanation": "Go out means leave home for a social activity.",
+              "options": [
+                "go out",
+                "stay in",
+                "call off"
+              ]
+            },
+            {
+              "id": "7",
+              "prompt": "She exercises three times a week. She likes to ___.",
+              "answers": [
+                "work out"
+              ],
+              "explanation": "Work out means exercise.",
+              "options": [
+                "work out",
+                "come over",
+                "call off"
+              ]
+            }
+          ],
+          "applyPrompt": "Write a short invitation to a friend. Use meet up, hang out and either come over or stay in naturally.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "vocabulary-3",
+          "title": "Idioms in context",
+          "help": "Choose meaning, not a word-for-word translation.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "“I feel under the weather.” How does the speaker feel?",
+              "answers": [
+                "a little sick"
+              ],
+              "explanation": "This idiom describes feeling unwell.",
+              "options": [
+                "a little sick",
+                "outside in the rain",
+                "very excited"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "“Can I take a rain check?” What does the speaker want?",
+              "answers": [
+                "to do it another time"
+              ],
+              "explanation": "A rain check politely postpones an invitation; rain is not necessary.",
+              "options": [
+                "to do it another time",
+                "to check the forecast",
+                "to cancel every future plan"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "“It’s raining cats and dogs.” What is happening?",
+              "answers": [
+                "It is raining very heavily."
+              ],
+              "explanation": "This is playful, informal language for heavy rain.",
+              "options": [
+                "It is raining very heavily.",
+                "Animals are outside.",
+                "There is no rain."
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "“Come rain or shine, I help my friend.” What does this mean?",
+              "answers": [
+                "I help in any situation."
+              ],
+              "explanation": "The commitment does not depend on conditions.",
+              "options": [
+                "I help in any situation.",
+                "I only help on sunny days.",
+                "I am canceling my help."
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "“Every cloud has a silver lining.” What is the idea?",
+              "answers": [
+                "Something good can come from a bad situation."
+              ],
+              "explanation": "The saying looks for a positive side.",
+              "options": [
+                "Something good can come from a bad situation.",
+                "Clouds contain metal.",
+                "Nothing good can happen."
+              ]
+            },
+            {
+              "id": "6",
+              "prompt": "“My bus is late and my phone is dead. When it rains, it pours!” What does this mean?",
+              "answers": [
+                "Several problems happen together."
+              ],
+              "explanation": "Here the idiom describes problems, not literal rain.",
+              "options": [
+                "Several problems happen together.",
+                "The phone predicts rain.",
+                "Only one small thing is wrong."
+              ]
+            }
+          ],
+          "applyPrompt": "Choose two idioms. Write a short situation for each, showing why the expression fits. Do not translate word for word.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "vocabulary-4",
+          "title": "Choose natural language",
+          "help": "Use meaning and grammar together.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "I am tired. Can I ___ and see you tomorrow?",
+              "answers": [
+                "take a rain check"
+              ],
+              "explanation": "This politely postpones a plan.",
+              "options": [
+                "take a rain check",
+                "raining cats and dogs",
+                "under the weather"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "We ___ at home now because it is pouring.",
+              "answers": [
+                "are staying"
+              ],
+              "explanation": "Now needs continuous here; staying at home is natural.",
+              "options": [
+                "are staying",
+                "stays",
+                "is stay"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "She ___ with friends every Saturday.",
+              "answers": [
+                "hangs out"
+              ],
+              "explanation": "A habitual action with she takes -s.",
+              "options": [
+                "hangs out",
+                "is hang out",
+                "hang out"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Which is appropriate for a formal weather report?",
+              "answers": [
+                "Heavy rain is expected."
+              ],
+              "explanation": "The neutral phrase fits a formal report.",
+              "options": [
+                "Heavy rain is expected.",
+                "Cats and dogs are falling.",
+                "I am under the weather."
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "The park is closed, but we can play indoors. Which idiom fits?",
+              "answers": [
+                "Every cloud has a silver lining."
+              ],
+              "explanation": "There is a good alternative in a disappointing situation.",
+              "options": [
+                "Every cloud has a silver lining.",
+                "Under the weather.",
+                "Take a rain check."
+              ]
+            },
+            {
+              "id": "6",
+              "prompt": "Choose the correct question about the current plan.",
+              "answers": [
+                "Are you going out now?"
+              ],
+              "explanation": "Are + subject + going asks about the present action.",
+              "options": [
+                "Are you going out now?",
+                "Do you going out now?",
+                "Are you go out now?"
+              ]
+            }
+          ],
+          "applyPrompt": "An outdoor plan is canceled. Write a friendly alternative plan with a reason, one phrasal verb and one suitable idiom.",
+          "applyMinWords": 25
+        }
+      ]
+    },
+    {
+      "id": "listening",
+      "title": "Listening Adventure",
+      "goal": "Listen for the main idea, details, grammar and exact words across four new recordings.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "listening-1",
+          "title": "The town forecast",
+          "help": "Listen once for the places and again for details. Then complete the sentences. Replay as often as needed.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "Where is it sunny but cold?",
+              "answers": [
+                "near the river"
+              ],
+              "explanation": "The forecast locates the sunshine near the river.",
+              "options": [
+                "near the river",
+                "at the park",
+                "in the city center"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "What are the cyclists doing?",
+              "answers": [
+                "waiting near the library"
+              ],
+              "explanation": "The cyclists are waiting, not riding.",
+              "options": [
+                "waiting near the library",
+                "playing tennis",
+                "eating in the café"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "What is closed?",
+              "answers": [
+                "the outdoor tennis courts"
+              ],
+              "explanation": "The sports center remains open.",
+              "options": [
+                "the outdoor tennis courts",
+                "the sports center",
+                "the café"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Today, the students are exercising ___.",
+              "answers": [
+                "inside"
+              ],
+              "explanation": "Listen for the contrast between Sundays and today."
+            },
+            {
+              "id": "5",
+              "prompt": "Type the missing words: “People ___ with warm jackets.”",
+              "answers": [
+                "are walking"
+              ],
+              "explanation": "Listen for are + walking."
+            }
+          ],
+          "audio": "forecast",
+          "applyPrompt": "Use the forecast to advise a friend visiting the park and the river. Mention the weather and a suitable activity in each place.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "listening-2",
+          "title": "A picnic changes",
+          "help": "Listen to both people. Notice the rejected place and the final meeting place.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "What does Ben usually do at the park on Sundays?",
+              "answers": [
+                "run"
+              ],
+              "explanation": "He usually runs, but is not running today.",
+              "options": [
+                "run",
+                "read",
+                "swim"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Why do they cancel the picnic?",
+              "answers": [
+                "It is pouring."
+              ],
+              "explanation": "The heavy rain makes the picnic unsuitable.",
+              "options": [
+                "It is pouring.",
+                "Ben is ill.",
+                "They have no food."
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Why do they reject the library?",
+              "answers": [
+                "It is closed."
+              ],
+              "explanation": "The library is closed today.",
+              "options": [
+                "It is closed.",
+                "It is far away.",
+                "It is too busy."
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Who feels under the weather?",
+              "answers": [
+                "the woman’s sister"
+              ],
+              "explanation": "Her sister is staying in because she feels ill.",
+              "options": [
+                "the woman’s sister",
+                "Ben",
+                "the woman"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "Complete the exact phrase: “Let’s ___ at the café.”",
+              "answers": [
+                "meet up"
+              ],
+              "explanation": "Meet up means meet socially."
+            }
+          ],
+          "audio": "change",
+          "applyPrompt": "Summarize the change of plan: what the friends cancel, why, where they meet instead, and why the sister stays home.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "listening-3",
+          "title": "A different Saturday",
+          "help": "Separate usual routines from what the family is doing today.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "What does Nina usually do on Saturday mornings?",
+              "answers": [
+                "work out at the sports center"
+              ],
+              "explanation": "This is her normal routine.",
+              "options": [
+                "work out at the sports center",
+                "make sandwiches",
+                "play soccer"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "What is her brother doing today?",
+              "answers": [
+                "making sandwiches"
+              ],
+              "explanation": "He is in the kitchen and is not watching television.",
+              "options": [
+                "making sandwiches",
+                "watching television",
+                "playing soccer"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Where are her parents?",
+              "answers": [
+                "in the living room"
+              ],
+              "explanation": "They are reading there.",
+              "options": [
+                "in the living room",
+                "by the river",
+                "at the sports center"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Why does Nina ask for a rain check?",
+              "answers": [
+                "The wind is very strong."
+              ],
+              "explanation": "She suggests meeting tomorrow because of the weather.",
+              "options": [
+                "The wind is very strong.",
+                "She does not like her friend.",
+                "She has no phone."
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "Complete: “I ___ English with my friend online.”",
+              "answers": [
+                "am practicing",
+                "am practising"
+              ],
+              "explanation": "Nina describes her current action."
+            }
+          ],
+          "audio": "routine",
+          "applyPrompt": "Compare Nina’s usual Saturday with today. Mention Nina, her brother and her parents, using both present tenses.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "listening-4",
+          "title": "Find your friend",
+          "help": "Listen without reading a transcript. Track people, places, times and current actions.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "What is Leo wearing?",
+              "answers": [
+                "a green jacket"
+              ],
+              "explanation": "He corrects the suggestion of a blue coat.",
+              "options": [
+                "a green jacket",
+                "a blue coat",
+                "a red jacket"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Where is the café?",
+              "answers": [
+                "across from the cinema"
+              ],
+              "explanation": "The woman gives its location.",
+              "options": [
+                "across from the cinema",
+                "inside the cinema",
+                "next to the library"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "What is Maya doing?",
+              "answers": [
+                "drinking tea and checking movie times"
+              ],
+              "explanation": "Both actions are happening now.",
+              "options": [
+                "drinking tea and checking movie times",
+                "buying tickets",
+                "calling Leo"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "What time does the movie start?",
+              "answers": [
+                "six thirty",
+                "6:30",
+                "six thirty pm",
+                "6:30 pm"
+              ],
+              "explanation": "Five thirty is the current time; the movie starts at six thirty."
+            },
+            {
+              "id": "5",
+              "prompt": "Type the missing words: “We ___ tickets yet.”",
+              "answers": [
+                "are not buying",
+                "aren't buying"
+              ],
+              "explanation": "The negative continuous describes what they are not doing."
+            }
+          ],
+          "audio": "message",
+          "applyPrompt": "Write a message from Leo to another friend explaining where everyone is, what they are doing and when the movie starts.",
+          "applyMinWords": 25
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "title": "Reading Detective",
+      "goal": "Read four connected texts and use evidence to understand routines, actions and changed plans.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "reading-1",
+          "title": "A usual Saturday?",
+          "help": "Read for the main idea first. Then find evidence for each answer. Re-read before checking.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "What do Rosa and Eli usually do?",
+              "answers": [
+                "meet at the park"
+              ],
+              "explanation": "Their routine is given in the opening sentence.",
+              "options": [
+                "meet at the park",
+                "meet at the library",
+                "study at home"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Why does Rosa take a jacket?",
+              "answers": [
+                "The river is often windy."
+              ],
+              "explanation": "This is a regular weather condition.",
+              "options": [
+                "The river is often windy.",
+                "She dislikes sunshine.",
+                "The café has no heating."
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Where is Eli at the start of the story?",
+              "answers": [
+                "at home"
+              ],
+              "explanation": "He has not left yet.",
+              "options": [
+                "at home",
+                "at the café",
+                "at the tennis courts"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "What replaces the tennis rackets?",
+              "answers": [
+                "a board game"
+              ],
+              "explanation": "They choose a different activity.",
+              "options": [
+                "a board game",
+                "a book",
+                "an umbrella"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "Copy two words that signal an action in progress: “She ___ her jacket.”",
+              "answers": [
+                "is wearing"
+              ],
+              "explanation": "Is wearing describes what Rosa has on now."
+            }
+          ],
+          "text": "On Saturdays, Rosa usually meets her cousin Eli at the park. They walk, talk and sometimes play tennis. Rosa likes sunny mornings, but she always takes a light jacket because the river is often windy. Eli usually brings water and fruit. Today, Rosa is sitting at the café near the park entrance. She is wearing her jacket and checking her phone. Outside, the sky is gray and rain is falling heavily. Eli is still at home. He sends a message: ‘Are you waiting outside?’ Rosa replies, ‘No, I’m staying inside. The café is warm, and there are free tables.’ A few minutes later, Eli calls her. He is not bringing the tennis rackets today. Instead, he is taking a board game. They are changing their activity, but they are still spending the morning together.",
+          "applyPrompt": "Summarize the routine and today’s change. Use one example of simple present and two examples of present continuous.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "reading-2",
+          "title": "Messages before leaving",
+          "help": "Read for the main idea first. Then find evidence for each answer. Re-read before checking.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "What does “call off tennis” mean?",
+              "answers": [
+                "cancel tennis"
+              ],
+              "explanation": "They cancel the activity because of the weather.",
+              "options": [
+                "cancel tennis",
+                "start tennis",
+                "buy a racket"
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Why is Eli’s sister staying in?",
+              "answers": [
+                "She feels sick."
+              ],
+              "explanation": "Under the weather means unwell.",
+              "options": [
+                "She feels sick.",
+                "She dislikes Rosa.",
+                "She is doing homework."
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Does Rosa usually eat at this café?",
+              "answers": [
+                "No, she does not."
+              ],
+              "explanation": "She explicitly says she doesn’t usually eat there.",
+              "options": [
+                "No, she does not.",
+                "Yes, every day.",
+                "The text does not say."
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "What is Rosa doing while they exchange messages?",
+              "answers": [
+                "eating breakfast"
+              ],
+              "explanation": "She says she is eating breakfast now.",
+              "options": [
+                "eating breakfast",
+                "playing tennis",
+                "walking home"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "Complete Eli’s current action: “I ___ home now.”",
+              "answers": [
+                "am leaving"
+              ],
+              "explanation": "Am leaving describes the action in progress."
+            }
+          ],
+          "text": "Eli: I’m putting on my coat. Is it still pouring near the park? Rosa: Yes. A man is running to the bus stop, and two people are opening an umbrella. We can’t play tennis outside. Eli: Let’s call off tennis, then. I’m bringing a game. Rosa: Good idea. Are you coming alone? Eli: Yes. My sister is under the weather. She usually comes with me, but today she is staying in and resting. Rosa: I hope she feels better soon. Tell her we can meet another day. Eli: Thanks. Do you want a sandwich? Rosa: No, thank you. I’m eating breakfast now. I don’t usually eat at this café, but the bread is good. Eli: Great. I’m leaving home now. See you soon. Rosa: Take your umbrella! It is windy too.",
+          "applyPrompt": "Explain why Eli’s sister is absent and how Rosa and Eli change their plan. Include one useful expression from the messages.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "reading-3",
+          "title": "Read the club notice",
+          "help": "Read for the main idea first. Then find evidence for each answer. Re-read before checking.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "Why are the outdoor activities canceled?",
+              "answers": [
+                "The weather is stormy."
+              ],
+              "explanation": "The club prioritizes safety.",
+              "options": [
+                "The weather is stormy.",
+                "The café is closed.",
+                "There are no teachers."
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "Where are the games?",
+              "answers": [
+                "above the café"
+              ],
+              "explanation": "The indoor room is upstairs.",
+              "options": [
+                "above the café",
+                "by the river",
+                "at the courts"
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "What must visitors do to join?",
+              "answers": [
+                "sign their names"
+              ],
+              "explanation": "Games are free, but signing in is required.",
+              "options": [
+                "sign their names",
+                "buy a drink",
+                "pay for a lesson"
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Are drinks free?",
+              "answers": [
+                "No."
+              ],
+              "explanation": "The notice says drinks are not free.",
+              "options": [
+                "No.",
+                "Yes.",
+                "Only before nine."
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "When do the games finish?",
+              "answers": [
+                "one thirty",
+                "1:30",
+                "1:30 pm",
+                "one thirty pm"
+              ],
+              "explanation": "The café closes later, at two."
+            }
+          ],
+          "text": "The Riverside Club opens every Saturday at nine. Members usually meet outside the café before their activities. The walking group follows the river path, while the tennis group goes to the outdoor courts. Today, the weather is stormy. The club is calling off all outdoor activities. The river path is closed, and members must not walk there. However, the indoor room above the café is open. Two teachers are organizing board games there. They are not teaching a sports lesson. Visitors can join the games without paying, but they need to sign their names at the café entrance. Drinks are not free. Children must stay with an adult. The club manager says, ‘We usually enjoy being outside, but safety comes first. Today we are enjoying a different kind of morning.’ The café closes at two, and the indoor games finish at one thirty.",
+          "applyPrompt": "Write a message to a visitor: explain which activities are canceled, where to go instead, what is free and when games finish.",
+          "applyMinWords": 25
+        },
+        {
+          "id": "reading-4",
+          "title": "A silver lining",
+          "help": "Read for the main idea first. Then find evidence for each answer. Re-read before checking.",
+          "kind": "quiz",
+          "questions": [
+            {
+              "id": "1",
+              "prompt": "How is Rosa different today?",
+              "answers": [
+                "She is talking and asking questions."
+              ],
+              "explanation": "She usually feels shy, but today she is participating.",
+              "options": [
+                "She is talking and asking questions.",
+                "She is alone.",
+                "She is refusing to talk."
+              ]
+            },
+            {
+              "id": "2",
+              "prompt": "What is the silver lining?",
+              "answers": [
+                "They are making new friends."
+              ],
+              "explanation": "A disappointing change brings something positive.",
+              "options": [
+                "They are making new friends.",
+                "The rain stops.",
+                "They win a tennis match."
+              ]
+            },
+            {
+              "id": "3",
+              "prompt": "Why does the woman say “When it rains, it pours”?",
+              "answers": [
+                "She has two problems at once."
+              ],
+              "explanation": "She cannot find her bag and her phone battery is empty.",
+              "options": [
+                "She has two problems at once.",
+                "She is watching a forecast.",
+                "She enjoys the rain."
+              ]
+            },
+            {
+              "id": "4",
+              "prompt": "Where does Eli find the bag?",
+              "answers": [
+                "under a chair"
+              ],
+              "explanation": "This solves one of the woman’s problems.",
+              "options": [
+                "under a chair",
+                "outside",
+                "in the café kitchen"
+              ]
+            },
+            {
+              "id": "5",
+              "prompt": "Where does Rosa invite Eli’s sister?",
+              "answers": [
+                "to her home",
+                "her home",
+                "Rosa's home",
+                "Rosa's house",
+                "to Rosa's home"
+              ],
+              "explanation": "Come over invites someone to the speaker’s home."
+            }
+          ],
+          "text": "Rosa and Eli are now upstairs at the Riverside Club. They are sitting with two new friends, and everyone is learning Eli’s game. One teacher is explaining the rules. Another teacher is helping a family at a different table. Rosa usually feels shy when she meets new people. Today she is asking questions and laughing. Eli says, ‘Every cloud has a silver lining. We can’t play tennis, but we’re making new friends.’ Rosa agrees. At the next table, a woman is looking for her bag. Her phone battery is empty too. ‘When it rains, it pours,’ she says. Eli helps her find the bag under a chair. Outside, it is still raining, but inside everyone is comfortable. Before leaving, Rosa writes a message to Eli’s sister: ‘We hope you feel better. Can you come over next Saturday? We can play this game at my home.’",
+          "applyPrompt": "Explain the positive result of the changed plan. Describe Rosa’s behavior today and give a suitable example of a silver lining.",
+          "applyMinWords": 25
+        }
+      ]
+    },
+    {
+      "id": "speaking",
+      "title": "Speaking Mission",
+      "goal": "Listen, rehearse, record, replay and reflect. Focus on understandable English, not a perfect accent.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "speaking-1",
+          "title": "Sound and sentence studio",
+          "help": "Recording is private practice saved to your account. No automatic pronunciation grade is assigned. You can re-record or upload an audio recording if your microphone is unavailable.",
+          "kind": "speaking",
+          "questions": [],
+          "prompt": "Listen to each model twice. Say each sentence slowly, then naturally. Practice for three minutes. Record all three sentences, replay them and notice one word to improve.",
+          "models": [
+            [
+              "go-out",
+              "We are going out tonight."
+            ],
+            [
+              "stay-in",
+              "It’s pouring, so we are staying in."
+            ],
+            [
+              "meet-up",
+              "We are meeting up after class."
+            ]
+          ],
+          "minSeconds": 10,
+          "checklist": [
+            "I listened to all three models.",
+            "I replayed my recording.",
+            "I practiced the stressed words and -ing endings."
+          ],
+          "image": false
+        },
+        {
+          "id": "speaking-2",
+          "title": "My routine and today",
+          "help": "Recording is private practice saved to your account. No automatic pronunciation grade is assigned. You can re-record or upload an audio recording if your microphone is unavailable.",
+          "kind": "speaking",
+          "questions": [],
+          "prompt": "Prepare six sentences: three about your usual weekends and three about what you and other people are doing today. Use usually/every and now/today. Rehearse, record for 45–90 seconds, and replay. Remember: changing tense changes the meaning.",
+          "models": [],
+          "minSeconds": 30,
+          "checklist": [
+            "I used routines and current actions.",
+            "I checked am/is/are and he/she verb endings.",
+            "I replayed my recording."
+          ],
+          "image": true
+        },
+        {
+          "id": "speaking-3",
+          "title": "Describe the scene",
+          "help": "Recording is private practice saved to your account. No automatic pronunciation grade is assigned. You can re-record or upload an audio recording if your microphone is unavailable.",
+          "kind": "speaking",
+          "questions": [],
+          "prompt": "Study the adventure picture. Describe the weather, three people and their actions, clothing, and the indoor/outdoor contrast. Use there is/are if helpful. Speak for 45–90 seconds. Rehearse once, record and listen again.",
+          "models": [],
+          "minSeconds": 30,
+          "checklist": [
+            "I described three visible actions.",
+            "I used weather vocabulary and complete sentences.",
+            "I replayed my recording."
+          ],
+          "image": true
+        },
+        {
+          "id": "speaking-4",
+          "title": "Change our plans",
+          "help": "Recording is private practice saved to your account. No automatic pronunciation grade is assigned. You can re-record or upload an audio recording if your microphone is unavailable.",
+          "kind": "speaking",
+          "questions": [],
+          "prompt": "Play both sides of a short phone conversation. Friend A asks about the weather and current actions. Friend B answers and changes an outdoor plan. Agree on a new place and say why. Include one phrasal verb and one suitable idiom. Practice for five minutes, then record 60–120 seconds.",
+          "models": [],
+          "minSeconds": 45,
+          "checklist": [
+            "I asked and answered at least two questions.",
+            "I explained a new plan and used an expression.",
+            "I replayed and checked that my meaning is clear."
+          ],
+          "image": true
+        }
+      ]
+    },
+    {
+      "id": "writing",
+      "title": "Writing & Final Mission",
+      "goal": "Plan, edit and write a message that brings the whole unit together.",
+      "minutes": "20–25",
+      "stages": [
+        {
+          "id": "writing-1",
+          "title": "Plan before writing",
+          "help": "Spend four minutes gathering useful language. Use your own ideas.",
+          "kind": "writing",
+          "questions": [],
+          "prompt": "Write 40–70 words of notes: your usual weekend, the weather today, what three people are doing, an outdoor activity to cancel, and a new indoor plan. Include five useful weather/activity words.",
+          "minWords": 40,
+          "checklist": [
+            "I included a routine and current actions.",
+            "I chose a reason to change the plan."
+          ]
+        },
+        {
+          "id": "writing-2",
+          "title": "Be the editor",
+          "help": "Rewrite the message in correct English, then add two original sentences. Check every verb carefully.",
+          "kind": "writing",
+          "questions": [],
+          "prompt": "Edit this message: “Hi Sam! I usually plays tennis on Sundays. Today it are pouring. My friends is waiting at the park. I am wear a coat. We not are playing now. Do you coming to the café? Let’s meet up there.” Add two sentences about what people are doing and why the indoor plan is good.",
+          "minWords": 50,
+          "model": "Hi Sam! I usually play tennis on Sundays. Today it is pouring. My friends are waiting at the park. I am wearing a coat. We are not playing now. Are you coming to the café? Let’s meet up there.",
+          "checklist": [
+            "I corrected subject–verb agreement.",
+            "I checked the question and the negative.",
+            "I added two original sentences."
+          ]
+        },
+        {
+          "id": "writing-3",
+          "title": "Write the first version",
+          "help": "Spend six minutes writing a connected message, not isolated sentences.",
+          "kind": "writing",
+          "questions": [],
+          "prompt": "Write 70–100 words to a friend. Explain your usual weekend and what is different today. Describe the weather and at least three current actions. Suggest changing a plan. Ask two questions. Include a phrasal verb and, if it fits naturally, an idiom from Unit 1.",
+          "minWords": 70,
+          "checklist": [
+            "I used present simple and present continuous.",
+            "I asked two questions.",
+            "I suggested a plan with a reason."
+          ]
+        },
+        {
+          "id": "writing-4",
+          "title": "My final message",
+          "help": "Read your earlier draft, improve it and complete the self-review. Your text is saved as practice, not an official exam submission.",
+          "kind": "writing",
+          "questions": [],
+          "prompt": "Write your final 100–130-word message. Include a greeting, usual activities, today’s weather, three actions in progress, a negative, two questions, a changed plan with a reason, one phrasal verb and a closing. Add a suitable idiom if it helps your message. Check spelling and punctuation before finishing.",
+          "minWords": 100,
+          "checklist": [
+            "I used all parts of the task.",
+            "I checked am/is/are + -ing and routine verbs.",
+            "I read the message aloud and improved at least one sentence."
+          ]
+        }
+      ]
+    }
+  ]
+}
