@@ -119,10 +119,19 @@
 .pi-process { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
 .pi-process > div { flex: 1 1 150px; padding: 18px; border-radius: 16px; background: var(--basic2-warm); color: var(--basic2-ink); }
 .pi-process p { margin: 8px 0 0; }
+.pi-model-heading { color: var(--basic2-ink); font-size: 1.1rem; margin: 24px 0 14px; }
+.pi-food-label { margin: 20px 0; padding: 18px; border: 1px solid rgba(18,59,143,.18); border-radius: 16px; background: var(--basic2-soft); }
+.pi-food-label figcaption { margin-bottom: 14px; color: var(--basic2-ink); }
+.pi-food-label table { width: 100%; border-collapse: collapse; table-layout: fixed; color: var(--basic2-ink); background: white; }
+.pi-food-label th,.pi-food-label td { padding: 12px; border: 1px solid #b4c9e8; text-align: left; overflow-wrap: anywhere; }
+.pi-food-label thead { background: var(--basic2-warm); }
+.pi-frequency-scale > div { flex-basis: 130px; }
 @media (max-width: 760px) {
   .pi-cluster-body { padding: 0 10px 4px; }
   .pi-subtopic > summary { padding: 14px 12px; gap: 8px; }
   .pi-subtopic .pi-topic-body { padding: 0 12px 16px; }
   .pi-process { display: grid; grid-template-columns: 1fr; }
   .pi-process > span { display: none; }
+  .pi-food-label { padding: 10px; }
+  .pi-food-label th,.pi-food-label td { padding: 10px 6px; font-size: .9rem; }
 }

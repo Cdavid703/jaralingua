@@ -85,7 +85,7 @@ write(PAGE,doc,'unit2')
 # Upgrade the Unit 2 entry while leaving the rest of the course route intact.
 doc = read('course-overview.html')
 doc.xpath('.//p[@class="pi-intro"]')[0].text = 'Six units lead to classroom tasks. The explanations for Units 1 and 2 are available. Open a unit to explore its topics; the remaining units show the route as their materials are developed.'
-entry = fragment('<details class="pi-topic" id="unit-2"><summary><span class="pi-number">02</span><h2>Interests and Hobbies</h2></summary><div class="pi-topic-body"><p class="pi-goal">Sessions 3–5 · 9 hours</p><p>Explore music, sports, handmade projects and the natural world. The main new grammar is object pronouns, with abilities and familiar present-tense forms in context.</p><div class="pi-grid">'+''.join(card(title,'<p>'+goal+'</p>'+link(PAGE+'#'+slug,'Explore this block',True)) for _,slug,title,goal in clusters)+'</div><div class="pi-actions">'+link(PAGE,'Open the full unit')+link('expressions.html#unit-2-expressions','Explore Unit 2 expressions',True)+'</div><p class="pi-note">The explanation prepares the unit tasks. The writing assessment in session 5 carries 20% and belongs in its assessment space.</p></div></details>')
+entry = fragment('<details class="pi-topic" id="unit-2"><summary><span class="pi-number">02</span><h2>Interests and Hobbies</h2></summary><div class="pi-topic-body"><p class="pi-goal">Sessions 3–5 · 9 hours</p><p>Explore music, sports, handmade projects and the natural world. The main new grammar is object pronouns, with abilities and familiar present-tense forms in context.</p><div class="pi-grid">'+''.join(card(title,'<p>'+goal+'</p>'+link(PAGE+'#'+slug,'Explore this block',True)) for _,slug,title,goal in clusters)+'</div><div class="pi-actions">'+link(PAGE,'Open the full unit')+link('expressions.html#unit-2-expressions','Explore Unit 2 expressions',True)+'</div></div></details>')
 old = doc.get_element_by_id('unit-2',None)
 if old is None:
     old = doc.xpath('//article[contains(@class,"pi-planned")][div/h2="Interests and Hobbies"]')[0]
@@ -142,3 +142,9 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+PAGE,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr/ingles-preintermedio-1-unit-2-interests-hobbies.svg')
 print(f'Built Unit 2: {len(clusters)} blocks, {len(topics)} topics and {len(audios)} exact audio models; connected overview, home and expression library.')
+
+# Keep the next explanation connected when rebuilding earlier units.
+unit3_builder = ROOT / "tools/build_preintermediate1_unit3.py"
+if unit3_builder.exists():
+    import runpy
+    runpy.run_path(str(unit3_builder), run_name="__main__")

@@ -26,7 +26,7 @@ def section(id,title,goal,body):
     sections.append({'id':id,'title':title,'goal':goal,'body':body})
 
 section('first-connection','Making a first connection','Open a conversation, share a little information and leave space for the other person.',
- grid(card('A real purpose','<p>You are meeting a new classmate. Learn enough to introduce each other later: a name, a routine, a preference and something you share.</p>'),card('A conversation has turns','<ol><li>Greet and introduce yourself.</li><li>Ask one clear question.</li><li>Listen and respond to the answer.</li><li>Ask for a little more detail.</li><li>Close politely.</li></ol>'))+
+ grid(card('A real purpose','<p>A first conversation can include a name, a routine, a preference and a shared interest. The examples explain how these details connect.</p>'),card('A conversation has turns','<ol><li>A greeting and introduction.</li><li>A clear question.</li><li>A response connected to the answer.</li><li>A follow-up question for more detail.</li><li>A polite closing.</li></ol>'))+
  grid(card('Open',example('greeting',"Hi, I’m Laura. What’s your name?")),card('Keep the exchange going',example('follow-up','That sounds interesting. What about you?')),card('Close',example('closing','It was nice talking to you. See you in class.')))+
  note('A good conversation is more than a list of questions. If someone says “I like cooking,” respond to that idea: “What do you usually cook?” You do not need to share every interest.'))
 
@@ -57,7 +57,7 @@ section('personality','Personality in context','Describe yourself with an adject
 
 section('similarities','Similarities and differences','Report what you share and what is different without needing identical answers.',
  grid(card('A shared interest',example('both','We both like cooking.')+'<p><b>both</b> refers to the two people. It comes before the main verb here: <b>We both enjoy walking.</b></p>'),card('A difference',example('difference','I prefer reading, but my classmate prefers listening to music.')+'<p>Use <b>but</b> to connect different preferences. Remember <b>prefers / likes / enjoys</b> with he or she.</p>'),card('A short report','<p>This is my classmate Laura. She is friendly and creative. She works in a bakery. We both like cooking, but we have different routines.</p>'))+
- note('If you have no shared interest yet, ask about another activity. You can also report a real difference: “We like different activities.” Do not invent a similarity just to complete a sentence.'))
+ note('A conversation does not require identical interests. “We like different activities” reports a difference; “We both like cooking” reports a shared interest.'))
 
 expressions=[
  ('get-along','Phrasal verb','get along with','llevarse bien con','Have a friendly relationship with someone.','Everyday, neutral. Keep with before the person.','I get along with my classmates.'),
@@ -78,12 +78,12 @@ for i,(role,text) in enumerate(dialogue):
     lines.append(f'<article class="pi-dialogue-line"><span class="pi-label">{role}</span>{say("dialogue-"+str(i+1),text,role)}</article>')
 model='This is my classmate Mateo. He works in a small shop and usually reads after work. He is quiet and patient. He likes cooking and walking in the park. We both enjoy cooking, but we have different routines. I prefer listening to music after work. We have something in common, and we ask questions to learn more about each other.'
 section('models','Conversation and pronunciation models','Notice the order of a complete exchange and hear how to introduce a classmate clearly.',
- '<p>Read the conversation first. Listen to individual turns, or play the full exchange. Speaker names identify the turns; they are not spoken in the audio.</p><button type="button" class="pi-button" data-playlist="'+','.join('dialogue-'+str(i+1) for i in range(len(dialogue)))+'">Listen to the conversation</button><div class="pi-dialogue">'+''.join(lines)+'</div>'+
- grid(card('Introduce a classmate',example('presentation',model)),card('What to notice','<ul><li><b>I’m</b> connects I and am; <b>What’s</b> connects what and is.</li><li>Stress the main syllable: <b>FRIEND</b>-ly, cre-<b>A</b>-tive, out-<b>GO</b>-ing.</li><li>Finish the third-person verb: she <b>likes</b>, he <b>enjoys</b>.</li><li>Pause between ideas. Clear speech matters more than speed.</li></ul>')))
+ '<p>This fictional conversation is an explained model. Individual turns and the full exchange have audio. Speaker names identify the turns; they are not spoken in the audio.</p><button type="button" class="pi-button" data-playlist="'+','.join('dialogue-'+str(i+1) for i in range(len(dialogue)))+'">Listen to the conversation</button><div class="pi-dialogue">'+''.join(lines)+'</div>'+
+ grid(card('An introduction: explained model',example('presentation',model)),card('What to notice','<ul><li><b>I’m</b> connects I and am; <b>What’s</b> connects what and is.</li><li>Stress the main syllable: <b>FRIEND</b>-ly, cre-<b>A</b>-tive, out-<b>GO</b>-ing.</li><li>Finish the third-person verb: she <b>likes</b>, he <b>enjoys</b>.</li><li>Pause between ideas. Clear speech matters more than speed.</li></ul>')))
 
-section('summary','Unit summary','Check what you understand before applying the language with a classmate.',
+section('summary','Unit summary','Recognise how the explanations connect the unit vocabulary and grammar.',
  '<ul class="pi-checklist"><li>I can start and close a conversation.</li><li>I can confirm a name and ask useful personal questions.</li><li>I can distinguish questions with be from questions with do/does.</li><li>I can explain a preference with a reason.</li><li>I can describe personality with an example.</li><li>I can ask a follow-up question and listen to the answer.</li><li>I can report shared interests and introduce my classmate.</li></ul>'+
- note('Your classroom task is to interview a classmate and introduce each other. Use short notes, listen to your partner and improve one part after feedback. The unit explanation prepares that task.'))
+ note('The models connect openings, questions, preferences and descriptions. Together, they show how a conversation can lead to a clear introduction.'))
 
 def header(active=''):
     return '<header class="site-header"><nav class="navbar" aria-label="Main navigation"><a class="brand" href="/index.html"><img src="/assets/img/jaralingua-logo.png" alt="JaraLingua" width="125" height="42"></a><ul class="nav-links"><li><a href="/ingles/index.html">English</a></li><li><a href="index.html"'+(' aria-current="page"' if active=='home' else '')+'>Preintermediate 1</a></li><li><a href="course-overview.html"'+(' aria-current="page"' if active=='overview' else '')+'>Course Overview</a></li><li><a href="expressions.html"'+(' aria-current="page"' if active=='expressions' else '')+'>Expressions</a></li></ul><div data-auth-nav-slot></div></nav></header>'
@@ -130,7 +130,7 @@ for page in COURSE.glob('*.html'):
     target='https://www.jaralingua.com/'+relative
     slug=relative.removesuffix('.html').replace('/','-')
     qrcode.make(target,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/(slug+'.svg'))
-print('Built four production URL QR codes using the shared Basic 2 component.')
+print('Built production URL QR codes using the shared Basic 2 component.')
 
 # Reapply the next unit's integration after rebuilding the initial course shell.
 unit2_builder = ROOT / 'tools/build_preintermediate1_unit2.py'

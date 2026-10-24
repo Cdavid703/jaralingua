@@ -8,6 +8,8 @@ La primera construcción comprende cuatro páginas en `ingles/preintermedio-1/`:
 
 ## Fidelidad al diseño de Básico 2
 
+El docente reiteró al encargar Unit 3 que las explicaciones de Units 1 y 2 tampoco pueden contener actividades. Course Overview y las páginas explicativas contienen únicamente teoría, comparaciones y modelos explicados con audio. Las entrevistas como tarea, encuestas, cuestionarios, producción, grabaciones, entregas y evaluaciones se construirán en Practice Lab; un diálogo de ejemplo con audio no es una actividad evaluable. Esta decisión también rige las unidades siguientes.
+
 El 24 de octubre de 2026 el docente señaló explícitamente la omisión del QR y el cambio de colores de la primera vista previa. Se corrigió y esta decisión debe mantenerse en futuras actividades:
 
 - Cargar directamente `style.css`, `english-basic-responsive.css` y `english-basic-2.css` y usar las clases de sus componentes. No reinterpretar la paleta del nivel.
@@ -61,3 +63,15 @@ La revisión local comprobó seis tamaños (celular y tablet en ambas orientacio
 El commit `08976111f23fe4322080c17370427eda36991de4` se envió a main con push normal mediante el bundle y la conexión SSH existente del VPS. El publicador selectivo aplicó exactamente 88 archivos tras comparar con la versión previa y revisar su vista previa. Respaldo: `20261024T215647Z-gprv40wt`. Todos los hashes del servidor y las 88 respuestas HTTP 200 públicas coincidieron con el commit. No se modificaron datos académicos, backend ni servicios.
 
 La revisión de navegador público confirmó el acceso desde Course Overview, el QR ampliable y el audio individual. Página: https://www.jaralingua.com/ingles/preintermedio-1/unit-2-interests-hobbies.html. Los informes de publicación y HTTPS se conservan en `tmp/preintermediate1-unit2-qa/`, fuera de los archivos públicos.
+
+## Unidad 3: Healthy Living — explicación
+
+El docente aprobó el plan de cuatro bloques y dieciséis subtemas para sesiones 6–8 (9 horas): Healthy Habits and Eating; Aches, Pains and Recommendations; Stress and Relaxation; Language in Context. Página: `unit-3-healthy-living.html`. Se explican frecuencia, rutinas frente a cambios temporales, cantidades en una etiqueta ficticia, have/feel/be, should, could, must/have to, mustn’t frente a don’t have to, if/when habituales, preguntas de horas/duración/frecuencia, could try + -ing e intenciones con be going to. No se introducen predicciones ni condicionales hipotéticos. Los ejemplos de salud son contextos lingüísticos; la etiqueta contiene cantidades inventadas para explicar su lectura.
+
+Los diálogos y el párrafo final son modelos completamente resueltos, sin consigna de producción, respuestas por completar ni envío. En Unit 1 se retiró la instrucción de entrevistar y presentar a un compañero y se reformularon las indicaciones de tarea. En Unit 2 se aclaró el carácter de modelo de la descripción manual y de los grupos, retirando referencias a proyectos y evaluación como tareas de la explicación. Los 120 audios existentes mantienen exactamente sus textos y archivos.
+
+Fuentes reproducibles: `tools/preintermediate1_unit3_content.py` y `tools/build_preintermediate1_unit3.py`. La cadena del generador de Unit 1 ejecuta después Unit 2 y Unit 3; se verificó que una segunda ejecución produce las mismas seis páginas. La biblioteca incorpora cut down on, give up, wind down, under the weather y recharge your batteries; carga un inventario combinado de 207 modelos de las tres unidades. Cada unidad carga su propio inventario.
+
+Se generaron 87 MP3 con Sarah (79 modelos) y Matilda/Sean (cuatro turnos cada uno), exclusivamente voces de catálogo ElevenLabs. Scribe confirmó 84 coincidencias normalizadas y tres variantes de escritura (30/thirty y organise/organize). Un modelo negativo con going to se regeneró para conservar la articulación clara de esa construcción y se volvió a comprobar. El informe está fuera de publicación en `tmp/preintermediate1-unit3-qa/audio-audit.json`.
+
+QA local: seis tamaños con los veinte acordeones cerrados y abiertos, sin desbordamiento; QR sin superposición y ampliación centrada en móvil; azul, rojo y Arial idénticos a los componentes compartidos de Básico 2; etiquetas legibles en celular; enlaces y modelos coherentes. Se verificó la ausencia de controles de actividades en las tres unidades. Los informes locales no sustituyen la confirmación posterior del despliegue. El origen y la consigna exacta de la imagen propia están en `docs/preintermediate1-unit3-image.md`.
