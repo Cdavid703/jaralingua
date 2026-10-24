@@ -50,7 +50,11 @@
   function revealHash() {
     let id;try{id=decodeURIComponent(location.hash.slice(1));}catch(_){return;}
     const el=id && document.getElementById(id);
-    if (el?.matches('details.pi-topic')) {el.open=true;el.scrollIntoView({block:'start'});}
+    if (el?.matches('details.pi-topic')) {
+      let folder = el;
+      while (folder) {folder.open=true;folder=folder.parentElement?.closest('details.pi-topic');}
+      el.scrollIntoView({block:'start'});
+    }
   }
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
   window.addEventListener('pagehide',stop);

@@ -50,7 +50,7 @@
 .pi-goal { color: #744705; background: var(--basic2-warm); padding: 15px 16px; border-radius: 18px; margin: 0 0 18px; line-height: 1.65; }
 .pi-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,290px),1fr)); gap: 18px; margin: 18px 0; }
 .pi-card { min-width: 0; line-height: 1.65; }
-.pi-card h3 { font-size: 1.06rem; line-height: 1.45; margin: 0 0 12px; }
+.pi-card h3,.pi-card h4 { font-size: 1.06rem; line-height: 1.45; margin: 0 0 12px; }
 .pi-card p { margin: 8px 0; }
 .pi-card li { margin: 6px 0; }
 .pi-card ul,.pi-card ol { padding-left: 22px; margin: 8px 0; }
@@ -109,3 +109,20 @@
   .pi-audio-controls [role=status] { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .preinter-page * { scroll-behavior: auto !important; } }
+/* Unit 2 keeps the shared palette while grouping its detailed explanations. */
+.pi-cluster-body { padding: 0 20px 8px; }
+.pi-subtopic > summary h3 { margin: 0; font-size: 1.06rem; line-height: 1.4; color: var(--basic2-ink); }
+.pi-subtopic .pi-number { min-width: 36px; min-height: 36px; border-radius: 12px; }
+.pi-teaching-map { margin: 18px 0; }
+.pi-teaching-map svg { display: block; width: 100%; height: auto; max-width: 900px; margin: auto; }
+.pi-teaching-map figcaption { margin-top: 10px; color: var(--basic2-muted); font-size: .9rem; }
+.pi-process { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+.pi-process > div { flex: 1 1 150px; padding: 18px; border-radius: 16px; background: var(--basic2-warm); color: var(--basic2-ink); }
+.pi-process p { margin: 8px 0 0; }
+@media (max-width: 760px) {
+  .pi-cluster-body { padding: 0 10px 4px; }
+  .pi-subtopic > summary { padding: 14px 12px; gap: 8px; }
+  .pi-subtopic .pi-topic-body { padding: 0 12px 16px; }
+  .pi-process { display: grid; grid-template-columns: 1fr; }
+  .pi-process > span { display: none; }
+}

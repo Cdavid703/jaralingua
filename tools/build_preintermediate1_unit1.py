@@ -131,3 +131,9 @@ for page in COURSE.glob('*.html'):
     slug=relative.removesuffix('.html').replace('/','-')
     qrcode.make(target,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/(slug+'.svg'))
 print('Built four production URL QR codes using the shared Basic 2 component.')
+
+# Reapply the next unit's integration after rebuilding the initial course shell.
+unit2_builder = ROOT / 'tools/build_preintermediate1_unit2.py'
+if unit2_builder.exists():
+    import runpy
+    runpy.run_path(str(unit2_builder), run_name='__main__')
