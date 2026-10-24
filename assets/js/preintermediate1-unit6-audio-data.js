@@ -1,0 +1,292 @@
+window.Preintermediate1Audio = {
+  "u6-word-tourist-office": {
+    "text": "a tourist office",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-tourist-office.mp3"
+  },
+  "u6-word-museum": {
+    "text": "a museum",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-museum.mp3"
+  },
+  "u6-word-station": {
+    "text": "a station",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-station.mp3"
+  },
+  "u6-word-market": {
+    "text": "a market",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-market.mp3"
+  },
+  "u6-word-cafe": {
+    "text": "a café",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-cafe.mp3"
+  },
+  "u6-word-park": {
+    "text": "a park",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-park.mp3"
+  },
+  "u6-word-pharmacy": {
+    "text": "a pharmacy",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-pharmacy.mp3"
+  },
+  "u6-word-bookshop": {
+    "text": "a bookshop",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-bookshop.mp3"
+  },
+  "u6-word-bank": {
+    "text": "a bank",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-bank.mp3"
+  },
+  "u6-word-square": {
+    "text": "a town square",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-word-square.mp3"
+  },
+  "u6-place-combinations": {
+    "text": "Visit a museum, buy a book, ask at the tourist office and have lunch at a café.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-place-combinations.mp3"
+  },
+  "u6-is-there": {
+    "text": "Is there a museum in this town? Yes, there is.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-is-there.mp3"
+  },
+  "u6-are-there": {
+    "text": "Are there any banks on this map? No, there aren’t.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-are-there.mp3"
+  },
+  "u6-opposite": {
+    "text": "The museum is opposite the station. The market is across from the park.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-opposite.mp3"
+  },
+  "u6-between": {
+    "text": "The park is between the museum and the tourist office.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-between.mp3"
+  },
+  "u6-right-left": {
+    "text": "On this map, the station is to the right of the museum.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-right-left.mp3"
+  },
+  "u6-front-behind": {
+    "text": "The bus stop is in front of the museum. The garden is behind it.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-front-behind.mp3"
+  },
+  "u6-map-description": {
+    "text": "The tourist office is opposite the café. The park is north of the tourist office, and the museum is north of the park.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-map-description.mp3"
+  },
+  "u6-where-question": {
+    "text": "Excuse me, where is the museum?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-where-question.mp3"
+  },
+  "u6-get-to-question": {
+    "text": "How can I get to the museum from here?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-to-question.mp3"
+  },
+  "u6-repeat": {
+    "text": "Could you repeat that, please?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-repeat.mp3"
+  },
+  "u6-confirm-turn": {
+    "text": "Do I turn left at Hill Street?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-confirm-turn.mp3"
+  },
+  "u6-straight-turn": {
+    "text": "Go straight ahead. Turn left at Hill Street.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-straight-turn.mp3"
+  },
+  "u6-along-past": {
+    "text": "Walk along Oak Street. Go past Central Street.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-along-past.mp3"
+  },
+  "u6-across": {
+    "text": "Walk across the street.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-across.mp3"
+  },
+  "u6-start-position": {
+    "text": "Start on Oak Street beside the tourist office, facing north.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-start-position.mp3"
+  },
+  "u6-facing-north": {
+    "text": "Facing north, the park is on your left and the market is on your right.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-facing-north.mp3"
+  },
+  "u6-facing-west": {
+    "text": "After you turn left onto Hill Street, you face west. The museum is on your right.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-facing-west.mp3"
+  },
+  "u6-route-model": {
+    "text": "From the start beside the tourist office, face north and walk along Oak Street. Go past Central Street. The park is on your left and the market is on your right. At Hill Street, turn left. Walk along Hill Street. The museum entrance is on your right.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-route-model.mp3"
+  },
+  "u6-opening-question": {
+    "text": "What time does the museum open?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-opening-question.mp3"
+  },
+  "u6-duration-question": {
+    "text": "How long does the guided walk last?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-duration-question.mp3"
+  },
+  "u6-distance-question": {
+    "text": "How far is the museum from the tourist office?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-distance-question.mp3"
+  },
+  "u6-price-question": {
+    "text": "How much does the guided walk cost?",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-price-question.mp3"
+  },
+  "u6-recommend-place": {
+    "text": "I can recommend the town museum.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-recommend-place.mp3"
+  },
+  "u6-recommend-ing": {
+    "text": "I can recommend visiting the museum and walking through the park.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-recommend-ing.mp3"
+  },
+  "u6-can-should": {
+    "text": "You can have lunch at the market. You should allow time for the museum.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-can-should.mp3"
+  },
+  "u6-guide-model": {
+    "text": "Welcome to our town. We meet at the tourist office at ten. First, we walk to the museum. Then, we walk through the park. Finally, we visit the market, where the walk ends. The tour lasts ninety minutes.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-guide-model.mp3"
+  },
+  "u6-itinerary-plan": {
+    "text": "We’re going to visit the museum. We’re meeting at the tourist office on Saturday at nine thirty.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-itinerary-plan.mp3"
+  },
+  "u6-dialogue-1": {
+    "text": "Excuse me, is there a museum in this town?",
+    "voice": "Laura",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-1.mp3"
+  },
+  "u6-dialogue-2": {
+    "text": "Yes, there is. It’s opposite the station.",
+    "voice": "Mateo",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-2.mp3"
+  },
+  "u6-dialogue-3": {
+    "text": "How can I get there from the tourist office?",
+    "voice": "Laura",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-3.mp3"
+  },
+  "u6-dialogue-4": {
+    "text": "Start on Oak Street facing north. Go straight past Central Street. At Hill Street, turn left.",
+    "voice": "Mateo",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-4.mp3"
+  },
+  "u6-dialogue-5": {
+    "text": "Is the museum on my left after the turn?",
+    "voice": "Laura",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-5.mp3"
+  },
+  "u6-dialogue-6": {
+    "text": "No, it’s on your right. The entrance is on Hill Street.",
+    "voice": "Mateo",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-6.mp3"
+  },
+  "u6-dialogue-7": {
+    "text": "What time does it open?",
+    "voice": "Laura",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-7.mp3"
+  },
+  "u6-dialogue-8": {
+    "text": "At nine in the morning. I can recommend visiting the market afterwards too.",
+    "voice": "Mateo",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-dialogue-8.mp3"
+  },
+  "u6-email-model": {
+    "text": "Hi Laura, We’re going to spend the weekend in town. We’re meeting at the tourist office on Saturday at nine thirty. Then, we’re going to visit the museum. It opens at nine, so we can visit in the morning. At noon, we’re going to have lunch at the market. On Sunday morning, we can walk in the park and have lunch at the café afterwards. I can recommend bringing a camera if you enjoy taking photos. Best wishes, Mateo.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-email-model.mp3"
+  },
+  "u6-brochure-model": {
+    "text": "Welcome to our town. The museum is opposite the station, and the park is between the museum and the tourist office. You can visit the museum from Tuesday to Sunday, between nine in the morning and five in the afternoon. The market is across from the park. You can have lunch there and look around the stalls. The café is opposite the tourist office. Ask at the tourist office for details of the guided walk.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-brochure-model.mp3"
+  },
+  "u6-get-around": {
+    "text": "get around",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-around.mp3"
+  },
+  "u6-get-around-example": {
+    "text": "You can get around this small town on foot.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-around-example.mp3"
+  },
+  "u6-look-around": {
+    "text": "look around",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-look-around.mp3"
+  },
+  "u6-look-around-example": {
+    "text": "We’re going to look around the market after lunch.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-look-around-example.mp3"
+  },
+  "u6-get-on": {
+    "text": "get on",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-on.mp3"
+  },
+  "u6-get-on-example": {
+    "text": "You can get on the bus near the station.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-on-example.mp3"
+  },
+  "u6-get-off": {
+    "text": "get off",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-off.mp3"
+  },
+  "u6-get-off-example": {
+    "text": "We get off the bus at the next stop.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-get-off-example.mp3"
+  },
+  "u6-stone-throw": {
+    "text": "a stone’s throw",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-stone-throw.mp3"
+  },
+  "u6-stone-throw-example": {
+    "text": "The café is a stone’s throw from the tourist office.",
+    "voice": "Narrator",
+    "path": "/ingles/preintermedio-1/audio/unit6/lesson/u6-stone-throw-example.mp3"
+  }
+};
