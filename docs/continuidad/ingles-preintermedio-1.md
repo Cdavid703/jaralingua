@@ -135,3 +135,9 @@ Fuentes reproducibles: `tools/preintermediate1_unit6_content.py` y `tools/build_
 Se generaron 58 MP3 con las voces de catálogo ElevenLabs: Sarah (50 modelos), Matilda y Sean (cuatro turnos cada uno). Scribe comprobó 57 coincidencias normalizadas y una variante de escritura de hora: nine thirty/9:30. Informe: `tmp/preintermediate1-unit6-qa/audio-audit.json`, fuera de publicación.
 
 QA local: veinte acordeones cerrados y abiertos en seis tamaños sin desbordamiento; colores y Arial compartidos de Básico 2; QR sin superposición y ampliación centrada; mapa legible en móvil; rutas y orientación revisadas; accesos, biblioteca, audio, velocidad y parada comprobados. Se verificó la ausencia de controles de actividades en las seis explicaciones y la reproducción idempotente de las nueve páginas. La imagen propia y su consigna están en `docs/preintermediate1-unit6-image.md`. Esta comprobación local no acredita publicación por sí sola.
+
+### Publicación verificada de Unit 6 — 24 de octubre de 2026
+
+Commit publicado: `113eecd36df5e9e8834c0e25d06600b428324403`, enviado a main mediante push normal. El publicador selectivo aplicó los 67 archivos previstos tras comparar sus versiones previas y revisar la vista previa. Respaldo: `20261024T234635Z-thslsys8`. Los 67 hashes del servidor y las 67 respuestas HTTPS 200 coincidieron con el commit. No se modificaron datos académicos, backend ni servicios.
+
+La revisión en navegador público confirmó las seis carpetas de explicación disponibles en Course Overview, acceso a Around Town, los colores compartidos de Básico 2 y Arial, QR ampliable y reproducción individual. Página: https://www.jaralingua.com/ingles/preintermedio-1/unit-6-around-town.html. Informes: `tmp/preintermediate1-unit6-qa/`, fuera de publicación. Las seis explicaciones están publicadas; Practice Lab y las evaluaciones no forman parte de esta entrega.
