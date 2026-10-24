@@ -132,3 +132,9 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+PAGE, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT/'assets/img/page-qr/ingles-preintermedio-1-unit-4-celebrations-festivals.svg')
 print(f'Built Unit 4 theory: {len(clusters)} blocks, {len(topics)} topics and {len(audios)} exact audio models; updated course access and expression library.')
+
+# Preserve the next explanation when rebuilding earlier course pages.
+unit5_builder = ROOT / "tools/build_preintermediate1_unit5.py"
+if unit5_builder.exists():
+    import runpy
+    runpy.run_path(str(unit5_builder), run_name="__main__")
