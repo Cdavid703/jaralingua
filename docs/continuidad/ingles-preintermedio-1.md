@@ -75,3 +75,9 @@ Fuentes reproducibles: `tools/preintermediate1_unit3_content.py` y `tools/build_
 Se generaron 87 MP3 con Sarah (79 modelos) y Matilda/Sean (cuatro turnos cada uno), exclusivamente voces de catálogo ElevenLabs. Scribe confirmó 84 coincidencias normalizadas y tres variantes de escritura (30/thirty y organise/organize). Un modelo negativo con going to se regeneró para conservar la articulación clara de esa construcción y se volvió a comprobar. El informe está fuera de publicación en `tmp/preintermediate1-unit3-qa/audio-audit.json`.
 
 QA local: seis tamaños con los veinte acordeones cerrados y abiertos, sin desbordamiento; QR sin superposición y ampliación centrada en móvil; azul, rojo y Arial idénticos a los componentes compartidos de Básico 2; etiquetas legibles en celular; enlaces y modelos coherentes. Se verificó la ausencia de controles de actividades en las tres unidades. Los informes locales no sustituyen la confirmación posterior del despliegue. El origen y la consigna exacta de la imagen propia están en `docs/preintermediate1-unit3-image.md`.
+
+### Publicación verificada de Unit 3 — 24 de octubre de 2026
+
+Commit publicado: `dd3e7e63b258dd16b954f5534ec8154bf5a95580`, subido con push normal a main. Se compararon con producción los 99 archivos explícitos, se revisó la vista previa y se aplicó el publicador existente con respaldo `20261024T221348Z-gqjmdv2o`. Los 99 hashes del servidor y las 99 respuestas HTTPS 200 coincidieron con el commit; incluyen los 87 MP3 nuevos y las páginas corregidas de Units 1 y 2. No se modificaron datos académicos, backend ni servicios.
+
+La comprobación en navegador público confirmó el acceso desde Course Overview, el QR ampliable y la reproducción individual. URL: https://www.jaralingua.com/ingles/preintermedio-1/unit-3-healthy-living.html. Los informes están en `tmp/preintermediate1-unit3-qa/`, fuera de publicación. No se ha construido Practice Lab como parte de esta entrega.
