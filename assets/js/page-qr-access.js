@@ -2,7 +2,7 @@
 (() => {
   "use strict";
 
-  const PATH_PATTERN = /^\/ingles\/(?:basico(?:-2)?|intermediate(?:-2)?)\/[^/]+\.html$/;
+  const PATH_PATTERN = /^\/ingles\/(?:basico(?:-2)?|intermediate(?:-2)?|preintermedio-1)\/[^/]+\.html$/;
   const isEnglishPortal = window.location.pathname === "/ingles/index.html";
   const courseOneLayout = /^\/ingles\/(?:intermediate|basico)\//.test(window.location.pathname);
 

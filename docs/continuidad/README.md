@@ -15,6 +15,7 @@ Para una conversación nueva usa `/new`; para volver a una guardada usa `/resume
 - [Reglas generales](reglas-generales.md): pedagogía, diseño, audio, accesibilidad y entregas.
 - [Inglés Básico 1](ingles-basico-1.md).
 - [Inglés Básico 2](ingles-basico-2.md): es el nivel con más contexto en esta conversación.
+- [Inglés Preintermedio 1](ingles-preintermedio-1.md): Making Friends y fidelidad obligatoria al diseño de Básico 2.
 - [Inglés Intermedio 1](ingles-intermedio-1.md).
 - [Inglés Intermedio 2](ingles-intermedio-2.md).
 - [Francés](frances.md): mapa de documentos por nivel; no inventar antecedentes que no estén aquí.

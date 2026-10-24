@@ -1,0 +1,7 @@
+{
+  "speakers": {
+    "Narrator": {"voice_id":"EXAVITQu4vr4xnSDxMaL","name":"Sarah catalog teaching model","profile":"english-us","gender":"female"},
+    "Laura": {"voice_id":"XrExE9yKIg1WjnnlVkGX","name":"Matilda catalog classmate","profile":"english-us","gender":"female"},
+    "Mateo": {"voice_id":"DwwuoY7Uz8AP8zrY5TAo","name":"Sean catalog classmate","profile":"english-us","gender":"male"}
+  }
+}

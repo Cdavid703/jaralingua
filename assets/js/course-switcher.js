@@ -12,6 +12,7 @@
     { group: "English", label: "English portal", href: "/ingles/index.html", match: /^\/ingles\/(?:index\.html)?$/i },
     { group: "English", label: "Basic English Course 1", href: "/ingles/basico/index.html", match: /\/ingles\/basico\//i },
     { group: "English", label: "Basic English Course 2", href: "/ingles/basico-2/index.html", match: /\/ingles\/basico-2\//i },
+    { group: "English", label: "Preintermediate English Course 1", href: "/ingles/preintermedio-1/index.html", match: /\/ingles\/preintermedio-1\//i },
     { group: "English", label: "Intermediate English Course 1", href: "/ingles/intermediate/index.html", match: /\/ingles\/intermediate\//i },
     { group: "English", label: "Intermediate English Course 2", href: "/ingles/intermediate-2/index.html", match: /\/ingles\/intermediate-2\//i }
   ];
