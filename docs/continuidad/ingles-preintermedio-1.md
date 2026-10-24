@@ -31,3 +31,5 @@ La comparación de estilos calculados con Básico 2 confirmó tarjeta `rgba(7, 3
 Los 43 modelos se transcribieron con ElevenLabs Scribe: todos coinciden al normalizar puntuación y tildes. La única diferencia ortográfica antes de normalizar fue Medellín/Medellin. El informe local de QA se conserva fuera de los archivos publicados.
 
 El acceso SSH de jaralingua-dev con la clave local falló; la revisión automática rechazó intentar la cuenta administrativa por requerir autorización específica. No intentar otra vía para eludir ese rechazo. La publicación del nivel requiere resolver este permiso. Mientras no esté publicado, los QR apuntan a sus destinos finales y no a la vista previa local.
+
+La revisión automática también rechazó el push a main por exigir autorización explícita para esa publicación. La construcción se guardó en un commit local; no consta subida a GitHub ni despliegue. Pedir al docente autorización concreta para subir esta versión y para la publicación selectiva con acceso administrativo antes de reintentar cualquiera de esos pasos.
