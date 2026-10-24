@@ -30,6 +30,14 @@ La comparación de estilos calculados con Básico 2 confirmó tarjeta `rgba(7, 3
 
 Los 43 modelos se transcribieron con ElevenLabs Scribe: todos coinciden al normalizar puntuación y tildes. La única diferencia ortográfica antes de normalizar fue Medellín/Medellin. El informe local de QA se conserva fuera de los archivos publicados.
 
-El acceso SSH de jaralingua-dev con la clave local falló; la revisión automática rechazó intentar la cuenta administrativa por requerir autorización específica. No intentar otra vía para eludir ese rechazo. La publicación del nivel requiere resolver este permiso. Mientras no esté publicado, los QR apuntan a sus destinos finales y no a la vista previa local.
+## Publicación confirmada el 24 de octubre de 2026
 
-La revisión automática también rechazó el push a main por exigir autorización explícita para esa publicación. La construcción se guardó en un commit local; no consta subida a GitHub ni despliegue. Pedir al docente autorización concreta para subir esta versión y para la publicación selectiva con acceso administrativo antes de reintentar cualquiera de esos pasos.
+El docente autorizó explícitamente commit, push a main y despliegue de esta versión después de los bloqueos iniciales de revisión automática. Se usó el acceso administrativo autorizado y el publicador selectivo existente. El bloqueo anterior quedó resuelto para esta entrega.
+
+Los commits locales se transfirieron como bundle al repositorio de desarrollo del servidor y se enviaron a GitHub usando su conexión SSH existente. No se trasladó ninguna clave privada. El commit desplegado es `b6143a9ec98a9c793d3ed1eba9dcb1393c1ef762`.
+
+El publicador aplicó exactamente 59 archivos públicos, con comprobación de las versiones previas y respaldo `20261024T213458Z-7siik0im` en la carpeta de respaldos habitual. No hubo cambios de backend, bases de datos, entregas ni servicios. Los cambios ajenos de la copia local se conservaron.
+
+Se comprobaron por HTTPS los 59 archivos: todos devolvieron HTTP 200 y coincidieron con sus hashes del commit. Incluyen cuatro páginas, cuatro QR y 43 MP3. La revisión en el navegador público confirmó QR ampliable y reproducción del modelo inicial.
+
+Página publicada: https://www.jaralingua.com/ingles/preintermedio-1/unit-1-making-friends.html. Los QR ya tienen sus destinos públicos disponibles. La explicación y sus accesos están publicados; las ocho actividades de Practice Lab siguen como desarrollo posterior.
