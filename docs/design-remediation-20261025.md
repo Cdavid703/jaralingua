@@ -42,3 +42,15 @@ Los controles se prueban en Chrome y WebKit. Las sesiones con nombres largos son
 - Pronunciación de Básico 2: puntaje, siguiente sección, restauración, reintento tras 503, fallo de almacenamiento y finalización de siete partes; ocho análisis sintéticos, ninguna entrega.
 
 En la portada general el selector de cursos también pasa a la navegación para evitar cubrir los botones de acceso.
+
+## Publicación verificada
+
+Commit `d7688ce4bdff906b5f68e434e79617d363aee6a4`, enviado a main sin force push. Se compararon los 594 archivos con la copia pública inicial antes de publicar; no había cambios concurrentes.
+
+Tres grupos selectivos y sus respaldos:
+
+- Compartidos e institucionales: 18 archivos; `20261025T220548Z-gk9ml0z2`.
+- Inglés: 328 HTML; `20261025T220555Z-wg9x08m0`.
+- Francés: 248 HTML; `20261025T220601Z-8nzqy581`.
+
+Los 594 archivos del servidor y las 594 respuestas HTTPS 200 coinciden por SHA-256 con el commit. La muestra posterior en la web real pasó 28 casos de controles en 14 páginas, a 360 y 1024 px. El primer intento público usaba el límite local de cuatro segundos y agotó el tiempo durante las cargas; la comprobación completa se repitió con un límite de navegación de 45 segundos y pasó sin fallos. No hubo cambios de base de datos, backend, notas ni reinicios.

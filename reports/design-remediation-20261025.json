@@ -6262,5 +6262,330 @@
         "Analyse temporaire de votre réponse avec Whisper…"
       ]
     }
-  ]
+  ],
+  "publication": {
+    "commit": "d7688ce4bdff906b5f68e434e79617d363aee6a4",
+    "groups": [
+      {
+        "name": "shared",
+        "files": 18,
+        "backup": "20261025T220548Z-gk9ml0z2"
+      },
+      {
+        "name": "english",
+        "files": 328,
+        "backup": "20261025T220555Z-wg9x08m0"
+      },
+      {
+        "name": "french",
+        "files": 248,
+        "backup": "20261025T220601Z-8nzqy581"
+      }
+    ],
+    "serverFilesMatched": 594,
+    "https200AndHashMatched": 594,
+    "liveControls": [
+      {
+        "name": "seguridad-privacidad.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course menu"
+        ]
+      },
+      {
+        "name": "seguridad-privacidad.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course menu"
+        ]
+      },
+      {
+        "name": "dominios-permitidos.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": []
+      },
+      {
+        "name": "index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course menu",
+          "sign-in panel"
+        ]
+      },
+      {
+        "name": "dominios-permitidos.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": []
+      },
+      {
+        "name": "index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course menu",
+          "sign-in panel"
+        ]
+      },
+      {
+        "name": "frances/Niveau 1/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "frances/Niveau 2/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "frances/Niveau 1/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "frances/Niveau 7/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "frances/Niveau 2/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "frances/Niveau 7/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "frances/Niveau 8/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "frances/Niveau 8/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "ingles/preintermedio-1/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/preintermedio-1/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/intermediate/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/intermediate/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/pronunciation-unit-1-weather-going-out.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/intermediate-2/index.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/pronunciation-unit-1-weather-going-out.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/game-hangman.html",
+        "width": 360,
+        "height": 800,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog",
+          "navigation"
+        ]
+      },
+      {
+        "name": "ingles/intermediate-2/index.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      },
+      {
+        "name": "ingles/basico-2/game-hangman.html",
+        "width": 1024,
+        "height": 768,
+        "issues": [],
+        "tested": [
+          "course selector",
+          "sign-in panel",
+          "QR dialog"
+        ]
+      }
+    ],
+    "liveFailures": 0
+  }
 }
