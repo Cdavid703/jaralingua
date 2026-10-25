@@ -19,7 +19,7 @@ Este documento resume preferencias reiteradas del docente. El estándar específ
 - Sign in en la navegación superior, nunca como botón flotante sobre ejercicios. Verificar visibilidad en tablet, no solo en escritorio.
 - Tarjetas compactas: imagen visible, título, categoría y una reseña de uno o dos renglones como máximo. No mostrar 0% como etiqueta decorativa.
 - Imagen profesional propia por actividad; reutilizar únicamente cuando el docente lo autoriza expresamente, como las adaptaciones de comida de Intermedio 1 a Básico 2.
-- QR pequeño dentro del bloque del título y descripción, sin crear otra fila invasiva ni separar los bloques del hero. Al tocarlo, ampliación grande, nítida y centrada. Sin enlace Open Link innecesario. Alcance solicitado: Básico 2 e Intermedio 2.
+- QR pequeño dentro del bloque del título y descripción, sin crear otra fila invasiva ni separar los bloques del hero. Al tocarlo, ampliación grande, nítida y centrada. Sin enlace Open Link innecesario. Alcance ampliado el 25 de octubre de 2026 a todos los niveles publicados de inglés y francés; texto del QR en el idioma del curso. Véase `docs/all-course-page-qr.md`.
 - Verificar contraste real en todas las tarjetas, modelos y estados de feedback. No usar texto claro sobre fondos claros ni azul oscuro sobre azul.
 - Probar celular y tablet en ambas orientaciones, portátil y escritorio. Evitar scroll horizontal involuntario y paneles flotantes que cubran escritura, preguntas o grabación.
 
