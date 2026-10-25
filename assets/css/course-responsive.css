@@ -1,0 +1,65 @@
+/* Shared course layout corrections, verified against every published French/English page.
+   Keep wide tables in their existing scroll containers; never conceal page overflow. */
+body :is(.premium-lesson-container, .premium-topic-card, .lesson-mini-card,
+  .topic-heading > div, .roulette-panel, .roulette-result-zone, .roulette-dialogue-card,
+  .guesswho-panel, .guesswho-wheel-card, .guesswho-current-card, .guesswho-list-card,
+  .guesswho-history-card, .weather-deck-card, .weather-wheel-card) { min-width: 0; }
+body .premium-lesson-container { grid-template-columns: minmax(0, 1fr); }
+body :is(.grid, .lesson-grid, .student-grid, .role-grid, .roulette-play-area, .weather-play-grid) > * { min-width: 0; }
+body :is(.premium-topic-card, .panel, .student-card, .topic-heading) :is(h2, h3, p, strong, button, summary),
+body :is(h1, .section-title, .student-card) { overflow-wrap: anywhere; }
+body .guesswho-rule-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+body .guesswho-play-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); }
+body :is(.guesswho-wheel, .roulette-wheel, .weather-wheel) { max-width: 100%; }
+body.basic2-page .immersive-basic-hero { margin-inline: 0; }
+@media (max-width: 991px) {
+  body .roulette-play-area { grid-template-columns: minmax(0, 1fr); }
+  body .weather-play-grid { grid-template-columns: minmax(0, 1fr); }
+  body .topic-heading { align-items: flex-start; }
+}
+@media (max-width: 575px) {
+  /* Bootstrap's g-5 gutter is wider than the phone container's side padding. */
+  body .container > .row.g-5 { --bs-gutter-x: 1.5rem; }
+  body .lesson-grid { grid-template-columns: minmax(0, 1fr); }
+  body .guesswho-rule-list { grid-template-columns: minmax(0, 1fr); }
+  body .guesswho-wheel-header, body .guesswho-list-header,
+  body .guesswho-history-header, body .weather-wheel-header { flex-wrap: wrap; }
+  body .global-course-switcher details > nav {
+    top: auto; bottom: calc(100% + .5rem); max-height: calc(100dvh - 100px); overflow-y: auto;
+  }
+}
+body .game-layout > * { min-width: 0; }
+body .weather-wheel-zone { min-width: 0; grid-template-columns: minmax(0, 1fr); }
+body .weather-wheel { height: auto; aspect-ratio: 1; }
+body .global-course-switcher details > nav { max-height: calc(100dvh - 160px); overflow-y: auto; }
+body :is(.template-card, .lesson-next-section, .lesson-next-card) { min-width: 0; }
+body .template-line { overflow-wrap: anywhere; }
+body .mm-settings select { width: 100%; min-width: 0; }
+.course-table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; }
+.course-table-scroll .chart-table { min-width: 640px; }
+.course-table-scroll:focus-visible { outline: 3px solid #1f4e8c; outline-offset: 4px; }
+@media (max-width: 640px) {
+  body .news-section-head { flex-direction: column; align-items: stretch; }
+  body .news-section-head > div { flex: auto; width: 100%; }
+}
+@media (max-width: 575px) {
+  body .global-course-switcher details > nav { max-height: calc(100dvh - 100px); }
+}
+body .premium-lesson-container > .lesson-next-section { width: 100%; max-width: 100%; padding-inline: 0; }
+/* A course menu must fit a short landscape viewport as well as a tall phone. */
+body .jl-course-panel {
+  --jl-course-panel-top: clamp(12px, calc(var(--jl-navbar-bottom, 72px) + 8px), calc(100dvh - 160px));
+  top: var(--jl-course-panel-top);
+  max-height: calc(100dvh - var(--jl-course-panel-top) - 12px);
+}
+@media (max-width: 1199px) {
+  body :is(.site-header, .navbar.fixed-top, .navbar.sticky-top) { position: relative !important; inset: auto !important; }
+  body.jl-intermediate2-auth .site-header .jaralingua-auth-nav.jl-auth-floating { position: static !important; }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* A tablet cannot fit a brand, every desktop link and the course selector in one row. */
+  body .navbar-expand-lg > .container,
+  body .navbar-expand-lg > .container-fluid { flex-wrap: wrap !important; }
+  body .navbar-expand-lg .navbar-collapse { flex-basis: 100%; order: 100; min-width: 0; }
+  body .navbar-expand-lg .navbar-nav { flex-wrap: wrap; }
+}

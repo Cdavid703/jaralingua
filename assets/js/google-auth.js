@@ -1529,7 +1529,7 @@
       body.jl-intermediate2-auth .jl-intermediate2-auth-slot{display:flex!important;align-items:center;flex:0 0 auto;order:98;margin-left:auto;overflow:visible!important}
       body.jl-intermediate2-auth .jaralingua-auth-nav.jl-auth-floating{position:fixed!important;top:12px!important;right:12px!important;left:auto!important;bottom:auto!important;z-index:6000}
       body.jl-intermediate2-auth .jaralingua-auth-nav.jl-auth-floating .auth-trigger{box-shadow:0 4px 16px rgba(7,31,79,.2)}
-      body.jl-intermediate2-auth .jaralingua-auth-nav .auth-panel.jl-intermediate2-auth-panel{position:fixed!important;inset:auto!important;left:var(--jl-auth-left,12px)!important;top:var(--jl-auth-top,12px)!important;width:var(--jl-auth-width,calc(100vw - 24px))!important;max-width:none!important;height:auto!important;max-height:var(--jl-auth-height,calc(100dvh - 24px))!important;margin:0!important;overflow:auto!important;overscroll-behavior:contain;background:#fff;color:#071f4f;z-index:6000}
+      .auth-panel.jl-intermediate2-auth-panel{position:fixed!important;inset:auto!important;left:var(--jl-auth-left,12px)!important;top:var(--jl-auth-top,12px)!important;width:var(--jl-auth-width,calc(100vw - 24px))!important;max-width:none!important;height:auto!important;max-height:var(--jl-auth-height,calc(100dvh - 24px))!important;margin:0!important;overflow:auto!important;overscroll-behavior:contain;background:#fff;color:#071f4f;z-index:6000}
       .jl-intermediate2-auth-panel h2{padding-right:36px}
       .jl-intermediate2-auth-panel .jl-auth-panel-dismiss{position:absolute;right:10px;top:10px;display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:#eef4ff;color:#071f4f;cursor:pointer;font:700 24px/1 Arial,sans-serif}
       @media(max-width:900px){
@@ -1825,7 +1825,8 @@
       });
     });
 
-    if (isIntermediate2) prepareIntermediate2AuthPanel(root, panel);
+    // Keep course sign-in panels inside the visual viewport, including tablet landscape.
+    if (isIntermediate2 || /^\/(?:ingles|frances)\//.test(location.pathname)) prepareIntermediate2AuthPanel(root, panel);
     if (!root.matches("[data-jaralingua-auth-nav]")) renderNavAccess();
   }
 

@@ -21,6 +21,7 @@ Este documento resume preferencias reiteradas del docente. El estándar específ
 - Imagen profesional propia por actividad; reutilizar únicamente cuando el docente lo autoriza expresamente, como las adaptaciones de comida de Intermedio 1 a Básico 2.
 - QR pequeño dentro del bloque del título y descripción, sin crear otra fila invasiva ni separar los bloques del hero. Al tocarlo, ampliación grande, nítida y centrada. Sin enlace Open Link innecesario. Alcance ampliado el 25 de octubre de 2026 a todos los niveles publicados de inglés y francés; texto del QR en el idioma del curso. Véase `docs/all-course-page-qr.md`.
 - Verificar contraste real en todas las tarjetas, modelos y estados de feedback. No usar texto claro sobre fondos claros ni azul oscuro sobre azul.
+- Las páginas publicadas de inglés y francés cargan `assets/css/course-responsive.css` después de sus estilos propios. Conservar esa referencia al crear o regenerar actividades y el ajuste de caché de `google-auth.js`. Auditoría: [responsividad transversal del 25 de octubre](../all-course-responsive-20261025.md).
 - Probar celular y tablet en ambas orientaciones, portátil y escritorio. Evitar scroll horizontal involuntario y paneles flotantes que cubran escritura, preguntas o grabación.
 
 ## Audios y conversación

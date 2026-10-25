@@ -14,6 +14,7 @@
     .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.34fr);gap:1.25rem}.question-list{display:grid;gap:1rem}.question-card{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:1rem}.question-card.correct{border:1px solid rgba(35,136,111,.45);background:#f4fffb}.question-card.incorrect{border:1px solid rgba(214,40,57,.42);background:#fff8f8}.option-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin-top:.9rem}.option input{position:absolute;opacity:0}.option span{min-height:58px;display:flex;align-items:center;justify-content:center;text-align:center;padding:.65rem;border-radius:12px;border:2px solid #dbe6f5;background:#fff;color:var(--blue-dark);font-weight:900;cursor:pointer}.option input:checked+span{border-color:var(--blue);background:#eef5ff}.feedback{display:none;margin-top:.85rem;padding:.85rem;border-radius:12px;line-height:1.55}.question-card.correct .feedback,.question-card.incorrect .feedback{display:block}.summary-card{position:sticky;top:6.2rem}.score{font-size:3rem;font-weight:900;color:var(--blue-dark)}.status{display:none;margin-top:1rem;padding:1rem;border-radius:12px;font-weight:800;line-height:1.55}.status.show{display:block;background:#fff2d7;color:#6e5000}.status.success{background:#e9f8f2;color:#126047}@media(max-width:991px){.layout{grid-template-columns:1fr}.summary-card{position:static}.option-grid{grid-template-columns:1fr}}
   </style>
 <script src="/assets/js/page-qr-access.js?v=20261025-all-courses" defer fetchpriority="high"></script>
+<link rel="stylesheet" href="/assets/css/course-responsive.css?v=20261025-1">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 8</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menu"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link " href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div></nav>
@@ -32,7 +33,7 @@
   </script>
   <script src="../../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/google-auth.js?v=20261025-responsive"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
