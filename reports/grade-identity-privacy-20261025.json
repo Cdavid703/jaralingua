@@ -1,0 +1,481 @@
+{
+  "date": "2026-10-25",
+  "api": {
+    "checks": [
+      {
+        "name": "basic credential login",
+        "passed": true
+      },
+      {
+        "name": "basic wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "basic own grades only",
+        "passed": true
+      },
+      {
+        "name": "basic anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "basic cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "basic outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "basic duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "basic teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "basic admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "basic student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "basic partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "basic2 credential login",
+        "passed": true
+      },
+      {
+        "name": "basic2 wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "basic2 own grades only",
+        "passed": true
+      },
+      {
+        "name": "basic2 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "basic2 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "basic2 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "basic2 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "basic2 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "basic2 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "basic2 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "basic2 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "intermediate credential login",
+        "passed": true
+      },
+      {
+        "name": "intermediate wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "intermediate own grades only",
+        "passed": true
+      },
+      {
+        "name": "intermediate anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "intermediate cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "intermediate outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "intermediate duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "intermediate teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "intermediate admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "intermediate student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "intermediate partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 credential login",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 own grades only",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "intermediate2 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "intermediate2 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "french1 credential login",
+        "passed": true
+      },
+      {
+        "name": "french1 wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "french1 own grades only",
+        "passed": true
+      },
+      {
+        "name": "french1 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "french1 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "french1 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "french1 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "french1 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "french1 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "french1 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "french1 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "french2 credential login",
+        "passed": true
+      },
+      {
+        "name": "french2 wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "french2 own grades only",
+        "passed": true
+      },
+      {
+        "name": "french2 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "french2 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "french2 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "french2 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "french2 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "french2 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "french2 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "french2 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "french7 own grades only",
+        "passed": true
+      },
+      {
+        "name": "french7 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "french7 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "french7 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "french7 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "french7 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "french7 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "french7 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "french7 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "french8 credential login",
+        "passed": true
+      },
+      {
+        "name": "french8 wrong password rejected",
+        "passed": true
+      },
+      {
+        "name": "french8 own grades only",
+        "passed": true
+      },
+      {
+        "name": "french8 anonymous blocked",
+        "passed": true
+      },
+      {
+        "name": "french8 cannot write grades",
+        "passed": true
+      },
+      {
+        "name": "french8 outsider cannot claim student ID",
+        "passed": true
+      },
+      {
+        "name": "french8 duplicate name cannot read student",
+        "passed": true,
+        "detail": "Synthetic signed identity with a Gmail-shaped email matching a configured name alias; no external account or email is used"
+      },
+      {
+        "name": "french8 teacher roster readable",
+        "passed": true
+      },
+      {
+        "name": "french8 admin grade saved",
+        "passed": true
+      },
+      {
+        "name": "french8 student reads published grade",
+        "passed": true
+      },
+      {
+        "name": "french8 partner grade unchanged",
+        "passed": true
+      },
+      {
+        "name": "progress write",
+        "passed": true
+      },
+      {
+        "name": "progress survives another session",
+        "passed": true
+      },
+      {
+        "name": "progress private",
+        "passed": true
+      },
+      {
+        "name": "draft write",
+        "passed": true
+      },
+      {
+        "name": "draft resumes",
+        "passed": true
+      },
+      {
+        "name": "draft private",
+        "passed": true
+      },
+      {
+        "name": "adventure real save",
+        "passed": true
+      },
+      {
+        "name": "adventure retry idempotent",
+        "passed": true
+      },
+      {
+        "name": "adventure stale device conflict",
+        "passed": true
+      },
+      {
+        "name": "adventure score computed by server",
+        "passed": true
+      },
+      {
+        "name": "adventure private",
+        "passed": true
+      },
+      {
+        "name": "student rubric hidden",
+        "passed": true
+      },
+      {
+        "name": "oral pair created",
+        "passed": true
+      },
+      {
+        "name": "student cannot grade",
+        "passed": true
+      },
+      {
+        "name": "teacher review saved",
+        "passed": true
+      },
+      {
+        "name": "draft review hidden",
+        "passed": true
+      },
+      {
+        "name": "teacher publish projects grade",
+        "passed": true
+      },
+      {
+        "name": "oral grade visible to owner",
+        "passed": true
+      },
+      {
+        "name": "oral feedback visible",
+        "passed": true
+      },
+      {
+        "name": "oral partner not graded implicitly",
+        "passed": true
+      },
+      {
+        "name": "cross-course fixture credential login",
+        "passed": true
+      },
+      {
+        "name": "basic valid other-course login cannot claim ID",
+        "passed": true
+      },
+      {
+        "name": "basic2 valid other-course login cannot claim ID",
+        "passed": true
+      },
+      {
+        "name": "intermediate valid other-course login cannot claim ID",
+        "passed": true
+      }
+    ],
+    "passed": 110,
+    "failed": 0
+  },
+  "browser": {
+    "passed": [
+      "real credential login in mobile UI",
+      "answer and feedback saved to real isolated backend",
+      "progress recovered in independent tablet session",
+      "other account cannot see saved answers",
+      "offline draft survives reload and sync retry",
+      "recovered draft reaches second device",
+      "professional audio decodes, plays, pauses and changes speed",
+      "microphone capture, stop, replay and account save with synthetic input",
+      "recording resumes on second device",
+      "teacher UI saves rubric and publishes individual grade",
+      "student sees own grade and feedback, not partner feedback"
+    ],
+    "failures": []
+  },
+  "identityUnitTests": 9,
+  "french1And2ExamTests": 29,
+  "french8ExamTests": 16,
+  "adventureTests": 11,
+  "oralRegression": "Passed: pairs, private files, retries, teacher rubric and individual grade projection",
+  "scope": "Temporary accounts and academic stores; no production academic writes",
+  "publication": "Pending",
+  "basic1OralRegression": "Passed: strict identity, teacher pairing, persistence, revisioned grading, leases and fail-closed storage"
+}

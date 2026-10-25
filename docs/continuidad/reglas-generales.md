@@ -45,3 +45,7 @@ Este documento resume preferencias reiteradas del docente. El estándar específ
 - No perder el texto ni dejar el botón eternamente en Sending ante errores. Comprobar teclado y escritura en móviles y que no existan contadores duplicados.
 - Mantener nóminas independientes por nivel y descarga coherente con su lista vigente. Ninguna actualización de Básico 2 autoriza cambiar Básico 1.
 - Calificar con rúbrica y consigna auténticas. Feedback específico: fragmento del estudiante, corrección y explicación. No inventar entregas, notas, copias ni revisiones ya realizadas.
+
+## Privacidad de notas
+
+- Desde la corrección del 25 de octubre, autorizar fichas académicas únicamente mediante el correo o identificador de cuenta registrado. No volver a activar reclamación por matrícula ni coincidencia por nombre. Mantener los roles docentes y las notas intactos. Véase [corrección y pruebas](../grade-identity-privacy-20261025.md).

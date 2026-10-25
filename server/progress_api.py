@@ -2032,6 +2032,8 @@ def normalize_name(value):
 
 def email_matches_student(student, email):
     login = normalize_login(email)
+    if not login:
+        return False
     if normalize_email(student.get("email")) == login:
         return True
     aliases = student.get("emailAliases", [])
@@ -2042,23 +2044,6 @@ def email_matches_student(student, email):
         normalize_login(student.get("login")),
         normalize_login(student.get("localUsername")),
     }
-
-
-def name_matches_student(student, profile):
-    email = normalize_email(profile.get("email"))
-    if not email.endswith("@gmail.com"):
-        return False
-    profile_name = normalize_name(profile.get("name"))
-    if not profile_name:
-        return False
-    aliases = student.get("nameAliases", [])
-    if not isinstance(aliases, list):
-        return False
-    for alias in aliases:
-        normalized_alias = normalize_name(alias)
-        if normalized_alias and (profile_name == normalized_alias or normalized_alias in profile_name):
-            return True
-    return False
 
 
 def read_grades_data(path):
@@ -2347,50 +2332,16 @@ def staff_student_view(student):
 
 
 def matched_student_for_profile(profile, grades_data):
-    students = grades_data.get("students", [])
-    email = normalize_email(profile.get("email"))
-    direct_match = next(
-        (item for item in students if isinstance(item, dict) and email_matches_student(item, email)),
-        None
-    )
-    if direct_match:
-        return direct_match
-    name_match = next(
-        (item for item in students if isinstance(item, dict) and name_matches_student(item, profile)),
-        None
-    )
-    if name_match:
-        return name_match
-    claimed_id = "".join(ch for ch in str(profile.get("_studentIdClaim", "")) if ch.isdigit())
-    if not claimed_id or not email or grades_data.get("allowStudentIdClaim") is not True:
-        return None
-    claimed_student = next(
-        (
-            item for item in students
-            if isinstance(item, dict) and "".join(ch for ch in str(item.get("id", "")) if ch.isdigit()) == claimed_id
-        ),
-        None
-    )
-    if not isinstance(claimed_student, dict):
-        return None
-    claimed_aliases = claimed_student.get("emailAliases", [])
-    has_existing_login = any((
-        normalize_email(claimed_student.get("email")),
-        normalize_login(claimed_student.get("username")),
-        normalize_login(claimed_student.get("login")),
-        normalize_login(claimed_student.get("localUsername")),
-        any(normalize_email(item) for item in claimed_aliases) if isinstance(claimed_aliases, list) else False,
-    ))
-    if has_existing_login:
-        return None
-    current_email = normalize_email(claimed_student.get("email"))
-    if not current_email:
-        claimed_student["email"] = email
-    return claimed_student
+    """Authorize only an account identifier explicitly registered by staff.
+
+    Display names and client-supplied student IDs are not identity evidence.
+    Keep this wrapper for activity endpoints that share the gradebook matcher.
+    """
+    return registered_student_for_profile(profile, grades_data)
 
 
 def registered_student_for_profile(profile, grades_data):
-    """Match high-stakes assessments only through a registered email or alias."""
+    """Resolve an authenticated account through staff-registered login identifiers."""
     email = normalize_email(profile.get("email"))
     if not email:
         return None
@@ -2439,10 +2390,9 @@ def serve_pronunciation_audio(handler, parsed, profile, grades_path, audio_dir):
 def grade_payload_for(profile, grades_data, query):
     role = grade_user_role(profile, grades_data)
     students = grades_data.get("students", [])
-    email = normalize_email(profile.get("email"))
     response = {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "evaluations": grades_data.get("evaluations", []),
         "bonusEvent": grades_data.get("bonusEvent"),
         "students": [],
@@ -2453,35 +2403,9 @@ def grade_payload_for(profile, grades_data, query):
         response["students"] = [staff_student_view(item) for item in students if isinstance(item, dict)]
         return response
 
-    direct_match = next(
-        (item for item in students if isinstance(item, dict) and email_matches_student(item, email)),
-        None
-    )
-    if direct_match:
-        response["student"] = student_public_view(direct_match)
-        return response
-
-    name_match = next(
-        (item for item in students if isinstance(item, dict) and name_matches_student(item, profile)),
-        None
-    )
-    if name_match:
-        response["student"] = student_public_view(name_match)
-        return response
-
-    requested_id = (query.get("studentId") or [""])[0]
-    clean_id = "".join(ch for ch in requested_id if ch.isdigit())
-    if clean_id and grades_data.get("allowStudentIdClaim") is True:
-        id_match = next(
-            (
-                item for item in students
-                if isinstance(item, dict) and "".join(ch for ch in str(item.get("id", "")) if ch.isdigit()) == clean_id
-            ),
-            None
-        )
-        if id_match:
-            response["student"] = student_public_view(id_match)
-            return response
+    student = registered_student_for_profile(profile, grades_data)
+    if student is not None:
+        response["student"] = student_public_view(student)
 
     return response
 
@@ -3932,9 +3856,6 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION):
         changed = True
-    if grades_data.get("allowStudentIdClaim") is not True:
-        grades_data["allowStudentIdClaim"] = True
-        changed = True
     if migrate_intermediate_final_oral_partner_followups(grades_data):
         changed = True
     return changed
@@ -3945,9 +3866,6 @@ def ensure_basic_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_ORAL_EVALUATION):
-        changed = True
-    if grades_data.get("allowStudentIdClaim") is not True:
-        grades_data["allowStudentIdClaim"] = True
         changed = True
     return changed
 
@@ -3983,9 +3901,6 @@ def ensure_basic2_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_EVALUATION):
-        changed = True
-    if grades_data.get("allowStudentIdClaim") is not True:
-        grades_data["allowStudentIdClaim"] = True
         changed = True
     grades_data.setdefault("bonusEvent", None)
     return changed
@@ -15122,7 +15037,7 @@ def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
     state = bundle.get("state", {})
     return {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "state": state,
         "student": basic_integrated_student_identity(student),
         "submitted": basic_integrated_submission_public(submitted),
@@ -15546,7 +15461,7 @@ def basic_final_writing_state_payload(profile, grades_data, bundle, store):
     can_take = basic_final_writing_can_start(role, state, student_id)
     return {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "state": state,
         "exam": basic_final_writing_public_exam(bundle) if role in ("admin", "teacher") else None,
         "student": basic_final_writing_student_identity(student),
@@ -16115,7 +16030,7 @@ def basic2_midterm_writing_state_payload(profile, grades_data, bundle, store):
     can_start = basic2_midterm_writing_can_start(role, state, student_id)
     return {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "state": state,
         "exam": basic2_midterm_writing_public_exam(bundle) if role in ("admin", "teacher") else None,
         "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None,
@@ -16785,7 +16700,7 @@ def intermediate_final_writing_state_payload(profile, grades_data, bundle, store
     can_start = intermediate_final_writing_can_start(role, state, student_id)
     return {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "state": state,
         "exam": (
             intermediate_final_writing_public_exam(bundle)
@@ -17511,7 +17426,7 @@ def intermediate2_final_writing_state_payload(profile, grades_data, bundle, stor
     state = bundle.get("state", {})
     attempt = store.get("attempts", {}).get(student_id) if student_id else None
     submitted = store.get("submissions", {}).get(student_id) if student_id else None
-    return {"role": role, "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True, "state": state, "exam": intermediate2_final_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_final_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
+    return {"role": role, "allowStudentIdClaim": False, "state": state, "exam": intermediate2_final_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_final_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
 
 
 def intermediate2_final_writing_health(grades_data, store):
@@ -17769,7 +17684,7 @@ def intermediate2_midterm_writing_state_payload(profile, grades_data, bundle, st
     state = bundle.get("state", {})
     attempt = store.get("attempts", {}).get(student_id) if student_id else None
     submitted = store.get("submissions", {}).get(student_id) if student_id else None
-    return {"role": role, "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True, "state": state, "exam": intermediate2_midterm_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_midterm_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
+    return {"role": role, "allowStudentIdClaim": False, "state": state, "exam": intermediate2_midterm_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_midterm_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
 
 
 def intermediate2_midterm_writing_health(grades_data, store):
@@ -18129,7 +18044,7 @@ def intermediate_integrated_state_payload(profile, grades_data, bundle, submissi
     state = bundle.get("state", {})
     return {
         "role": role,
-        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "allowStudentIdClaim": False,
         "state": state,
         "student": basic_integrated_student_identity(student),
         "submitted": basic_integrated_submission_public(submitted),
@@ -20509,16 +20424,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
         from intermediate2_group_stories import handle as handle_group_stories
         if handle_group_stories(self, profile, parsed, globals(), payload):
             return
-        if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/") or parsed.path.startswith("/api/basic2/")) and isinstance(payload, dict):
-            profile = dict(profile)
-            profile["_studentIdClaim"] = (
-                payload.get("studentIdClaim")
-                or payload.get("studentId")
-                or payload.get("idClaim")
-                or profile.get("_studentIdClaim")
-                or ""
-            )
-
         if parsed.path == "/api/intermediate2/unit1-pronunciation/submit":
             with data_lock:
                 status, response = submit_intermediate2_unit1_pronunciation(profile, payload)
@@ -25069,9 +24974,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except FinalExamStorageError as error:
                     self.storage_unavailable(error)
                     return None
-            student_id_claim = "".join(ch for ch in str(self.headers.get("X-Jaralingua-Student-Id-Claim", "")) if ch.isdigit())
-            if student_id_claim:
-                profile["_studentIdClaim"] = student_id_claim
             return profile
         except ValueError as error:
             json_response(self, 401, {"error": "invalid_token", "message": str(error)})
