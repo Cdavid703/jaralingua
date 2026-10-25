@@ -12,8 +12,9 @@ La documentación oficial y `GET /v1/models` de la cuenta confirmaron `eleven_v4
 | 2 | Trying a New Hobby | `ingles/preintermedio-1/audio/unit2/connected/trying-a-new-hobby-v4.mp3` | 58.59 s |
 | 3 | A Busy Week | `ingles/preintermedio-1/audio/unit3/connected/a-busy-week-v4.mp3` | 58.44 s |
 | 4 | A Celebration Together | `ingles/preintermedio-1/audio/unit4/connected/a-celebration-together-v4.mp3` | 67.00 s |
+| 5 | A Photo from School | `ingles/preintermedio-1/audio/unit5/connected/a-photo-from-school-v4.mp3` | 61.73 s |
 
-Units 1–3 fueron los tres listenings migrados al momento de la solicitud; Unit 4 se elaboró después directamente con V4. Las rutas nuevas evitan depender de una copia anterior en la caché del navegador. Los tres MP3 originales permanecen disponibles para recuperación. Las pronunciaciones del vocabulario y los 417 modelos explicativos conservan sus archivos y modelos existentes.
+Units 1–3 fueron los tres listenings migrados al momento de la solicitud; Units 4–5 se elaboraron después directamente con V4. Las rutas nuevas evitan depender de una copia anterior en la caché del navegador. Los tres MP3 originales permanecen disponibles para recuperación. Las pronunciaciones del vocabulario y los 417 modelos explicativos conservan sus archivos y modelos existentes.
 
 El proceso usa `tools/elevenlabs_generate_listenings.py`, el reparto `tools/elevenlabs_voice_cast.preintermediate1-unit1.json`, `--mode dialogue --dialogue-model-id eleven_v4 --seed 20261025`, idioma inglés y MP3 44.1 kHz / 128 kbps. Las fuentes de guion son `tools/preintermediate1_unit1_connected_content.py`, `tools/preintermediate1_unit2_connected_content.py` y `tools/preintermediate1_unit3_connected_content.py`; no se publica su transcripción íntegra en las actividades. Metadatos, hashes y duración: `docs/preintermediate1-listenings-v4.json`.
 
@@ -26,3 +27,5 @@ Fuentes oficiales consultadas:
 - https://elevenlabs.io/docs/overview/models/
 - https://elevenlabs.io/docs/overview/capabilities/text-to-dialogue
 - https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert
+
+Unit 5 integra el diálogo A Photo from School generado directamente con V4 y su lectura conectada; la pronunciación aislada de kite también se generó con V4. Su construcción y publicación se registran en la continuidad del nivel.

@@ -19,7 +19,7 @@ SECTIONS = [
      'Six units with explanations and audio models.',
      'Two adult learners planning a learning route together in a library'),
     ('practice-lab', 'Practice Lab', 'practice-lab.html', 'practice-lab',
-     'Units 1–4: connected listening and reading.',
+     'Units 1–5: connected listening and reading.',
      'Two adults working together with study cards and a notebook'),
     ('games', 'Games', 'games.html', 'games',
      'Shared games from Basic 1 and Basic 2.',
@@ -79,7 +79,7 @@ quick = []
 cards = []
 for number, (slug, title, href, image, description, alt) in enumerate(SECTIONS, 1):
     image = image if image.startswith('/') else ASSETS + image + '.webp'
-    status = {'practice-lab': 'Units 1–4 started', 'games': 'Shared games', 'listening-library': 'Unit audio models',
+    status = {'practice-lab': 'Units 1–5 started', 'games': 'Shared games', 'listening-library': 'Unit audio models',
               'grades': 'Sin registros', 'evaluations': 'Desde cero'}.get(slug, 'Available now' if href else 'En preparación')
     destination = href or '#' + slug + '-card'
     quick.append(f'<a href="{destination}"><b>{number:02}</b><span>{escape(title)}'
@@ -97,7 +97,7 @@ content = hero + '''<section class="quick-access-panel compact" aria-label="Quic
   <details class="quick-access-dropdown"><summary>Show Preintermediate 1 menu</summary><div class="quick-link-list">''' + ''.join(quick) + '''</div></details>
 </section><section class="basic-intro-section"><div class="section-heading">
   <p class="eyebrow">Course dashboard</p><h2>Choose your learning section</h2>
-  <p>Explore the six units, begin Units 1–4 in Practice Lab, and use the shared games and audio library. Pronunciation Library remains <span lang="es">“En preparación”</span>.</p>
+  <p>Explore the six units, begin Units 1–5 in Practice Lab, and use the shared games and audio library. Pronunciation Library remains <span lang="es">“En preparación”</span>.</p>
 </div></section><section class="course-dashboard" id="course-sections" aria-label="Course sections">''' + ''.join(cards) + '</section>'
 main.extend(html.fragments_fromstring(content))
 for script in doc.xpath('//script[contains(@src,"preintermediate1-")]'):

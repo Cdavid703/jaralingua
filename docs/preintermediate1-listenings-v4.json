@@ -54,6 +54,17 @@
       "scribe_verified": true,
       "previous_audio": null,
       "previous_sha256": null
+    },
+    {
+      "unit": 5,
+      "path": "ingles/preintermedio-1/audio/unit5/connected/a-photo-from-school-v4.mp3",
+      "sha256": "3a07c0278e886bb016fec45ee69e8339c64121c8f4291b88441a46ed7e3ecffc",
+      "duration_seconds": 61.727347,
+      "script_module": "tools/preintermediate1_unit5_connected_content.py",
+      "script_sha256": "2a61e74b0e1024d9bf7e691397c1b177eec2be935fda02efe7ea1faae86d5d20",
+      "scribe_verified": true,
+      "previous_audio": null,
+      "previous_sha256": null
     }
   ]
 }
