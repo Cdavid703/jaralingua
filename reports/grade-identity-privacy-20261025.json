@@ -476,6 +476,63 @@
   "adventureTests": 11,
   "oralRegression": "Passed: pairs, private files, retries, teacher rubric and individual grade projection",
   "scope": "Temporary accounts and academic stores; no production academic writes",
-  "publication": "Pending",
+  "publication": {
+    "commit": "08c6b93ec715b0b21fa282209b2ed5def1071336",
+    "deployedFile": "server/progress_api.py",
+    "sha256": "664dcba61c9229fca1ca7062d9922a13dcc18aa8991bf8f9cc5aafd4b089846b",
+    "backup": "20261025T230350Z-2tssggvz",
+    "serviceActive": true,
+    "deployedCodeHttpFixtureTestsPassed": 110,
+    "deployedCodeHttpFixtureFailures": 0,
+    "gradebookFilesCompared": 8,
+    "gradebooksUnchangedBeforeAndAfter": true,
+    "httpsChecks": [
+      {
+        "path": "/api/health",
+        "status": 200,
+        "passed": true
+      },
+      {
+        "path": "/api/basic/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/basic2/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/intermediate/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/intermediate2/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/french1/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/french2/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/french7/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      },
+      {
+        "path": "/api/french8/grades?studentId=101",
+        "status": 401,
+        "passed": true
+      }
+    ]
+  },
   "basic1OralRegression": "Passed: strict identity, teacher pairing, persistence, revisioned grading, leases and fail-closed storage"
 }

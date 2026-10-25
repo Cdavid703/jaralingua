@@ -22,3 +22,13 @@ Evidencia sin credenciales: `reports/grade-identity-privacy-20261025.json`. Las 
 ## Publicación
 
 Se publica únicamente `server/progress_api.py` con `tools/deploy_grade_privacy_api.py`: compara el código anterior con producción y el commit padre, valida el candidato, ejecuta las pruebas de identidad, conserva respaldo, reemplaza el archivo de forma atómica y reinicia la API. Si la salud falla, restaura únicamente el código anterior. Compara hashes de las ocho libretas antes y después; nunca escribe ni restaura archivos académicos. La verificación posterior debe probar el módulo desplegado con datos en memoria y comprobar HTTP no autenticado sin consultar fichas reales.
+
+## Publicación verificada
+
+- Commit publicado: `08c6b93ec715b0b21fa282209b2ed5def1071336`. Un solo archivo de producción actualizado: `server/progress_api.py`.
+- Respaldo del código y manifiesto: `/var/backups/jaralingua/grade-privacy-api/20261025T230350Z-2tssggvz`.
+- SHA-256 publicado: `664dcba61c9229fca1ca7062d9922a13dcc18aa8991bf8f9cc5aafd4b089846b`. Servicio activo y salud HTTP 200.
+- Las 110 comprobaciones HTTP se repitieron con el módulo desplegado en un servidor temporal aislado del almacén real: 110 aprobadas, cero fallos. No se usaron cuentas reales.
+- Las ocho rutas públicas de notas rechazaron peticiones HTTPS sin sesión con 401.
+- Los hashes de las ocho libretas conocidas permanecieron idénticos antes del despliegue, después del reinicio y al terminar la verificación. No se escribieron notas, roles, matrículas ni aliases de alumnos en producción.
+- Una consulta opcional al entorno del proceso fue rechazada por revisión automática por posible exposición de secretos. No se reintentó ni se consultó ese entorno por otra vía. La publicación se verificó con los archivos conocidos, pruebas aisladas, hashes del código y salud del servicio.
