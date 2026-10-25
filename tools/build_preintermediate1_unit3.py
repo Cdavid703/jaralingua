@@ -86,16 +86,7 @@ if old is None:
 old.getparent().replace(old, entry)
 write('course-overview.html', doc)
 
-doc = read('index.html')
-doc.xpath('.//div[contains(@class,"pi-hero-copy")]/p[not(@class="eyebrow")]')[0].text = 'Explore the language of everyday life through Making Friends, Interests and Hobbies, and Healthy Living. Each unit connects clear explanations with complete audio models.'
-doc.xpath('.//section[@class="pi-objective"]/p')[0].text = 'Explore how people connect, describe interests and discuss daily habits. The three available explanations combine vocabulary, grammar and models in context.'
-grid = doc.xpath('.//div[@class="pi-shell"]/div[@class="pi-grid"]')[0]
-for el in grid.xpath('./article[h3="Unit 3 Healthy Living"]'):
-    grid.remove(el)
-grid.insert(3, fragment(card('Unit 3 Healthy Living', '<p>Habits, feelings, advice, suggestions, obligations and intentions, explained in context.</p>'+link(PAGE, 'Open Unit 3'))))
-grid.xpath('./article[h3="Course Overview"]/p')[0].text = 'See the six-unit route and explore the explanations for Units 1, 2 and 3.'
-grid.xpath('./article[h3="Expressions in context"]/p')[0].text = 'Explore the meaning, use and pronunciation of expressions from Units 1, 2 and 3.'
-write('index.html', doc)
+# Course home is owned by the final dashboard builder.
 
 doc = read('expressions.html')
 doc.xpath('//meta[@name="description"]')[0].set('content', 'Phrasal verbs and idioms from Units 1, 2 and 3 with individual audio, meaning, register and contextual examples.')

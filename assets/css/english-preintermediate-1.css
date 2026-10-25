@@ -126,6 +126,44 @@
 .pi-food-label th,.pi-food-label td { padding: 12px; border: 1px solid #b4c9e8; text-align: left; overflow-wrap: anywhere; }
 .pi-food-label thead { background: var(--basic2-warm); }
 .pi-frequency-scale > div { flex-basis: 130px; }
+/* Dashboard: Basic 2 components, with space for this level's longer title/QR. */
+.preinter-home .basic-course-hero { padding: 42px var(--basic2-app-gutter) 34px; gap: 28px; }
+.preinter-home .basic-hero-content h1 { font-size: clamp(2rem, 3.1vw, 3.4rem); overflow-wrap: anywhere; }
+.preinter-home .basic-hero-content.jl-page-qr-host { padding-right: 150px !important; }
+.preinter-home .basic-hero-content .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.preinter-home .basic-hero-content .btn { width: auto; min-height: 44px; padding: 12px 18px; }
+.preinter-home .course-section-content { padding: 22px; display: flex; flex-direction: column; align-items: flex-start; flex: 1; }
+.preinter-home .course-section-card { display: flex; flex-direction: column; scroll-margin-top: 24px; }
+.preinter-home.basic2-index-page .course-dashboard { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.preinter-home .course-section-content .section-number { margin-bottom: 10px; }
+.preinter-home .course-section-content .course-status { margin: 0 0 12px; }
+.preinter-home .course-section-content h3 { font-size: 1.25rem; line-height: 1.3; }
+.preinter-home .course-section-content > p { font-size: .95rem; line-height: 1.55; }
+.preinter-home .course-section-content .card-link { margin-top: auto; }
+.preinter-home .course-section-content .pi-pending-note { margin-top: auto; padding-top: 12px; color: #674000; font-weight: 700; }
+.preinter-home .quick-link-list small { display: block; margin-top: 4px; color: #744705; }
+.pi-unit-cover { margin: 0 0 18px; }
+.pi-unit-cover a { display: block; max-width: 560px; }
+.pi-unit-cover img { display: block; width: 100%; height: auto; max-height: 250px; object-fit: cover; border-radius: 16px; }
+@media (max-width: 900px) {
+  .preinter-home .basic-course-hero { grid-template-columns: 1fr; }
+  .preinter-home .basic-hero-image { min-height: 240px; max-height: 360px; }
+  .preinter-home .basic-hero-image img { width: 100%; min-height: 240px; max-height: 360px; object-fit: cover; }
+}
+@media (max-width: 1120px) {
+  .preinter-home.basic2-index-page .course-dashboard { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 860px) {
+  .preinter-home.basic2-index-page .course-dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 620px) {
+  .preinter-home.basic2-index-page .course-dashboard { grid-template-columns: 1fr !important; }
+  .preinter-home .basic-course-hero { padding: 24px 14px; gap: 20px; }
+  .preinter-home .basic-hero-content.jl-page-qr-host { padding: 22px !important; }
+  .preinter-home .basic-hero-content > .eyebrow { margin: 0 84px 12px 0; min-height: 82px; display: flex; align-items: center; }
+  .preinter-home .basic-hero-content .hero-actions { display: grid; grid-template-columns: 1fr; }
+  .preinter-home .basic-hero-content .btn { width: 100%; }
+}
 @media (max-width: 760px) {
   .pi-cluster-body { padding: 0 10px 4px; }
   .pi-subtopic > summary { padding: 14px 12px; gap: 8px; }

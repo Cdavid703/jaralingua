@@ -86,16 +86,7 @@ if old is None:
 old.getparent().replace(old, entry)
 write('course-overview.html', doc)
 
-doc = read('index.html')
-doc.xpath('.//div[contains(@class,"pi-hero-copy")]/p[not(@class="eyebrow")]')[0].text = 'Explore the language of everyday life, from meeting people and describing memories to finding your way around town. Each unit connects clear explanations with complete audio models.'
-doc.xpath('.//section[@class="pi-objective"]/p')[0].text = 'The six unit explanations connect vocabulary, grammar and complete audio models. Each unit shows how language works in an everyday context.'
-grid = doc.xpath('.//div[@class="pi-shell"]/div[@class="pi-grid"]')[0]
-for el in grid.xpath('./article[h3="Unit 6 Around Town"]'):
-    grid.remove(el)
-grid.insert(6, fragment(card('Unit 6 Around Town', '<p>Places, directions, tourist information and recommendations with a complete fictional map and itinerary.</p>'+link(PAGE, 'Open Unit 6'))))
-grid.xpath('./article[h3="Course Overview"]/p')[0].text = 'See the complete six-unit explanation route, from Making Friends to Around Town.'
-grid.xpath('./article[h3="Expressions in context"]/p')[0].text = 'Explore the meaning, use and pronunciation of expressions from Units 1, 2, 3, 4, 5 and 6.'
-write('index.html', doc)
+# Course home is owned by the final dashboard builder.
 
 doc = read('expressions.html')
 doc.xpath('//meta[@name="description"]')[0].set('content', 'Phrasal verbs and idioms from Units 1, 2, 3, 4, 5 and 6 with individual audio, meaning, register and contextual examples.')
@@ -132,3 +123,7 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+PAGE, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT/'assets/img/page-qr/ingles-preintermedio-1-unit-6-around-town.svg')
 print(f'Built Unit 6 theory: {len(clusters)} blocks, {len(topics)} topics and {len(audios)} exact audio models; updated course access and expression library.')
+
+# Preserve the dashboard and per-page covers after any unit regeneration.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_home.py'), run_name='__main__')

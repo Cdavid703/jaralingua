@@ -92,17 +92,7 @@ if old is None:
 old.getparent().replace(old,entry)
 write('course-overview.html',doc)
 
-doc = read('index.html')
-doc.xpath('.//div[contains(@class,"pi-hero-copy")]/p[not(@class="eyebrow")]')[0].text = 'Connect with people and communicate more clearly about everyday life. Explore Making Friends and Interests and Hobbies through detailed explanations and audio models.'
-doc.xpath('.//section[@class="pi-objective"]/h2')[0].text = 'Choose your unit'
-doc.xpath('.//section[@class="pi-objective"]/p')[0].text = 'Begin with Making Friends, then explore music, crafts, sports and nature in Unit 2. Each explanation connects vocabulary and grammar with a real communication goal.'
-grid = doc.xpath('.//div[@class="pi-shell"]/div[@class="pi-grid"]')[0]
-for el in grid.xpath('./article[h3="Unit 2 Interests and Hobbies"]'):
-    grid.remove(el)
-grid.insert(2,fragment(card('Unit 2 Interests and Hobbies','<p>Four blocks with vocabulary, object pronouns, abilities and complete language models.</p>'+link(PAGE,'Open Unit 2'))))
-grid.xpath('./article[h3="Course Overview"]/p')[0].text = 'See the six-unit route and explore the explanations for Units 1 and 2.'
-grid.xpath('./article[h3="Expressions in context"]/p')[0].text = 'Learn the meaning, use and pronunciation of expressions from Units 1 and 2.'
-write('index.html',doc)
+# Course home is owned by the final dashboard builder.
 
 doc = read('expressions.html')
 doc.find('.//title').text = 'Expressions in Context Preintermediate 1 | JaraLingua'
