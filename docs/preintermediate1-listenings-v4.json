@@ -43,6 +43,17 @@
       "scribe_verified": true,
       "previous_audio": "ingles/preintermedio-1/audio/unit3/connected/a-busy-week.mp3",
       "previous_sha256": "fdffce3787c8697c377e5a32b495dcfc22eba8a67e8432310f837da981b86407"
+    },
+    {
+      "unit": 4,
+      "path": "ingles/preintermedio-1/audio/unit4/connected/a-celebration-together-v4.mp3",
+      "sha256": "cf5612b2cbfe9ffa84625c234c775a48915bac13d2b429ba16e98a6d1880952a",
+      "duration_seconds": 67.004082,
+      "script_module": "tools/preintermediate1_unit4_connected_content.py",
+      "script_sha256": "a854c8f1d6a105b119c7dd7ff3e3a299f4d8c1b55887e2ab91783570e6d7d3e1",
+      "scribe_verified": true,
+      "previous_audio": null,
+      "previous_sha256": null
     }
   ]
 }
