@@ -4176,5 +4176,12 @@
     "Synthetic oscillator and isolated transcription fixtures; no speech accuracy or live provider guarantee.",
     "Blocked recorder entry flows are listed explicitly; no authenticated exam attempts or academic submissions.",
     "Runtime initialization covers every inventoried page; individual exercise branches and native player controls are not exhaustively automated."
-  ]
+  ],
+  "publication": {
+    "commit": "93f052a0b54317bac42a082c010ccb07382ce58c",
+    "backup": "20261025T212915Z-4vl4id60",
+    "https_html_hashes_verified": 7,
+    "corrected_audio_urls_http_200": 14,
+    "public_webkit_recording_cases_passed": 8
+  }
 }

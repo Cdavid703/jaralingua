@@ -29,4 +29,4 @@ Los primeros barridos WebKit con demasiadas tareas simultáneas y espera de audi
 
 ## Publicación
 
-Publicación selectiva de siete HTML, tras comparar sus hashes contra el snapshot público. El recibo y la verificación final se agregan al completar el despliegue. No se modifica backend, audios, permisos académicos ni notas.
+Publicado el commit `93f052a0b54317bac42a082c010ccb07382ce58c` por push normal y despliegue selectivo de siete HTML. Respaldo: `20261025T212915Z-4vl4id60`. Se verificaron por HTTPS los siete hashes, las catorce URLs de audio y ocho casos de grabación WebKit sobre las páginas publicadas (MP4/AAC, permiso denegado, reintento, parada, liberación y descarte). No se modificó backend, audios, permisos académicos ni notas.
