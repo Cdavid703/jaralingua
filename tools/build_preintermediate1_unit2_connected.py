@@ -15,7 +15,7 @@ LISTEN = 'audio-listening-unit-2-trying-a-new-hobby.html'
 READ = 'reading-unit-2-our-first-group-project.html'
 LISTEN_IMAGE = '/assets/img/english-preintermediate-1/unit-2/practice/trying-a-new-hobby-listening.webp'
 READ_IMAGE = '/assets/img/english-preintermediate-1/unit-2/practice/our-first-group-project-reading.webp'
-AUDIO = '/ingles/preintermedio-1/audio/unit2/connected/trying-a-new-hobby.mp3'
+AUDIO = '/ingles/preintermedio-1/audio/unit2/connected/trying-a-new-hobby-v4.mp3'
 MODELS = json.loads((COURSE / 'audio/unit2/lesson/audio-manifest.json').read_text())
 
 

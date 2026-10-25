@@ -15,7 +15,7 @@ LISTEN = 'audio-listening-unit-1-a-new-classmate.html'
 READ = 'reading-unit-1-first-connections.html'
 LISTEN_IMAGE = '/assets/img/english-preintermediate-1/unit-1/practice/a-new-classmate-listening.webp'
 READ_IMAGE = '/assets/img/english-preintermediate-1/unit-1/practice/first-connections-reading.webp'
-AUDIO = '/ingles/preintermedio-1/audio/unit1/connected/a-new-classmate.mp3'
+AUDIO = '/ingles/preintermedio-1/audio/unit1/connected/a-new-classmate-v4.mp3'
 MODELS = json.loads((COURSE / 'audio/unit1/lesson/audio-manifest.json').read_text())
 
 

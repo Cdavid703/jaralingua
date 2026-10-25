@@ -1,0 +1,48 @@
+{
+  "model_id": "eleven_v4",
+  "generated_on": "2026-10-25",
+  "endpoint": "/v1/text-to-dialogue",
+  "language_code": "en",
+  "output_format": "mp3_44100_128",
+  "seed": 20261025,
+  "voice_cast": "tools/elevenlabs_voice_cast.preintermediate1-unit1.json",
+  "voices": {
+    "Laura": "Matilda catalog / XrExE9yKIg1WjnnlVkGX",
+    "Mateo": "Sean catalog / DwwuoY7Uz8AP8zrY5TAo"
+  },
+  "files": [
+    {
+      "unit": 1,
+      "path": "ingles/preintermedio-1/audio/unit1/connected/a-new-classmate-v4.mp3",
+      "sha256": "342f97d2f5fe253d39a5ddaf7adad20ab4e9a4359392646afdff681494e5a9ae",
+      "duration_seconds": 63.79102,
+      "script_module": "tools/preintermediate1_unit1_connected_content.py",
+      "script_sha256": "0d45e31c7a30f98a6636059adffe605e9e0ae07684f111bd3b652053d61327ee",
+      "scribe_verified": true,
+      "previous_audio": "ingles/preintermedio-1/audio/unit1/connected/a-new-classmate.mp3",
+      "previous_sha256": "08ad26de1cff08e34ec7408320a9ad7bf9ea274c992c4b51f4009ef110fe9277"
+    },
+    {
+      "unit": 2,
+      "path": "ingles/preintermedio-1/audio/unit2/connected/trying-a-new-hobby-v4.mp3",
+      "sha256": "d8f7f0cf3085c945920d577796c0a5c9e7d8cf11eafc4473296803dabc0afcf3",
+      "duration_seconds": 58.592653,
+      "script_module": "tools/preintermediate1_unit2_connected_content.py",
+      "script_sha256": "a703c3642c9c741f60a70f86b9fc291504d0c187c107e68e8b6de6ca958c1b5e",
+      "scribe_verified": true,
+      "previous_audio": "ingles/preintermedio-1/audio/unit2/connected/trying-a-new-hobby.mp3",
+      "previous_sha256": "54c71efbbbac3f25ae23d5ab648d524cafcdddaf2a19fbd4feb0d605cefe05da"
+    },
+    {
+      "unit": 3,
+      "path": "ingles/preintermedio-1/audio/unit3/connected/a-busy-week-v4.mp3",
+      "sha256": "66be7dd12cdd27aee3d0f34c7bbfeb87d5a2da2a27741101e4ad7ce66f7dadc5",
+      "duration_seconds": 58.435918,
+      "script_module": "tools/preintermediate1_unit3_connected_content.py",
+      "script_sha256": "2b7a8bfbc4ca17fcc6b748a1b1e73131895f11631c7b6fc787f31b2f5c0a29e4",
+      "scribe_verified": true,
+      "previous_audio": "ingles/preintermedio-1/audio/unit3/connected/a-busy-week.mp3",
+      "previous_sha256": "fdffce3787c8697c377e5a32b495dcfc22eba8a67e8432310f837da981b86407"
+    }
+  ]
+}

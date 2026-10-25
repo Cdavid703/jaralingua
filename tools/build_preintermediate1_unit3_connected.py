@@ -15,7 +15,7 @@ LISTEN = 'audio-listening-unit-3-a-busy-week.html'
 READ = 'reading-unit-3-small-changes-a-better-week.html'
 LISTEN_IMAGE = '/assets/img/english-preintermediate-1/unit-3/practice/a-busy-week-listening.webp'
 READ_IMAGE = '/assets/img/english-preintermediate-1/unit-3/practice/small-changes-a-better-week-reading.webp'
-AUDIO = '/ingles/preintermedio-1/audio/unit3/connected/a-busy-week.mp3'
+AUDIO = '/ingles/preintermedio-1/audio/unit3/connected/a-busy-week-v4.mp3'
 MODELS = json.loads((COURSE / 'audio/unit3/lesson/audio-manifest.json').read_text())
 
 
