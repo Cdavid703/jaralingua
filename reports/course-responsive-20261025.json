@@ -2888,5 +2888,14 @@
       "checks": 15,
       "status": "pass"
     }
-  ]
+  ],
+  "publication": {
+    "commit": "02a9b4ab55e59cc8e7c7d864b08a8a5c4665587c",
+    "files": 572,
+    "verifiedServerHashes": 572,
+    "verifiedHTTPSHashes": 572,
+    "backup": "20261025T205455Z-1wpuxrv7",
+    "publicInteractionChecks": 22,
+    "publicInteractionFailures": 0
+  }
 }

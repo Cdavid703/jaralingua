@@ -26,3 +26,9 @@ El informe público sin datos personales es `reports/course-responsive-20261025.
 - Conservar el enlace al CSS compartido en nuevos generadores y repetir la auditoría al cambiar cabeceras, formularios, tablas o rejillas. Revisar las causas de un desbordamiento; no resolverlo con `overflow-x:hidden` en body.
 
 Publicación: únicamente los 570 HTML, la hoja CSS nueva y el ajuste visual de `google-auth.js`, previa comparación con producción y con respaldo del publicador. La verificación de producción se realiza después del despliegue.
+
+## Publicación verificada
+
+Commit publicado: `02a9b4ab55e59cc8e7c7d864b08a8a5c4665587c`, enviado a main con push normal. El publicador selectivo aplicó 572 archivos y conservó el respaldo `20261025T205455Z-1wpuxrv7`. Los 572 archivos del servidor y sus 572 respuestas HTTPS 200 coincidieron exactamente con el commit. No se reiniciaron servicios ni se modificaron datos académicos.
+
+Después del despliegue, 22 casos públicos de navegación, panel de acceso y QR (11 páginas, celular y tablet) pasaron sin fallos. La muestra incluye los nueve niveles, el portal de francés y la tabla comparativa.
