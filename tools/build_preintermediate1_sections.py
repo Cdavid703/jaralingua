@@ -161,3 +161,7 @@ import qrcode.image.svg
 for name in ['games', 'listening-library', 'notas', 'evaluations']:
     qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + name + '.html', image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT / 'assets/img/page-qr' / ('ingles-preintermedio-1-' + name + '.svg'))
 print(f'Built four section entrances: {len(GAMES)} shared original games, {total} unit audio models, empty gradebook and empty evaluation center, with their own cover images and QR assets.')
+
+# Keep the first Practice Lab increment after rebuilding the course entrances.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_practice.py'), run_name='__main__')

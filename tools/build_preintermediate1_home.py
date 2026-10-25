@@ -12,14 +12,14 @@ from lxml import html
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / 'ingles/preintermedio-1'
 VERSION = '20261024-course-dashboard'
-DASHBOARD_VERSION = '20261024-home-section-plan'
+DASHBOARD_VERSION = '20261024-unit1-reading'
 ASSETS = '/assets/img/english-preintermediate-1/course/'
 SECTIONS = [
     ('course-overview', 'Course Overview', 'course-overview.html', 'course-overview',
      'Six units with explanations and audio models.',
      'Two adult learners planning a learning route together in a library'),
-    ('practice-lab', 'Practice Lab', None, 'practice-lab',
-     'Activities to apply each unit’s language.',
+    ('practice-lab', 'Practice Lab', 'practice-lab.html', 'practice-lab',
+     'Begin with Unit 1 reading practice.',
      'Two adults working together with study cards and a notebook'),
     ('games', 'Games', 'games.html', 'games',
      'Shared games from Basic 1 and Basic 2.',
@@ -79,7 +79,7 @@ quick = []
 cards = []
 for number, (slug, title, href, image, description, alt) in enumerate(SECTIONS, 1):
     image = image if image.startswith('/') else ASSETS + image + '.webp'
-    status = {'games': 'Shared games', 'listening-library': 'Unit audio models',
+    status = {'practice-lab': 'Unit 1 started', 'games': 'Shared games', 'listening-library': 'Unit audio models',
               'grades': 'Sin registros', 'evaluations': 'Desde cero'}.get(slug, 'Available now' if href else 'En preparación')
     destination = href or '#' + slug + '-card'
     quick.append(f'<a href="{destination}"><b>{number:02}</b><span>{escape(title)}'
@@ -97,7 +97,7 @@ content = hero + '''<section class="quick-access-panel compact" aria-label="Quic
   <details class="quick-access-dropdown"><summary>Show Preintermediate 1 menu</summary><div class="quick-link-list">''' + ''.join(quick) + '''</div></details>
 </section><section class="basic-intro-section"><div class="section-heading">
   <p class="eyebrow">Course dashboard</p><h2>Choose your learning section</h2>
-  <p>Explore the six units, shared games and growing audio library. Practice Lab and Pronunciation Library remain <span lang="es">“En preparación”</span>.</p>
+  <p>Explore the six units, begin Unit 1 in Practice Lab, and use the shared games and audio library. Pronunciation Library remains <span lang="es">“En preparación”</span>.</p>
 </div></section><section class="course-dashboard" id="course-sections" aria-label="Course sections">''' + ''.join(cards) + '</section>'
 main.extend(html.fragments_fromstring(content))
 for script in doc.xpath('//script[contains(@src,"preintermediate1-")]'):
@@ -140,4 +140,4 @@ for number, (slug, title) in enumerate(units, 1):
 save('course-overview.html', doc)
 import runpy
 runpy.run_path(str(ROOT / 'tools/build_preintermediate1_sections.py'), run_name='__main__')
-print('Built ten course cards: eight destinations, two in preparation; fresh gradebook and evaluation center; overview preserved.')
+print('Built ten course cards: nine destinations, one in preparation; Unit 1 Practice Lab started; overview preserved.')

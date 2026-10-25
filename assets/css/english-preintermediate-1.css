@@ -162,12 +162,43 @@
 .pi-empty-table td { color: var(--basic2-muted); }
 #preintermediate-gradebook { --blue: var(--basic2-blue); --muted: var(--basic2-muted); --line: rgba(18,59,143,.16); }
 .preinter-page .staff-tab-panel.pi-objective { padding: 24px 28px; }
+/* First Connections: a reading beside its formative comprehension practice. */
+.pi-practice-page .pi-hero-copy h1 { font-size: clamp(2rem, 3.6vw, 3.4rem); line-height: 1.1; }
+.pi-practice-unit-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 24px; align-items: start; }
+.pi-practice-unit-layout > .pi-section-grid { grid-template-columns: 1fr; margin-top: 0; }
+.pi-practice-pending .pi-model-heading { margin-top: 0; }
+.pi-reading-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px; align-items: start; margin-top: 24px; }
+.pi-reading-text { font-size: 1.06rem; line-height: 1.9; }
+.pi-reading-text > p:not(.pi-label) { margin: 22px 0; max-width: 75ch; color: var(--basic2-ink); }
+.pi-paragraph-number { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; margin-right: 10px; border-radius: 50%; background: var(--basic2-soft); color: var(--basic2-blue); font-size: .8rem; font-weight: 800; }
+.pi-reading-questions { min-width: 0; }
+.pi-question { min-width: 0; padding: 18px; margin: 24px 0; border: 1px solid rgba(18,59,143,.2); border-radius: 18px; }
+.pi-question legend { max-width: 100%; padding: 0 6px; white-space: normal; font-size: 1.02rem; line-height: 1.5; font-weight: 800; color: var(--basic2-ink); }
+.pi-choice { display: flex; align-items: flex-start; gap: 10px; min-height: 44px; margin: 10px 0; padding: 12px; border: 1px solid rgba(18,59,143,.16); border-radius: 12px; background: var(--basic2-soft); cursor: pointer; line-height: 1.6; }
+.pi-choice input { width: 18px; height: 18px; flex: 0 0 18px; margin: 4px 0 0; accent-color: var(--basic2-blue); }
+.pi-choice > span { min-width: 0; }
+.pi-choice:has(input:checked) { border-color: var(--basic2-blue); background: #e8effd; }
+.pi-question.is-unanswered, .pi-question.is-review { border-color: #966100; }
+.pi-question.is-correct { border-color: #267143; }
+.pi-question-feedback { margin-top: 18px; padding: 16px; border-radius: 12px; background: var(--basic2-warm); color: var(--basic2-ink); line-height: 1.65; }
+.pi-question-feedback p { margin: 8px 0; }
+.pi-feedback-answer { font-weight: 800; }
+.pi-question-feedback blockquote { margin: 14px 0; padding-left: 12px; border-left: 3px solid var(--basic2-blue); font-style: normal; }
+.pi-reading-result { margin-top: 20px; padding: 18px; border-radius: 12px; background: var(--basic2-soft); color: var(--basic2-ink); line-height: 1.65; font-weight: 700; }
+.pi-planned-activities { padding-left: 26px; }
+.pi-planned-activities li { padding: 16px; margin: 12px 0; border: 1px solid rgba(18,59,143,.14); border-radius: 14px; }
+.pi-planned-activities li > div { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.pi-planned-activities li > div > span { color: var(--basic2-muted); font-size: .85rem; }
+.pi-planned-activities p { margin: 8px 0; }
+@media (max-width: 980px) { .pi-reading-layout, .pi-practice-unit-layout { grid-template-columns: 1fr; } }
 @media (max-width: 1450px) { .pi-section-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 1050px) { .pi-section-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) {
   .pi-section-grid, .pi-audio-list { grid-template-columns: 1fr; }
   .pi-empty-table th, .pi-empty-table td { padding: 12px 8px; font-size: .85rem; }
   .preinter-page .staff-tab-panel.pi-objective { padding: 18px; }
+  .pi-question { padding: 12px; }
+  .pi-choice { padding: 10px; }
 }
 @media (max-width: 900px) {
   .preinter-home .basic-course-hero { grid-template-columns: 1fr; }
