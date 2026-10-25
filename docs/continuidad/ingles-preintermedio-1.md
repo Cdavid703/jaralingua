@@ -198,3 +198,18 @@ El inicio de Básico 1 no tiene un menú Games independiente. Sus juegos se encu
 | Enlazado desde Practice Lab Básico 2 | Market Basket Challenge | `ingles/intermediate/practice-unit-5-countable-uncountable-food.html` |
 
 Los juegos vinculados a temas de unidad conservan su ubicación pedagógica al preparar la adaptación. Este inventario registra fuentes y alcance, no disponibilidad de versiones de Preintermedio. El antiguo `game-unit-1-weather-hangman.html` no se cuenta como otro juego aparte de Hangman. No añadir juegos nuevos por iniciativa propia ni modificar las fuentes originales de Básico 1, Básico 2 o Intermedio.
+
+## Aplicación del plan al home — 24 de octubre de 2026
+
+El docente pidió aplicar el plan al home, conservando diseño de Básico 2, imágenes propias y QR ampliable, con commit, push y despliegue. El inicio tiene diez tarjetas: ocho destinos y dos en preparación (Practice Lab y Pronunciation Library). Grades muestra «Sin registros» y Evaluations «Desde cero», con acceso a sus estructuras iniciales vacías. Course Overview, la biblioteca de expresiones y las seis páginas de explicación conservan exactamente su versión anterior. Fonética y recursos continúan enlazando las mismas páginas generales.
+
+Se añadieron cuatro páginas de entrada, usando cada una la imagen propia ya creada para su tarjeta y un nuevo QR de su URL pública:
+
+- `games.html`: colección de los trece juegos originales inventariados, agrupados en Core games, Classroom speaking y Memory and sorting. Las tarjetas abren las páginas originales y señalan su curso; Final Adventure informa que usa la cuenta de Básico 2 y conserva allí su progreso. Esta reutilización por referencia no crea una adaptación de contenido ni un registro de juego de Preintermedio. Las futuras adaptaciones propias deberán separar su progreso como establece el plan. Los originales permanecen intactos.
+- `listening-library.html`: 417 modelos existentes, agrupados en seis carpetas de unidad cerradas al cargar, con reproducción individual, velocidad y parada. La biblioteca se deriva de los manifiestos de cada unidad al reconstruir el curso. El texto distingue los modelos de audio de las actividades de listening que se construyan después.
+- `notas.html`: estructura vacía de Gradebook, Deliverables, Reports y Roster, con el componente de pestañas compartido de Básico 2. No contiene alumnos, resultados, entregas ni promedios inventados. La página indica que la gestión de registros aún no está habilitada; esta entrega del home crea la entrada y estructura inicial, no un servicio de administración académica.
+- `evaluations.html`: centro vacío con carpetas separadas para Exam Practice y Official Evaluations, cerradas al cargar. Las pruebas propias se incorporarán al construirlas.
+
+Generación reproducible: `tools/build_preintermediate1_home.py` ejecuta `tools/build_preintermediate1_sections.py`; la cadena completa de unidades conserva las trece páginas. El código de pestañas de este nivel solo conecta el componente compartido a las secciones vacías. Esta entrega es estática y no consulta ni modifica APIs de notas, bases académicas, cuentas o progreso de otros niveles.
+
+QA local: trece portadas distintas; ocho destinos en el inicio y dos pendientes; trece juegos de referencia y 417 modelos; archivos y anclas existentes; treinta combinaciones de página/tamaño sin desbordamiento ni superposición de QR, con imágenes cargadas y acordeones inicialmente cerrados. Se probaron las cuatro pestañas y reproducción, velocidad y parada del audio, además del QR ampliable móvil. La cadena completa reprodujo las trece páginas sin cambios. Informes en `tmp/preintermediate1-home-plan-qa/`. La verificación local por sí sola no acredita publicación.

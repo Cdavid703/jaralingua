@@ -145,6 +145,30 @@
 .pi-unit-cover { margin: 0 0 18px; }
 .pi-unit-cover a { display: block; max-width: 560px; }
 .pi-unit-cover img { display: block; width: 100%; height: auto; max-height: 250px; object-fit: cover; border-radius: 16px; }
+/* Section entrances share the same course shell and keep records empty. */
+.pi-section-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-top: 20px; }
+.pi-section-grid .course-section-card { display: flex; flex-direction: column; min-width: 0; }
+.pi-section-grid .course-section-content { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 20px; }
+.pi-section-grid .course-section-content h3 { font-size: 1.15rem; line-height: 1.35; }
+.pi-section-grid .course-section-content > p { font-size: .95rem; line-height: 1.55; }
+.pi-section-grid .course-status { margin: 0 0 12px; max-width: 100%; }
+.pi-section-grid .card-link { margin-top: auto; }
+.pi-audio-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+.pi-audio-list .pi-say { width: 100%; font-size: .98rem; }
+.pi-table-wrap { overflow-x: auto; margin-top: 18px; }
+.pi-empty-table { border-collapse: collapse; width: 100%; table-layout: fixed; font-size: .95rem; }
+.pi-empty-table th, .pi-empty-table td { padding: 16px 12px; border: 1px solid rgba(18,59,143,.16); text-align: left; overflow-wrap: anywhere; }
+.pi-empty-table th { background: var(--basic2-soft); color: var(--basic2-ink); }
+.pi-empty-table td { color: var(--basic2-muted); }
+#preintermediate-gradebook { --blue: var(--basic2-blue); --muted: var(--basic2-muted); --line: rgba(18,59,143,.16); }
+.preinter-page .staff-tab-panel.pi-objective { padding: 24px 28px; }
+@media (max-width: 1450px) { .pi-section-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1050px) { .pi-section-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) {
+  .pi-section-grid, .pi-audio-list { grid-template-columns: 1fr; }
+  .pi-empty-table th, .pi-empty-table td { padding: 12px 8px; font-size: .85rem; }
+  .preinter-page .staff-tab-panel.pi-objective { padding: 18px; }
+}
 @media (max-width: 900px) {
   .preinter-home .basic-course-hero { grid-template-columns: 1fr; }
   .preinter-home .basic-hero-image { min-height: 240px; max-height: 360px; }

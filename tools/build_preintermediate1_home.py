@@ -12,6 +12,7 @@ from lxml import html
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / 'ingles/preintermedio-1'
 VERSION = '20261024-course-dashboard'
+DASHBOARD_VERSION = '20261024-home-section-plan'
 ASSETS = '/assets/img/english-preintermediate-1/course/'
 SECTIONS = [
     ('course-overview', 'Course Overview', 'course-overview.html', 'course-overview',
@@ -20,11 +21,11 @@ SECTIONS = [
     ('practice-lab', 'Practice Lab', None, 'practice-lab',
      'Activities to apply each unit’s language.',
      'Two adults working together with study cards and a notebook'),
-    ('games', 'Games', None, 'games',
-     'Games for vocabulary and communication.',
+    ('games', 'Games', 'games.html', 'games',
+     'Shared games from Basic 1 and Basic 2.',
      'Adult learners enjoying a tabletop game together'),
-    ('listening-library', 'Listening Library', None, 'listening-library',
-     'Listening through the six unit themes.',
+    ('listening-library', 'Listening Library', 'listening-library.html', 'listening-library',
+     'Audio models collected unit by unit.',
      'An adult learner listening attentively through headphones'),
     ('pronunciation-library', 'Pronunciation Library', None, 'pronunciation-library',
      'Pronunciation practice for course language.',
@@ -40,11 +41,11 @@ SECTIONS = [
      '/assets/img/english-basic/english-learning-resources-banner.png',
      'Shared free English learning resources.',
      'English language learning resources'),
-    ('grades', 'Grades', None, 'grades',
-     'A space for course results.',
+    ('grades', 'Grades', 'notas.html', 'grades',
+     'A fresh gradebook for this course.',
      'An adult learner reviewing an anonymous progress chart'),
-    ('evaluations', 'Evaluations and Exam Practice', None, 'evaluations',
-     'Assessments and exam preparation.',
+    ('evaluations', 'Evaluations and Exam Practice', 'evaluations.html', 'evaluations',
+     'A fresh course assessment center.',
      'Adult learners writing individually in a bright classroom'),
 ]
 
@@ -78,7 +79,8 @@ quick = []
 cards = []
 for number, (slug, title, href, image, description, alt) in enumerate(SECTIONS, 1):
     image = image if image.startswith('/') else ASSETS + image + '.webp'
-    status = 'Available now' if href else 'En preparación'
+    status = {'games': 'Shared games', 'listening-library': 'Unit audio models',
+              'grades': 'Sin registros', 'evaluations': 'Desde cero'}.get(slug, 'Available now' if href else 'En preparación')
     destination = href or '#' + slug + '-card'
     quick.append(f'<a href="{destination}"><b>{number:02}</b><span>{escape(title)}'
                  + ('' if href else '<small lang="es">En preparación</small>') + '</span></a>')
@@ -87,7 +89,7 @@ for number, (slug, title, href, image, description, alt) in enumerate(SECTIONS, 
     cards.append(f'''<article class="course-section-card" id="{slug}-card">
       <div class="course-section-image"><img src="{image}" alt="{escape(alt)}" width="1536" height="1024" loading="lazy" decoding="async"></div>
       <div class="course-section-content"><span class="section-number">{number:02}</span>
-        <span class="course-status {'course-status-available' if href else 'course-status-pending'}"{'' if href else ' lang="es"'}>{status}</span>
+        <span class="course-status {'course-status-empty' if slug in ('grades', 'evaluations') else 'course-status-available' if href else 'course-status-pending'}"{(' lang="es"' if not href or slug in ('grades', 'evaluations') else '')}>{status}</span>
         <h3>{escape(title)}</h3><p>{escape(description)}</p>{action}
       </div></article>''')
 content = hero + '''<section class="quick-access-panel compact" aria-label="Quick navigation">
@@ -95,12 +97,15 @@ content = hero + '''<section class="quick-access-panel compact" aria-label="Quic
   <details class="quick-access-dropdown"><summary>Show Preintermediate 1 menu</summary><div class="quick-link-list">''' + ''.join(quick) + '''</div></details>
 </section><section class="basic-intro-section"><div class="section-heading">
   <p class="eyebrow">Course dashboard</p><h2>Choose your learning section</h2>
-  <p>Start with the six unit explanations in Course Overview. Sections still being built are marked <span lang="es">“En preparación”</span>.</p>
+  <p>Explore the six units, shared games and growing audio library. Practice Lab and Pronunciation Library remain <span lang="es">“En preparación”</span>.</p>
 </div></section><section class="course-dashboard" id="course-sections" aria-label="Course sections">''' + ''.join(cards) + '</section>'
 main.extend(html.fragments_fromstring(content))
 for script in doc.xpath('//script[contains(@src,"preintermediate1-")]'):
     script.getparent().remove(script)
 save('index.html', doc)
+doc = read('index.html')
+doc.xpath('//link[contains(@href,"english-preintermediate-1.css")]')[0].set('href', '/assets/css/english-preintermediate-1.css?v=' + DASHBOARD_VERSION)
+(COURSE / 'index.html').write_text('<!doctype html>\n' + html.tostring(doc, encoding='unicode', method='html') + '\n')
 
 # A card and its destination share one cover. Unrelated pages never share it.
 for name, cover, alt in [
@@ -133,4 +138,6 @@ for number, (slug, title) in enumerate(units, 1):
     body.insert(0, html.fragment_fromstring(
         f'<figure class="pi-unit-cover"><a href="unit-{number}-{slug}.html" aria-label="Open Unit {number}: {escape(title)}"><img src="/assets/img/english-preintermediate-1/unit-{number}/{slug}-hero.webp" alt="{escape(title)} — Unit {number} cover" width="1536" height="1024" loading="lazy" decoding="async"></a></figure>'))
 save('course-overview.html', doc)
-print('Built ten course cards: four available, six in preparation; distinct home, overview and expression covers; six unit thumbnails.')
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_sections.py'), run_name='__main__')
+print('Built ten course cards: eight destinations, two in preparation; fresh gradebook and evaluation center; overview preserved.')
