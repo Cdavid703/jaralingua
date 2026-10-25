@@ -63,3 +63,75 @@ body .jl-course-panel {
   body .navbar-expand-lg .navbar-collapse { flex-basis: 100%; order: 100; min-width: 0; }
   body .navbar-expand-lg .navbar-nav { flex-wrap: wrap; }
 }
+
+/* Design review 2026-10-25: shared geometry, with each course's palette intact. */
+body.trust-page :is(.trust-container, .trust-panel, .trust-table-wrap) { min-width: 0; max-width: 100%; box-sizing: border-box; }
+body.trust-page .trust-table-wrap { overflow-x: auto; overscroll-behavior-x: contain; }
+body.trust-page .trust-table { width: 100%; min-width: 0; table-layout: fixed; }
+body.trust-page .trust-table :is(th, td) { overflow-wrap: anywhere; }
+body.trust-page .trust-hero .eyebrow { color: #0b2454; background: #eef3fb; }
+body :is(h1, .section-title) { overflow-wrap: normal; word-break: normal; hyphens: manual; text-wrap: balance; }
+body .jl-page-qr-host h1 { overflow-wrap: normal; }
+body .site-header .jaralingua-auth-nav.jl-auth-floating { position: static !important; inset: auto !important; }
+.jl-navigation-auth-slot { display: flex; align-items: center; flex: 0 0 auto; margin-left: auto; order: 98; }
+body .navbar > :is(.container, .container-fluid) { min-width: 0; }
+body :is(.action-button, .coach-button, .speed-btn, .games-btn, .games-btn-soft,
+  .intermediate2-button, .btn-main, .btn-soft) { min-height: 44px; }
+body :is(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid #3575ba; outline-offset: 3px; }
+body :is(button, input, select, textarea) { touch-action: manipulation; }
+body :is(.action-button, .coach-button, .speed-btn, .games-btn):disabled { cursor: not-allowed; }
+body .speed-btn:is(.active, [aria-pressed="true"]) { box-shadow: inset 0 0 0 2px currentColor; }
+@media (max-width: 991px) {
+  body .site-header .navbar { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center; gap: 8px; padding-block: 10px !important; }
+  body .site-header .navbar > .brand { flex: 0 0 auto; margin: 0; }
+  body .site-header .brand img { width: 44px !important; height: 44px !important; object-fit: contain; }
+  body .site-header .nav-links { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; width: auto !important; flex: 1 1 220px; gap: 6px !important; padding: 0; margin: 0 !important; }
+  body .site-header .nav-links > li { width: auto !important; flex: 0 0 auto; }
+  body .site-header .nav-links > li > a { min-height: 40px; display: flex; align-items: center; padding: 8px 12px; }
+  body .navbar > :is(.container, .container-fluid) { flex-wrap: wrap; gap: 8px; }
+  body .navbar .jl-navigation-auth-slot { margin-left: auto; order: 2; }
+  body .navbar .navbar-toggler { order: 3; min-width: 44px; min-height: 44px; }
+  body .navbar .navbar-collapse { order: 100; }
+  body :is(.basic-course-hero, .intermediate-course-hero) { display: flex; flex-direction: column; gap: 16px; padding-block: 24px; }
+  body :is(.basic-course-hero, .intermediate-course-hero) > :is(.basic-hero-content, .intermediate-hero-content) { order: 0; width: 100%; }
+  body :is(.basic-course-hero, .intermediate-course-hero) > :is(.basic-hero-image, .intermediate-hero-image) { order: 1; width: 100%; }
+  body :is(.basic-hero-image, .intermediate-hero-image) img { max-height: 280px; width: 100%; object-fit: cover; }
+  body :is(.home-hero, .intermediate2-hero) { padding-block: 24px; }
+  body :is(.home-hero, .basic-hero-content, .intermediate-hero-content, .intermediate2-hero) h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+}
+@media (min-width: 992px) {
+  body :is(.basic-course-hero, .intermediate-course-hero) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  body :is(.basic-hero-content, .intermediate-hero-content, .french-hero-content, .english-hero-panel) { min-width: 0; }
+}
+@media (max-width: 480px) {
+  body .site-header .navbar { width: calc(100% - 24px); }
+  body .site-header .nav-links { flex-basis: 210px; }
+  body .jl-navigation-auth-slot .auth-trigger { min-height: 44px; max-width: 180px; }
+  body .jl-navigation-auth-slot .auth-trigger > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (max-width: 991px) {
+  body .navbar-collapse.show { max-height: calc(100dvh - 140px); overflow-y: auto; overscroll-behavior-y: contain; }
+  body > header.hero { padding-block: 32px; }
+  body .home-hero-logo { max-height: 96px; width: auto; object-fit: contain; }
+  body .ie2-unit1-hero h1 { max-width: 100%; font-size: clamp(1.75rem, 5vw, 2.5rem); }
+}
+body .section-title { overflow-wrap: anywhere; }
+@media (max-width: 991px) {
+  body.hangman-page .site-header,
+  body.hangman-page .site-header .container { max-height: none; }
+  body.hangman-page .site-header .container { flex-wrap: wrap; }
+  body.hangman-page .navbar-collapse { flex-basis: 100%; }
+  body.hangman-page .site-header .jaralingua-auth-nav .auth-trigger { min-height: 44px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body :is(.home-hero-copy, .home-visual-stage) { animation: none; }
+}
+body .navbar .auth-trigger { min-height: 44px !important; max-width: 200px; }
+body .navbar .auth-trigger > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+body .jl-intermediate2-auth-panel .jl-auth-panel-dismiss { width: 44px; height: 44px; }
+
+body:is(.basic2-page, .basic2-index-page) .site-header .jaralingua-auth-nav .auth-trigger { min-height: 44px !important; }
+
+body.home-page .navbar > .global-course-switcher { position: relative; inset: auto; order: 3; z-index: 20; }
+body.home-page .navbar .global-course-switcher details > nav { top: calc(100% + .5rem); bottom: auto; max-height: calc(100dvh - 200px); }

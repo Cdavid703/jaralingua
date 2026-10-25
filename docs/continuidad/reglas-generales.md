@@ -24,6 +24,8 @@ Este documento resume preferencias reiteradas del docente. El estándar específ
 - Las páginas publicadas de inglés y francés cargan `assets/css/course-responsive.css` después de sus estilos propios. Conservar esa referencia al crear o regenerar actividades y el ajuste de caché de `google-auth.js`. Auditoría: [responsividad transversal del 25 de octubre](../all-course-responsive-20261025.md).
 - Probar celular y tablet en ambas orientaciones, portátil y escritorio. Evitar scroll horizontal involuntario y paneles flotantes que cubran escritura, preguntas o grabación.
 
+- Correcciones de diseño del 25 de octubre: cuenta dentro de la navegación, QR compacto ampliable, controles compartidos con foco visible y separación explícita entre marca de avance y entrega al docente. Mantener los ajustes de `course-responsive.css`; véase [implementación y validación](../design-remediation-20261025.md).
+
 ## Audios y conversación
 
 - Usar audios profesionales ElevenLabs. Reutilizar un audio existente solo si coincide exactamente con texto, idioma y propósito. No sustituirlo silenciosamente por voz genérica del navegador.

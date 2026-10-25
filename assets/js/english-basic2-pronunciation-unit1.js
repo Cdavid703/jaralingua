@@ -666,7 +666,7 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Send to teacher</h3>
-      <p>This pronunciation follow-up sends a written report to the teacher: scores, transcript, missed words, and unit focus. It has weight 0 and does not affect the accumulated percentage.</p>
+      <p>This pronunciation follow-up sends a written report to the teacher: scores, transcript, missed words, and unit focus. This is practice for teacher feedback and does not change your final grade.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-submit-score>--</b><small>Practice average so far / 100</small></span>
         <span><b data-submit-grade>--</b><small>Reference grade / 5</small></span>
@@ -731,7 +731,7 @@
       panel.querySelector(".pronunciation-delivery-preview")?.remove();
       const preview = document.createElement("div");
       preview.className = "pronunciation-delivery-preview";
-      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Sections:</span> ${STAGES.length} completed</p><p><span>Final text:</span> ${report.finalAttempt.referenceText}</p><p><span>Gradebook:</span> follow-up activity, weight 0, visible to teacher.</p>`;
+      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Sections:</span> ${STAGES.length} completed</p><p><span>Final text:</span> ${report.finalAttempt.referenceText}</p><p><span>Gradebook:</span> practice report, visible to your teacher; not part of your final grade.</p>`;
       panel.querySelector(".pronunciation-submit-actions").insertAdjacentElement("beforebegin", preview);
       if (submitState === "submitted") {
         panel.classList.add("is-submitted");

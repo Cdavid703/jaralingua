@@ -60,7 +60,7 @@
       markInProgress: "Marcar en progreso",
       markCompleted: "Marcar completada",
       loginNeeded: "Inicia sesi\u00f3n con Google o Microsoft para usar esta descarga.",
-      savedHere: "Progreso sincronizado con tu cuenta.",
+      savedHere: "Tu marca personal de avance. Marcar completada no envía una entrega al docente.",
       viewDashboard: "Abrir panel",
       activityAutosave: "Respuestas guardadas",
       autosaveActive: "Las respuestas de esta p\u00e1gina se guardan autom\u00e1ticamente.",
@@ -133,7 +133,7 @@
       markInProgress: "Marquer en cours",
       markCompleted: "Marquer termin\u00e9e",
       loginNeeded: "Connectez-vous avec Google ou Microsoft pour utiliser ce t\u00e9l\u00e9chargement.",
-      savedHere: "Progr\u00e8s synchronis\u00e9 avec votre compte.",
+      savedHere: "Votre repère personnel de progression. Marquer terminé ne transmet pas de travail au professeur.",
       viewDashboard: "Ouvrir le panneau",
       activityAutosave: "R\u00e9ponses enregistr\u00e9es",
       autosaveActive: "Les r\u00e9ponses de cette page sont enregistr\u00e9es automatiquement.",
@@ -206,7 +206,7 @@
       markInProgress: "Mark in progress",
       markCompleted: "Mark completed",
       loginNeeded: "Sign in with Google or Microsoft to use this download.",
-      savedHere: "Progress synced with your account.",
+      savedHere: "Your personal progress marker. Marking completed does not submit work to your teacher.",
       viewDashboard: "Open panel",
       activityAutosave: "Saved answers",
       autosaveActive: "Answers on this page are saved automatically.",
@@ -1567,16 +1567,16 @@
 
   function createNavAccess() {
     let explicitSlot = document.querySelector(".site-header [data-auth-nav-slot], [data-auth-nav-slot]");
-    if (isIntermediate2) {
-      document.body.classList.add("jl-intermediate2-auth");
+    if (document.querySelector(".navbar")) {
+      if (isIntermediate2) document.body.classList.add("jl-intermediate2-auth");
       const navbar = document.querySelector(".site-header .navbar, .navbar");
       if (navbar) {
         // Keep access outside link rows that activities hide or scroll on phones.
         const container = navbar.querySelector(":scope > .container, :scope > .container-fluid") || navbar;
-        explicitSlot = container.querySelector(":scope > .jl-intermediate2-auth-slot");
+        explicitSlot = explicitSlot || container.querySelector(":scope > .jl-navigation-auth-slot");
         if (!explicitSlot) {
           explicitSlot = document.createElement("div");
-          explicitSlot.className = "jl-intermediate2-auth-slot";
+          explicitSlot.className = "jl-navigation-auth-slot";
           explicitSlot.setAttribute("data-auth-nav-slot", "");
           container.appendChild(explicitSlot);
         }
@@ -1826,7 +1826,7 @@
     });
 
     // Keep course sign-in panels inside the visual viewport, including tablet landscape.
-    if (isIntermediate2 || /^\/(?:ingles|frances)\//.test(location.pathname)) prepareIntermediate2AuthPanel(root, panel);
+    prepareIntermediate2AuthPanel(root, panel);
     if (!root.matches("[data-jaralingua-auth-nav]")) renderNavAccess();
   }
 
@@ -1846,14 +1846,7 @@
     dismiss.addEventListener("click", () => { closePanel(); trigger.focus({ preventScroll: true }); });
     panel.appendChild(dismiss);
     const events = new AbortController();
-    const slot = root.closest(".jl-intermediate2-auth-slot");
     const place = () => {
-      if (slot) {
-        // Preserve the header layout while its only sign-in control follows scrolling.
-        slot.style.minWidth = trigger.offsetWidth + "px";
-        slot.style.minHeight = trigger.offsetHeight + "px";
-        root.classList.toggle("jl-auth-floating", slot.getBoundingClientRect().top < 0);
-      }
       trigger.setAttribute("aria-expanded", String(!panel.hidden));
       if (panel.hidden) {
         if (panel.hasAttribute("popover") && panel.matches(":popover-open")) panel.hidePopover();
