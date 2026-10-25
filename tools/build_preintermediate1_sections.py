@@ -144,7 +144,8 @@ page('notas.html', 'Grades', 'grades', 'A new gradebook for Preintermediate Engl
     '/assets/js/preintermediate1-sections.js?v=' + VERSION,
 ])
 doc = html.document_fromstring((COURSE / 'notas.html').read_text())
-doc.find('.//head').append(fragment('<link rel="stylesheet" href="/assets/css/gradebook-tabs.css?v=20260721">'))
+responsive = doc.xpath('//link[contains(@href,"course-responsive.css")]')[0]
+responsive.addprevious(fragment('<link rel="stylesheet" href="/assets/css/gradebook-tabs.css?v=20260721">'))
 (COURSE / 'notas.html').write_text('<!doctype html>\n' + html.tostring(doc, encoding='unicode', method='html') + '\n')
 
 evaluations = '''<section class="pi-objective"><h2>A new assessment center</h2><p>This space begins from zero for Preintermediate 1. Its own exam preparation and official assessments will appear here as they are built.</p></section>

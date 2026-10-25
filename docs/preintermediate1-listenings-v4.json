@@ -65,6 +65,17 @@
       "scribe_verified": true,
       "previous_audio": null,
       "previous_sha256": null
+    },
+    {
+      "unit": 6,
+      "path": "ingles/preintermedio-1/audio/unit6/connected/finding-the-museum-v4.mp3",
+      "sha256": "883e33ad3f14323b4cbb548b0f63f00792c18a3442d7cd6584e6b747eae45500",
+      "duration_seconds": 63.947755,
+      "script_module": "tools/preintermediate1_unit6_connected_content.py",
+      "script_sha256": "0633f077f8d82b06e7da6a5682dfbc1dd2802c7096a798e0a2026631715eba11",
+      "scribe_verified": true,
+      "previous_audio": null,
+      "previous_sha256": null
     }
   ]
 }
