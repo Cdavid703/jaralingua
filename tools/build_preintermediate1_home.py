@@ -12,14 +12,14 @@ from lxml import html
 ROOT = Path(__file__).resolve().parents[1]
 COURSE = ROOT / 'ingles/preintermedio-1'
 VERSION = '20261024-course-dashboard'
-DASHBOARD_VERSION = '20261024-unit1-reading'
+DASHBOARD_VERSION = '20261024-connected-unit1'
 ASSETS = '/assets/img/english-preintermediate-1/course/'
 SECTIONS = [
     ('course-overview', 'Course Overview', 'course-overview.html', 'course-overview',
      'Six units with explanations and audio models.',
      'Two adult learners planning a learning route together in a library'),
     ('practice-lab', 'Practice Lab', 'practice-lab.html', 'practice-lab',
-     'Begin with Unit 1 reading practice.',
+     'Unit 1: connected listening and reading.',
      'Two adults working together with study cards and a notebook'),
     ('games', 'Games', 'games.html', 'games',
      'Shared games from Basic 1 and Basic 2.',

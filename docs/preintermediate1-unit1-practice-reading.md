@@ -1,5 +1,7 @@
 # Unit 1 Practice Lab — First Connections Reading
 
+Actualización aprobada: esta versión inicial fue adaptada a la Parte 2 de una historia que comienza con listening. La URL se conserva, con el título Something in Common, 144 palabras y diez preguntas. La construcción vigente está en `docs/preintermediate1-unit1-connected-listening-reading.md`; el registro que sigue describe la primera entrega histórica de ocho preguntas.
+
 Primera actividad del plan original de ocho actividades. Fuentes leídas: `PreIntermediate_Course 1.docx` de Descargas (sesiones 1–2), y `Ingles_Preintermedio_1_Matriz_64_horas_y_Unidad_1.docx`, conservado en `Projects/outputs/preintermedio-1/`. El texto se conserva exactamente como en la matriz: 157 palabras, cuatro párrafos, Laura y Mateo, primera conversación, rutinas y dos intereses comunes. Uso previsto: unos 15 minutos de la sesión 1, dentro del bloque de modelos; no son horas adicionales.
 
 Contenido canónico: `tools/preintermediate1_unit1_practice_content.py`. Generación: `tools/build_preintermediate1_practice.py`, aplicada al terminar las entradas de secciones. Página: `ingles/preintermedio-1/reading-unit-1-first-connections.html`. Practice Lab tiene seis carpetas de unidad cerradas inicialmente; Making Friends muestra una actividad disponible y las otras siete previstas, aún en preparación. Los enlaces con ancla pueden abrir su carpeta.

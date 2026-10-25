@@ -164,6 +164,17 @@
 .preinter-page .staff-tab-panel.pi-objective { padding: 24px 28px; }
 /* First Connections: a reading beside its formative comprehension practice. */
 .pi-practice-page .pi-hero-copy h1 { font-size: clamp(2rem, 3.6vw, 3.4rem); line-height: 1.1; }
+/* Reuse Intermedio's glossary behavior, with Basic 2 colors and normal text flow. */
+.pi-connected-page .fv-vocab-word { display: inline; max-width: 100%; min-height: 0; margin: 0; padding: 2px 1px; border: 0; border-radius: 3px; background: transparent; color: var(--basic2-blue); font: inherit; line-height: inherit; text-align: inherit; white-space: normal; vertical-align: baseline; text-decoration: underline dotted; text-underline-offset: .2em; cursor: pointer; }
+.pi-connected-page .fv-vocab-word:hover, .pi-connected-page .fv-vocab-word.is-playing { background: #e8effd; color: var(--basic2-ink); }
+.pi-connected-page .fv-vocab-word:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.pi-connected-page .fv-vocab-tooltip { position: fixed; z-index: 20; box-sizing: border-box; width: max-content; max-width: min(440px, calc(100vw - 24px)); padding: 12px 14px; border: 1px solid #b4c9e8; border-radius: 12px; background: white; color: var(--basic2-ink); box-shadow: 0 8px 24px #071f4f26; font: 500 1rem/1.45 Arial, Helvetica, sans-serif; overflow-wrap: anywhere; text-align: left; }
+.pi-connected-vocab { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; margin: 18px 0; padding: 0; list-style: none; }
+.pi-connected-vocab li { display: flex; align-items: center; min-width: 0; padding: 8px; background: var(--basic2-soft); border: 1px solid #d5e1f4; border-radius: 12px; }
+.pi-connected-vocab .fv-vocab-word { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 10px; font-weight: 700; }
+.pi-connected-page #pi-story-audio { display: block; width: 100%; max-width: 100%; margin: 20px 0; }
+.pi-library-activities { width: min(100%, 440px); margin-top: 20px; }
+.pi-library-activities .course-section-content { padding: 22px; }
 .pi-practice-unit-layout { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 24px; align-items: start; }
 .pi-practice-unit-layout > .pi-section-grid { grid-template-columns: 1fr; margin-top: 0; }
 .pi-practice-pending .pi-model-heading { margin-top: 0; }

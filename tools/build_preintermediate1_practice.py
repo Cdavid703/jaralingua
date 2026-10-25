@@ -106,3 +106,7 @@ for name in ['practice-lab.html', PAGE]:
     slug = name.removesuffix('.html')
     qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + name, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT / 'assets/img/page-qr' / ('ingles-preintermedio-1-' + slug + '.svg'))
 print('Built Practice Lab: first reading available, seven Unit 1 activities planned; 157 words, eight questions and six exact existing audio models.')
+
+# Reapply the teacher-approved connected listening → reading sequence.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_connected.py'), run_name='__main__')
