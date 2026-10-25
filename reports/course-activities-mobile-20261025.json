@@ -1,0 +1,4180 @@
+{
+  "date": "2026-10-25",
+  "pages_initialized": 572,
+  "initialization_failures_after_repairs": 0,
+  "audio_assets_chromium": {
+    "tested": 4703,
+    "failed": 0
+  },
+  "audio_webkit_sample": {
+    "tested": 32,
+    "failed": 0
+  },
+  "audio_button_cases": {
+    "tested": 346,
+    "playback_verified": 138,
+    "activity_specific_or_native_controls_not_automated": 208,
+    "errors": 0
+  },
+  "microphone_chromium": [
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-2.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 20582,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-3.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-1.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-2.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-3.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-1.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-4.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-5.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-6.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-4.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-5.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-6.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-7.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-8.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/prononciation.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-7.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-8.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/cartes-meteo-saisons.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/cartes-meteo-saisons.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/prononciation.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-directions.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-logement.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-plans.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-directions.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-logement.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-plans.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-restaurant.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-sante.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-vetements.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 20511,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-restaurant.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-sante.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-vetements.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-01-regrets-reproches-bilans.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-02-hypotheses-irreelles-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-01-regrets-reproches-bilans.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-02-hypotheses-irreelles-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-03-subjonctif-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22514,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-04-discours-rapporte.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-05-medias-desinformation.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-03-subjonctif-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-04-discours-rapporte.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-05-medias-desinformation.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-06-ia-ethique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-07-justice-sociale.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-08-registres-francophonie.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-06-ia-ethique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-07-justice-sociale.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-01e-regrets-reproches-bilans.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-08-registres-francophonie.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-02e-hypotheses-irreelles-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-01e-regrets-reproches-bilans.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-03e-commentaire-critique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-02e-hypotheses-irreelles-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-04e-compte-rendu.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-03e-commentaire-critique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-05e-analyse-infox.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-04e-compte-rendu.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-06e-decision-technologique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21048,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-05e-analyse-infox.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-07e-prise-position.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-06e-decision-technologique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-09e-note-synthese.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          ""
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-07e-prise-position.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22015,
+        "mimes": [
+          "audio/mp4;codecs=opus"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4;codecs=opus"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-01d-conditionnel-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23409,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-09e-note-synthese.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          ""
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-02d-hypotheses-irreelles-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-01d-conditionnel-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-03d-subjonctif-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-02d-hypotheses-irreelles-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-03d-subjonctif-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-04d-discours-rapporte.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-05d-medias-desinformation.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-04d-discours-rapporte.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-06d-ia-ethique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-05d-medias-desinformation.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-07d-justice-sociale.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-06d-ia-ethique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-08d-francais-oral.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-07d-justice-sociale.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-09d-precision-syntaxique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-1-weather-going-out.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 20582,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-08d-francais-oral.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-1-weather-going-out.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-2-shopping-ella.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-3-around-world-ava.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-2-shopping-ella.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-3-around-world-ava.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22514,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-4-weekend-leo.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-5-nora-memories.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-4-weekend-leo.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-09d-precision-syntaxique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-5-nora-memories.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-6-restaurant.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23480,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-6-restaurant.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23480,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-1-weather-going-out.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 20511,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-2-shopping-concert.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 20511,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-3-around-world.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-1-weather-going-out.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-2-shopping-concert.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-3-around-world.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-4-regular-ed-sounds.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-4-past-verbs-step-by-step.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-5-looking-back.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-4-regular-ed-sounds.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-4-past-verbs-step-by-step.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task-rescue.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-5-looking-back.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task-rescue.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-6-fabulous-food.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/complete-course-oral-review.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-6-fabulous-food.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/final-oral-interview-mock.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/complete-course-oral-review.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-1-introducing-myself.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-2-in-my-classroom.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/final-oral-interview-mock.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-1-introducing-myself.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-2-in-my-classroom.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-3-my-favorite-person.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-4-my-healthy-day.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-5-my-free-time.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-3-my-favorite-person.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-4-my-healthy-day.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-5-my-free-time.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-6-my-neighborhood.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-1.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-6-my-neighborhood.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-2.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23480,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-1.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-3.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-2.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 24446,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-4.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-3.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-5.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-4.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-6.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-5.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/conversation-coach-unit-5-david-first-impression.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23480,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-6.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/conversation-coach-unit-5-david-first-impression.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 24446,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/midterm-oral-conversation-coach.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-1-people-who-changed-my-circle.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-2-the-choice-id-make-differently.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-1-people-who-changed-my-circle.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/midterm-oral-conversation-coach.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-2-the-choice-id-make-differently.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-3-sound-clear-tech-support.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-4-make-your-movie-review-clear.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-5-first-impressions-clear-words.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-3-sound-clear-tech-support.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-4-make-your-movie-review-clear.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/final-oral-partner-coach.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/intermediate/final-oral-partner-coach.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-5-first-impressions-clear-words.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-6-report-the-news-clearly.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-1-beyond-first-impressions.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-2-study-abroad.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-6-report-the-news-clearly.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-1-beyond-first-impressions.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-2-study-abroad.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-3-unforgettable-natural-wonder.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-4-family-stories.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-5-food-quantities.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-3-unforgettable-natural-wonder.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-4-family-stories.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-5-food-quantities.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 22443,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-6-future-plans-advice.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21477,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-5.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-5.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-6-schedule.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-6-future-plans-advice.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 23409,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-6-schedule.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-5-restaurant.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/unit-conversation-coach-unit-5-restaurant.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 21548,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    }
+  ],
+  "microphone_webkit": [
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-1.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 35153,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-8.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 35153,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-sante.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 33811,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-8.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34960,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/pratique-orale-unite-1.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34960,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-04e-compte-rendu.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5705,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-05-medias-desinformation.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34961,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-04e-compte-rendu.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5761,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/prononciation-sante.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34317,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/coach-conversation-05-medias-desinformation.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 35023,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-2-shopping-concert.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34900,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-1-weather-going-out.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34900,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-03d-subjonctif-passe.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 29664,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico-2/pronunciation-unit-2-shopping-concert.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 35337,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico/basic-course-1-final-oral-task.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "blocked": "Recording not exposed by initial public flow"
+    },
+    {
+      "path": "ingles/basico-2/conversation-coach-unit-1-weather-going-out.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 29798,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-5-my-free-time.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34961,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-6.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 29215,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/pronunciation-unit-5-my-free-time.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34900,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/prononciation-03d-subjonctif-passe.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 35023,
+        "mimes": [
+          "audio/webm;codecs=opus",
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-4-make-your-movie-review-clear.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34576,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/basico/unit-conversation-coach-unit-6.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34961,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-4-family-stories.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34961,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate-2/pronunciation-unit-4-make-your-movie-review-clear.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34445,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "ingles/intermediate/pronunciation-unit-4-family-stories.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 34900,
+        "mimes": [
+          "audio/webm;codecs=opus"
+        ],
+        "liveTracks": 0
+      }
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-05e-analyse-infox.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5705,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-06e-decision-technologique.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5705,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-05e-analyse-infox.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5761,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-06e-decision-technologique.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5761,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-07e-prise-position.html",
+      "width": 375,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5621,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    },
+    {
+      "path": "frances/Niveau 8/ateliers/production-07e-prise-position.html",
+      "width": 1024,
+      "checks": [
+        "permission denial recovers",
+        "native recorder starts",
+        "recording bytes and track cleanup",
+        "record again available",
+        "reset discards in-flight recording"
+      ],
+      "errors": [],
+      "capture": {
+        "bytes": 5732,
+        "mimes": [
+          "audio/mp4; codecs=mp4a.40.2"
+        ],
+        "liveTracks": 0
+      },
+      "blobType": "audio/mp4; codecs=mp4a.40.2"
+    }
+  ],
+  "game_controls": [
+    {
+      "path": "frances/Niveau 1/ateliers/memory-transports.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/memory-maison.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 1/jeux/le-pendu-a1.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/memory-transports.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 1/ateliers/memory-maison.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/memoire-vetements.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 2/jeux/le-pendu-a2.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 2/ateliers/memoire-vetements.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 1/jeux/le-pendu-a1.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/journal-televise-interculturel.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/entretien-rapporte.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/journal-televise-interculturel.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/entretien-rapporte.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/puzzle-narratif.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/ligne-vie-interculturelle.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/puzzle-narratif.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/ligne-vie-interculturelle.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/reclamation-formelle.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/recit-deux-voix.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/recit-deux-voix.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/reclamation-formelle.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/simulation-consulaire.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/speed-dating-projets.html",
+      "width": 375,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/simulation-consulaire.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/ateliers/speed-dating-projets.html",
+      "width": 1024,
+      "checks": [
+        "role and prompt generate mission"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 2/jeux/le-pendu-a2.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/game-hangman.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/game-hangman.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/jeux/le-pendu-b1.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-2-shopping-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 8/jeux/le-pendu-b2.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 7/jeux/le-pendu-b1.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-2-shopping-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "frances/Niveau 8/jeux/le-pendu-b2.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-3-around-world-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-6-food-vocabulary-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico/game-unit-5-free-time-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-3-around-world-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico-2/practice-unit-6-food-vocabulary-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/intermediate-2/game-unit-6-disaster-news-memory.html",
+      "width": 375,
+      "checks": [],
+      "errors": [],
+      "uncovered": "Activity-specific flow or authorization not emulated"
+    },
+    {
+      "path": "ingles/intermediate-2/game-unit-6-disaster-news-memory.html",
+      "width": 1024,
+      "checks": [],
+      "errors": [],
+      "uncovered": "Activity-specific flow or authorization not emulated"
+    },
+    {
+      "path": "ingles/basico/game-unit-5-free-time-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico/game-unit-6-neighborhood-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/intermediate/game-hangman.html",
+      "width": 375,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/intermediate/game-unit-5-food-vocabulary-memory.html",
+      "width": 375,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/basico/game-unit-6-neighborhood-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/intermediate/game-unit-5-food-vocabulary-memory.html",
+      "width": 1024,
+      "checks": [
+        "two cards reveal and comparison cycle"
+      ],
+      "errors": []
+    },
+    {
+      "path": "ingles/intermediate/game-hangman.html",
+      "width": 1024,
+      "checks": [
+        "start hangman and mark used letter",
+        "second clue opens"
+      ],
+      "errors": []
+    }
+  ],
+  "changed_public_files": [
+    "frances/Niveau 7/ateliers/speed-dating-projets.html",
+    "frances/Niveau 8/ateliers/production-04e-compte-rendu.html",
+    "frances/Niveau 8/ateliers/production-05e-analyse-infox.html",
+    "frances/Niveau 8/ateliers/production-06e-decision-technologique.html",
+    "frances/Niveau 8/ateliers/production-07e-prise-position.html",
+    "frances/Niveau 8/jugement-emotion-anteriorite.html",
+    "frances/Niveau 8/table-ronde-decision-polemique.html"
+  ],
+  "limitations": [
+    "Desktop Chromium and WebKit with touch viewports; no physical phone or tablet.",
+    "Synthetic oscillator and isolated transcription fixtures; no speech accuracy or live provider guarantee.",
+    "Blocked recorder entry flows are listed explicitly; no authenticated exam attempts or academic submissions.",
+    "Runtime initialization covers every inventoried page; individual exercise branches and native player controls are not exhaustively automated."
+  ]
+}

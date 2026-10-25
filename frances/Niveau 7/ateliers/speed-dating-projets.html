@@ -120,7 +120,7 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
     const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});
     let selectedStudent=""; let selectedRole=""; let selectedPrompt="";
     const box=document.getElementById('missionBox');
-    function updateMission(){ if(!selectedStudent || !selectedPrompt){return;} box.innerHTML='<strong>'+selectedStudent+' - '+selectedRole+'</strong><span>'+selectedPrompt+' doit présenter son projet, demander un conseil et rapporter ensuite ce qu'un camarade lui a conseillé.</span>'; }
+    function updateMission(){ if(!selectedStudent || !selectedPrompt){return;} box.innerHTML='<strong>'+selectedStudent+' - '+selectedRole+'</strong><span>'+selectedPrompt+' doit présenter son projet, demander un conseil et rapporter ensuite ce qu’un camarade lui a conseillé.</span>'; }
     document.querySelectorAll('.student-card').forEach((card)=>card.addEventListener('click',()=>{document.querySelectorAll('.student-card').forEach((c)=>c.classList.remove('active'));card.classList.add('active');selectedStudent=card.dataset.student;selectedRole=card.dataset.role;updateMission();}));
     document.querySelectorAll('.prompt-card').forEach((card)=>card.addEventListener('click',()=>{document.querySelectorAll('.prompt-card').forEach((c)=>c.classList.remove('active'));card.classList.add('active');selectedPrompt=card.dataset.prompt;updateMission();}));
   </script>

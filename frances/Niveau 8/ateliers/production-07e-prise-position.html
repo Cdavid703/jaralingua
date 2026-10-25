@@ -28,9 +28,41 @@
     function setPill(el,ok,labelOk,labelKo){el.textContent=ok?labelOk:labelKo;el.classList.toggle("is-ok",ok);}
     function updateValidation(){const text=textArea.value,count=words(text),hasSubj=/\b(bien que|quoique)\b[^.?!]*(soit|soient|ait|aient|puisse|puissent|reste|restent|fasse|fassent|permette|permettent)/iu.test(text),hasOpp=/\b(cependant|toutefois|neanmoins|pourtant)\b/iu.test(text),hasMemeSi=/\bmeme si\b/iu.test(text),hasIdiom=/\b(ne pas baisser les bras|baisser les bras|plafond de verre|ascenseur social|seme d'embuches|semé d'embûches)\b/iu.test(text);setPill(wordCount,count>=180&&count<=230,`${count} mots`,`${count} mots`);setPill(subjStatus,hasSubj,"Concession presente","Concession a ajouter");setPill(oppStatus,hasOpp,"Opposition presente","Opposition a ajouter");setPill(memeSiStatus,hasMemeSi,"Meme si present","Meme si a ajouter");setPill(idiomStatus,hasIdiom,"Expression presente","Expression a ajouter");submitButton.disabled=!(count>=160&&hasSubj&&hasOpp&&hasMemeSi&&hasIdiom&&hasAudio);}
     function tick(){seconds+=1;timer.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");}
-    async function startRecording(){try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];seconds=0;timer.textContent="00:00";mediaRecorder=new MediaRecorder(stream);mediaRecorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};mediaRecorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());const blob=new Blob(chunks,{type:"audio/webm"});studentAudio.src=URL.createObjectURL(blob);studentAudio.hidden=false;hasAudio=true;recordStatus.textContent="Audio enregistre. Vous pouvez l'ecouter ou le refaire.";recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();};mediaRecorder.start();recordButton.classList.add("is-recording");recordStatus.textContent="Enregistrement en cours...";stopButton.disabled=false;timerId=setInterval(tick,1000);}catch(error){recordStatus.textContent="Microphone indisponible. Verifiez l'autorisation du navigateur.";}}
+    let recordingPending=false,discardRecording=false,recordingUrl="";
+    async function startRecording(){
+      if(recordingPending||(mediaRecorder&&mediaRecorder.state!=="inactive"))return;
+      recordingPending=true;discardRecording=false;recordButton.disabled=true;
+      let stream=null;
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({audio:true});
+        if(discardRecording){stream.getTracks().forEach(track=>track.stop());recordButton.disabled=false;return;}
+        const recorder=new MediaRecorder(stream);mediaRecorder=recorder;
+        const recordedChunks=[];seconds=0;timer.textContent="00:00";
+        const release=()=>{stream.getTracks().forEach(track=>track.stop());clearInterval(timerId);recordButton.disabled=false;recordButton.classList.remove("is-recording");stopButton.disabled=true;};
+        recorder.ondataavailable=event=>{if(event.data.size)recordedChunks.push(event.data);};
+        recorder.onerror=()=>{discardRecording=true;release();recordStatus.textContent="L'enregistrement a échoué. Réessayez.";};
+        recorder.onstop=()=>{
+          release();if(discardRecording)return;
+          const blob=new Blob(recordedChunks,{type:recorder.mimeType||recordedChunks[0]?.type||""});
+          if(!blob.size){recordStatus.textContent="Aucun audio enregistré. Réessayez.";return;}
+          if(recordingUrl)URL.revokeObjectURL(recordingUrl);
+          recordingUrl=URL.createObjectURL(blob);studentAudio.src=recordingUrl;studentAudio.hidden=false;hasAudio=true;
+          recordStatus.textContent="Audio enregistré. Vous pouvez l'écouter ou le refaire.";updateValidation();
+        };
+        recorder.start();recordButton.classList.add("is-recording");recordStatus.textContent="Enregistrement en cours...";stopButton.disabled=false;timerId=setInterval(tick,1000);
+      }catch(error){if(stream)stream.getTracks().forEach(track=>track.stop());recordButton.disabled=false;recordStatus.textContent="Microphone indisponible. Vérifiez l'autorisation du navigateur, puis réessayez.";}
+      finally{recordingPending=false;}
+    }
     function stopRecording(){if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();}
-    function resetAudio(){if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();chunks=[];hasAudio=false;seconds=0;timer.textContent="00:00";studentAudio.hidden=true;studentAudio.removeAttribute("src");recordStatus.textContent="Enregistrez quand votre texte est pret.";recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();}
+    function resetAudio(){
+      discardRecording=true;
+      if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
+      chunks=[];hasAudio=false;seconds=0;timer.textContent="00:00";
+      studentAudio.pause();studentAudio.hidden=true;studentAudio.removeAttribute("src");
+      if(recordingUrl){URL.revokeObjectURL(recordingUrl);recordingUrl="";}
+      recordStatus.textContent="Enregistrez votre lecture quand votre texte est prêt.";
+      recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();
+    }
     textArea.addEventListener("input",updateValidation);recordButton.addEventListener("click",startRecording);stopButton.addEventListener("click",stopRecording);resetAudioButton.addEventListener("click",resetAudio);submitButton.addEventListener("click",()=>{submitStatus.textContent="Activite prete : texte valide et audio enregistre pour feedback professeur.";});updateValidation();
   </script>
   <script src="../../../assets/js/google-auth-config.js"></script>

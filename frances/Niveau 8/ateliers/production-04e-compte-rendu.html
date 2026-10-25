@@ -29,9 +29,41 @@
     function introVerbs(text){return (text.match(/\b(a déclaré|a affirmé|a précisé|a répondu|a expliqué|a reconnu|a nié|a promis|a demandé|a ajouté|a rapporté|a souligné)\b/giu)||[]).length;}
     function updateValidation(){const count=words(textArea.value);const verbs=introVerbs(textArea.value);const hasSi=/\ba demandé si\b|\bon lui a demandé si\b/i.test(textArea.value);wordCount.textContent=`${count} mots`;wordCount.classList.toggle("is-ok",count>=140&&count<=180);verbCount.textContent=`${verbs} verbes introducteurs`;verbCount.classList.toggle("is-ok",verbs>=4);siStatus.textContent=hasSi?"Question avec si présente":"Question avec si à ajouter";siStatus.classList.toggle("is-ok",hasSi);submitButton.disabled=!(count>=120&&verbs>=3&&hasSi&&hasAudio);}
     function tick(){seconds+=1;timer.textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0");}
-    async function startRecording(){try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];seconds=0;timer.textContent="00:00";mediaRecorder=new MediaRecorder(stream);mediaRecorder.ondataavailable=(event)=>{if(event.data.size)chunks.push(event.data);};mediaRecorder.onstop=()=>{stream.getTracks().forEach((track)=>track.stop());const blob=new Blob(chunks,{type:"audio/webm"});studentAudio.src=URL.createObjectURL(blob);studentAudio.hidden=false;hasAudio=true;recordStatus.textContent="Audio enregistré. Vous pouvez l'écouter ou le refaire.";recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();};mediaRecorder.start();recordButton.classList.add("is-recording");recordStatus.textContent="Enregistrement en cours...";stopButton.disabled=false;timerId=setInterval(tick,1000);}catch(error){recordStatus.textContent="Microphone indisponible. Vérifiez l'autorisation du navigateur.";}}
+    let recordingPending=false,discardRecording=false,recordingUrl="";
+    async function startRecording(){
+      if(recordingPending||(mediaRecorder&&mediaRecorder.state!=="inactive"))return;
+      recordingPending=true;discardRecording=false;recordButton.disabled=true;
+      let stream=null;
+      try{
+        stream=await navigator.mediaDevices.getUserMedia({audio:true});
+        if(discardRecording){stream.getTracks().forEach(track=>track.stop());recordButton.disabled=false;return;}
+        const recorder=new MediaRecorder(stream);mediaRecorder=recorder;
+        const recordedChunks=[];seconds=0;timer.textContent="00:00";
+        const release=()=>{stream.getTracks().forEach(track=>track.stop());clearInterval(timerId);recordButton.disabled=false;recordButton.classList.remove("is-recording");stopButton.disabled=true;};
+        recorder.ondataavailable=event=>{if(event.data.size)recordedChunks.push(event.data);};
+        recorder.onerror=()=>{discardRecording=true;release();recordStatus.textContent="L'enregistrement a échoué. Réessayez.";};
+        recorder.onstop=()=>{
+          release();if(discardRecording)return;
+          const blob=new Blob(recordedChunks,{type:recorder.mimeType||recordedChunks[0]?.type||""});
+          if(!blob.size){recordStatus.textContent="Aucun audio enregistré. Réessayez.";return;}
+          if(recordingUrl)URL.revokeObjectURL(recordingUrl);
+          recordingUrl=URL.createObjectURL(blob);studentAudio.src=recordingUrl;studentAudio.hidden=false;hasAudio=true;
+          recordStatus.textContent="Audio enregistré. Vous pouvez l'écouter ou le refaire.";updateValidation();
+        };
+        recorder.start();recordButton.classList.add("is-recording");recordStatus.textContent="Enregistrement en cours...";stopButton.disabled=false;timerId=setInterval(tick,1000);
+      }catch(error){if(stream)stream.getTracks().forEach(track=>track.stop());recordButton.disabled=false;recordStatus.textContent="Microphone indisponible. Vérifiez l'autorisation du navigateur, puis réessayez.";}
+      finally{recordingPending=false;}
+    }
     function stopRecording(){if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();}
-    function resetAudio(){if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();chunks=[];hasAudio=false;seconds=0;timer.textContent="00:00";studentAudio.hidden=true;studentAudio.removeAttribute("src");recordStatus.textContent="Enregistrez votre lecture quand votre texte est prêt.";recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();}
+    function resetAudio(){
+      discardRecording=true;
+      if(mediaRecorder&&mediaRecorder.state==="recording")mediaRecorder.stop();
+      chunks=[];hasAudio=false;seconds=0;timer.textContent="00:00";
+      studentAudio.pause();studentAudio.hidden=true;studentAudio.removeAttribute("src");
+      if(recordingUrl){URL.revokeObjectURL(recordingUrl);recordingUrl="";}
+      recordStatus.textContent="Enregistrez votre lecture quand votre texte est prêt.";
+      recordButton.classList.remove("is-recording");stopButton.disabled=true;clearInterval(timerId);updateValidation();
+    }
     textArea.addEventListener("input",updateValidation);recordButton.addEventListener("click",startRecording);stopButton.addEventListener("click",stopRecording);resetAudioButton.addEventListener("click",resetAudio);submitButton.addEventListener("click",()=>{submitStatus.textContent="Activité prête : texte validé et audio enregistré. Le professeur peut maintenant réviser la production.";});updateValidation();
   </script>
   <script src="../../../assets/js/google-auth-config.js"></script>
