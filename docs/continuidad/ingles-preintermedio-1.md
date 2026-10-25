@@ -159,3 +159,42 @@ QA local: enlaces y anclas existentes, diez tarjetas (cuatro accesos y seis pend
 Commit publicado: `934f4c18607b306fbe0048a76ce621d6d509c7dc`, enviado a main mediante push normal. Se comprobaron las versiones previas de los trece archivos públicos y se revisó la vista previa antes de aplicar el publicador selectivo. Respaldo: `20261025T000726Z-mcd7v926`. Los trece hashes de producción y las trece respuestas HTTPS 200 coincidieron con el commit. Las dos páginas generales compartidas y sus imágenes respondieron también HTTP 200. No se publicaron cambios académicos, backend ni servicios.
 
 El navegador público confirmó las diez tarjetas, las portadas propias del inicio/Overview/expresiones, las seis carpetas de Overview cerradas y el QR ampliable cargado en móvil. Página: https://www.jaralingua.com/ingles/preintermedio-1/index.html. Capturas de verificación en `/Users/davidaramillo/Projects/outputs/preintermedio-1/home-publicado.png` y `tarjetas-home-publicado.png`.
+
+## Plan corregido de conservación de secciones — decisión del docente, 24 de octubre de 2026
+
+Después de señalar que faltó el comparativo previo a la construcción del inicio, el docente precisó las siguientes decisiones. Esta tabla define el alcance de las próximas construcciones; no acredita que las secciones pendientes estén implementadas o publicadas. La publicación anterior conserva su estado hasta realizar esos trabajos.
+
+| Sección | Decisión vigente |
+| --- | --- |
+| Course Overview | Se mantiene exactamente como acaba de construirse, con sus seis unidades y portadas. |
+| Practice Lab | Se conserva en preparación. Las explicaciones no incorporan sus actividades. |
+| Games | Se conservan todos los juegos existentes de Básico 1 y Básico 2, reutilizando su funcionamiento y diseño. Inventariar también los que aparecen dentro de Practice Lab; no reducir el alcance a los cuatro del menú Games. La adaptación al nivel debe mantener las mecánicas existentes y separar el progreso de Preintermedio. |
+| Listening Library | Se conserva y se irá alimentando con los audios que se construyan en cada unidad. Conservar su organización por unidad y utilizar los audios disponibles, sin marcar como construidos ejercicios o grabaciones que aún no existen. Los 417 modelos explicativos ya existentes son material disponible; no equivalen a 417 actividades de listening. |
+| Pronunciation Library | No hubo una nueva indicación sobre esta sección; se conserva su estado actual en preparación. |
+| Idioms and Phrasal Verbs | No hubo una nueva indicación sobre esta sección; se conserva la biblioteca de expresiones ya disponible. |
+| Phonetic Rules | Queda igual, enlazando la página general compartida existente. |
+| Free English Learning Links | Queda igual, enlazando la página general compartida existente. |
+| Grades | El docente lo llamó «Rates» después de haberse discutido Grades. Se entiende como la sección de notas: misma estructura y funcionamiento, comenzando desde cero para Preintermedio, sin importar alumnos, notas, entregas ni progreso de otros cursos y sin borrar datos de esos cursos. |
+| Evaluations and Exam Practice | Misma estructura y organización del centro de evaluaciones, comenzando desde cero para Preintermedio. No copiar como propias las pruebas, preguntas, entregas o resultados de Básico; se elaborarán las evaluaciones de este nivel según su pacing guide. |
+
+### Inventario comprobado de juegos para la adaptación
+
+El inicio de Básico 1 no tiene un menú Games independiente. Sus juegos se encuentran dentro de Practice Lab. La revisión de las páginas locales el 24 de octubre encontró:
+
+| Procedencia | Juego o actividad lúdica | Fuente existente |
+| --- | --- | --- |
+| Games Básico 2 | Final Adventure (seis unidades) | `ingles/basico-2/adventure-unit-1.html` |
+| Games Básico 2 / Practice Lab Básico 1 | Guess Who | `ingles/basico/practice-unit-3-favorite-people.html` |
+| Games Básico 2 | Hangman | `ingles/basico-2/game-hangman.html` |
+| Games Básico 2 | Impostor | `ingles/basico-2/game-impostor.html` |
+| Practice Lab Básico 1 | Mystery Object Guessing Game | `ingles/basico/workshop-unit-2-bag-exchange.html` |
+| Practice Lab Básico 1 | Two Truths and One Lie | `ingles/basico/workshop-unit-4-two-truths-one-lie.html` |
+| Practice Lab Básico 1 | Free Time Memory Challenge | `ingles/basico/game-unit-5-free-time-memory.html` |
+| Practice Lab Básico 1 | Neighborhood Memory Challenge | `ingles/basico/game-unit-6-neighborhood-memory.html` |
+| Practice Lab Básico 2 | Shopping Memory Vocabulary | `ingles/basico-2/practice-unit-2-shopping-memory.html` |
+| Practice Lab Básico 2 | Around the World Memory | `ingles/basico-2/practice-unit-3-around-world-memory.html` |
+| Practice Lab Básico 2 | Past be: Memory Grammar Lab | `ingles/basico-2/practice-unit-5-past-be-memory-lab.html` |
+| Practice Lab Básico 2 | Food Vocabulary Memory | `ingles/basico-2/practice-unit-6-food-vocabulary-memory.html` |
+| Enlazado desde Practice Lab Básico 2 | Market Basket Challenge | `ingles/intermediate/practice-unit-5-countable-uncountable-food.html` |
+
+Los juegos vinculados a temas de unidad conservan su ubicación pedagógica al preparar la adaptación. Este inventario registra fuentes y alcance, no disponibilidad de versiones de Preintermedio. El antiguo `game-unit-1-weather-hangman.html` no se cuenta como otro juego aparte de Hangman. No añadir juegos nuevos por iniciativa propia ni modificar las fuentes originales de Básico 1, Básico 2 o Intermedio.
