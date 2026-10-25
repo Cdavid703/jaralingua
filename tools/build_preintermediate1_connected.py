@@ -141,3 +141,7 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + LISTEN, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT / 'assets/img/page-qr/ingles-preintermedio-1-audio-listening-unit-1-a-new-classmate.svg')
 print('Built connected listening and reading: 10 questions each, Intermedio inline glossary, two active Practice Lab cards and listening-library access.')
+
+# Preserve the approved Unit 2 pair when rebuilding earlier units.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit2_connected.py'), run_name='__main__')

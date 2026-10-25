@@ -1,4 +1,4 @@
-/* Connected Unit 1 practice; the shared Intermedio vocabulary component is reused. */
+/* Connected practice with unit-specific drafts; the shared Intermedio vocabulary component is reused. */
 (() => {
   'use strict';
   const raw = document.getElementById('pi-connected-data');
@@ -12,7 +12,8 @@
   const storyAudio = document.getElementById('pi-story-audio');
   const status = document.getElementById('pi-connected-audio-status');
   const retry = document.getElementById('pi-audio-retry');
-  const storageKey = `jl-preintermediate1-unit1-connected-${data.kind}-v1`;
+  const unit = Number.isInteger(data.unit) && data.unit > 0 ? data.unit : 1;
+  const storageKey = `jl-preintermediate1-unit${unit}-connected-${data.kind}-v1`;
   let attempts = 0, checked = false, speed = 1, playToken = 0;
 
   function stopWord() {
