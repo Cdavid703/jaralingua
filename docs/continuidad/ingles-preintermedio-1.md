@@ -153,3 +153,9 @@ Se generaron nueve imágenes originales: inicio, Overview, expresiones y las sei
 Fuente canónica del inicio: `tools/build_preintermediate1_home.py`, reaplicada al terminar Unit 6. Los generadores de unidades 2–6 ya no reconstruyen tarjetas del inicio anterior. La cadena completa reproduce las nueve páginas sin cambios y las seis páginas de explicación siguen idénticas a las publicadas. No se regeneraron ni modificaron los 417 audios.
 
 QA local: enlaces y anclas existentes, diez tarjetas (cuatro accesos y seis pendientes), portadas únicas, seis miniaturas cargadas al abrir sus carpetas, menú funcional, QR centrado/ampliable en móvil y 18 combinaciones de página/tamaño sin desbordamiento ni superposición. Informes en `tmp/preintermediate1-home-qa/`. Estas verificaciones locales no acreditan publicación por sí solas.
+
+### Publicación verificada del inicio
+
+Commit publicado: `934f4c18607b306fbe0048a76ce621d6d509c7dc`, enviado a main mediante push normal. Se comprobaron las versiones previas de los trece archivos públicos y se revisó la vista previa antes de aplicar el publicador selectivo. Respaldo: `20261025T000726Z-mcd7v926`. Los trece hashes de producción y las trece respuestas HTTPS 200 coincidieron con el commit. Las dos páginas generales compartidas y sus imágenes respondieron también HTTP 200. No se publicaron cambios académicos, backend ni servicios.
+
+El navegador público confirmó las diez tarjetas, las portadas propias del inicio/Overview/expresiones, las seis carpetas de Overview cerradas y el QR ampliable cargado en móvil. Página: https://www.jaralingua.com/ingles/preintermedio-1/index.html. Capturas de verificación en `/Users/davidaramillo/Projects/outputs/preintermedio-1/home-publicado.png` y `tarjetas-home-publicado.png`.
