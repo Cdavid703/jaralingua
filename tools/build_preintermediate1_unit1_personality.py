@@ -13,6 +13,7 @@ NAME = 'vocabulary-unit-1-personality.html'
 MEDIA = '/assets/img/english-preintermediate-1/unit-1/practice/personality-vocabulary/'
 PDF = 'materials/22-describing-personality-original.pdf'
 VERSION = '20261026-personality-1'
+STYLE_VERSION = '20261026-personality-compact'
 
 def fragment(text):
     return html.fragment_fromstring(text)
@@ -21,7 +22,7 @@ def write(name, doc):
     (COURSE / name).write_text('<!doctype html>\n' + html.tostring(doc, encoding='unicode', method='html') + '\n', encoding='utf-8')
 
 def options():
-    return '<option value="">Choose a word</option>' + ''.join(f'<option value="{w}">{w}</option>' for w in WORDS)
+    return '<option value="">Choose…</option>' + ''.join(f'<option value="{w}">{w}</option>' for w in WORDS)
 
 models = {}
 for word in WORDS:
@@ -48,25 +49,24 @@ description = 'Learn nine personality adjectives through the original word-match
 doc.xpath('//meta[@name="description"]')[0].set('content', description)
 head = doc.find('.//head')
 # Put activity styles before the final shared responsive layer.
-head.insert(list(head).index(doc.xpath('//link[contains(@href,"course-responsive.css")]')[0]), fragment(f'<link rel="stylesheet" href="/assets/css/preintermediate1-personality-vocabulary.css?v={VERSION}">'))
+head.insert(list(head).index(doc.xpath('//link[contains(@href,"course-responsive.css")]')[0]), fragment(f'<link rel="stylesheet" href="/assets/css/preintermediate1-personality-vocabulary.css?v={STYLE_VERSION}">'))
 body = doc.find('.//body'); body.set('class', 'english-basic-page basic2-page preinter-page pi-practice-page pv-page')
 for el in body.xpath('./script[@id="pi-connected-data"] | ./script[contains(@src,"first-visit-vocabulary")] | ./script[contains(@src,"preintermediate1-connected")] | ./audio'):
     body.remove(el)
 main = doc.find('.//main'); hero = copy.deepcopy(main[0]); main.clear(); main.set('id','main-content')
 hero.set('style', f'--hero-image:url({MEDIA}cover.webp)')
-hero.xpath('.//p[@class="eyebrow"]')[0].text = 'Practice Lab · Unit 1 · Vocabulary · Activity 1 of 8'
+hero.xpath('.//p[@class="eyebrow"]')[0].text = 'Practice Lab · Unit 1 · Vocabulary'
 hero.xpath('.//h1')[0].text = 'Personality Vocabulary'
 hero.xpath('.//div[contains(@class,"pi-hero-copy")]/p[not(@class="eyebrow")]')[0].text = description
 actions = hero.xpath('.//div[contains(@class,"hero-actions")]')[0];actions.clear();actions.set('class','hero-actions pi-actions')
 actions.extend(html.fragments_fromstring(f'<a class="btn btn-primary" href="#task-1">Start vocabulary</a><a class="btn btn-secondary" href="{PDF}" download="22 - Describing Personality.pdf">Download original PDF</a><a class="btn btn-secondary" href="practice-lab.html#unit-1-personality">Practice Lab</a>'))
 img = hero.xpath('.//figure/img')[0];img.set('src',MEDIA+'cover.webp');img.set('alt','Three adult classmates sharing ideas around a classroom table');img.set('width','1600');img.set('height','800')
 main.append(hero)
-content = '''<section class="pi-objective"><p class="pi-label">Describing Personality · ESL Pals · Pages 1–2</p><h2>Your learning goal</h2><p>Identify nine personality adjectives and connect them to meanings and pictures.</p><div class="pi-route"><span>About 15–20 minutes</span><span>9 words · 2 original tasks</span><span>Practice · no official grade</span></div><p class="pi-small">Choose your answers, check them, then try again. Explanations appear after two different complete attempts, or when all your answers are accepted. Your work stays in this browser tab.</p><p id="pv-storage-status" class="pi-small" role="status" hidden></p></section>
-<details class="pi-topic" id="warm-up"><summary><span class="pi-number">☀</span><h2>Warm up · Weather</h2></summary><div class="pi-topic-body"><p>What is the weather like in your city today? Do you like it? Explain.</p><p class="pv-weather">sunny · rainy · snowy · cloudy</p><label for="pv-warmup">Your answer (optional)</label><textarea id="pv-warmup" rows="3" maxlength="1500" placeholder="Write your answer or discuss it with a classmate."></textarea></div></details>
-<section class="pi-objective pv-listening"><h2>Listen to the word box</h2><p>Tap a word to hear its pronunciation. The same nine words appear in both tasks.</p>''' + bank() + '''<div class="pi-audio-controls"><span>Speed</span><button type="button" data-speed="0.75" aria-pressed="false">0.75×</button><button type="button" data-speed="1" aria-pressed="true">1.0×</button><button type="button" data-speed="1.25" aria-pressed="false">1.25×</button><button type="button" data-stop>Stop audio</button></div><p data-audio-status role="status" aria-live="polite">Choose a word to listen.</p></section>'''
+content = '''<section class="pi-objective pv-intro"><p class="pi-label">Describing Personality · ESL Pals · Pages 1–2</p><h2>Your learning goal</h2><p>Identify nine personality adjectives and connect them to meanings and pictures.</p><div class="pi-route"><span>15–20 minutes</span><span>9 words · 2 tasks</span><span>Practice · no official grade</span></div><p class="pi-small">Check your answers and try again. Explanations appear after two different complete attempts, or when all answers are accepted. Your draft stays in this browser tab.</p><div class="pi-audio-controls"><span>Word audio</span><button type="button" data-speed="0.75" aria-pressed="false">0.75×</button><button type="button" data-speed="1" aria-pressed="true">1.0×</button><button type="button" data-speed="1.25" aria-pressed="false">1.25×</button><button type="button" data-stop>Stop audio</button></div><p data-audio-status class="pv-audio-status" role="status" aria-live="polite">Tap a word in either task to hear it.</p><p id="pv-storage-status" class="pi-small" role="status" hidden></p></section>
+<details class="pi-topic" id="warm-up"><summary><span class="pi-number">☀</span><h2>Warm up · Weather</h2></summary><div class="pi-topic-body"><p>What is the weather like in your city today? Do you like it? Explain.</p><p class="pv-weather">sunny · rainy · snowy · cloudy</p><label for="pv-warmup">Your answer (optional)</label><textarea id="pv-warmup" rows="2" maxlength="1500" placeholder="Write your answer or discuss it with a classmate."></textarea></div></details>'''
 content += task(1, 'Task 1 · Match the words', 'Match the words to their box to their synonyms.', cards1)
 content += task(2, 'Task 2 · Match the pictures', 'Choose a picture that matches one of the words from the box.', cards2)
-content += f'''<section class="pi-objective pv-download" id="paper-version"><h2>Prefer to work on paper?</h2><p>Download the complete original 10-page worksheet. This activity uses pages 1–2. The following pages will have their own activities.</p><a class="btn btn-primary" href="{PDF}" download="22 - Describing Personality.pdf">Download original PDF · 10 pages</a><p class="pi-small">Worksheet and exercise illustrations: ESL Pals, <cite>Describing Personality</cite>. The original PDF is provided unchanged.</p></section><section class="pi-objective"><h2>Activity 1 of 8</h2><p>Personality Vocabulary is ready. The next activity, Describing Personality with Be (Grammar), is in preparation.</p><a class="btn btn-secondary" href="practice-lab.html#unit-1-personality">Return to the Unit 1 activities</a></section><noscript><p class="pi-objective">Enable JavaScript to check answers and play word audio, or download the original PDF to work on paper.</p></noscript>'''
+content += f'''<section class="pi-objective pv-download pv-footer" id="paper-version"><div><h2>Original PDF · 10 pages</h2><p>This activity uses pages 1–2. Download the complete worksheet to work on paper.</p><p class="pi-small">Worksheet and original illustrations: ESL Pals, <cite>Describing Personality</cite>. PDF provided unchanged.</p></div><div class="pi-actions"><a class="btn btn-primary" href="{PDF}" download="22 - Describing Personality.pdf">Download original PDF</a><a class="btn btn-secondary" href="practice-lab.html#unit-1-personality">Unit 1 activities · 1 of 8 ready</a></div></section><noscript><p class="pi-objective">Enable JavaScript to check answers and play word audio, or download the original PDF to work on paper.</p></noscript>'''
 main.append(fragment('<div class="pi-shell">' + content + '</div>'))
 warmup = doc.get_element_by_id('warm-up').xpath('.//p[@class="pv-weather"]')[0]
 weather = '<div class="pv-weather-pictures">' + ''.join(f'<figure><img src="{MEDIA}{w}.webp" alt="{w}" width="{size[0]}" height="{size[1]}" loading="lazy"><figcaption>{w}</figcaption></figure>' for w,size in [('sunny',(399,340)),('rainy',(364,340)),('snowy',(409,340)),('cloudy',(367,340))]) + '</div>'
@@ -89,7 +89,7 @@ lab_body = lab.find('.//body')
 if 'pv-lab' not in lab_body.get('class','').split(): lab_body.set('class',lab_body.get('class','')+' pv-lab')
 if not lab.xpath('//link[contains(@href,"preintermediate1-personality-vocabulary.css")]'):
     lab_head = lab.find('.//head')
-    lab_head.insert(list(lab_head).index(lab.xpath('//link[contains(@href,"course-responsive.css")]')[0]), fragment(f'<link rel="stylesheet" href="/assets/css/preintermediate1-personality-vocabulary.css?v={VERSION}">'))
+    lab_head.insert(list(lab_head).index(lab.xpath('//link[contains(@href,"course-responsive.css")]')[0]), fragment(f'<link rel="stylesheet" href="/assets/css/preintermediate1-personality-vocabulary.css?v={STYLE_VERSION}">'))
 unit = lab.get_element_by_id('unit-1').xpath('./div[contains(@class,"pi-topic-body")]')[0]
 # Keep the two live story cards. Replace only the obsolete Unit 1 future-activity list.
 for previous in unit.xpath('.//*[@id="unit-1-personality"] | .//section[contains(@class,"pi-practice-pending")]'):

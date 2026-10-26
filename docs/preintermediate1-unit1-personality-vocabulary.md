@@ -57,3 +57,13 @@ La descarga respeta el acceso de alumnos ya establecido por google-auth.js. No s
 Se comprobaron incompletos, primer intento, repetición idéntica, segundo intento distinto, explicación, respuesta perfecta, alternativas de las imágenes, edición posterior, reinicio y conservación tras recargar. Se revisaron seis tamaños: 390×844, 844×390, 820×1180, 1180×820, 1440×900 y 1920×1080. Las imágenes conservan su proporción completa. Los cinco audios nuevos coinciden con sus guiones en transcripción Scribe; el informe queda fuera de publicación en `tmp/preintermediate1-personality-qa/audio-audit.json`.
 
 El resultado de publicación se registra en la continuidad del nivel después de verificarlo.
+
+## Revisión de espacio — 25 de octubre de 2026
+
+El docente pidió aprovechar mejor el espacio de esta primera actividad. El ajuste mantiene todos los archivos de imágenes, ambas consignas originales, las 18 respuestas, el PDF y su vista completa. Solo cambia la presentación y la información de navegación repetida.
+
+Task 1 presenta cada pista y su selector en una misma fila, con las explicaciones debajo cuando corresponda. Task 2 conserva tres columnas en escritorio, pasa a dos en celular desde 360 px y usa una composición horizontal a 320 px. Sus imágenes usan contain y mantienen su proporción completa; selectores y botones conservan al menos 44 px para tocarlos. Se reduce el espacio del hero, las tarjetas, el clima y las decoraciones. Se retira el tercer banco de palabras, que repetía los dos de las tareas, y se conservan sus controles de velocidad y parada junto al objetivo. Descarga, atribución y regreso a la unidad comparten un solo bloque.
+
+Medidas comparables a 1440×900, sin respuestas y con warm-up y ambas tareas abiertas: página completa de 5685 a 3604 px (37 % menos), Task 1 de 1671 a 859 px (49 % menos), Task 2 de 1587 a 1179 px (26 % menos) y hero de 547 a 384 px. Las explicaciones crecen lo necesario al mostrarse.
+
+QA: 320×568, 360×740, 390×844, 844×390, 820×1180, 1180×820, 1440×900 y 1920×1080, sin desbordamiento horizontal; navegación contenida, imágenes completas y controles de al menos 44 px. Se vuelven a comprobar audio, velocidad, parada, incompletos, resultado perfecto, edición posterior y QR. Los archivos JavaScript, imágenes y PDF se conservan sin modificar. Publicación: registrar el resultado verificado en la continuidad.
