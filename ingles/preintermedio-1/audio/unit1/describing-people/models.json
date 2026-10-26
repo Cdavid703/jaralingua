@@ -1,0 +1,14 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah · ElevenLabs catalog",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "my-teacher-is-friendly.mp3",
+      "text": "My teacher is friendly.",
+      "kind": "sentence",
+      "bytes": 22612,
+      "sha256": "7787d0aa1e34f7a388ee109807647e08659fd360a2dbfa151c57c1c440288f3a"
+    }
+  ]
+}

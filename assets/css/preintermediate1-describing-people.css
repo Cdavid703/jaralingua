@@ -1,0 +1,16 @@
+/* Writing retains the original example and seven responses within the compact shell. */
+.pw-page .pw-example{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;margin:16px 0;background:#f4f7fc;border:1px solid #c1d1df;border-radius:12px}
+.pw-page .pw-example h3{margin:0 0 8px;font-size:1rem;line-height:1.5;color:#17334d}
+.pw-page .pw-example p{margin:0;color:#b20f36;font-size:1.1rem;font-weight:700;line-height:1.5}
+.pw-page .pw-example .btn{min-height:44px;flex:0 0 auto}
+.pw-page .pw-writing-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.pw-page .pw-response{min-width:0;padding:12px;border:1px solid #c1d1df;border-radius:12px}
+.pw-page .pw-response label{display:block;margin:0 0 8px;color:#17334d;font-weight:700;line-height:1.5}
+.pw-page .pw-answer{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:8px}
+.pw-page .pw-answer>span{padding-top:9px;color:#496477}
+.pw-page .pw-answer textarea{margin:0;min-height:76px}
+.pw-page .pw-count{font-size:.9rem;color:#073561;font-weight:700;margin:12px 0}
+.pw-page #pw-writing-form>.pi-actions{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pw-page #pw-result{margin:12px 0 0}
+.pw-page .pv-audio-status{font-size:.875rem;line-height:1.5}
+@media(max-width:700px){.pw-page .pw-writing-grid{grid-template-columns:1fr}.pw-page .pw-example{align-items:flex-start;flex-direction:column;gap:10px}.pw-page .pw-response{padding:10px}.pw-page .pw-example p{font-size:1rem}}
