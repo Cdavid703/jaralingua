@@ -145,3 +145,7 @@ import qrcode.image.svg
 for name in [LISTEN, READ]:
     qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + name, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT / 'assets/img/page-qr' / ('ingles-preintermedio-1-' + name.removesuffix('.html') + '.svg'))
 print('Built Unit 6 town listening and message reading: ten questions each, contextual glossary, unique images, support map and expandable QR.')
+
+# Restore the separately approved Unit 1 worksheet block after the story chain.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit1_personality.py'), run_name='__main__')

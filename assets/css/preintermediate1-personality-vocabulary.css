@@ -1,0 +1,45 @@
+/* Activity 1: the original vocabulary and picture tasks. */
+body:is(.pv-page,.pv-lab) :is(.site-header,.site-header .navbar){height:auto!important;max-height:none!important;min-height:76px}
+.pv-page .pi-hero-copy>.eyebrow{display:block!important;background:transparent!important;border:0;border-radius:0;padding:0!important;margin:0 0 14px!important;min-height:0!important;max-width:none;color:#fff!important;font:700 .8rem/1.6 Arial,sans-serif!important;letter-spacing:.08em}
+.pv-page .pv-weather-pictures{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:24px 0}
+.pv-page .pv-weather-pictures figure{margin:0;text-align:center;color:#17334d}
+.pv-page .pv-weather-pictures img{width:100%;height:120px;object-fit:contain}
+.pv-page .pv-weather-pictures figcaption{margin-top:12px}
+.pv-page .pv-meaning-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:24px;align-items:center}
+.pv-page .pv-meaning-layout>.pv-grid{grid-template-columns:1fr}
+.pv-page .pv-original-decoration{width:100%;height:auto}
+.pv-page .pv-picture-decoration{display:block;width:240px;height:auto;max-width:100%;margin:20px auto}
+.pv-page .pv-original-page{margin:24px auto;max-width:900px;text-align:center}
+.pv-page .pv-original-page img{display:block;width:100%;height:auto;border:1px solid #c1d1df}
+.pv-page .pv-original-page figcaption{margin-top:10px;color:#496477}
+@media(max-width:650px){.pv-page .pv-weather-pictures{grid-template-columns:repeat(2,minmax(0,1fr))}.pv-page .pv-meaning-layout{grid-template-columns:1fr}.pv-page .pv-original-decoration{max-width:240px;justify-self:center}}
+#unit-1 .pi-unit1-stories>.pi-section-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:940px}
+#unit-1-personality>.pi-topic-body>.pi-section-grid{grid-template-columns:1fr;width:min(100%,440px);margin-bottom:28px}
+#unit-1-personality summary h3{margin:0;line-height:1.4}
+@media(max-width:650px){#unit-1 .pi-unit1-stories>.pi-section-grid{grid-template-columns:1fr}}
+.pv-page .pi-shell{max-width:1180px}
+.pv-page .lesson-hero-image img{object-fit:cover;object-position:center;aspect-ratio:2/1}
+.pv-page .pv-wordbank{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.pv-page .pv-wordbank button{display:inline-flex;gap:8px;align-items:center;min-height:44px;padding:10px 16px;background:#edf5fb;border:1px solid #9bb4ce;border-radius:12px;color:#073561;font:700 1rem Arial,sans-serif;cursor:pointer}
+.pv-page .pv-wordbank button:hover,.pv-page .pv-wordbank button.is-playing{background:#073561;color:#fff}
+.pv-page .pv-wordbank button:focus-visible,.pv-page select:focus-visible,.pv-page textarea:focus-visible{outline:3px solid #d91b48;outline-offset:3px}
+.pv-page .pv-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:20px 0}
+.pv-page .pv-question{min-width:0;padding:20px;border:1px solid #c1d1df;border-radius:16px;background:#fff;display:flex;flex-direction:column;gap:12px}
+.pv-page .pv-question label{font-size:1.08rem;font-weight:700;color:#073561;line-height:1.5}
+.pv-page .pv-item-number{color:#b20f36;margin-right:5px}
+.pv-page select,.pv-page textarea{box-sizing:border-box;max-width:100%;width:100%;min-height:48px;border:1px solid #71879c;border-radius:9px;background:#fff;color:#17334d;font:1rem/1.5 Arial,sans-serif;padding:10px 12px}
+.pv-page textarea{display:block;margin-top:12px;resize:vertical}
+.pv-page .pv-picture figure{height:210px;margin:0;display:grid;place-items:center}
+.pv-page .pv-picture img{max-height:200px;max-width:100%;height:auto;width:auto;object-fit:contain}
+.pv-page .pv-count{font-weight:700;color:#073561;margin-top:22px}
+.pv-page .pv-feedback{margin:0;padding:12px;border-radius:8px;background:#edf5fb;color:#17334d;font-size:.95rem;line-height:1.6}
+.pv-page .pv-feedback[data-accepted="true"]{background:#e7f5ed;border-left:4px solid #227345}
+.pv-page .pv-feedback[data-accepted="false"]{background:#fff0ed;border-left:4px solid #b33220}
+.pv-page .pv-result{padding:18px;border:1px solid #9bb4ce;border-radius:12px;background:#edf5fb;color:#073561;line-height:1.6;font-weight:700}
+.pv-page .pv-result:focus{outline:3px solid #d91b48;outline-offset:2px}
+.pv-page .pv-original-instruction{font-size:1.1rem;line-height:1.6;color:#17334d}
+.pv-page .pv-weather{font-weight:700;color:#073561;word-spacing:.3rem}
+.pv-page .pv-download{background:#f0f6fb}
+.pv-page [hidden]{display:none!important}
+@media(max-width:900px){.pv-page .pv-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.pv-page .pv-grid{grid-template-columns:1fr}.pv-page .pv-question{padding:16px}.pv-page .pv-wordbank{gap:8px}.pv-page .pv-wordbank button{padding:10px 12px}.pv-page .pi-topic summary{align-items:center}.pv-page .pi-topic summary h2{font-size:1.15rem}}

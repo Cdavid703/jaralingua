@@ -1,0 +1,42 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah · ElevenLabs catalog",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "smart.mp3",
+      "text": "smart",
+      "kind": "word",
+      "bytes": 12999,
+      "sha256": "9c0549d316d52242038319d6a04a288ce80f57cd78ab1b5a8deeda75f50a6c59"
+    },
+    {
+      "file": "rude.mp3",
+      "text": "rude",
+      "kind": "word",
+      "bytes": 12163,
+      "sha256": "86845a7fdbdacb112389e186df8d1b1309c8324c719e0b38c3ae6b81b3b79615"
+    },
+    {
+      "file": "grumpy.mp3",
+      "text": "grumpy",
+      "kind": "word",
+      "bytes": 15089,
+      "sha256": "7a97dcd1a4800df6054790ca2eaff035b7c96d9126a5252754e027c6446a683d"
+    },
+    {
+      "file": "silly.mp3",
+      "text": "silly",
+      "kind": "word",
+      "bytes": 14253,
+      "sha256": "a62c9910a170578754e6349aaa09f7e6f27b32c3f47be4019f685d8c4d61ac8c"
+    },
+    {
+      "file": "lazy.mp3",
+      "text": "lazy",
+      "kind": "word",
+      "bytes": 13835,
+      "sha256": "fbff49cd214c4e89240ca3d396603998a0d76a21ab264645e029e60d80ddc2c9"
+    }
+  ]
+}
