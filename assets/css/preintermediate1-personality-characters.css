@@ -1,0 +1,38 @@
+/* Case Study: original text and illustration, using the approved compact shell. */
+.pc-page .pc-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+.pc-page .pc-wordbox{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.pc-page .pc-wordbox span{padding:4px 8px;background:#edf5fb;border-radius:7px;color:#073561;font-size:.9rem;font-weight:700}
+.pc-page .pc-profile-table{width:100%;table-layout:fixed;border-collapse:collapse;margin:12px 0;color:#17334d}
+.pc-page .pc-profile-table th,.pc-page .pc-profile-table td{border:1px solid #c1d1df;padding:12px;vertical-align:top;overflow-wrap:anywhere}
+.pc-page .pc-profile-table thead th{background:#e8f0fa;color:#073561;text-align:left;font-size:.95rem}
+.pc-page .pc-profile-table thead th:first-child{width:16%}
+.pc-page .pc-profile-table thead th:nth-child(2){width:53%}
+.pc-page .pc-profile-table tbody th{background:#f3f7fc;color:#073561;font-weight:700;text-align:left}
+.pc-page .pc-profile-text{font-size:1rem;line-height:1.6;margin:0}
+.pc-page .pc-profile-table textarea{min-height:76px;margin:0}
+.pc-page .pc-cell-label{display:none}
+.pc-page .pc-listen{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:6px 10px;margin-top:8px;background:#fff;border:1px solid #9bb4ce;border-radius:8px;color:#073561;font:700 .9rem Arial,sans-serif;cursor:pointer}
+.pc-page .pc-listen:hover,.pc-page .pc-listen.is-playing{background:#073561;color:#fff}
+.pc-page .pc-count{font-weight:700;font-size:.9rem;color:#073561;margin:10px 0}
+.pc-page .pc-table-feedback{margin-top:10px}
+.pc-page .pc-feedback p,.pc-page .pc-table-feedback p{margin:6px 0;line-height:1.55}
+.pc-page .pc-feedback blockquote,.pc-page .pc-table-feedback blockquote{margin:8px 0;padding:0 0 0 10px;border-left:3px solid #8ea9c6;font:inherit;line-height:1.5;color:#17334d}
+.pc-page .pc-text-link,.pc-page .pc-evidence-link{display:inline-flex;align-items:center;min-height:44px;color:#073561;font-weight:700;text-decoration:underline}
+.pc-page .pc-question{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;min-width:0;margin:0;padding:8px 0;border:0;border-bottom:1px solid #dbe3ec}
+.pc-page .pc-question-text{margin:0;line-height:1.5;color:#17334d}
+.pc-page .pc-choices{display:flex;gap:8px}
+.pc-page .pc-choices label{display:flex;align-items:center;gap:8px;min-height:44px;padding:6px 10px;border:1px solid #9bb4ce;border-radius:8px;background:#f3f7fc;color:#073561;cursor:pointer}
+.pc-page .pc-choices label:has(input:checked){border-color:#073561;background:#e4eef9}
+.pc-page .pc-choices input{width:18px;height:18px;margin:0;accent-color:#073561}
+.pc-page .pc-question>.pc-feedback{grid-column:1/-1}
+.pc-page .pc-task-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:12px}
+.pc-page .pc-task-footer .pi-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.pc-page .pc-source-art{display:block;width:150px;height:auto;max-width:30%;object-fit:contain}
+.pc-page .pc-who-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}
+.pc-page .pc-who-question{min-width:0;padding:12px;border:1px solid #c1d1df;border-radius:12px}
+.pc-page .pc-who-question label{display:block;line-height:1.5;color:#17334d}
+.pc-page .pc-who-question select{margin-top:10px}
+.pc-page .pc-who-question .pc-feedback{margin-top:10px}
+.pc-page .pi-topic-body>.pi-small{line-height:1.5;margin:8px 0}
+@media(max-width:760px){.pc-page .pc-profile-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.pc-page .pc-profile-table,.pc-page .pc-profile-table tbody,.pc-page .pc-profile-table tr,.pc-page .pc-profile-table td,.pc-page .pc-profile-table th{display:block;width:auto}.pc-page .pc-profile-table tr{border:1px solid #c1d1df;border-radius:12px;margin-bottom:12px;overflow:hidden}.pc-page .pc-profile-table tbody th{display:flex;justify-content:space-between;gap:12px;align-items:center}.pc-page .pc-profile-table th,.pc-page .pc-profile-table td{border:0;padding:10px 12px}.pc-page .pc-listen{margin:0;flex:0 0 auto}.pc-page .pc-cell-label{display:block;margin-bottom:6px;font-size:.85rem;color:#073561;font-weight:700}.pc-page .pc-profile-table textarea{min-height:68px}.pc-page .pc-who-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.pc-page .pc-question{grid-template-columns:1fr;gap:6px;padding:10px 0}.pc-page .pc-choices{justify-content:flex-start}.pc-page .pc-choices label{min-width:86px}.pc-page .pc-source-art{width:110px}.pc-page .pc-who-question{padding:10px}}

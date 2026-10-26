@@ -13,7 +13,7 @@ NAME = 'vocabulary-unit-1-personality.html'
 MEDIA = '/assets/img/english-preintermediate-1/unit-1/practice/personality-vocabulary/'
 PDF = 'materials/22-describing-personality-original.pdf'
 VERSION = '20261026-personality-1'
-STYLE_VERSION = '20261026-personality-compact-be'
+STYLE_VERSION = '20261026-personality-compact-characters'
 
 def fragment(text):
     return html.fragment_fromstring(text)

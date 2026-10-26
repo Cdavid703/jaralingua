@@ -1,0 +1,42 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah · ElevenLabs catalog",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "angie-profile.mp3",
+      "text": "Angie is 23 years old. She likes walking on the beach and painting pictures. She is an artist! She always smiles and has many friends. But, she doesn’t like meeting new people.",
+      "kind": "profile",
+      "bytes": 168898,
+      "sha256": "0d81fdbbdb62a8cd580f70bdbac89628a96d76d1a4eb5e112c1dbf091c2cd579"
+    },
+    {
+      "file": "frankie-profile.mp3",
+      "text": "Frankie is 60 years old. He doesn’t like to work. He likes to sleep late and watch TV. Frankie’s neighbours don’t like him. They think he is a mean man.",
+      "kind": "profile",
+      "bytes": 162211,
+      "sha256": "94c24d2c41784c333b05a0303a16ef21916cd0c9cf2afb46e68727b7a34bc8fb"
+    },
+    {
+      "file": "gillian-thomas-profile.mp3",
+      "text": "Gillian and Thomas are from France! They love studying and learning new things. They are studying to be doctors! They like meeting new people and telling stories.",
+      "kind": "profile",
+      "bytes": 146746,
+      "sha256": "473b88582dc33b2ae0234240477a8c03a00105d98e5bb79b0d05796ef4338e3d"
+    },
+    {
+      "file": "max-profile.mp3",
+      "text": "Max is from Brazil. He is very nice! He is a photographer. Max likes to make jokes and make people laugh. People like to be friends with Max.",
+      "kind": "profile",
+      "bytes": 142149,
+      "sha256": "c5a55e0a2eb73d8b9958256b936ca8754af3883b76dfb17c11ef09e8d86af811"
+    },
+    {
+      "file": "joe-profile.mp3",
+      "text": "Joe is 25 years old. He is from Spain. Joe is a chef. He loves making food. Joe has many friends - but he is not friendly. Some people think that Joe is rude, but he isn’t!",
+      "kind": "profile",
+      "bytes": 185198,
+      "sha256": "bf7fcbea6d36590b462dd6bca2aaf1999df64b42ad942d80a5578746513cae11"
+    }
+  ]
+}
