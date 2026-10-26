@@ -13,7 +13,7 @@ NAME = 'vocabulary-unit-1-personality.html'
 MEDIA = '/assets/img/english-preintermediate-1/unit-1/practice/personality-vocabulary/'
 PDF = 'materials/22-describing-personality-original.pdf'
 VERSION = '20261026-personality-1'
-STYLE_VERSION = '20261026-personality-compact'
+STYLE_VERSION = '20261026-personality-compact-be'
 
 def fragment(text):
     return html.fragment_fromstring(text)
@@ -90,6 +90,8 @@ if 'pv-lab' not in lab_body.get('class','').split(): lab_body.set('class',lab_bo
 if not lab.xpath('//link[contains(@href,"preintermediate1-personality-vocabulary.css")]'):
     lab_head = lab.find('.//head')
     lab_head.insert(list(lab_head).index(lab.xpath('//link[contains(@href,"course-responsive.css")]')[0]), fragment(f'<link rel="stylesheet" href="/assets/css/preintermediate1-personality-vocabulary.css?v={STYLE_VERSION}">'))
+else:
+    lab.xpath('//link[contains(@href,"preintermediate1-personality-vocabulary.css")]')[0].set('href',f'/assets/css/preintermediate1-personality-vocabulary.css?v={STYLE_VERSION}')
 unit = lab.get_element_by_id('unit-1').xpath('./div[contains(@class,"pi-topic-body")]')[0]
 # Keep the two live story cards. Replace only the obsolete Unit 1 future-activity list.
 for previous in unit.xpath('.//*[@id="unit-1-personality"] | .//section[contains(@class,"pi-practice-pending")]'):
@@ -109,4 +111,8 @@ except ModuleNotFoundError:
     import qrcode
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
-print('Built Personality Vocabulary: 9 meanings, 9 original pictures, original PDF and Unit 1 navigation. Activities 2–8 remain pending.')
+print('Built Personality Vocabulary: 9 meanings, 9 original pictures, original PDF and Unit 1 navigation. Restoring the next approved activity.')
+
+# Keep the second approved worksheet activity and its navigation on a full rebuild.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit1_personality_be.py'), run_name='__main__')

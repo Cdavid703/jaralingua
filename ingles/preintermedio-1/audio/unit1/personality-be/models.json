@@ -1,0 +1,56 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah · ElevenLabs catalog",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "i-am-creative.mp3",
+      "text": "I am creative.",
+      "kind": "sentence",
+      "bytes": 20941,
+      "sha256": "c26bbce52c08b4dffc7d7d37c968b013b31ef152e57c0fb44e7a2a78570ed624"
+    },
+    {
+      "file": "he-is-grumpy.mp3",
+      "text": "He is grumpy.",
+      "kind": "sentence",
+      "bytes": 19687,
+      "sha256": "ed41225a70fe0dc5b4e42db8a7271a01241f69f0d7c06fde33722c1da0a7b384"
+    },
+    {
+      "file": "she-is-silly.mp3",
+      "text": "She is silly.",
+      "kind": "sentence",
+      "bytes": 17597,
+      "sha256": "9651321eb30a196732602d2ee51bb84095a121d9675f3804adb68e9e664f71d7"
+    },
+    {
+      "file": "it-is-lazy.mp3",
+      "text": "It is lazy.",
+      "kind": "sentence",
+      "bytes": 17597,
+      "sha256": "83311dbdd9665a6ab0bb5812df4c57c1ba99f99e3b8f2c546cfdaa48093ae88b"
+    },
+    {
+      "file": "we-are-friendly.mp3",
+      "text": "We are friendly.",
+      "kind": "sentence",
+      "bytes": 18015,
+      "sha256": "16ceb9dd46f7221788069e9c89e7097ec2cbd3b4033a72dadee7c1c33457653e"
+    },
+    {
+      "file": "they-are-neat.mp3",
+      "text": "They are neat.",
+      "kind": "sentence",
+      "bytes": 18015,
+      "sha256": "668a3bdcfcbeb6ea33b504f63389f00784e02ade4dd496c7d489998f416a72a9"
+    },
+    {
+      "file": "you-are-talkative.mp3",
+      "text": "You are talkative.",
+      "kind": "sentence",
+      "bytes": 21776,
+      "sha256": "8ead15e1ac5ee64f7be56ee328b059ae02202b9519873ff383016e1e6d59ad15"
+    }
+  ]
+}

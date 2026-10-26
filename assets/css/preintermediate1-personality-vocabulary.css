@@ -14,9 +14,9 @@ body:is(.pv-page,.pv-lab) :is(.site-header,.site-header .navbar){height:auto!imp
 .pv-page .pv-original-page figcaption{margin-top:10px;color:#496477}
 @media(max-width:700px){.pv-page .pv-meaning-layout{grid-template-columns:1fr;gap:4px}.pv-page .pv-original-decoration{max-width:110px;justify-self:center}.pv-page .pv-weather-pictures img{height:64px}}
 #unit-1 .pi-unit1-stories>.pi-section-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:940px}
-#unit-1-personality>.pi-topic-body>.pi-section-grid{grid-template-columns:1fr;width:min(100%,440px);margin-bottom:28px}
+#unit-1-personality>.pi-topic-body>.pi-section-grid{grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:940px;margin-bottom:28px}
 #unit-1-personality summary h3{margin:0;line-height:1.4}
-@media(max-width:650px){#unit-1 .pi-unit1-stories>.pi-section-grid{grid-template-columns:1fr}}
+@media(max-width:650px){#unit-1 .pi-unit1-stories>.pi-section-grid,#unit-1-personality>.pi-topic-body>.pi-section-grid{grid-template-columns:1fr}}
 .pv-page .pi-shell{max-width:1180px}
 body.pv-page.basic2-page .lesson-hero.immersive-basic-hero{padding:24px max(var(--basic2-app-gutter),calc((100% - var(--basic2-app-max))/2))!important;gap:24px}
 body.pv-page .pi-hero .pi-hero-copy{padding:26px}
