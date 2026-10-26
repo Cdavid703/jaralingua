@@ -415,3 +415,14 @@ Se verificaron las dos tareas, conservación tras recargar, reintentos, respuest
 Commit `e776f5c06d46151389349c7a6e2c942dcb0fe977`, enviado mediante push normal a main. El publicador selectivo aplicó exactamente 30 archivos estáticos tras comparar sus versiones previas y revisar la vista previa. Respaldo: `20261026T022003Z-1qd2varq`. Los treinta hashes del servidor y respuestas HTTPS 200 coinciden con el commit. El navegador público muestra las nueve imágenes originales y el ejercicio. No se modificaron registros académicos, backend ni servicios; se conservaron los cambios ajenos locales.
 
 Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-1-personality.html. Acceso desde Practice Lab → Unit 1 → Describing Personality. Actividad 1 de 8 terminada; esperar la indicación del docente para Activity 2, Describing Personality with Be (Grammar).
+
+
+### Diseño compacto publicado — 25 de octubre de 2026, Colombia
+
+El docente pidió revisar el diseño para ahorrar espacio. Se compactaron hero, márgenes, warm-up, tarjetas e información repetida. Task 1 reúne pista y selector en una fila; Task 2 muestra tres columnas en escritorio y dos en celulares desde 360 px, con una disposición horizontal a 320 px. Se elimina únicamente el tercer banco de palabras redundante, conservando ambos bancos originales, los nueve audios, sus controles y todas las imágenes originales completas. PDF, consignas, respuestas y lógica de revisión permanecen intactos. La descarga, atribución y regreso a Unit 1 comparten un bloque.
+
+Con warm-up y ambas tareas abiertas, sin respuestas y a 1440×900: página de 5685 a 3604 px (37 % menos), Task 1 de 1671 a 859 px (49 % menos), Task 2 de 1587 a 1179 px (26 % menos), hero de 547 a 384 px. Se comprobaron ocho tamaños de 320 a 1920 px sin desbordamiento, controles de al menos 44 px, imágenes completas, feedback bajo la fila, conservación al recargar, edición posterior, audio, velocidad, parada y QR. El generador es idempotente y no modifica Practice Lab ni las demás unidades.
+
+Commit publicado `1b21f5eabeb85690468311debbed2792a154535f`, push normal a main y publicación selectiva de exactamente dos archivos: CSS propio y HTML de esta actividad. Se compararon las versiones previas y se revisó la vista previa; respaldo `20261026T023355Z-wr6f1zt_`. Ambos hashes del servidor y las dos respuestas HTTPS 200 coincidieron. El navegador público confirmó el CSS nuevo y las nueve ilustraciones. Sin cambios en imágenes, PDF, audios, JavaScript de ejercicios, QR, backend ni registros académicos. QA: `tmp/preintermediate1-personality-compact-qa/`. Captura publicada: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_1_Personality_diseno_compacto.png`.
+
+Actividad 1 continúa terminada. Las actividades 2–8 siguen pendientes de la indicación del docente.
