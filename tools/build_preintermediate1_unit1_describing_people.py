@@ -80,4 +80,7 @@ except ModuleNotFoundError:
     import qrcode
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
-print('Built activity 4: original word box, fixed teacher example and seven writing responses. Activities 5–8 remain pending.')
+print('Built activity 4: original word box, fixed teacher example and seven writing responses. Restoring the next approved activity.')
+
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit1_pictures.py'),run_name='__main__')
