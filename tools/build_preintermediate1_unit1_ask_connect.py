@@ -84,8 +84,10 @@ for previous in unit.xpath('.//details[@id="unit-1-complementary"]'):
     previous.getparent().remove(previous)
 card = f'''<article class="course-section-card"><div class="course-section-image"><img src="{MEDIA}cover.webp" alt="Laura and Mateo sharing a classroom conversation" width="1600" height="800" loading="lazy" decoding="async"></div><div class="course-section-content"><span class="section-number">01</span><span class="course-status course-status-available">Grammar · Available now</span><h3>Ask and Connect</h3><p>15 choices: questions, personality and preferences.</p><a class="card-link" href="{NAME}">Open grammar practice</a></div></article>'''
 unit.xpath('./div[contains(@class,"pi-topic-body")]')[0].append(fragment('<details class="pi-topic" id="unit-1-complementary"><summary><span class="pi-number">+</span><h3>More Making Friends practice</h3></summary><div class="pi-topic-body"><p>Extra practice for the language explained in Unit 1.</p><div class="pi-section-grid">' + card + '</div></div></details>'))
-unit.xpath('./div/p[contains(@class,"pi-goal")]')[0].text = 'Sessions 1–2 · 6 hours of class · 8 activities available'
-lab.xpath('//section[@class="pi-objective"]/p')[0].text = 'Units 1–6 each have a connected listening and reading story. Unit 1 also has five Describing Personality activities and extra grammar practice in Ask and Connect.'
+activity_count = len(unit.xpath('.//article[contains(@class,"course-section-card")]'))
+worksheet_count = len(unit.xpath('.//details[@id="unit-1-personality"]//article[contains(@class,"course-section-card")]'))
+unit.xpath('./div/p[contains(@class,"pi-goal")]')[0].text = f'Sessions 1–2 · 6 hours of class · {activity_count} activities available'
+lab.xpath('//section[@class="pi-objective"]/p')[0].text = f'Units 1–6 each have a connected listening and reading story. Unit 1 also has {worksheet_count} Describing Personality activities and extra grammar practice in Ask and Connect.'
 write('practice-lab.html', lab)
 
 # Link to gated models instead of exposing the answer audio ahead of practice.

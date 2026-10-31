@@ -1,0 +1,56 @@
+{
+  "generated_on": "2026-10-31",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261031,
+  "script": "tools/preintermediate1_unit1_speaking_content.py",
+  "scribe_verified": true,
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/partner.mp3",
+      "sha256": "65c0e7397105b1bb1b174624d85b70d95bf6bc2de4177eb9e7cf13884c8c0fd2"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/personality.mp3",
+      "sha256": "96be28e016cc3d586a22ae88338b1b0790abb89324cd10048675488bf7bf6b6f"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/qualities.mp3",
+      "sha256": "71c6d3c8ca44b40228c8093be4522f913ce4f642ede758697b1761a8f43387a8"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-01.mp3",
+      "sha256": "619bd96cd77df099695d2a87385cd4c3ccdc1778e6f096c642fc30f43fb6007e"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-02.mp3",
+      "sha256": "4204021269de21c9a0a831805fb3ab4d9c4c0a525accdac7629095f7d3408e42"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-03.mp3",
+      "sha256": "0e2ecffeae9caef2bb1cddbc229324c41feeb0e2a1f96823f4ee31de3528be98"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-04.mp3",
+      "sha256": "cdcdf5e9ae0da3c68f6ad258e483ebaa0cf8451cdf6def214d307252c61f94d1"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-05.mp3",
+      "sha256": "5a8f8c159f904270f3eb9dc57bb6059c08396728ad146221e01c6e487b9c5112"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-06.mp3",
+      "sha256": "86fd6c4ab971fdfb4c0a66fc2b497d87226fcebf862a66317950116b5c9968b2"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-07.mp3",
+      "sha256": "c0597458072b2dcfaf7c7639baebc2fa72c8885c38ba99f67cbd9a218a31a9df"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/personality-speaking/question-08.mp3",
+      "sha256": "967c463293385987d677e3ab946dec3b9cb34f323941fdf41b88943f9e23d7eb"
+    }
+  ]
+}

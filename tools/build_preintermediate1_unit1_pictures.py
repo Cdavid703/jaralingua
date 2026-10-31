@@ -82,4 +82,4 @@ print('Built activity 5: six original pictures and writing responses. Activities
 
 # Preserve the separately approved complementary practice without advancing the PDF.
 import runpy
-runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit1_ask_connect.py'),run_name='__main__')
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit1_speaking.py'),run_name='__main__')
