@@ -1,0 +1,76 @@
+{
+  "generated_on": "2026-10-31",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "seed": 20261031,
+  "language_profile": "english-us",
+  "source": "tools/preintermediate1_unit1_ask_connect_content.py",
+  "scribe_verified": true,
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/follow-up-question.mp3",
+      "sha256": "8134339a674fd7d676ea0a646d6f45c8bf0d76c4b0d714ae2d4c237080937d5b"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-01.mp3",
+      "sha256": "be46eb94d8e594a9f203beb52805b85bf2ab4abf2fca637cef0b4835fb3aa9c6"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-02.mp3",
+      "sha256": "7e2bf65488646d1899960736e37ac9d84b4cad7136614004346d473bfe76c236"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-03.mp3",
+      "sha256": "4bda260781d387ddecc88dc87e1a760afc25e5db9a6d0a9a975a57ebbeba6761"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-04.mp3",
+      "sha256": "b7f3b835b0beabf7dc39fc9028aa865b3ba407f4c2f1392e1e63725d5892e84c"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-05.mp3",
+      "sha256": "04a7617d7ecad1a89b2998e023454eafca4474cdd9a36030e30c179a88382148"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-06.mp3",
+      "sha256": "64e4d976c0ad9c0e0cf7ee8f17a9ebd111b664e35c97bafbf610048c5cead6be"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-07.mp3",
+      "sha256": "4037757a38496bf7689a2b7fb575472e820c933823499e2b2d48283faece5123"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-08.mp3",
+      "sha256": "9e4224f95fdfebd770f8c9578202bc6ccf9ec42d8a8ed1a1b7f314964456a3a4"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-09.mp3",
+      "sha256": "a0ce64a40be8caf78cba25fa52e526bbb22dc611973e0f8aeab1ca61bafde0bf"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-10.mp3",
+      "sha256": "a56288175e11e1a71c24b87b1fd11453a216031b33a7998d79565dc69ed74802"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-11.mp3",
+      "sha256": "2d908d71f630f921cb550d7742585511fffcead23d7d3f7a2b5b2172f99bfaa0"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-12.mp3",
+      "sha256": "c8f477845a02207da6beb0a5c4e6b209cb6c514426d3baec055259845d654473"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-13.mp3",
+      "sha256": "324230e45d29780dba5ba4ba64e996ba0c3d2934c57e2f1a65dfa9e853c32b0c"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-14.mp3",
+      "sha256": "7ec9313929602e76e3f4027664027a81bae2c8eda832072869db600d828fbd07"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/ask-connect/model-15.mp3",
+      "sha256": "f0b50a140b4469226760de091b480f0b803d6663737c17c870a7901cc53af8c8"
+    }
+  ]
+}
