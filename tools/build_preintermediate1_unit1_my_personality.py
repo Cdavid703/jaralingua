@@ -90,4 +90,4 @@ qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + NAME, image_f
 print('Built Activity 7: original page 8 writing prompt, nine words, personal draft, self-check and expandable QR.')
 
 import runpy
-runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit1_ask_connect.py'), run_name='__main__')
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit1_more_personalities.py'), run_name='__main__')

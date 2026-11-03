@@ -1,0 +1,162 @@
+{
+  "generated_on": "2026-11-03",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261103,
+  "script": "tools/preintermediate1_unit1_more_personalities_content.py",
+  "scribe_verified": true,
+  "pronunciations_reused": 10,
+  "notes": [
+    "Five profiles, three instructions and ten new word recordings.",
+    "Ashley is spoken consistently; original written Ahsley/Ashely spellings are preserved and explained on the page.",
+    "Seventeen literal normalized Scribe matches; Lily differs only by 6/six."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/ingrid-ray-profile.mp3",
+      "sha256": "88f805c344f2d6b977304b52d9c84c2bceb4d4239ee219967317e91c5f885e14",
+      "text": "Ingrid and Ray like to sleep late. They don’t like to go to school. They never do their homework. The teachers don’t like them, because they are impolite.",
+      "heard": "Ingrid and Ray like to sleep late. They don't like to go to school. They never do their homework. The teachers don't like them because they are impolite",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/janet-profile.mp3",
+      "sha256": "714e4f823e414d306a11dd3d5467ff36d94afc98bbe722c7f0c7d9d4dab8acc9",
+      "text": "Janet is 45 years old. She is from South Africa. She is moody. People don’t like to work with Janet.",
+      "heard": "Janet is 45 years old. She is from South Africa. She is moody. People don't like to work with Janet",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/you-profile.mp3",
+      "sha256": "9a76f91db592d2cbf049dfe640199fbb40894c3f4f4b78c910f7bf3bf02d408d",
+      "text": "You are intelligent. You are learning English. In class, you are outgoing!",
+      "heard": "You are intelligent. You are learning English. In class, you are outgoing.",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/claire-ashley-profile.mp3",
+      "sha256": "601195ddc16476b45be8292d43cbb84eda9d8bb3c3e54b04496069935c68e95f",
+      "text": "Claire and Ashley have a podcast. They are very artistic. They are kind and goofy! They like to make jokes and make people laugh.",
+      "heard": "Claire and Ashley have a podcast. They are very artistic. They are kind and goofy. They like to make jokes and make people laugh",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/lily-profile.mp3",
+      "sha256": "0c2830b59b3b23175885288fe2335f7f6ce4b13ab78441f4a2abd77f94878a47",
+      "text": "Lily is 6 years old. She is very kind and goofy. Lily likes to laugh and play games. She always smiles and people like to be friends with her.",
+      "heard": "Lily is six years old. She is very kind and goofy. Lily likes to laugh and play games. She always smiles, and people like to be friends with her",
+      "literal_normalized_match": false,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/reading-instruction.mp3",
+      "sha256": "4151192fca7455baef3065a759a8795ea0dc76dd730263fea9b97313b33a880b",
+      "text": "Read the text and complete the last table with describing words from the lesson.",
+      "heard": "Read the text and complete the last table with describing words from the lesson.",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/tf-instruction.mp3",
+      "sha256": "3cb0579b0bc25d3a6fb86c3ada14c2e0649e78fa7005f02102e9bec7074ec8e6",
+      "text": "True or False",
+      "heard": "True or false?",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/who-instruction.mp3",
+      "sha256": "cf2d4f35099faaa13fbf6bfc81d4b3066f3066f78dcad5902a0316182110d7f4",
+      "text": "Who is it? Guess who the character is from the description!",
+      "heard": "Who is it? Guess who the character is from the description",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/impolite.mp3",
+      "sha256": "48a806e2c1133f78213a14f71bc1285c5034e2ce175cff7e34658803c3f63638",
+      "text": "impolite",
+      "heard": "Impolite",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/moody.mp3",
+      "sha256": "e0b61dad79c9edc6404c0081c96e29b18259bdc32879b632bccff036954e8a0a",
+      "text": "moody",
+      "heard": "Moody",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/intelligent.mp3",
+      "sha256": "c64f08ca9ea855695abedf781d1fe005540aa86ee1ad8dc95a319ce5cbd7a3f2",
+      "text": "intelligent",
+      "heard": "Intelligent",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/artistic.mp3",
+      "sha256": "edb98b1c65e25eb594aa84ba4a0033b04666080acd5326fca50b1c0d58749ae7",
+      "text": "artistic",
+      "heard": "Artistic",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/kind.mp3",
+      "sha256": "7a58688c95b597eafb684daccc74c5f60549e0ef782fd391ff79f27a9021ab82",
+      "text": "kind",
+      "heard": "Kind",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/goofy.mp3",
+      "sha256": "bdbcd522e1643aecdd1bf4953e8583c3c8940dcb7ce2c53dd319baa8d284ac50",
+      "text": "goofy",
+      "heard": "Goofy",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/podcast.mp3",
+      "sha256": "5ba405cbe42de2ec519b74b727754b68b5f10a96f5f3e04f9df35105e34fa79b",
+      "text": "podcast",
+      "heard": "Podcast",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/sleep-late.mp3",
+      "sha256": "da5475450be54f5649cda7e13a06fa5a4b00ad7cca8c17b58e229a5fa8053237",
+      "text": "sleep late",
+      "heard": "Sleep late?",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/homework.mp3",
+      "sha256": "8ea3b2f9a0f4e85f7623bb3ea2c9205135b2b1074ba5ffc44b15748c8601f492",
+      "text": "homework",
+      "heard": "Homework",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/more-personalities/make-jokes.mp3",
+      "sha256": "774678c76b917da5e506d29b56ac6392c90e8546719c38c36e5f29956cfa59a5",
+      "text": "make jokes",
+      "heard": "Make jokes",
+      "literal_normalized_match": true,
+      "verified": true
+    }
+  ]
+}
