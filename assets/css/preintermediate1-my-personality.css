@@ -1,0 +1,46 @@
+/* Activity 7: compact free writing and personal self-check. */
+.mp-page [hidden]{display:none!important}
+body.mp-page :is(.site-header,.site-header .navbar){height:auto!important;max-height:none!important;min-height:76px}
+.mp-page .pi-shell{max-width:none;padding-top:20px}
+body.mp-page.basic2-page .lesson-hero.immersive-basic-hero{padding:24px var(--basic2-app-gutter)!important;gap:24px}
+body.mp-page .pi-hero .pi-hero-copy{padding:26px}
+.mp-page .pi-hero-copy>.eyebrow{display:block!important;background:transparent!important;border:0;padding:0!important;margin:0 0 12px!important;min-height:0!important;color:white!important;font:700 .8rem/1.6 Arial,sans-serif!important}
+body.mp-page .pi-hero .pi-hero-copy h1{font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.12;margin:8px 0 14px}
+body.mp-page .pi-hero .pi-hero-copy>p:not(.eyebrow){font-size:1rem;line-height:1.5;margin:0}
+body.mp-page.basic2-page .immersive-basic-hero .lesson-hero-image{min-height:0!important}
+body.mp-page.basic2-page .immersive-basic-hero .lesson-hero-image img{min-height:0!important;max-height:320px!important;aspect-ratio:2/1;object-fit:cover}
+.mp-page .pi-objective{padding:18px 22px;margin-bottom:16px}
+.mp-page .pi-objective h2{font-size:1.2rem}
+.mp-page .mp-intro .pi-small{margin-top:10px}
+.mp-page .pi-topic{margin:12px 0}
+.mp-page .pi-topic>summary{padding:12px 16px}
+.mp-page .pi-topic>summary h2{font-size:1.1rem}
+.mp-page .pi-audio-controls{padding:8px;margin:12px 0}
+.mp-page .mp-instruction{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mp-page #mp-original-instruction{font-weight:700;line-height:1.6;margin:4px 0;flex:1 1 360px}
+.mp-page .mp-wordbank{display:flex;flex-wrap:wrap;gap:6px 20px;list-style:none;padding:12px 16px;margin:14px 0 8px;border:1px solid #b4c9e8;border-radius:12px;background:var(--basic2-soft)}
+.mp-page .mp-wordbank li{display:flex;align-items:center;min-height:44px}
+.mp-page .mp-workspace{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:20px;align-items:start;margin-top:16px}
+.mp-page .mp-writing-panel,.mp-page .mp-review-panel{min-width:0}
+.mp-page .mp-writing-panel>label{display:block;color:var(--basic2-blue);font-size:1.15rem;font-weight:700;margin:4px 0 8px}
+.mp-page textarea{display:block;width:100%;max-width:100%;min-height:340px;resize:vertical;box-sizing:border-box;padding:16px;border:1px solid #829bbf;border-radius:12px;font:1.05rem/1.8 Arial,sans-serif;color:var(--basic2-ink);background:white}
+.mp-page #mp-count{font-size:.88rem;color:var(--basic2-muted);margin:8px 0 12px}
+.mp-page .mp-review-panel{border:1px solid #b4c9e8;border-radius:12px;padding:16px;background:var(--basic2-soft)}
+.mp-page .mp-review-panel h3{color:var(--basic2-blue);font-size:1.1rem;margin:16px 0 8px}
+.mp-page .mp-help summary{min-height:44px;display:list-item;padding:10px 0;cursor:pointer;font-weight:700;color:var(--basic2-blue)}
+.mp-page .mp-help p,.mp-page .mp-help li{font-size:.94rem;line-height:1.6}
+.mp-page .mp-help ul{padding-left:22px}
+.mp-page .mp-self-check label{display:flex;gap:10px;align-items:flex-start;min-height:44px;padding:8px 0;line-height:1.5;cursor:pointer}
+.mp-page .mp-self-check input{flex:0 0 20px;width:20px;height:20px;margin:2px 0 0;accent-color:var(--basic2-blue)}
+.mp-page .mp-self-check{margin-bottom:16px}
+.mp-page #mp-copy-status{min-height:1.6em;overflow-wrap:anywhere}
+.mp-page .mp-result{padding:16px;border:1px solid #b4c9e8;border-radius:12px;background:var(--basic2-soft);color:var(--basic2-ink);line-height:1.6}
+.mp-page .btn{min-height:44px;white-space:normal}
+.mp-page :is(button,textarea,input,summary,a):focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.mp-page .mp-original-page{max-width:900px;margin:16px auto;text-align:center}
+.mp-page .mp-original-page img{display:block;width:100%;height:auto;border:1px solid #b4c9e8}
+.mp-page .mp-original-page figcaption{margin-top:8px}
+.mp-page .mp-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
+.mp-page .mp-footer .pi-actions{display:flex;flex-direction:column;margin:0;gap:8px}
+@media(max-width:980px){body.mp-page.basic2-page .lesson-hero.immersive-basic-hero{gap:12px}body.mp-page.basic2-page .immersive-basic-hero .lesson-hero-image img{height:190px;max-height:190px!important}.mp-page .mp-workspace,.mp-page .mp-footer{grid-template-columns:1fr}.mp-page .mp-footer .pi-actions{flex-direction:row;flex-wrap:wrap}}
+@media(max-width:700px){.mp-page .pi-objective{padding:16px}.mp-page .mp-review-panel{padding:14px}.mp-page textarea{min-height:300px;padding:12px}.mp-page .pi-hero-copy.jl-page-qr-host>.eyebrow{display:flex!important;align-items:center;min-height:68px!important;margin:0 76px 12px 0!important}}

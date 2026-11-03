@@ -1,0 +1,19 @@
+{
+  "generated_on": "2026-11-03",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261103,
+  "script": "tools/preintermediate1_unit1_my_personality_content.py",
+  "scribe_verified": true,
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/my-personality/instruction.mp3",
+      "sha256": "8edd4c0faca35f134744ea7231ac7c4392edb9ac9436507ef00b49d6e7a25e0b",
+      "text": "Write about your own personality. Use words from the box. Say as much as you can!",
+      "heard": "Write about your own personality. Use words from the box. Say as much as you can"
+    }
+  ],
+  "reused_pronunciations": "Nine exact existing files; see VOCABULARY in the content source."
+}
