@@ -1,0 +1,51 @@
+/* Unit 2: original hobby vocabulary and personal practice. */
+.hv-page [hidden]{display:none!important}
+body.hv-page :is(.site-header,.site-header .navbar){height:auto!important;max-height:none!important;min-height:76px}
+.hv-page .pi-shell{max-width:none;padding-top:20px}
+body.hv-page.basic2-page .lesson-hero.immersive-basic-hero{padding:24px var(--basic2-app-gutter)!important;gap:24px}
+body.hv-page .pi-hero .pi-hero-copy{padding:26px}
+.hv-page .pi-hero-copy>.eyebrow{display:block!important;background:transparent!important;border:0;padding:0!important;margin:0 0 12px!important;min-height:0!important;color:white!important;font:700 .8rem/1.6 Arial,sans-serif!important}
+body.hv-page .pi-hero .pi-hero-copy h1{font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.12;margin:8px 0 14px}
+body.hv-page .pi-hero .pi-hero-copy>p:not(.eyebrow){font-size:1rem;line-height:1.5;margin:0}
+body.hv-page.basic2-page .immersive-basic-hero .lesson-hero-image{min-height:0!important}
+body.hv-page.basic2-page .immersive-basic-hero .lesson-hero-image img{min-height:0!important;max-height:320px!important;aspect-ratio:2/1;object-fit:cover}
+.hv-page .pi-objective{padding:18px 22px;margin-bottom:16px}
+.hv-page .pi-objective h2{font-size:1.2rem}
+.hv-page .hv-intro .pi-small{margin-top:10px}
+.hv-page .pi-topic{margin:12px 0}
+.hv-page .pi-topic>summary{padding:12px 16px}
+.hv-page .pi-topic>summary h2{font-size:1.1rem}
+.hv-page .pi-audio-controls{padding:8px;margin:12px 0}
+.hv-page .hv-instruction{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.hv-page .hv-original-instruction{flex:1 1 360px;font-weight:700;line-height:1.65;margin:6px 0}
+.hv-page .hv-warmup-layout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:24px;align-items:center;margin-top:12px}
+.hv-page .hv-warmup-art{display:block;width:100%;height:auto;object-fit:contain}
+.hv-page .hv-definition{display:flex;align-items:flex-start;gap:10px;min-height:44px;box-sizing:border-box;padding:12px;margin:8px 0;border:1px solid #b4c9e8;border-radius:10px;background:var(--basic2-soft);cursor:pointer;line-height:1.5}
+.hv-page .hv-definition:has(input:checked){outline:2px solid var(--basic2-blue);outline-offset:-2px}
+.hv-page input[type=radio]{width:20px;height:20px;flex:0 0 20px;margin:2px 0 0;accent-color:var(--basic2-blue)}
+.hv-page .hv-wordbox{display:flex;flex-wrap:wrap;list-style:none;gap:6px 20px;padding:12px 16px;margin:12px 0;background:var(--basic2-soft);border:1px solid #b4c9e8;border-radius:12px}
+.hv-page .hv-wordbox li{display:flex;align-items:center;min-height:44px}
+.hv-page .hv-picture-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:14px 0}
+.hv-page .hv-picture{min-width:0;border:1px solid #b4c9e8;border-radius:12px;padding:12px;background:white}
+.hv-page .hv-picture figure{margin:0 0 10px;display:flex;align-items:center;justify-content:center;min-width:0;background:white}
+.hv-page .hv-picture img{display:block;width:100%;height:150px;object-fit:contain;border-radius:4px}
+.hv-page .hv-picture>label{display:block;margin-bottom:6px;font-weight:700;color:var(--basic2-blue)}
+.hv-page select,.hv-page textarea{display:block;box-sizing:border-box;width:100%;max-width:100%;min-height:44px;padding:10px;border:1px solid #829bbf;border-radius:8px;color:var(--basic2-ink);background:white;font:1rem/1.6 Arial,sans-serif}
+.hv-page textarea{min-height:135px;resize:vertical}
+.hv-page .hv-count{font-weight:700;color:var(--basic2-blue);font-size:.92rem;margin:10px 0}
+.hv-page .hv-feedback,.hv-page .hv-result{line-height:1.6;color:var(--basic2-ink);background:var(--basic2-soft);border:1px solid #b4c9e8;border-radius:10px;padding:12px;margin:12px 0 0;overflow-wrap:anywhere}
+.hv-page .hv-feedback{font-size:.9rem}
+.hv-page .hv-personal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:14px 0}
+.hv-page .hv-personal-grid label{display:block;background:var(--basic2-soft);border:1px solid #b4c9e8;border-radius:8px;padding:12px;margin-bottom:8px;font-weight:700;color:var(--basic2-blue)}
+.hv-page .btn{min-height:44px;white-space:normal}
+.hv-page :is(button,input,select,textarea,summary,a):focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.hv-page .hv-original-page{max-width:900px;margin:18px auto;text-align:center}
+.hv-page .hv-original-page img{display:block;width:100%;height:auto;border:1px solid #b4c9e8}
+.hv-page .hv-original-page figcaption{margin-top:8px}
+.hv-page .hv-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px}
+.hv-page .hv-footer .pi-actions{flex-direction:column;gap:8px;margin:0}
+@media(max-width:1100px){.hv-page .hv-picture-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:980px){body.hv-page.basic2-page .lesson-hero.immersive-basic-hero{gap:12px}body.hv-page.basic2-page .immersive-basic-hero .lesson-hero-image img{height:190px;max-height:190px!important}.hv-page .hv-footer{grid-template-columns:1fr}.hv-page .hv-footer .pi-actions{flex-direction:row;flex-wrap:wrap}}
+@media(max-width:760px){.hv-page .hv-picture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hv-page .hv-picture img{height:120px}.hv-page .hv-warmup-layout{grid-template-columns:1fr}.hv-page .hv-warmup-art{width:140px;justify-self:end}.hv-page .hv-personal-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.hv-page .pi-objective{padding:16px}.hv-page .pi-hero-copy.jl-page-qr-host>.eyebrow{display:flex!important;align-items:center;min-height:68px!important;margin:0 76px 12px 0!important}.hv-page .hv-picture{padding:10px}.hv-page select{font-size:.9rem;padding:8px}.hv-page .hv-picture-grid{gap:10px}}
+@media(max-width:359px){.hv-page .hv-picture-grid{grid-template-columns:1fr}.hv-page .hv-picture img{height:160px}}

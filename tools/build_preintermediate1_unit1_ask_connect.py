@@ -106,3 +106,7 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/' + NAME, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT / 'assets/img/page-qr' / ('ingles-preintermedio-1-' + NAME.removesuffix('.html') + '.svg'))
 print('Built Ask and Connect: 15 questions, gated model audio, inline glossary and separate extra-practice access.')
+
+# Keep the separately approved Unit 2 worksheet when rebuilding the Unit 1 chain.
+import runpy
+runpy.run_path(str(ROOT / 'tools/build_preintermediate1_unit2_hobby_vocabulary.py'), run_name='__main__')

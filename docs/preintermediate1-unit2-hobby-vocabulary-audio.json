@@ -1,0 +1,103 @@
+{
+  "generated_on": "2026-11-03",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261103,
+  "script": "tools/preintermediate1_unit2_hobby_vocabulary_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "Nine vocabulary pronunciations and two original page 1 instructions. All eleven normalized Scribe transcripts match their scripts."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/fishing.mp3",
+      "sha256": "40f1199f4392bbe850a0714955d2f4bf4755de4a713cdc776d2b8e60f5f18d83",
+      "text": "fishing",
+      "heard": "Fishing",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/cooking.mp3",
+      "sha256": "701a67d86d0d230d7dc3f28a1001b31c5ea7acd5556b20164cfb80f050c979fb",
+      "text": "cooking",
+      "heard": "Cooking",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/playing-chess.mp3",
+      "sha256": "28552cb3fc2e2d37a82cecb59925ce3ab2dba6c5b11ec6bcdecbba3af29d8b62",
+      "text": "playing chess",
+      "heard": "Playing chess",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/dancing.mp3",
+      "sha256": "e54ebb7d1b370dbd2eb495643e2455856f08267b2d6306f419296bd8919b7e4d",
+      "text": "dancing",
+      "heard": "Dancing",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/sailing.mp3",
+      "sha256": "a10f4d01eb8c2c30aa2f983397a0246b45fc116f0dfaf59ece2faba6fc281275",
+      "text": "sailing",
+      "heard": "Sailing",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/baking.mp3",
+      "sha256": "fbe662f6f9a487007b4d6a24f21331191ef2541d307ec7c8d0dfb007e176e5a8",
+      "text": "baking",
+      "heard": "Baking",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/playing-football.mp3",
+      "sha256": "7c5fc9c707913b06f2c51e656070ee8b235d4a128db1d324a1fd54a4150fea38",
+      "text": "playing football",
+      "heard": "Playing football",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/cycling.mp3",
+      "sha256": "7f35ce756000384a43fc9a28d1c81fbdc9128bece89db5dd350234a57ba9284a",
+      "text": "cycling",
+      "heard": "Cycling",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/hobby.mp3",
+      "sha256": "ffced4a483c8bb065cac8c1e61c47463bad9be3e1efab5dd662025571c27d5d4",
+      "text": "hobby",
+      "heard": "Hobby?",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/warm-up-instruction.mp3",
+      "sha256": "ff2df7023fee2783ed75a3845ba9a96f1db44e30e602cf0ce4f258c5d27c953b",
+      "text": "Task: Choose the correct definition for the word hobby.",
+      "heard": "Task: Choose the correct definition for the word hobby",
+      "literal_normalized_match": true,
+      "verified": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/vocabulary-instruction.mp3",
+      "sha256": "fcaee88593c7f8c7c628d0478368e9c147679f31879752e9d54abafb92bc1614",
+      "text": "Match the hobbies from the box to the correct pictures. Then, divide them in the table.",
+      "heard": "Match the hobbies from the box to the correct pictures, then divide them in the table",
+      "literal_normalized_match": true,
+      "verified": true
+    }
+  ]
+}
