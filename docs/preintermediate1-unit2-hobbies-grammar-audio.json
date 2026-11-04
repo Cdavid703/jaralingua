@@ -1,0 +1,269 @@
+{
+  "generated_on": "2026-11-03",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261103,
+  "script": "tools/preintermediate1_unit2_hobbies_grammar_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "Four grammar examples, four original instructions, thirteen vocabulary pronunciations and seven gated correct-sentence models.",
+    "No incorrect source sentence is narrated as a grammar model.",
+    "24 literal normalized Scribe matches; three numeral spellings and one sew/so homophone accepted with contextual review."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/know-how-to.mp3",
+      "sha256": "5ddb5d9a7d3e0f87440b8c39adddf6e00bb7edf4167961ec8263a0e9981b7c99",
+      "text": "know how to",
+      "heard": "know how to",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/partner.mp3",
+      "sha256": "89a51589cba8c7b31ee9c51fe61c4cd1a8a63619b570cbd7f4b43ff9fd4e83ea",
+      "text": "partner",
+      "heard": "Partner",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/grandmother.mp3",
+      "sha256": "8c612a9af836eb256092ede7fd31211eb7600435a66574767cc7f171eb9e8369",
+      "text": "grandmother",
+      "heard": "Grandmother",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/sew.mp3",
+      "sha256": "3c9cb5ec4d6402bd0813febf5749470a550919cf4227e0db682e3be5c3ed127a",
+      "text": "sew",
+      "heard": "So",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Sew and so are homophones (/soʊ/); the phrase sew clothing also transcribes correctly."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/run-a-race.mp3",
+      "sha256": "df0579c8341b8ec103125bf57f40d4ace004447e69c7bec65220978a1d0d437a",
+      "text": "run a race",
+      "heard": "Run a race",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/sail-a-boat.mp3",
+      "sha256": "4fd2000608422661d450f330623df9878802ac4add61102860b0d851f4aeac23",
+      "text": "sail a boat",
+      "heard": "Sail a boat?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/bake-a-cake.mp3",
+      "sha256": "fedc12343fd8dff4f21fa62c3c99f1c02a16a110b64895f80cff49e8f8ac5eec",
+      "text": "bake a cake",
+      "heard": "Bake a cake",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/ride-a-bike.mp3",
+      "sha256": "40e186191bbcb1105fd048399ac4dab41e5e1a0d5d195fb8ce03247e06721d4e",
+      "text": "ride a bike",
+      "heard": "Ride a bike?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/swim.mp3",
+      "sha256": "f3895bba9b1a91acde3a27a0148f8b87ccd839b4d1bc7b546043b99048640ab7",
+      "text": "swim",
+      "heard": "Swim",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/sew-clothing.mp3",
+      "sha256": "ef74b153691a18443c01b6169f3b2a855dcb5d47ac69185f95dcfc69f923356c",
+      "text": "sew clothing",
+      "heard": "Sew clothing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/play-chess.mp3",
+      "sha256": "59c69b430d3ecc20f1f977b6e75850b85cd1f8365f138b0cde590ab5dd383e7e",
+      "text": "play chess",
+      "heard": "Play chess",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/play-football.mp3",
+      "sha256": "98ef38997147274714fdd5aa0598d102e6bd4a7faaa09faf6fb56a30d0f5c418",
+      "text": "play football",
+      "heard": "Play football?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/wine.mp3",
+      "sha256": "8dfd9eb66de2e00bf279bb94c294e3828b1f464dad88b7a2220e1b42608ec75f",
+      "text": "wine",
+      "heard": "Wine",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/theory-instruction.mp3",
+      "sha256": "aa40484d0616c38b81ca8937d0d2b2adcc9c1625c1ce850dd9a88fcf225f1d80",
+      "text": "Read the theory about the grammar point and then complete the exercises.",
+      "heard": "Read the theory about the grammar point and then complete the exercises",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/task-1-instruction.mp3",
+      "sha256": "f8007ae2787b09ff927b214ef91c51aed5ede9bf43b1978163f5f01dd059d274",
+      "text": "Task 1: Complete the sentences for you.",
+      "heard": "Task one: Complete the sentences for you",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs (1/one, 2/two, 3/three)."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/task-2-instruction.mp3",
+      "sha256": "e586a6fab43651676703ff8d47e43dbd6f6c2d2498703d28dd9f026583831253",
+      "text": "Task 2: Correct the mistakes in the sentences.",
+      "heard": "Task two: Correct the mistakes in the sentences",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs (1/one, 2/two, 3/three)."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/task-3-instruction.mp3",
+      "sha256": "2fdbbc94d6457f97b42108e35cae04271153503235416e15a34fdfdc7950e524",
+      "text": "Task 3: Make sentences for yourself.",
+      "heard": "Task three: Make sentences for yourself",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs (1/one, 2/two, 3/three)."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/can-cook.mp3",
+      "sha256": "dd4559dfc666fd39fb53b46879c244659f673ecfffd90608598a98217dee6c0f",
+      "text": "I can cook.",
+      "heard": "I can cook",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/can-sing.mp3",
+      "sha256": "dfed577a7cfedbd3e5882bb0e743d2a47f7d946e735b8edcabf9c927c3cea707",
+      "text": "I can sing.",
+      "heard": "I can sing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/cant-cook.mp3",
+      "sha256": "f5ee99a197f7d785b31d19743ac23a35e3ead3077c4f0788d3be8f4d263782a0",
+      "text": "I can’t cook.",
+      "heard": "I can't cook",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/cant-sing.mp3",
+      "sha256": "2281e5cd5c9f24ab16a86b20a7ef2ae2aa66529d38595650d41347e66020387e",
+      "text": "I can’t sing.",
+      "heard": "I can't sing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-1.mp3",
+      "sha256": "54f0855374c45940becf4a32a49bf9f421997cfbfe7cfd7133f79d58e5359cde",
+      "text": "I can’t swim.",
+      "heard": "I can't swim.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-2.mp3",
+      "sha256": "863c39030ecb11fd990682cdd34bf43826555dae0068f17ae5446c5439b0111c",
+      "text": "They can’t speak Spanish.",
+      "heard": "They can't speak Spanish?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-3.mp3",
+      "sha256": "e2c8539450282218401b4642493f2f0ccdb3e7f917d36100663c9cb534679cbe",
+      "text": "Can you drive?",
+      "heard": "Can you drive?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-4.mp3",
+      "sha256": "88b58eeb94f3f0aa83299b128be156a5265d4ba4e506ff615beeae7b2e8793b4",
+      "text": "I can’t drink wine.",
+      "heard": "I can't drink wine",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-5.mp3",
+      "sha256": "d3d60baa724e362a92a3311e3b188c12740b0a2f38c9898db7e0aea43e6ae785",
+      "text": "He can cook.",
+      "heard": "He can cook",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-6.mp3",
+      "sha256": "4c311a27e75c8c6bf6a19b51cad4ba0e50f63b94c2a0d0b859fc7fdecdc43c91",
+      "text": "She can run fast.",
+      "heard": "She can run fast.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/correction-7.mp3",
+      "sha256": "ca1f238e2e4e8ca1be46c5d33de845b5c9f044f434d4b96952bc0b8caa51c99d",
+      "text": "We can’t dance.",
+      "heard": "We can't dance",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    }
+  ]
+}

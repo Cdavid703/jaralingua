@@ -78,3 +78,7 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Unit 2 worksheet activity 1/8: original warm up, eight pictures, personal columns and unchanged downloadable PDF.')
+
+# Reapply the separately approved grammar activity after reconstructing this route.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit2_hobbies_grammar.py'), run_name='__main__')
