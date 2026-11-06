@@ -1,0 +1,310 @@
+{
+  "generated_on": "2026-11-05",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261105,
+  "script": "tools/preintermediate1_unit2_why_hobbies_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "Four original profiles, five instructions, six original questions and sixteen new pronunciations.",
+    "27 literal normalized Scribe matches; four instructions differ only in numeral spelling.",
+    "Creative and hobby reuse unchanged existing course pronunciations."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/relaxing.mp3",
+      "sha256": "2329f3617d4fe05b9df17967229e7f3b6bde080bfb4b1175e1492d7e91bab3e6",
+      "text": "relaxing",
+      "heard": "Relaxing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/flowers.mp3",
+      "sha256": "706b47f800869a2ba9dece99687a69ccbb6086797821f1dd2577f754577b369c",
+      "text": "flowers",
+      "heard": "Flowers",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/trees.mp3",
+      "sha256": "28bc85019fc1c59a5d8e7413df14babd4ef4e58e1b67b44537ba1f0aebe77dfc",
+      "text": "trees",
+      "heard": "Trees",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/exercise.mp3",
+      "sha256": "a23508c43607dbadf67b34e35086bc3f3c40e35afdb6997ec29314015161a547",
+      "text": "exercise",
+      "heard": "Exercise",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/outdoors.mp3",
+      "sha256": "4dc9b360a3fb7e48e5b5ce0d5003236351405d3fde23fb51c308e2ec1cda90b5",
+      "text": "outdoors",
+      "heard": "Outdoors",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/challenging.mp3",
+      "sha256": "c6a4fbbe810471b134194cdb5b66ee19f1495d133618106522f860f0f61bda4e",
+      "text": "challenging",
+      "heard": "challenging",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/hiking.mp3",
+      "sha256": "4b23749000f0eda8cb17b0253117a5a65769dd8f1bae7eb7efd944ec50352b12",
+      "text": "hiking",
+      "heard": "Hiking",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/forest.mp3",
+      "sha256": "e4bccd10a09d7837f27702c14c2ae038558249076b286335379e8a9004c5a315",
+      "text": "forest",
+      "heard": "Forest",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/mountains.mp3",
+      "sha256": "768e77686c68ad210f63c36533c1316279d483ba30fe033cc017f0b1ca5da69e",
+      "text": "mountains",
+      "heard": "Mountains",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/three-times-a-week.mp3",
+      "sha256": "0abbd79d7eef3acce0618684278cfdef256bc2851a848ddaad850257ff0691fd",
+      "text": "three times a week",
+      "heard": "Three times a week?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/fruit.mp3",
+      "sha256": "25f6c4c9bf1a556652ffec24602257b40cdd242ac986563fddf2385ddf92d625",
+      "text": "fruit",
+      "heard": "Fruit",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/common.mp3",
+      "sha256": "3bba896bba2c506183e492c8aa8db42e348465470126a2989779e9a4a0bf2bf9",
+      "text": "common",
+      "heard": "common",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/country.mp3",
+      "sha256": "5fa38a8710acebdf58ba3031d0a808c3d5a5529a2d472abb30476538d7de7ac0",
+      "text": "country",
+      "heard": "Country",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/painting.mp3",
+      "sha256": "f00bd6c1b92ab1ff230cd4ba55796dc8e989a399a11a5939addedfd607f55279",
+      "text": "painting",
+      "heard": "Painting",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/running.mp3",
+      "sha256": "2b2b2162af1206f5c6f44fffdb525c0fe488f9cc7b33058e2d9bbde7d01e656b",
+      "text": "running",
+      "heard": "Running",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/tennis.mp3",
+      "sha256": "0284ad6ff510790798bd01ab7899ef22cb927fc389f34959bb569c559e94a914",
+      "text": "tennis",
+      "heard": "Tennis",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/olivia-profile.mp3",
+      "sha256": "5ed8b816c98869814d62c6f3c52a99da75e88e10e14683af403389528c2ebefd",
+      "text": "I love painting! It is creative and fun! I like painting flowers and trees. Painting is very relaxing. I paint every day!",
+      "heard": "I love painting. It is creative and fun. I like painting flowers and trees. Painting is very relaxing. I paint every day.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/benji-profile.mp3",
+      "sha256": "44c8885d904485817edabc55bbed06eafe5730540069b6109e0c23a69265a89b",
+      "text": "My hobby is playing tennis. It’s great! It is good exercise and I can be outdoors. I play tennis every week.",
+      "heard": "My hobby is playing tennis. It's great. It is good exercise and I can be outdoors. I play tennis every week",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/isabelle-profile.mp3",
+      "sha256": "ce9d05a489bb200911ab3f4505bd685326bebe15d2d137a9439cc4ba18f42c75",
+      "text": "I love running - it is my hobby! Running is challenging - but it is good exercise! I run three times a week.",
+      "heard": "I love running. It is my hobby. Running is challenging, but it is good exercise. I run three times a week",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/liam-profile.mp3",
+      "sha256": "1dd84bb46a6c3c0a2efc9dde84115e855c273fd1dc9ed436fb33b9ecf97a023e",
+      "text": "I love hiking because I can be outdoors. I love hiking in the forest and the mountains - it is beautiful. I hike every Sunday.",
+      "heard": "I love hiking because I can be outdoors. I love hiking in the forest and the mountains. It is beautiful. I hike every Sunday",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/reading-instruction.mp3",
+      "sha256": "437be1ff59e5bcede8583dd607e7e76f90fe8540108464235df9586620a77503",
+      "text": "Read about the people and their hobbies and then complete the exercises.",
+      "heard": "Read about the people and their hobbies, and then complete the exercises",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/table-instruction.mp3",
+      "sha256": "de47958d9d9c0528b2ec6a90597693fcbf683c1066b9153fce765d45353a5cf6",
+      "text": "Task 1: Complete the table with the correct name.",
+      "heard": "Task one: Complete the table with the correct name",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one, 2/two or 3/three."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/continuation-instruction.mp3",
+      "sha256": "725863e6a51d9bbf9f65123163382f90436e718c1be6580badeac861366e0216",
+      "text": "Now, use the same text as a guide to complete task 2 and task 3 below.",
+      "heard": "Now use the same text as a guide to complete task two and task three below",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one, 2/two or 3/three."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/tf-instruction.mp3",
+      "sha256": "779b0bb7b0ba531de9b2c272ce465ff238191ba8f8f023d017e2414af1387c61",
+      "text": "Task 2: True or False.",
+      "heard": "Task two, true or false",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one, 2/two or 3/three."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/questions-instruction.mp3",
+      "sha256": "ec9737daea112836eae1e79ad85c3233075c6e78f593759afe0a799457e77302",
+      "text": "Task 3: Answer the questions.",
+      "heard": "Task three: Answer the questions",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one, 2/two or 3/three."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-1.mp3",
+      "sha256": "95c13fcb98e5ce3d41f881a2b35adddaf2f192a8dc46e240108a2d639393a4db",
+      "text": "Why does Olivia like painting?",
+      "heard": "Why does Olivia like painting?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-2.mp3",
+      "sha256": "112dc8f035b45739eea46cd04de5915d4c26cef8abca7de8b97199b56c68b704",
+      "text": "Why does Liam like hiking?",
+      "heard": "Why does Liam like hiking?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-3.mp3",
+      "sha256": "d1e9219beccf5a40302422f3508e8ebdb953ebb0fc2650fd249343cca69bf5d5",
+      "text": "Which of these hobbies do you want to do? (Painting, running, tennis or hiking…)",
+      "heard": "Which of these hobbies do you want to do? Painting, running, tennis, or hiking?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-4.mp3",
+      "sha256": "c85164dc6b673ba567ffab136f8d245f6905f7077c03c0e6a9774955059a701e",
+      "text": "Is it common to go hiking in your country?",
+      "heard": "Is it common to go hiking in your country?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-5.mp3",
+      "sha256": "1aa1d13dd73fcad7e9f42652427b8b13b4a36ac5e0ef02e31038ded4655da9df",
+      "text": "Do you think that running is good exercise?",
+      "heard": "Do you think that running is good exercise?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/question-6.mp3",
+      "sha256": "80265a8d783d29d1775167c03dcd57d81b354948fb901b6b9107d8adc8024dd8",
+      "text": "Which of these hobbies is the most creative?",
+      "heard": "Which of these hobbies is the most creative?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    }
+  ],
+  "reused": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/lesson/creative.mp3",
+      "text": "creative",
+      "sha256": "0cf744c740df0fbda99c2c33c3e7db6c8f4f59891684ee5a08b91eed26720fbc",
+      "verification": "Existing course pronunciation; bytes unchanged from the published committed asset."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/hobby.mp3",
+      "text": "hobby",
+      "sha256": "ffced4a483c8bb065cac8c1e61c47463bad9be3e1efab5dd662025571c27d5d4",
+      "verification": "Existing course pronunciation; bytes unchanged from the published committed asset."
+    }
+  ]
+}

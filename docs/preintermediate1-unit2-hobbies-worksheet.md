@@ -1,6 +1,6 @@
 # Unit 2 · Hobbies: Can / Can’t · Original worksheet route
 
-The teacher approved following the Unit 1 PDF workflow, separated by activity and skill. Build and review one activity at a time. Activities 1–3 are implemented in their separately approved deliveries; the other five remain in preparation without dead links. The existing connected listening and reading remain available.
+The teacher approved following the Unit 1 PDF workflow, separated by activity and skill. Build and review one activity at a time. Activities 1–4 are implemented in their separately approved deliveries; the other four remain in preparation without dead links. The existing connected listening and reading remain available.
 
 ## Original source
 
@@ -13,7 +13,7 @@ ESL Pals, Hobbies: Can / Can’t, 10 pages. Recovered from the teacher’s conne
 | 1 | Hobby Vocabulary | Vocabulary | Page 1 | Built; see publication record |
 | 2 | Hobbies with Can and Can’t | Grammar | Page 2 and the top of page 3 | Built; see grammar publication record |
 | 3 | People and Their Hobbies | Video Listening | Lower part of page 3 | Built; see video publication record |
-| 4 | Why Hobbies Are Good | Reading | Pages 4–5 | In preparation |
+| 4 | Why Hobbies Are Good | Reading | Pages 4–5 | Built; see reading publication record |
 | 5 | Let’s Talk About Hobbies | Speaking | Page 6 | In preparation |
 | 6 | Who Can Do It? | Case Study | Page 7 | In preparation |
 | 7 | Can and Can’t: More Practice | Grammar | Page 8 and the top of page 9 | In preparation |
