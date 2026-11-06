@@ -8,7 +8,7 @@ from preintermediate1_unit2_hobby_vocabulary_content import PLAN
 ROOT=Path(__file__).resolve().parents[1];COURSE=ROOT/'ingles/preintermedio-1'
 NAME='video-listening-unit-2-people-and-hobbies.html';PDF='materials/25-hobbies-can-and-cant-original.pdf'
 MEDIA='/assets/img/english-preintermediate-1/unit-2/practice/people-hobbies/'
-VERSION='20261105-people-hobbies-1'
+VERSION='20261105-people-hobbies-2'
 def fragment(s):return html.fragment_fromstring(s)
 def write(name,doc):(COURSE/name).write_text('<!doctype html>\n'+html.tostring(doc,encoding='unicode',method='html')+'\n')
 def audio_button(slug,label):return f'<button type="button" class="btn btn-secondary" data-ph-audio="{slug}">{escape(label)}</button>'

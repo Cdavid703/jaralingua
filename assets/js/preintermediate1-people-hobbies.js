@@ -6,7 +6,7 @@
   const storageStatus=document.getElementById('ph-storage-status'),audio=document.getElementById('ph-audio'),audioStatus=document.getElementById('ph-audio-status');
   const videoFolder=document.getElementById('watch-video'),frame=document.getElementById('ph-video-frame'),loadButton=document.getElementById('ph-load-video'),videoStatus=document.getElementById('ph-video-status'),pauseButton=document.getElementById('ph-pause-video');
   let saved={},storageAvailable=true,vocabulary=null,speed=1,audioToken=0;
-  let player=null,ready=false,loading=false,apiPromise=null,loadEpoch=0,loadTimer=null,pendingSeek=null,evidencePlayback=false;
+  let player=null,ready=false,loading=false,loadEpoch=0,loadTimer=null,pendingSeek=null,evidencePlayback=false;
   const videoSpeeds=[...document.querySelectorAll('[data-ph-video-speed]')];
   function unavailable(){storageAvailable=false;storageStatus.hidden=false;storageStatus.textContent='This browser cannot save your draft. Keep this page open and copy your opinion before leaving.';}
   try{saved=JSON.parse(sessionStorage.getItem(key)||'{}')||{};}catch(_){unavailable();}
@@ -50,23 +50,36 @@
   function videoControls(){let rates=[];try{rates=player.getAvailablePlaybackRates();}catch(_){}videoSpeeds.forEach(b=>b.disabled=!ready||!rates.includes(Number(b.dataset.phVideoSpeed)));pauseButton.disabled=!ready;}
   function rateChanged(){if(!ready)return;const rate=player.getPlaybackRate();videoSpeeds.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.phVideoSpeed)===rate)));videoStatus.textContent='Video speed: '+rate+'×.';}
   function failVideo(epoch,message){if(epoch!==loadEpoch)return;clearTimeout(loadTimer);loadEpoch++;ready=false;loading=false;pendingSeek=null;evidencePlayback=false;try{player?.destroy();}catch(_){}player=null;frame.replaceChildren();const target=document.createElement('div');target.id='ph-player';frame.append(target);frame.hidden=true;loadButton.hidden=false;loadButton.disabled=false;loadButton.textContent='Retry original video';videoControls();videoStatus.textContent=message+' Open the original on YouTube if needed; your answers are still here.';}
-  function youtubeAPI(){
-    if(window.YT?.Player)return Promise.resolve();if(apiPromise)return apiPromise;
-    apiPromise=new Promise((resolve,reject)=>{let finished=false;const old=window.onYouTubeIframeAPIReady;const timer=setTimeout(()=>finish(false),15000);const tag=document.createElement('script');tag.id='ph-youtube-api';tag.src='https://www.youtube.com/iframe_api';tag.async=true;
-      function finish(ok){if(finished)return;finished=true;clearTimeout(timer);if(ok)resolve();else{tag.remove();reject(new Error('Video API unavailable'));}}
-      window.onYouTubeIframeAPIReady=()=>{if(typeof old==='function')old();finish(true);};tag.onerror=()=>finish(false);document.head.append(tag);
-    }).catch(error=>{apiPromise=null;throw error;});return apiPromise;
+  // Communicate with the permitted embedded player without loading third-party scripts in this page.
+  function embeddedPlayer(events){
+    const iframe=document.createElement('iframe');iframe.id='ph-player';iframe.title='Original video: Listening — hobbies';iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';iframe.allowFullscreen=true;
+    const origin='https://www.youtube-nocookie.com';const url=new URL(origin+'/embed/'+data.video_id);url.search=new URLSearchParams({enablejsapi:'1',playsinline:'1',rel:'0',autoplay:'0',hl:'en',cc_lang_pref:'en',origin:location.origin,widgetid:'1'}).toString();
+    let info={playbackRate:1,availablePlaybackRates:[1]},announced=false,disposed=false;
+    const post=message=>{if(!disposed)iframe.contentWindow?.postMessage(JSON.stringify({...message,id:'ph-player',channel:'ph-player'}),origin);};
+    const command=(func,args=[])=>post({event:'command',func,args});
+    const ping=()=>post({event:'listening'});const timer=setInterval(ping,250);
+    function receive(event){
+      if(disposed||event.source!==iframe.contentWindow||event.origin!==origin)return;
+      let message;try{message=typeof event.data==='string'?JSON.parse(event.data):event.data;}catch(_){return;}if(!message||typeof message!=='object')return;
+      if((message.event==='initialDelivery'||message.event==='infoDelivery')&&message.info&&typeof message.info==='object')Object.assign(info,message.info);
+      if(!announced&&(message.event==='onReady'||message.event==='initialDelivery')){announced=true;clearInterval(timer);for(const name of ['onStateChange','onPlaybackRateChange','onError','onAutoplayBlocked'])command('addEventListener',[name]);events.onReady();}
+      if(message.event==='onStateChange'){info.playerState=message.info;events.onStateChange({data:message.info});}
+      if(message.event==='onPlaybackRateChange'){info.playbackRate=message.info;events.onPlaybackRateChange();}
+      if(message.event==='onError')events.onError();if(message.event==='onAutoplayBlocked')events.onAutoplayBlocked();
+    }
+    window.addEventListener('message',receive);iframe.addEventListener('load',ping);iframe.src=url.href;document.getElementById('ph-player').replaceWith(iframe);
+    return{pauseVideo:()=>command('pauseVideo'),playVideo:()=>command('playVideo'),seekTo:(second,ahead)=>command('seekTo',[second,ahead]),setPlaybackRate:rate=>command('setPlaybackRate',[rate]),getPlaybackRate:()=>info.playbackRate,getAvailablePlaybackRates:()=>Array.isArray(info.availablePlaybackRates)?info.availablePlaybackRates:[1],getIframe:()=>iframe,destroy:()=>{disposed=true;clearInterval(timer);window.removeEventListener('message',receive);iframe.remove();}};
   }
   function replayPending(){if(!ready||pendingSeek===null)return;const second=pendingSeek;pendingSeek=null;stopAudio();evidencePlayback=true;player.seekTo(second,true);player.playVideo();videoStatus.textContent='Replaying from '+Math.floor(second/60)+':'+String(second%60).padStart(2,'0')+'. Press Play in the player if playback is paused.';}
   async function loadVideo(){
     if(loading)return;if(ready){replayPending();return;}loading=true;const epoch=++loadEpoch;loadButton.disabled=true;videoStatus.textContent='Loading the original YouTube video…';frame.hidden=false;loadTimer=setTimeout(()=>failVideo(epoch,'The video did not become ready.'),25000);
-    try{await youtubeAPI();if(epoch!==loadEpoch)return;player=new window.YT.Player('ph-player',{host:'https://www.youtube-nocookie.com',width:'100%',height:'100%',videoId:data.video_id,playerVars:{playsinline:1,rel:0,autoplay:0,hl:'en',cc_lang_pref:'en',origin:location.origin},events:{
+    try{if(epoch!==loadEpoch)return;player=embeddedPlayer({
       onReady:()=>{if(epoch!==loadEpoch)return;clearTimeout(loadTimer);ready=true;loading=false;loadButton.hidden=true;const iframe=player.getIframe();iframe.title='Original video: Listening — hobbies';iframe.referrerPolicy='strict-origin-when-cross-origin';videoControls();videoStatus.textContent='Video ready. Press Play in the player.';if(pendingSeek!==null)replayPending();},
       onStateChange:event=>{if(epoch!==loadEpoch)return;if(event.data===1){stopAudio();videoStatus.textContent='Video playing.';}else if(event.data===2)videoStatus.textContent='Video paused.';else if(event.data===0){evidencePlayback=false;videoStatus.textContent='Video finished. Replay any part you want to review.';}},
       onPlaybackRateChange:()=>{if(epoch===loadEpoch)rateChanged();},
       onError:()=>failVideo(epoch,'The original video cannot play in this player.'),
       onAutoplayBlocked:()=>{if(epoch===loadEpoch)videoStatus.textContent='Press Play in the player to start the video.';}
-    }});}catch(_){failVideo(epoch,'The video could not load.');}
+    });}catch(_){failVideo(epoch,'The video could not load.');}
   }
   loadButton.addEventListener('click',loadVideo);pauseButton.addEventListener('click',pauseVideo);
   videoSpeeds.forEach(b=>b.addEventListener('click',()=>{if(!ready||b.disabled)return;player.setPlaybackRate(Number(b.dataset.phVideoSpeed));}));
