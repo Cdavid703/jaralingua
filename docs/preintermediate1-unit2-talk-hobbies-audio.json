@@ -1,0 +1,200 @@
+{
+  "generated_on": "2026-11-05",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261105,
+  "script": "tools/preintermediate1_unit2_talk_hobbies_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "15 literal normalized Scribe matches; three instructions differ only in numeral spelling.",
+    "Four unchanged exact word pronunciations are reused."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/fun.mp3",
+      "sha256": "11cfb69951be97b8245c58dc720e9e2abf89529ccde6ee82e14c6d3cfb0e67b2",
+      "text": "fun",
+      "heard": "Fun",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/good-exercise.mp3",
+      "sha256": "6c41a5655d1c907bdc4bdf0bc87fe5b4c6266944db088bbd439a5ba742aca5fc",
+      "text": "good exercise",
+      "heard": "Good exercise",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/everyone.mp3",
+      "sha256": "0260e513770302f6e1c0b2caf3cbe11691d27373ed77ab7edca1cc8eac77a911",
+      "text": "everyone",
+      "heard": "Everyone",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/should.mp3",
+      "sha256": "95e0a4fe238606078414b9d7405472a1d440d536b35c858139e65cf4530cb57d",
+      "text": "should",
+      "heard": "Should",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/expensive.mp3",
+      "sha256": "6e336c5845820ab3e084f46961f1a7b730975790feef041c57b07457a2a1a722",
+      "text": "expensive",
+      "heard": "Expensive",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/hobbies.mp3",
+      "sha256": "966e81b8ffb5c1ccbe96b64f61a5e0dd84507faa38cf9addc2448bb29cb8b823",
+      "text": "hobbies",
+      "heard": "Hobbies",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/started.mp3",
+      "sha256": "f72fdd809fa6062d49e734fc92f5222b197854609ea3025117beed1c52bd8f97",
+      "text": "started",
+      "heard": "started",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/state.mp3",
+      "sha256": "226a3bb86c07ff0d884ea1557d0a101e5eb0131d40d490554c2ce81b74a96e54",
+      "text": "state",
+      "heard": "State",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/try.mp3",
+      "sha256": "0197d96293d8dffb365803d63842377a69c1c94cc6e4a5ed8f5b9357b3434b94",
+      "text": "try",
+      "heard": "Try",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/future.mp3",
+      "sha256": "be8edb4b09042f547dd22ca2d1772f04ef3eeb304f8549cd241fb907d297390d",
+      "text": "future",
+      "heard": "Future",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/question-1.mp3",
+      "sha256": "2c0d0748132e9fbe168638c8baa15e21aa627b4cff7dec19906397bbb75a35b1",
+      "text": "Do you think everyone should have a hobby?",
+      "heard": "Do you think everyone should have a hobby?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/question-2.mp3",
+      "sha256": "89c134b7a639198eb37308291dc6297597e8ff4451bb19e01daeec600d0eebd7",
+      "text": "Do you think that some hobbies are too expensive?",
+      "heard": "Do you think that some hobbies are too expensive?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/question-3.mp3",
+      "sha256": "c2fe31366f577249c178ddace241d7eb22cb82c501cc71d493aa938a41993595",
+      "text": "What hobby would you never like to do?",
+      "heard": "What hobby would you never like to do?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/question-4.mp3",
+      "sha256": "885a212f1a6f3f390d5bcb6fc4b0b02af9f723cb5df9cf2404270287ff50ea5a",
+      "text": "What hobbies do your family do?",
+      "heard": "What hobbies do your family do?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/question-5.mp3",
+      "sha256": "3a6cf73d02ef6990b6b7087df6b9dedf03d699de5338f082612eb1fd047da117",
+      "text": "What hobbies do your friends do?",
+      "heard": "What hobbies do your friends do?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/discussion-instruction.mp3",
+      "sha256": "933aa380828793fcd42ca9119117f08c207ba8d1698ab37349210fb584bfa4f4",
+      "text": "Task 1: Discuss the questions as a class.",
+      "heard": "Task one: Discuss the questions as a class",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/talk-instruction.mp3",
+      "sha256": "fc3e5dcd2e2c252183971d7d8e7d07114746e1ebb4ae3f76f35329eb00a2bf41",
+      "text": "Task 2: Use the words in the box to talk about your hobby. In your answer: Describe your hobby. State when you started your hobby. Describe why you do it.",
+      "heard": "Task two: Use the words in the box to talk about your hobby. In your answer, describe your hobby. State when you started your hobby. Describe why you do it",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/list-instruction.mp3",
+      "sha256": "7f3ebb3b7d4652bc8a36e983318730658021eb38d3abde4edbfa5eef52285526",
+      "text": "Task 3: Make a list of the hobbies you want to try in the future.",
+      "heard": "Task three: Make a list of the hobbies you want to try in the future.",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Numeral spelling only."
+    }
+  ],
+  "reused": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/relaxing.mp3",
+      "sha256": "2329f3617d4fe05b9df17967229e7f3b6bde080bfb4b1175e1492d7e91bab3e6",
+      "text": "relaxing"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/lesson/creative.mp3",
+      "sha256": "0cf744c740df0fbda99c2c33c3e7db6c8f4f59891684ee5a08b91eed26720fbc",
+      "text": "creative"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/outdoors.mp3",
+      "sha256": "4dc9b360a3fb7e48e5b5ce0d5003236351405d3fde23fb51c308e2ec1cda90b5",
+      "text": "outdoors"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/why-hobbies/challenging.mp3",
+      "sha256": "c6a4fbbe810471b134194cdb5b66ee19f1495d133618106522f860f0f61bda4e",
+      "text": "challenging"
+    }
+  ]
+}

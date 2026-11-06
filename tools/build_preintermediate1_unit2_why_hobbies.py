@@ -75,3 +75,6 @@ except ModuleNotFoundError:sys.path.insert(0,str(ROOT/'tmp/unit5-explanation/pyt
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Unit 2 activity 4/8: four original profiles, 4-name picture table, six True/False statements and six written answers.')
+
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit2_talk_hobbies.py'),run_name='__main__')
