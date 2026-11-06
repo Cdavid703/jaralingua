@@ -1,0 +1,162 @@
+{
+  "generated_on": "2026-11-03",
+  "verified_on": "2026-11-05",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261103,
+  "script": "tools/preintermediate1_unit2_people_hobbies_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "Fourteen vocabulary pronunciations and two original task instructions.",
+    "Original video audio is preserved in the linked YouTube player, not regenerated.",
+    "Fourteen literal normalized Scribe matches; two numeral spelling variants reviewed as equivalent."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/aunt.mp3",
+      "sha256": "197129995f51b18a5c81d08069b1c24fac296a535180b11a107d1f1e4b98559a",
+      "text": "aunt",
+      "heard": "Aunt",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/snowboarding.mp3",
+      "sha256": "3359e404e9da758b88fac7f80648e78feb8d41b819c2bce4611447606caad0cc",
+      "text": "snowboarding",
+      "heard": "Snowboarding",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/drawing-cartoons.mp3",
+      "sha256": "dd1940f469c5687921f1f5ccbde8148d46f669e53cdec370d0e5693b85d27c96",
+      "text": "drawing cartoons",
+      "heard": "Drawing cartoons",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/strange.mp3",
+      "sha256": "f40f134348275ef91c5b265ad43b5e9d38cd76cfa95d84416847da76c2fc73a2",
+      "text": "strange",
+      "heard": "Strange",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/biscuits.mp3",
+      "sha256": "d1bc5ac3e6bf3de9d78cb95a3d33f223cd15af5636d0f0a75b012d567f5147c1",
+      "text": "biscuits",
+      "heard": "Biscuits",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/musician.mp3",
+      "sha256": "4dfcb6806d906e36a925b82f6eefef56e5e367fc36e5e2b878ae817454a5b930",
+      "text": "musician",
+      "heard": "Musician",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/volleyball.mp3",
+      "sha256": "f4134b5e84c1c63eb2087fc79ec365043f8886210c85294d5d27f924d13cedd9",
+      "text": "volleyball",
+      "heard": "Volleyball",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/sending-messages.mp3",
+      "sha256": "461adc3e1c779a50778c03b34a4919e7240ce05e7d48e56d1d22b9251431da57",
+      "text": "sending messages",
+      "heard": "Sending messages",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/repairs.mp3",
+      "sha256": "60777d0726b467fa292ee2678e12b85d02935ae001135613947858e9780e6e73",
+      "text": "repairs",
+      "heard": "Repairs",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/science.mp3",
+      "sha256": "84b1f24e81fbe9514bd12ffd3067f0cdc7f400235c2ba2dfcb76e5f4cf7dd545",
+      "text": "science",
+      "heard": "Science",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/magazines.mp3",
+      "sha256": "3f78428fa2e55de934fdcdbe460d8c5a19f50569e4c0979ad15cc21acc8ba63f",
+      "text": "magazines",
+      "heard": "Magazines",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/online.mp3",
+      "sha256": "74a278a9104b6281a4b8ebc95b443d8db69dd926f0c408807aeca6d8d82d74f7",
+      "text": "online",
+      "heard": "Online?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/most.mp3",
+      "sha256": "d48e2e79ada8a8b0acae1da333b0648e457e8b12793dea58180a1376a523a72e",
+      "text": "most",
+      "heard": "Most",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/least.mp3",
+      "sha256": "4e5b3a301a4da01ea9b1b6a4c2af4485cd3c9afc57fc91011b04108bafe95df4",
+      "text": "least",
+      "heard": "least",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/listening-instruction.mp3",
+      "sha256": "c5d8b64c57dd3d52a8f80f86576afc8e46b83d47e04ff32063585867fa29aa19",
+      "text": "Task 1: Watch the video, then decide if the following statements are true or false.",
+      "heard": "Task one: Watch the video, then decide if the following statements are true or false",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one or 2/two."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/people-hobbies/opinion-instruction.mp3",
+      "sha256": "3d454c4a0b1eb73c420f9743e141a7bb113d5b2fab1192490071d76dd0fcf453",
+      "text": "Task 2: Which of the people’s hobbies sound most and least interesting?",
+      "heard": "Task two: Which of the people's hobbies sound most and least interesting?",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Only numeral spelling differs: 1/one or 2/two."
+    }
+  ]
+}
