@@ -37,3 +37,8 @@ Exact prompt:
 ## Verification
 
 Original PDF hash and ten pages; exact tasks, keys and evidence; eight source images pixel-exact including alpha; two full pages lossless; 31 verified new and two unchanged reused audios; all local links/media; prior pages intact except three footers; other units intact; full rebuild twice idempotent. Browser tests cover incomplete/repeated/distinct/perfect attempts, reset twice and undo after reload, writing guidance without scores, task isolation, edit hiding feedback, new-draft backup retirement, evidence navigation, profile/word/question audio, speed, stop and keyboard meaning without autoplay. Fifty-six layout states across eight sizes from 320 to 1920 px have no page overflow, QR outside its card or broken visible images. The mobile QR opens centered and loads correctly. Reports are kept outside publication in `tmp/preintermediate1-why-hobbies-qa/`. Publication is recorded separately after public verification.
+
+
+## Publication verified · 2026-11-05, Colombia
+
+Published commit `2de49499b327fbf422a2734a62916c9073611948`, normal push to main. Selective deployment: 51 static files, 112 unchanged dependencies checked beforehand, backup `20261106T013524Z-_gbkcc03`. All 51 production hashes and 163 HTTPS responses matched expected bytes. Public browser checks confirmed the Lab counts, Olivia audio, gated matching explanations and evidence navigation, Spanish glossary with pronunciation, centered expandable mobile QR, both complete source pages, Library link and previous activity’s Next link. All 16 fields were cleared and feedback hidden. No backend, authentication, shared component or academic data changes. Detailed publication record: `docs/continuidad/ingles-preintermedio-1.md`.
