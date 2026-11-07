@@ -6,17 +6,30 @@
 
 Catálogo de referencia para localizar los materiales del docente y elegir fuentes para nuevas actividades de Jaralingua. Registrar por separado ubicación, contenido comprobado, utilidad propuesta y elección del docente. Encontrar un PDF no significa haber construido o publicado sus actividades.
 
-Carpeta raíz observada: `/Volumes/David/Material inglés/`.
+**Ubicación principal para trabajar:** `/Users/davidaramillo/Projects/Material inglés/`.
 
-**Estado de esta revisión:** inventario inicial, todavía parcial. Se observó la organización general y se extrajo el texto de ocho PDF candidatos para Healthy Living. El disco dejó de estar montado durante la preparación de las vistas previas. No se completó la revisión visual de esos PDF ni se guardó una copia permanente de ellos. No se modificó ningún archivo del disco.
+Origen conservado: `/Volumes/David/Material inglés/`. El docente pidió copiar toda la carpeta a la Mac el 7 de noviembre de 2026. La copia está terminada y verificada; ya no hace falta conectar David para consultar estos materiales.
 
-Para retomar: conectar David, comprobar de nuevo la ruta y consultar el índice existente antes de recorrer toda la colección. Las extracciones temporales de esta sesión no sustituyen los originales ni son una dependencia permanente del catálogo.
+**Estado actual:** inventario completo de nombres/rutas de los 1.215 materiales del índice; copia comprobada de 1.220 archivos, incluidos los cinco documentos de organización. Se examinó el texto de ocho PDF candidatos para Healthy Living y se revisaron visualmente las nueve páginas de Healthy Lifestyle. El contenido pedagógico de toda la colección todavía no se ha leído.
+
+Consulta el [catálogo completo, archivo por archivo](material-ingles-catalogo-completo.md), agrupado por nivel y categoría, con enlaces locales a los 488 PDF, 723 MP3 y cuatro RAR. El índice TSV original también está disponible en `_Organizacion/2026-10-25/indice.tsv` dentro de la copia local.
+
+### Copia comprobada en la Mac
+
+- 1.220 archivos copiados: 1.215 materiales originales más cinco documentos de organización.
+- Tamaño total del contenido copiado: **8.903.978.916 bytes**, aproximadamente 8,9 GB.
+- Cada archivo se leyó del origen, se copió y se verificó con SHA-256 leyendo por separado el destino. También se comprobaron los 1.215 nombres y tamaños del índice original.
+- Se conservaron las carpetas, nombres, posibles duplicados y bytes originales. No se borró ni modificó contenido de David.
+- Solo se excluyeron metadatos de Finder `._*` y `.DS_Store`; no son materiales del índice.
+- Informe completo con las 1.220 huellas: `/Users/davidaramillo/Projects/Material inglés/_Copia Mac/verificacion-2026-11-07.json`.
+- Se añadió una guía local `LEEME - Copia local.md`, separada de los archivos originales y del registro de 1.220 copiados.
+- Los materiales permanecen fuera del repositorio y del sitio público. Se guarda en Git únicamente la documentación del catálogo.
 
 ## Organización existente
 
-El archivo `LEEME - Material organizado.txt`, leído en la raíz, informa una organización realizada el 25 de octubre de 2026. Sus cifras son un **registro previo**, no un recuento nuevo ni una auditoría de integridad realizada en esta revisión:
+El archivo `LEEME - Material organizado.txt`, leído en la raíz, informa una organización realizada el 25 de octubre de 2026. Sus cifras se contrastaron con las 1.215 filas del índice y con los archivos copiados a la Mac; coinciden:
 
-| Grupo | Archivos según el registro previo |
+| Grupo | Archivos del índice, copiados y comprobados |
 | --- | ---: |
 | A1 | 351 |
 | A2 | 190 |
@@ -29,12 +42,12 @@ El archivo `LEEME - Material organizado.txt`, leído en la raíz, informa una or
 | Compartido General | 1 |
 | **Total** | **1.215** |
 
-El mismo registro desglosa 488 PDF, 723 MP3 y 4 RAR. Indica que se preservaron los originales y posibles duplicados. No se volvieron a comprobar esas huellas en esta sesión.
+El mismo registro desglosa 488 PDF, 723 MP3 y 4 RAR. Indica que se preservaron los originales y posibles duplicados. Las huellas nuevas SHA-256 acreditan la copia origen-destino de esta sesión. No equivalen a cotejar todas las huellas históricas de la organización anterior.
 
 Rutas del registro observadas:
 
 - `LEEME - Material organizado.txt`: explicación de la organización.
-- `_Organizacion/2026-10-25/indice.tsv`: índice de rutas anteriores/nuevas, nivel y criterio. **Localizado; contenido aún no leído.** Debe ser la primera fuente para completar este inventario.
+- `_Organizacion/2026-10-25/indice.tsv`: índice de rutas anteriores/nuevas, nivel y criterio. **Leído completo: 1.215 filas.** Se comprobó que cada destino existe en la copia y tiene el tamaño indicado.
 - `_Organizacion/2026-10-25/registro.json`: registro de la organización.
 - `_Organizacion/2026-10-25/movimientos.jsonl`: movimientos registrados.
 - `_Organizacion/2026-10-25/deshacer.py`: herramienta existente de reversión; localizada, no ejecutada.
@@ -63,7 +76,7 @@ La explicación y el listening/reading conectado de Unit 3 ya existen. La búsqu
 
 ### Resumen de los ocho PDF examinados por texto
 
-Todas las rutas de la tabla son relativas a `/Volumes/David/Material inglés/`. Los números de página son posiciones físicas del PDF, empezando en 1. Cantidad de páginas y extracción textual comprobadas con el original accesible; revisión visual pendiente.
+Todas las rutas de la tabla son relativas a `/Users/davidaramillo/Projects/Material inglés/`. Los números de página son posiciones físicas del PDF, empezando en 1. Cantidad de páginas y extracción textual comprobadas para los ocho documentos. Revisión visual completa de Healthy Lifestyle; pendiente para los otros siete.
 
 | Material | Carpeta y nombre exacto | Páginas | Uso para Unit 3 | Estado |
 | --- | --- | ---: | --- | --- |
@@ -78,7 +91,11 @@ Todas las rutas de la tabla son relativas a `/Volumes/David/Material inglés/`.
 
 ### Healthy Lifestyle — mapa del material elegido
 
-Ruta absoluta: `/Volumes/David/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`.
+Ruta local principal: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`.
+
+Archivo de 5.100.468 bytes; SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`. Copia exacta del original del disco David, sin reparar ni reescribir el PDF. Sus nueve páginas se renderizaron e inspeccionaron completas.
+
+El enlace original del vídeo, recuperado de las anotaciones de páginas 1, 3 y 4, es `https://www.youtube.com/watch?v=Cg_GW7yhq20`. Se verificó su presencia en el PDF; todavía no se comprobó la disponibilidad/reproducción actual del vídeo ni su correspondencia literal con las actividades.
 
 | Página | Sección original | Contenido textual comprobado | Posible página de Practice Lab |
 | --- | --- | --- | --- |
@@ -86,7 +103,7 @@ Ruta absoluta: `/Volumes/David/Material inglés/B1/06 Conversacion y lecciones/
 | 2 | Healthy Lifestyle Vocabulary | Cinco términos: carbohydrate, plant-based, calories, aerobic exercise y processed food; cinco definiciones, cinco frases y cinco preguntas personales | 2. Healthy Lifestyle Vocabulary |
 | 3-4 | Video: Healthy Lifestyle | Diez citas con huecos; ocho afirmaciones True/False; nueve preguntas de discusión | 3. Video: Healthy Lifestyle |
 | 5 | Phrasal Verbs: Healthy Lifestyle | give up, cut down on, stick to y work out; cuatro definiciones, cuatro frases y ocho preguntas | 4. Healthy Lifestyle Phrasal Verbs |
-| 6 | Healthy Living | Estar de acuerdo o en desacuerdo con afirmaciones; tabla de lenguaje para opinión, desacuerdo, ventajas/desventajas y resumen | 5. Healthy Living: Agree or Disagree |
+| 6 | Healthy Living | Estar de acuerdo o en desacuerdo con cuatro afirmaciones; tabla de lenguaje para opinión, desacuerdo, ventajas/desventajas y resumen | 5. Healthy Living: Agree or Disagree |
 | 7 | Picture Round | Cuatro imágenes para describir; ocho preguntas sobre las escenas y los hábitos | 6. Healthy Lifestyle: Picture Round |
 | 8 | Homework / The Benefits of a Healthy Lifestyle | Artículo completo sobre alimentación, actividad física, descanso, bienestar y beneficios; remite a las actividades siguientes | 7. The Benefits of a Healthy Lifestyle — Reading |
 | 9 | Article-Based Exercises | Ocho palabras/expresiones para definir y usar en frases; diez preguntas abiertas sobre la lectura | 8. Healthy Lifestyle: Article Practice |
@@ -97,8 +114,9 @@ Vocabulario inicial de página 1: meditation, alcohol, blueberries, junk food, c
 
 Puntos para preparar la construcción:
 
-- Revisar las nueve páginas visualmente, especialmente las imágenes de páginas 1 y 7 y las afirmaciones de página 6, que no aparecieron en la extracción textual. No inventarlas ni sustituirlas por deducciones.
-- El vídeo original es parte de la fuente. Recuperar su enlace desde el PDF y comprobar que corresponde a sus diez citas y ocho afirmaciones antes de construir la actividad de vídeo. Audios de consigna o vocabulario de ElevenLabs no reemplazan automáticamente ese vídeo.
+- Revisión visual completada: página 1 tiene nueve ilustraciones, en orden stress, blueberries, junk food, balanced diet, alcohol, smoothies, meditation, hiking y cigarettes. Página 7 contiene cuatro fotografías: conversación con bebidas en un bar, paseo familiar con perro, dos personas comiendo hamburguesas y un grupo corriendo. Conservar originales al construir; todavía no se extrajeron como activos del sitio.
+- Página 6 contiene cuatro opiniones atribuidas a John, Oli, Beth y Amy: dieta vegetal como única opción; impedir que los niños coman alimentos azucarados/procesados; prohibir cigarrillos/alcohol; preferir fuerza a ejercicio aeróbico. Son afirmaciones para debatir, no claves correctas ni recomendaciones del curso. La de Beth emplea un condicional hipotético; no convertirla en un objetivo gramatical nuevo de esta unidad.
+- El vídeo original es parte de la fuente. El enlace ya está recuperado; comprobar que corresponde a sus diez citas y ocho afirmaciones antes de construir la actividad de vídeo. Audios de consigna o vocabulario de ElevenLabs no reemplazan automáticamente ese vídeo.
 - Conservar el texto original y documentar cualquier errata o ambigüedad antes de definir corrección automática. Por ejemplo, la explicación de plant-based de página 2 y su frase de completar no usan exactamente el mismo alcance; no alterar el PDF ni imponer una interpretación sin revisión.
 - B1 es la clasificación de la carpeta. Prever apoyos de significado en español y pronunciación para términos como carbohydrate, endorphins o cognitive function, sin cambiar las preguntas por iniciativa propia.
 - Si se aprueban, mantener diseño de Básico 2, imagen de portada propia por página, QR ampliable, carpetas cerradas y vocabulario subrayado con significado y audio. Audios nuevos con ElevenLabs y voces de catálogo, conforme a las decisiones del curso.
@@ -165,16 +183,16 @@ Conecta con Stress and Relaxation. La sección hipotética no forma parte del fo
 - Unit 2: `/Volumes/David/Material inglés/A1/02 Gramatica/ESL Pals/25 - Hobbies - Can and Cant.pdf`.
 - Complementos de hobbies localizados: `A1/06 Conversacion y lecciones/ESL Pals/26 - Hobbies.pdf` y `27 - Listening - Hobbies.pdf`.
 
-Las rutas del disco fueron localizadas en esta revisión. La construcción y publicación de las ocho actividades de cada uno de los dos primeros PDF están documentadas en `docs/continuidad/ingles-preintermedio-1.md`; no se deducen de la mera presencia de los originales.
+Las mismas rutas relativas están disponibles y verificadas en la copia local. Las rutas del disco de esta sección se conservan como procedencia. La construcción y publicación de las ocho actividades de cada uno de los dos primeros PDF están documentadas en `docs/continuidad/ingles-preintermedio-1.md`; no se deducen de la mera presencia de los originales.
 
 ## Cómo ampliar el catálogo en futuras revisiones
 
-1. Comprobar que David esté montado y abrir el índice TSV existente. Completar el inventario de nombres/rutas sin mover ni renombrar originales.
+1. Usar primero la copia local y su índice TSV. Consultar David solo para una actualización o cotejo posterior. No mover ni renombrar originales por iniciativa propia.
 2. Distinguir **localizado**, **texto examinado**, **revisado visualmente**, **elegido por el docente**, **construido** y **publicado/verificado**. Registrar cada estado con su evidencia; no intercambiarlos.
 3. Para cada candidato nuevo, anotar ruta exacta, nivel/carpeta, páginas, secciones, vídeo/audio asociado, unidad candidata y límites de adaptación.
 4. Añadir a este mismo documento los hallazgos y decisiones del docente. Mantener las propuestas separadas de lo aprobado.
-5. Si se copia un PDF al proyecto para construir una actividad, registrar destino y SHA-256 y conservar intacto el original. Esta revisión no hizo esa copia permanente.
-6. No convertir los totales históricos en una verificación actual de los 1.215 archivos sin comprobarlos.
+5. Si se copia un PDF al proyecto para construir una actividad, registrar destino y SHA-256 y conservar intacto el original. Esta revisión copió la biblioteca completa a la Mac, fuera del sitio; todavía no se copió este PDF a una nueva actividad de Unit 3.
+6. La presencia, tamaños del índice y copia de los 1.215 materiales ya están comprobados. No presentar esto como una lectura pedagógica ni una prueba de reproducción de todos los PDF/MP3/RAR.
 
 ## Registro de decisiones
 
@@ -184,3 +202,6 @@ Las rutas del disco fueron localizadas en esta revisión. La construcción y pub
 | 2026-11-07 | El docente pidió documentar los hallazgos en Markdown para consultas futuras | Se crea este catálogo y se enlaza desde la continuidad del proyecto. |
 | 2026-11-07 | El docente eligió Healthy Lifestyle, B1, nueve páginas | Fuente elegida para planificar el siguiente bloque de Practice Lab de Unit 3; construcción pendiente de acordar. |
 | 2026-11-07 | David dejó de aparecer en `/Volumes` después de extraer los ocho PDF | Revisión visual, medios e inventario completo pendientes de reconexión. |
+
+| 2026-11-07 | David volvió a estar disponible; se leyó el índice completo y se revisaron las nueve páginas de Healthy Lifestyle | Se recuperaron el enlace del vídeo y las imágenes/afirmaciones antes ausentes en el texto. Reproducción del vídeo pendiente. |
+| 2026-11-07 | El docente pidió transferir la información a una carpeta de la Mac | Se copiaron y verificaron 1.220 archivos (8.903.978.916 bytes) en `/Users/davidaramillo/Projects/Material inglés/`; originales conservados. Catálogo completo de 1.215 materiales disponible en Markdown. |
