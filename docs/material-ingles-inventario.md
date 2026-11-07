@@ -122,13 +122,13 @@ El 7 de noviembre el docente corrigió la primera propuesta: separar por gramát
 | Writing | p.9 Task 2: diez respuestas detalladas sobre el artículo | El vocabulario de Task 1 va separado. Conservar la lectura de referencia disponible. |
 | Grammar | El PDF elegido no incluye un apartado específico de ejercicios de gramática | Si el docente quiere añadirlo, acordar una práctica complementaria a partir de Unit 3 y el pacing guide; no atribuirla al PDF. No construirla todavía. |
 
-Primera actividad propuesta tras la corrección: **Vocabulary — Healthy Lifestyle**, solamente las nueve imágenes originales de p.1 Task 2 con sus nueve palabras, ayudas de significado/pronunciación y revisión. Las tres preguntas y explicaciones de imágenes se conservan para Speaking. Alcance concreto pendiente de confirmar antes de construir.
+Primera actividad aprobada para construir tras la corrección: **Vocabulary — Healthy Lifestyle**, solamente las nueve imágenes originales de p.1 Task 2 con sus nueve palabras, ayudas de significado/pronunciación y revisión. Las tres preguntas y explicaciones de imágenes se conservan para Speaking. El docente confirmó «listo empieza»: nueve asociaciones de Vocabulary únicamente, con los apoyos y descargable acordados. Construcción y QA local completados; publicación pendiente de verificación. Detalles: [Healthy Lifestyle Vocabulary](preintermediate1-unit3-healthy-vocabulary.md).
 
 ### Descargables y botones
 
 Se comprobó que las páginas publicadas de vocabulario de Units 1 y 2 tienen botones **Download original PDF** al inicio y en el bloque final, enlazados al PDF completo intacto. La descarga usa el acceso compartido existente del sitio.
 
-Para las nuevas páginas de Unit 3 se propone mantener esos botones hacia **el mismo PDF original completo de nueve páginas**. No confundirlo con un PDF separado de cada ejercicio ni con la copia personal de respuestas. Esta última se añade a las actividades que lo necesiten al acordar su diseño. Todavía no se ha publicado el descargable de Healthy Lifestyle ni una nueva actividad de este bloque.
+Para las nuevas páginas de Unit 3 se propone mantener esos botones hacia **el mismo PDF original completo de nueve páginas**. No confundirlo con un PDF separado de cada ejercicio ni con la copia personal de respuestas. Esta última se añade a las actividades que lo necesiten al acordar su diseño. El PDF completo y sus dos botones ya están construidos localmente con la primera actividad de Vocabulary; publicación pendiente de verificación.
 
 Vocabulario inicial de página 1: meditation, alcohol, blueberries, junk food, cigarettes, hiking, smoothies, stress y balanced diet. Vocabulario de página 9: energised, endorphins, anxiety, cognitive function, mental well-being, chronic diseases, self-esteem y substantial.
 
@@ -226,3 +226,5 @@ Las mismas rutas relativas están disponibles y verificadas en la copia local. L
 | 2026-11-07 | David volvió a estar disponible; se leyó el índice completo y se revisaron las nueve páginas de Healthy Lifestyle | Se recuperaron el enlace del vídeo y las imágenes/afirmaciones antes ausentes en el texto. Reproducción del vídeo pendiente. |
 | 2026-11-07 | El docente pidió transferir la información a una carpeta de la Mac | Se copiaron y verificaron 1.220 archivos (8.903.978.916 bytes) en `/Users/davidaramillo/Projects/Material inglés/`; originales conservados. Catálogo completo de 1.215 materiales disponible en Markdown. |
 | 2026-11-07 | El docente pidió separar las actividades por gramática, vocabulario, etc., y consultó los botones de descarga | Se sustituye la propuesta mixta de Warm Up por categorías separadas; primera propuesta: nueve asociaciones de Vocabulary. Botones de PDF completo comprobados en Units 1-2 y previstos para Unit 3 al construir. |
+
+| 2026-11-07 | El docente confirmó «listo empieza» después de separar categorías y botones de descarga | Se construye Vocabulary de nueve imágenes, p.1 Task 2 solamente; QA local completado. No adelantar Speaking, Grammar ni otros bloques. |
