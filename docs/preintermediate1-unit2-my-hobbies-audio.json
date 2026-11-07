@@ -1,0 +1,126 @@
+{
+  "generated_on": "2026-11-07",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261107,
+  "script": "tools/preintermediate1_unit2_my_hobbies_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "All eleven new files match Scribe after normalizing punctuation and capitalization.",
+    "Four exact unchanged existing word/phrase pronunciations are reused."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/if-not.mp3",
+      "sha256": "c5399f867132fa2853d45b6a3041019a957432816bdc9226cf13d40d3f57641a",
+      "text": "if not",
+      "heard": "If not",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/would-you-like-to.mp3",
+      "sha256": "7186b1facc57397cd7278a2db71f41298b7df9a47556580abad80489e7cf907f",
+      "text": "would you like to",
+      "heard": "Would you like to",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/difficult.mp3",
+      "sha256": "962d392df9015984e5c78961046f28aed5f8baaae680d5ee114658c4fb8af133",
+      "text": "difficult",
+      "heard": "Difficult",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/family-members.mp3",
+      "sha256": "d8918a939b4b1e42435f87c677b2a71e5fbb48aa0dbe04af450f60e5fe96e26f",
+      "text": "family members",
+      "heard": "family members,",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/important.mp3",
+      "sha256": "0039c0e472f7d34b5c6e014d2e6cca8ccdd8fc82e8400753a3c6dbe4e9a4e8ed",
+      "text": "important",
+      "heard": "Important",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/instruction.mp3",
+      "sha256": "df1d8428784446b52f01c2f4695a319f29212f2a7abe3ec51fdd9aac4955b8b4",
+      "text": "Write answers to the following questions.",
+      "heard": "Write answers to the following questions",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/question-1.mp3",
+      "sha256": "0a2ded7dcbdb19fe886bfa349ceea3d8fa73916f27ab70839510c884505f33c2",
+      "text": "Can you play the guitar? If not, would you like to?",
+      "heard": "Can you play the guitar? If not, would you like to?",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/question-2.mp3",
+      "sha256": "4e493b312990ff09b1d63f1efcdabfe224bd6fdd602c687fe8f1bcdefb07aa07",
+      "text": "Can you cook? What do you like cooking?",
+      "heard": "Can you cook? What do you like cooking?",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/question-3.mp3",
+      "sha256": "bf97d957d42b5b9e7d3f0ac3fb912279dd7ead43a5cd45534e778f57430eccbf",
+      "text": "Can you bake cakes? Do you think it is difficult?",
+      "heard": "Can you bake cakes? Do you think it is difficult?",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/question-4.mp3",
+      "sha256": "d2254eeb2eccb314750876474f6dd779005f93083ba18dbb0c290d42cbb353c7",
+      "text": "What hobbies do your family members have?",
+      "heard": "What hobbies do your family members have?",
+      "verified": true,
+      "literal_normalized_match": true
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/my-hobbies/question-5.mp3",
+      "sha256": "84ff003cbea67e9ed3f38fabc7d7aa60697b4d0e3c45ff1e21288cee22066042",
+      "text": "Why are hobbies important?",
+      "heard": "Why are hobbies important?",
+      "verified": true,
+      "literal_normalized_match": true
+    }
+  ],
+  "reused": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/play-the-guitar.mp3",
+      "sha256": "70982575172a162260ad7b639f7296365b5132f4c490c17daf613955b64f3133",
+      "text": "play the guitar"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobby-vocabulary/cooking.mp3",
+      "sha256": "701a67d86d0d230d7dc3f28a1001b31c5ea7acd5556b20164cfb80f050c979fb",
+      "text": "cooking"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/bake-cakes.mp3",
+      "sha256": "491ffee0b65b752be5f4b84aff8e7bb6c93862913176180b179653d8d98aece3",
+      "text": "bake cakes"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/talk-hobbies/hobbies.mp3",
+      "sha256": "966e81b8ffb5c1ccbe96b64f61a5e0dd84507faa38cf9addc2448bb29cb8b823",
+      "text": "hobbies"
+    }
+  ]
+}
