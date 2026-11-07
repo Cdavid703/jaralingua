@@ -7,7 +7,7 @@ Fecha: 7 de noviembre de 2026, Colombia.
 El docente eligió Healthy Lifestyle, pidió separar Vocabulary, Grammar, Speaking y otras categorías, confirmó los botones de descarga y autorizó empezar. Esta entrega contiene **únicamente nueve asociaciones de palabras e imágenes**, página 1, Task 2. No incorpora las preguntas personales ni la explicación de cada imagen: corresponden a futuras páginas de Speaking. Tampoco añade gramática ni una actividad de vídeo.
 
 Página: `ingles/preintermedio-1/vocabulary-unit-3-healthy-lifestyle.html`.
-Destino público previsto: `https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-healthy-lifestyle.html`.
+Página publicada y verificada: `https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-healthy-lifestyle.html`.
 
 ## Fuente y fidelidad
 
@@ -70,3 +70,17 @@ Seis pruebas Node: incompletos, repetición/recarga frente a intento diferente, 
 Treinta y dos estados de diseño: carpetas cerradas, ejercicio, feedback y original abierto en ocho tamaños CSS exactos (320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900, 1920×1080). Sin desbordamiento, imagen visible rota ni texto cubierto por el QR; se comprobó el texto real con sus rectángulos, no el ancho completo de los bloques. Ocho ampliaciones QR: imagen cargada, dentro de pantalla y centrada. El visor usa escala 1.2: cada tamaño se midió tras estabilizar el diseño para comprobar dimensiones CSS reales.
 
 Informes locales: `tmp/preintermediate1-healthy-vocabulary-qa/`. Esta sección acredita construcción y QA local; registrar publicación únicamente tras comprobar producción y HTTPS.
+
+
+## Publicación verificada — 7 de noviembre de 2026, Colombia
+
+Commit publicado `36287140a98a458f4d2e007ed13cffaac62bb88e`, enviado a main con push normal. Se compararon versiones previas y 92 dependencias intactas, se revisó la vista previa y se aplicaron **28 archivos estáticos** con el publicador selectivo. Respaldo `20261107T211618Z-nstdktub`, bajo `/var/backups/jaralingua/vps-publish/`. Los 28 hashes de producción y **120 respuestas HTTPS 200** (28 publicados + 92 dependencias) coinciden con lo esperado. Sin cambios de datos académicos, backend, autenticación, componentes compartidos ni servicios.
+
+Navegador público: acceso desde Practice Lab, tres actividades de Unit 3, nueve selectores, carpetas inicialmente cerradas y dos botones Download original PDF con acceso compartido de sesión. Primer conjunto 1/9 sin claves; repetición y recarga conservan 1/9 sin revelar. Segundo conjunto distinto 2/9 con nueve explicaciones. Reinicio doble/recarga/deshacer conserva las nueve selecciones y las explicaciones. Perfecto inmediato 9/9. Glosario con significado en español y pronunciación: blueberries reprodujo el archivo esperado, listo para reproducir (readyState 4), duración 1,068118 s y sin error; consigna completa de 2,879274 s reproducida sin error. Enfoque y puntero pueden mostrar el significado del término actualmente activo sin interrumpir por sí solos el audio de otro; no confundir ese texto con la transcripción de la grabación. QR móvil ampliado, cargado y centrado; original p.1 completo cargado a 1275×1802. Acceso desde Listening Library comprobado.
+
+Entrega limpia: nueve respuestas vacías, respaldo de prueba retirado, feedback oculto; carpeta de práctica abierta para el docente y original cerrado. Visor restablecido a su tamaño normal. Informe `tmp/preintermediate1-healthy-vocabulary-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Vocabulary_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Vocabulary_glosario.png`
+
+La primera actividad de Vocabulary está terminada y publicada. No equivale a completar el material de nueve páginas ni autoriza construir el siguiente bloque.
