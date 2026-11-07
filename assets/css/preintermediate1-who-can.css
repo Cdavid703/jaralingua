@@ -1,0 +1,32 @@
+/* Unit 2: original ability table case study. */
+.wc-page [hidden]{display:none!important}
+body.wc-page :is(.site-header,.site-header .navbar){height:auto!important;max-height:none!important;min-height:76px}
+.wc-page .pi-shell{max-width:none;padding-top:20px}
+body.wc-page.basic2-page .lesson-hero.immersive-basic-hero{padding:24px var(--basic2-app-gutter)!important;gap:24px}
+body.wc-page .pi-hero .pi-hero-copy{padding:26px}
+.wc-page .pi-hero-copy>.eyebrow{display:block!important;background:transparent!important;border:0;padding:0!important;margin:0 0 12px!important;min-height:0!important;color:white!important;font:700 .8rem/1.6 Arial,sans-serif!important}
+body.wc-page .pi-hero .pi-hero-copy h1{font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.12;margin:8px 0 14px}
+body.wc-page .pi-hero .pi-hero-copy>p:not(.eyebrow){font-size:1rem;line-height:1.5;margin:0}
+body.wc-page.basic2-page .immersive-basic-hero .lesson-hero-image{min-height:0!important}
+body.wc-page.basic2-page .immersive-basic-hero .lesson-hero-image img{min-height:0!important;max-height:320px!important;aspect-ratio:2/1;object-fit:cover}
+.wc-page .pi-objective{padding:18px 22px;margin-bottom:16px}
+.wc-page .pi-objective h2{font-size:1.2rem}
+.wc-page .wc-intro .pi-small{margin-top:10px}
+.wc-page .pi-topic{margin:12px 0}
+.wc-page .pi-topic>summary{padding:12px 16px}
+.wc-page .pi-topic>summary h2{font-size:1.1rem}
+.wc-page .pi-audio-controls{padding:8px;margin:12px 0}
+
+
+
+
+.wc-page .wc-instruction{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}.wc-page .wc-original-instruction{flex:1 1 360px;font-weight:700;line-height:1.65;margin:6px 0}
+.wc-page .wc-legend{display:flex;flex-wrap:wrap;gap:22px;font-weight:700;color:var(--basic2-blue)}.wc-page .wc-table-scroll{max-width:100%;overflow:auto;border:1px solid #b4c9e8;border-radius:10px;background:white}.wc-page .wc-ability-table{border-collapse:collapse;min-width:620px;width:100%;table-layout:fixed;line-height:1.6;font-size:1rem}.wc-page .wc-ability-table caption{text-align:left;padding:12px 16px;color:var(--basic2-blue);font-weight:700}.wc-page .wc-ability-table th,.wc-page .wc-ability-table td{border:1px solid #b4c9e8;text-align:center;padding:12px 8px;color:var(--basic2-ink)}.wc-page .wc-ability-table thead th{background:var(--basic2-soft);vertical-align:bottom}.wc-page .wc-ability-table th:first-child{width:90px}.wc-page .wc-ability-table tbody th{color:var(--basic2-blue);background:var(--basic2-soft)}.wc-page .wc-ability-table img{display:block;width:100%;height:100px;object-fit:contain;margin-bottom:10px}.wc-page .wc-ability-table tr:target th,.wc-page .wc-ability-table tr:target td{background:#fff5d7}.wc-page .wc-ability{white-space:nowrap;font-weight:700}.wc-page .wc-can{color:#105e42}.wc-page .wc-cant{color:#84243c}
+.wc-page .wc-question-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:14px 0}.wc-page .wc-question{min-width:0;padding:16px;border:1px solid #b4c9e8;border-radius:12px;background:white;line-height:1.65}.wc-page fieldset{border:0;padding:0;margin:0;min-width:0}.wc-page legend{font-size:1.05rem;line-height:1.7;color:var(--basic2-blue);font-weight:700;margin:0 0 12px;padding:0}.wc-page .wc-name-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:4px 0 14px}.wc-page .wc-name-grid label{box-sizing:border-box;display:flex;align-items:center;gap:8px;min-height:44px;padding:8px;border:1px solid #b4c9e8;border-radius:8px;cursor:pointer;color:var(--basic2-ink)}.wc-page .wc-name-grid label:has(input:checked){background:var(--basic2-soft);border-color:var(--basic2-blue)}.wc-page input[type=checkbox]{width:20px;height:20px;flex:0 0 20px;accent-color:var(--basic2-blue)}
+.wc-page .wc-count{font-weight:700;color:var(--basic2-blue);font-size:.92rem;margin:12px 0}.wc-page .wc-feedback,.wc-page .wc-result{line-height:1.6;color:var(--basic2-ink);background:var(--basic2-soft);border:1px solid #b4c9e8;border-radius:10px;padding:12px;margin-top:12px;overflow-wrap:anywhere}.wc-page .wc-feedback{font-size:.92rem}.wc-page .wc-feedback p{margin:0 0 8px}.wc-page .wc-feedback blockquote{margin:10px 0;padding:8px 10px;border-left:3px solid var(--basic2-blue);background:white}.wc-page .wc-evidence-link{display:flex;align-items:center;min-height:44px;font-weight:700}
+.wc-page .btn{min-height:44px;white-space:normal}.wc-page :is(button,input,summary,a,.wc-table-scroll):focus-visible{outline:3px solid var(--red);outline-offset:3px}.wc-page [data-wc-audio].is-playing{outline:2px solid var(--basic2-blue);outline-offset:2px}
+.wc-page .wc-decoration{margin:18px 0 0 auto;max-width:300px}.wc-page .wc-decoration img{display:block;width:100%;height:auto}.wc-page .wc-original-page{margin:16px auto;max-width:850px}.wc-page .wc-original-page img{box-sizing:border-box;display:block;width:100%;height:auto;border:1px solid #b4c9e8}.wc-page figcaption{font-size:.9rem;line-height:1.6;margin-top:8px}
+.wc-page .wc-footer{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px}.wc-page .wc-footer .pi-actions{flex-direction:column;gap:8px;margin:0}
+@media(max-width:1200px){.wc-page .wc-question-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:980px){body.wc-page.basic2-page .lesson-hero.immersive-basic-hero{gap:12px}body.wc-page.basic2-page .immersive-basic-hero .lesson-hero-image img{height:190px;max-height:190px!important}.wc-page .wc-footer{grid-template-columns:1fr}.wc-page .wc-footer .pi-actions{flex-direction:row;flex-wrap:wrap}}
+@media(max-width:700px){.wc-page .wc-question-grid{grid-template-columns:1fr}.wc-page .pi-objective{padding:16px}.wc-page .pi-hero-copy.jl-page-qr-host>.eyebrow{display:flex!important;align-items:center;min-height:68px!important;margin:0 76px 12px 0!important}.wc-page .wc-instruction>.btn{max-width:100%}.wc-page .wc-decoration{max-width:220px}.wc-page .wc-ability-table img{height:70px}body.wc-page .site-header .nav-links{flex-wrap:nowrap!important;overflow-x:auto;max-width:100%;min-width:0;padding-bottom:4px;scrollbar-width:thin}body.wc-page .site-header .nav-links>li{flex:0 0 auto}body.wc-page .site-header .nav-links a{min-height:44px;display:flex;align-items:center;white-space:nowrap}}

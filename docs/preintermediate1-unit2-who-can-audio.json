@@ -1,0 +1,163 @@
+{
+  "generated_on": "2026-11-07",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261107,
+  "script": "tools/preintermediate1_unit2_who_can_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "14 literal normalized Scribe matches; sail was transcribed as its homophone sale (/seɪl/).",
+    "Play chess and both reuse unchanged exact existing pronunciations."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/bake.mp3",
+      "sha256": "e50a9942569e28c23e1b697fb32e6f85ddf840fb3260f8266ff956fe5db73e43",
+      "text": "bake",
+      "heard": "Bake",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/run.mp3",
+      "sha256": "9e0cdc38d3546a108d025c349452fb7506efbed0246fd75d8e9aba23ffcdcbb9",
+      "text": "run",
+      "heard": "Run",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/sail.mp3",
+      "sha256": "1e712c36008696e4300e4b97c55f3ebf6fe85d6e5ad8bceebbcdc3a75c1aedb7",
+      "text": "sail",
+      "heard": "Sale",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Sail/sale are homophones /seɪl/; no audible lexical difference."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/dance.mp3",
+      "sha256": "c17bda9af34c918f78092515abe8a9b66197419c36bfeb4430b069d64dc4e2e6",
+      "text": "dance",
+      "heard": "Dance",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/table.mp3",
+      "sha256": "375e615ff8b191af8339344946dfa54dd3b735a15f7b3e6ccf6a4d6a79a72221",
+      "text": "table",
+      "heard": "Table",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/either.mp3",
+      "sha256": "b8232c8ca19b24068b6b402b66b41a654f4a576145cc2324baa200e7bf1a6fe3",
+      "text": "either",
+      "heard": "Either",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/instruction.mp3",
+      "sha256": "3c68b141eb1e26e3293deae28fb8324b6fea03cc1886901d0a6973916ab60f28",
+      "text": "Look at the table below and then answer the questions.",
+      "heard": "Look at the table below and then answer the questions",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-1.mp3",
+      "sha256": "2baea624b945bcf7c91644661827d0bd0c0ab01f66f55a3a48f09dbe9ec3e2a2",
+      "text": "Who can bake, but can’t sail?",
+      "heard": "Who can bake but can't sail?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-2.mp3",
+      "sha256": "656c901c2bb395e7878f2c8f48c602a11c40ed56a2ab52a312e6b2a4513be3a0",
+      "text": "Who can play chess, but can’t dance?",
+      "heard": "Who can play chess but can't dance?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-3.mp3",
+      "sha256": "569c8a94b4efa217c364779449d98418567827ae85b6e8fcb57430ba347b04fe",
+      "text": "Who can sail and bake?",
+      "heard": "Who can sail and bake?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-4.mp3",
+      "sha256": "fc09aa966ff80d2b7205a15ad021916cc0c4ed955c43446b32e71f7e98125a16",
+      "text": "Who can bake, run and dance?",
+      "heard": "Who can bake, run, and dance?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-5.mp3",
+      "sha256": "7e33894eb8d3a5ccc8ac08a6f477aebed08052a908e69cb2ee777f3fe67c005c",
+      "text": "Who can’t sail or dance?",
+      "heard": "Who can't sail or dance?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-6.mp3",
+      "sha256": "ce8df3a83f7b6a83ed59bce9ecd9cd260ba8a072c3b13fe787d8525d2844b285",
+      "text": "Who can play chess and run?",
+      "heard": "Who can play chess and run?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-7.mp3",
+      "sha256": "3ec386884d0fefe101204c80ab56f184856a979da276bfee7d80e26e789e8aa9",
+      "text": "Who can’t play chess or run?",
+      "heard": "Who can't play chess or run?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/who-can/question-8.mp3",
+      "sha256": "a2b15dacfda4b43b5b2c8d35ea0ccc7969df4fdeea67f71159e5746caf7da985",
+      "text": "Who can’t bake or sail?",
+      "heard": "Who can't bake or sail?",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    }
+  ],
+  "reused": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/play-chess.mp3",
+      "sha256": "59c69b430d3ecc20f1f977b6e75850b85cd1f8365f138b0cde590ab5dd383e7e",
+      "text": "play chess"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit1/lesson/both.mp3",
+      "sha256": "b0861769fc9a5d4523c4ad9271c59ce20575eac70ee8d70fa682e7308cabc5c3",
+      "text": "both"
+    }
+  ]
+}
