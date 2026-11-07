@@ -20,6 +20,7 @@ Para una conversación nueva usa `/new`; para volver a una guardada usa `/resume
 - [Inglés Intermedio 2](ingles-intermedio-2.md).
 - [Francés](frances.md): mapa de documentos por nivel; no inventar antecedentes que no estén aquí.
 - [Operación del VPS](operacion-vps.md): carpetas, GitHub y publicación.
+- [Inventario de material de inglés del disco David](../material-ingles-inventario.md): organización localizada, PDF examinados y elección de Healthy Lifestyle para Preintermedio 1, Unit 3. Inventario inicial parcial; consultar sus límites de verificación.
 
 ## Cómo interpretar el estado
 
