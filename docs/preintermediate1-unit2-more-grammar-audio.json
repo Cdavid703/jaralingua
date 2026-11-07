@@ -1,0 +1,460 @@
+{
+  "generated_on": "2026-11-07",
+  "voice": "Sarah catalog",
+  "voice_id": "EXAVITQu4vr4xnSDxMaL",
+  "model_id": "eleven_multilingual_v2",
+  "language_profile": "english-us",
+  "seed": 20261107,
+  "script": "tools/preintermediate1_unit2_more_grammar_content.py",
+  "scribe_verified": true,
+  "notes": [
+    "43 literal normalized Scribe matches; four variants are slash spoken as or and numeral spelling 1/one, 2/two, ten/10.",
+    "10 km is narrated as ten kilometers; printed sentences stay unchanged.",
+    "The worked example uses She and personal paint-well sentences use I, with separate exact audios.",
+    "Three exact unchanged existing assets are reused."
+  ],
+  "files": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-form.mp3",
+      "sha256": "a85ffe14d69342704eb111541a2975baa366dc829303e7ff8a9f5028f7f237af",
+      "text": "negative form",
+      "heard": "Negative form",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/paint-well.mp3",
+      "sha256": "5f30bc02b1efe2d15abc2c3c05259efd642165bf29f59bc84f2da6f4ab79ead9",
+      "text": "paint well",
+      "heard": "paint well",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/write-a-letter.mp3",
+      "sha256": "42db9af8a702ac4aabd357f07e050d1993d2f7ad09550e8f603db9ad06d1e947",
+      "text": "write a letter",
+      "heard": "Write a letter",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/drive-a-bus.mp3",
+      "sha256": "f58a1578e1e67e2d3f7a0ff34f53ba6e998ab5d64aa21ab2dc0685168c1c3b10",
+      "text": "drive a bus",
+      "heard": "Drive a bus",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/bake-cakes.mp3",
+      "sha256": "491ffee0b65b752be5f4b84aff8e7bb6c93862913176180b179653d8d98aece3",
+      "text": "bake cakes",
+      "heard": "Bake cakes",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/go-fishing.mp3",
+      "sha256": "9d5a2dd8038769e4c48448846651597dd924876f8ec4c2e723e38f732892c6d0",
+      "text": "go fishing",
+      "heard": "Go fishing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/alcohol.mp3",
+      "sha256": "0e633c6f5f95a89c0ea7293f0050dbc141e7bf24c9cf17d6faeaa1e8c5742053",
+      "text": "alcohol",
+      "heard": "Alcohol",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/motorcycle.mp3",
+      "sha256": "f729970f9f5ca14f187f02a6f1385db19ad82fcccbd325947927050e0555dd34",
+      "text": "motorcycle",
+      "heard": "Motorcycle",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/create-websites.mp3",
+      "sha256": "7c54d339228c4fc8a3053e43c34134d46581790a4ac03af4b1283d4eab5059e0",
+      "text": "create websites",
+      "heard": "Create websites",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/play-the-guitar.mp3",
+      "sha256": "70982575172a162260ad7b639f7296365b5132f4c490c17daf613955b64f3133",
+      "text": "play the guitar",
+      "heard": "Play the guitar",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/crossfit.mp3",
+      "sha256": "54677b7d7e547127ea95da2041516a902a162b3583220619b8f1fb10c51f059f",
+      "text": "crossfit",
+      "heard": "CrossFit",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/an-hour.mp3",
+      "sha256": "8a711aab0048b92751e0b024c7cf1302e51a78744ee761e7eaf65ed2b2a82482",
+      "text": "an hour",
+      "heard": "An hour",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/main-instruction.mp3",
+      "sha256": "4d17208d9b3f9a4f9802924f0a0251c1dd33465803b5bfae63500f3eaadb49d4",
+      "text": "Complete the grammar exercises for can / can’t.",
+      "heard": "Complete the grammar exercises for can or can't",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Slash spoken as or or numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-instruction.mp3",
+      "sha256": "bca77834511404d7b2387c95d6880e33b5f97337e1864122c36ed82baa46e139",
+      "text": "Exercise 1: Change the sentence into the negative form. The first one is done for you.",
+      "heard": "Exercise one: Change the sentence into the negative form. The first one is done for you",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Slash spoken as or or numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-instruction.mp3",
+      "sha256": "e38e6f30247fb3a4d1c16386a502f4a3fbab889d04e1bc380d643adc85d40fc2",
+      "text": "Exercise 2: Complete the sentences for you.",
+      "heard": "Exercise two: Complete the sentences for you",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Slash spoken as or or numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/example-positive.mp3",
+      "sha256": "75fefe08b7180ddcc6fe51f2f40f8cd2098428fb5d9f03bd3faf955f55e51c7f",
+      "text": "She can paint well.",
+      "heard": "She can paint well",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/example-negative.mp3",
+      "sha256": "b4d4398b208ace89005247aec3c2a1e5237f7c7b9f25715c6e9c1f33429527dd",
+      "text": "She can’t paint well.",
+      "heard": "She can't paint well",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-2.mp3",
+      "sha256": "c38d6e8a65aaf7db47c3684b474da143ffd6f5f4dc765fbeff0d78ef253856ad",
+      "text": "You can write a letter.",
+      "heard": "You can write a letter",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-2.mp3",
+      "sha256": "18ccfd1d9cf75bb7dc0978a0e954969c34717e86c0665b204409d21af674a2da",
+      "text": "You can’t write a letter.",
+      "heard": "You can't write a letter",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-3.mp3",
+      "sha256": "14aa01410bc739b6649f3471869b115a67d6de67903cddf5cdff21c6987a4f1d",
+      "text": "He can sing.",
+      "heard": "He can sing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-3.mp3",
+      "sha256": "be562d72b5d5e3a49a7404c7ef67936c93e0fd402aa74509b988d886adaadcc3",
+      "text": "He can’t sing.",
+      "heard": "He can't sing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-4.mp3",
+      "sha256": "c63b8ff399841f10a7d15793d912e871e11492cf106cd4be6ffdd59b57fb3786",
+      "text": "They can play chess.",
+      "heard": "They can play chess",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-4.mp3",
+      "sha256": "6e333a6677e0fc8e035e2fa5ebaaf566952a2308d7cdc0034698a12d1c134369",
+      "text": "They can’t play chess.",
+      "heard": "They can't play chess",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-5.mp3",
+      "sha256": "69221493d8a4399b68f0dea3593bd2674e71754f63c6c47e0fb3d4d4e1984ee4",
+      "text": "We can drive a bus.",
+      "heard": "We can drive a bus",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-5.mp3",
+      "sha256": "d204c7cfbb2ffe91ca644864c2d24a12809a36cd661dfe6d473b0de9bf750326",
+      "text": "We can’t drive a bus.",
+      "heard": "We can't drive a bus",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-6.mp3",
+      "sha256": "eca0a158e90db344bd438a215f59e414fde4d611831dd1b612fccb8cfcfd6502",
+      "text": "He can study after school.",
+      "heard": "He can study after school",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-6.mp3",
+      "sha256": "1ea221e118aa54d4c31ac4f471fc11303a4942ed6b093d6c9b294a560b21481b",
+      "text": "He can’t study after school.",
+      "heard": "He can't study after school",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-7.mp3",
+      "sha256": "b34c4c3eadd5c0221a4e66e3ec1fb7db509e653ef940dfebf636dad97b070bd1",
+      "text": "They can bake cakes.",
+      "heard": "They can bake cakes.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-7.mp3",
+      "sha256": "d09fad89232c43df495fd97927cbdbaf816496f34032bc7f58fc8e6ddeb2727d",
+      "text": "They can’t bake cakes.",
+      "heard": "They can't bake cakes",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-8.mp3",
+      "sha256": "23752c929e17c94b94e9098ecfc37f32b8983e584e6937b5fff99bb20625d3b7",
+      "text": "You can go fishing.",
+      "heard": "You can go fishing.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-8.mp3",
+      "sha256": "2ef288e03b1615a43ab015f391d51580413397062a1828c19edb7be776d2ef11",
+      "text": "You can’t go fishing.",
+      "heard": "You can't go fishing",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-9.mp3",
+      "sha256": "7ec2733fcc5769a55badff3b880f15194e0dd42004639d6639de187b1e6464e3",
+      "text": "We can drink alcohol.",
+      "heard": "We can drink alcohol",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-9.mp3",
+      "sha256": "b70b48f1a66b93304bae5553051729601b94864df7126ea778b569832fb5f3af",
+      "text": "We can’t drink alcohol.",
+      "heard": "We can't drink alcohol",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/prompt-10.mp3",
+      "sha256": "30b99c3ce67761efa6261e04566f32649e167f64b1aa6be4adbcb2264cb1bac6",
+      "text": "She can drive a motorcycle.",
+      "heard": "She can drive a motorcycle",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/negative-10.mp3",
+      "sha256": "396e0ba1ca4811fea332a2048ef902a56e13041c4a1e33bee60d5580b64df026",
+      "text": "She can’t drive a motorcycle.",
+      "heard": "She can't drive a motorcycle",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-1-can.mp3",
+      "sha256": "e9ab0b4d6043e594d01aeda5b312f3406240c39a1e6e7b6dad94cccc485c1ec2",
+      "text": "I can read.",
+      "heard": "I can read",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-1-cant.mp3",
+      "sha256": "64549e9fed252abe14086e42bbb81f5e128e942fd00d9d4f9e4be15ff24d7e94",
+      "text": "I can’t read.",
+      "heard": "I can't read",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-2-can.mp3",
+      "sha256": "0b7b3c73da9e49061f5b39c347ae8883816e35d6ada152b51822102235425e13",
+      "text": "I can paint well.",
+      "heard": "I can paint well",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-2-cant.mp3",
+      "sha256": "e38c7a2b34be547ffd4d3f101ec36e4cef5098cbe102920049b5fa4fd7ed1206",
+      "text": "I can’t paint well.",
+      "heard": "I can't paint well",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-3-can.mp3",
+      "sha256": "30897bb6976e9df3c4980b975901efa5f159f38955c0a39abbce74410949959b",
+      "text": "I can create websites.",
+      "heard": "I can create websites.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-3-cant.mp3",
+      "sha256": "187b8cc01e5c277188d5b5aa2efd100089ddb60b36d3f5f8a604fe8a56d1c47f",
+      "text": "I can’t create websites.",
+      "heard": "I can't create websites",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-4-can.mp3",
+      "sha256": "7c00ac055509e45c1f690a3757cec0441e820cb5f2806d5a6bbb5b7abb7a8c58",
+      "text": "I can play the guitar.",
+      "heard": "I can play the guitar.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-4-cant.mp3",
+      "sha256": "c796762cf55e7065e70dd01343fe319a1241c14ef99896fe116b3f6740726e52",
+      "text": "I can’t play the guitar.",
+      "heard": "I can't play the guitar.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-5-can.mp3",
+      "sha256": "49ca58ea2344b2152414bc1f72010fb9622e0ea03367e142ef233f3f32a05aa1",
+      "text": "I can do crossfit.",
+      "heard": "I can do CrossFit",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-5-cant.mp3",
+      "sha256": "ec3bb8bd47f61e3316822c2a3f60dd58bb652cda4135eb33173d8dcdfae79809",
+      "text": "I can’t do crossfit.",
+      "heard": "I can't do CrossFit",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-6-can.mp3",
+      "sha256": "37d99571dc762dfc34778b735d12d2c570b395fcefbbf2279fed546e10eeeb04",
+      "text": "I can run ten kilometers in an hour.",
+      "source_text": "I can run 10 km in an hour.",
+      "heard": "I can run 10 kilometers in an hour.",
+      "literal_normalized_match": false,
+      "verified": true,
+      "verification_note": "Slash spoken as or or numeral spelling only."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/more-grammar/personal-6-cant.mp3",
+      "sha256": "6966bd08a51eaabfea4ca7345c4d3f2a267a6b3a64defdb61eb61d82c32e6532",
+      "text": "I can’t run ten kilometers in an hour.",
+      "source_text": "I can’t run 10 km in an hour.",
+      "heard": "I can't run ten kilometers in an hour.",
+      "literal_normalized_match": true,
+      "verified": true,
+      "verification_note": "Literal normalized match."
+    }
+  ],
+  "reused": [
+    {
+      "path": "ingles/preintermedio-1/audio/unit5/connected/after-school.mp3",
+      "sha256": "acd8122223f2f2e2ba44ab560d6c2f4274e2ef3696a27df057c8b9ec4f6bfc1b",
+      "text": "after school"
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/can-sing.mp3",
+      "sha256": "dfed577a7cfedbd3e5882bb0e743d2a47f7d946e735b8edcabf9c927c3cea707",
+      "text": "I can sing."
+    },
+    {
+      "path": "ingles/preintermedio-1/audio/unit2/hobbies-grammar/cant-sing.mp3",
+      "sha256": "2281e5cd5c9f24ab16a86b20a7ef2ae2aa66529d38595650d41347e66020387e",
+      "text": "I can’t sing."
+    }
+  ]
+}
