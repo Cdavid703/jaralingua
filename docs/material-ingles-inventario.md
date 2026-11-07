@@ -97,18 +97,38 @@ Archivo de 5.100.468 bytes; SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506f
 
 El enlace original del vídeo, recuperado de las anotaciones de páginas 1, 3 y 4, es `https://www.youtube.com/watch?v=Cg_GW7yhq20`. Se verificó su presencia en el PDF; todavía no se comprobó la disponibilidad/reproducción actual del vídeo ni su correspondencia literal con las actividades.
 
-| Página | Sección original | Contenido textual comprobado | Posible página de Practice Lab |
-| --- | --- | --- | --- |
-| 1 | Healthy Lifestyle / Let's Warm Up | Referencia al vídeo Healthy Lifestyle de Every Mind Matters; tres preguntas iniciales; nueve palabras para asociar a imágenes; explicar su relación con los hábitos | 1. Healthy Lifestyle: Warm Up |
-| 2 | Healthy Lifestyle Vocabulary | Cinco términos: carbohydrate, plant-based, calories, aerobic exercise y processed food; cinco definiciones, cinco frases y cinco preguntas personales | 2. Healthy Lifestyle Vocabulary |
-| 3-4 | Video: Healthy Lifestyle | Diez citas con huecos; ocho afirmaciones True/False; nueve preguntas de discusión | 3. Video: Healthy Lifestyle |
-| 5 | Phrasal Verbs: Healthy Lifestyle | give up, cut down on, stick to y work out; cuatro definiciones, cuatro frases y ocho preguntas | 4. Healthy Lifestyle Phrasal Verbs |
-| 6 | Healthy Living | Estar de acuerdo o en desacuerdo con cuatro afirmaciones; tabla de lenguaje para opinión, desacuerdo, ventajas/desventajas y resumen | 5. Healthy Living: Agree or Disagree |
-| 7 | Picture Round | Cuatro imágenes para describir; ocho preguntas sobre las escenas y los hábitos | 6. Healthy Lifestyle: Picture Round |
-| 8 | Homework / The Benefits of a Healthy Lifestyle | Artículo completo sobre alimentación, actividad física, descanso, bienestar y beneficios; remite a las actividades siguientes | 7. The Benefits of a Healthy Lifestyle — Reading |
-| 9 | Article-Based Exercises | Ocho palabras/expresiones para definir y usar en frases; diez preguntas abiertas sobre la lectura | 8. Healthy Lifestyle: Article Practice |
+| Página | Sección original | Contenido textual comprobado |
+| --- | --- | --- |
+| 1 | Healthy Lifestyle / Let's Warm Up | Referencia al vídeo Healthy Lifestyle de Every Mind Matters; tres preguntas iniciales; nueve palabras para asociar a imágenes; explicar su relación con los hábitos |
+| 2 | Healthy Lifestyle Vocabulary | Cinco términos: carbohydrate, plant-based, calories, aerobic exercise y processed food; cinco definiciones, cinco frases y cinco preguntas personales |
+| 3-4 | Video: Healthy Lifestyle | Diez citas con huecos; ocho afirmaciones True/False; nueve preguntas de discusión |
+| 5 | Phrasal Verbs: Healthy Lifestyle | give up, cut down on, stick to y work out; cuatro definiciones, cuatro frases y ocho preguntas |
+| 6 | Healthy Living | Estar de acuerdo o en desacuerdo con cuatro afirmaciones; tabla de lenguaje para opinión, desacuerdo, ventajas/desventajas y resumen |
+| 7 | Picture Round | Cuatro imágenes para describir; ocho preguntas sobre las escenas y los hábitos |
+| 8 | Homework / The Benefits of a Healthy Lifestyle | Artículo completo sobre alimentación, actividad física, descanso, bienestar y beneficios; remite a las actividades siguientes |
+| 9 | Article-Based Exercises | Ocho palabras/expresiones para definir y usar en frases; diez preguntas abiertas sobre la lectura |
 
-**La división en ocho páginas es una propuesta de organización, pendiente de acordar antes de construir.** Mantiene el orden original y agrupa las dos páginas del vídeo. Lectura y ejercicios finales quedarían conectados. No se ha iniciado la implementación.
+### Separación por tipo de actividad solicitada por el docente
+
+El 7 de noviembre el docente corrigió la primera propuesta: separar por gramática, vocabulario y otras categorías. **La propuesta anterior de ocho páginas, con un Warm Up que mezclaba vocabulario y conversación, queda sustituida por esta clasificación.** La cantidad y división final de páginas siguen pendientes de acuerdo; todavía no se han construido estas actividades.
+
+| Tipo | Material del PDF que corresponde | Separación que conservar |
+| --- | --- | --- |
+| Vocabulary | p.1 Task 2: nueve imágenes/palabras; p.2 Tasks 1-2: definiciones y frases; p.9 Task 1: palabras de la lectura y frases propias | Las preguntas de conversación se llevan a Speaking. Estos bloques pueden ocupar páginas distintas. |
+| Vocabulary — Phrasal Verbs | p.5 Tasks 1-2: give up, cut down on, stick to y work out | Página propia de vocabulario; las ocho preguntas personales pasan a Speaking. No presentar este bloque como una lección de gramática del PDF. |
+| Video Listening | p.3: diez citas con huecos; p.4 Task 2: ocho True/False | Vídeo original; las nueve preguntas de discusión de p.4 Task 3 pasan a Speaking. |
+| Speaking | p.1 Tasks 1 y 3; p.2 Task 3; p.4 Task 3; p.5 Task 3; p.6 opiniones; p.7 Picture Round | Organizar en páginas temáticas de conversación, debate y descripción; sin claves personales ni nota automática. No mezclar con la primera página de asociación de vocabulario. |
+| Reading | p.8: The Benefits of a Healthy Lifestyle | Conectar con vocabulario y escritura relacionados mediante enlaces, conservando páginas diferenciadas. |
+| Writing | p.9 Task 2: diez respuestas detalladas sobre el artículo | El vocabulario de Task 1 va separado. Conservar la lectura de referencia disponible. |
+| Grammar | El PDF elegido no incluye un apartado específico de ejercicios de gramática | Si el docente quiere añadirlo, acordar una práctica complementaria a partir de Unit 3 y el pacing guide; no atribuirla al PDF. No construirla todavía. |
+
+Primera actividad propuesta tras la corrección: **Vocabulary — Healthy Lifestyle**, solamente las nueve imágenes originales de p.1 Task 2 con sus nueve palabras, ayudas de significado/pronunciación y revisión. Las tres preguntas y explicaciones de imágenes se conservan para Speaking. Alcance concreto pendiente de confirmar antes de construir.
+
+### Descargables y botones
+
+Se comprobó que las páginas publicadas de vocabulario de Units 1 y 2 tienen botones **Download original PDF** al inicio y en el bloque final, enlazados al PDF completo intacto. La descarga usa el acceso compartido existente del sitio.
+
+Para las nuevas páginas de Unit 3 se propone mantener esos botones hacia **el mismo PDF original completo de nueve páginas**. No confundirlo con un PDF separado de cada ejercicio ni con la copia personal de respuestas. Esta última se añade a las actividades que lo necesiten al acordar su diseño. Todavía no se ha publicado el descargable de Healthy Lifestyle ni una nueva actividad de este bloque.
 
 Vocabulario inicial de página 1: meditation, alcohol, blueberries, junk food, cigarettes, hiking, smoothies, stress y balanced diet. Vocabulario de página 9: energised, endorphins, anxiety, cognitive function, mental well-being, chronic diseases, self-esteem y substantial.
 
@@ -205,3 +225,4 @@ Las mismas rutas relativas están disponibles y verificadas en la copia local. L
 
 | 2026-11-07 | David volvió a estar disponible; se leyó el índice completo y se revisaron las nueve páginas de Healthy Lifestyle | Se recuperaron el enlace del vídeo y las imágenes/afirmaciones antes ausentes en el texto. Reproducción del vídeo pendiente. |
 | 2026-11-07 | El docente pidió transferir la información a una carpeta de la Mac | Se copiaron y verificaron 1.220 archivos (8.903.978.916 bytes) en `/Users/davidaramillo/Projects/Material inglés/`; originales conservados. Catálogo completo de 1.215 materiales disponible en Markdown. |
+| 2026-11-07 | El docente pidió separar las actividades por gramática, vocabulario, etc., y consultó los botones de descarga | Se sustituye la propuesta mixta de Warm Up por categorías separadas; primera propuesta: nueve asociaciones de Vocabulary. Botones de PDF completo comprobados en Units 1-2 y previstos para Unit 3 al construir. |
