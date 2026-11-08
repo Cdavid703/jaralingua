@@ -46,7 +46,7 @@ for old in unit.xpath('./p[@lang="es"]'):unit.remove(old)
 unit.xpath('./p[contains(@class,"pi-goal")]')[0].text='Sessions 6–8 · 9 hours of class · 3 activities available'
 unit.append(fragment('<details class="pi-topic" id="unit-3-healthy-lifestyle"><summary><span class="pi-number">+</span><h3>Healthy Lifestyle · Vocabulary</h3></summary><div class="pi-topic-body"><p>Original ESL Pals worksheet, with activities separated by skill. Download the complete PDF inside the vocabulary page.</p><div class="pi-section-grid">'+card+'</div><p class="pi-small" lang="es">Las demás actividades del material están en preparación.</p></div></details>'))
 intro=lab.xpath('//section[@class="pi-objective"]/p')[0]
-if 'Unit 3 adds Healthy Lifestyle Vocabulary.' not in (intro.text or ''):intro.text=(intro.text or '')+' Unit 3 adds Healthy Lifestyle Vocabulary.'
+if 'Unit 3 adds Healthy Lifestyle Vocabulary' not in (intro.text or ''):intro.text=(intro.text or '')+' Unit 3 adds Healthy Lifestyle Vocabulary.'
 write('practice-lab.html',lab)
 library=html.document_fromstring((COURSE/'listening-library.html').read_text());shell=library.get_element_by_id('unit-audio-library')
 for old in shell.xpath('./section[@id="unit-3-healthy-vocabulary-audio"]'):shell.remove(old)
@@ -57,3 +57,7 @@ except ModuleNotFoundError:sys.path.insert(0,str(ROOT/'tmp/unit5-explanation/pyt
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Unit 3 Vocabulary: nine original matches only, PDF buttons, draft recovery and audio.')
+
+# Reapply the separately approved page-2 vocabulary activity after this page.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit3_food_fitness.py'), run_name='__main__')

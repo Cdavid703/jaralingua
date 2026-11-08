@@ -230,3 +230,8 @@ Las mismas rutas relativas están disponibles y verificadas en la copia local. L
 | 2026-11-07 | El docente confirmó «listo empieza» después de separar categorías y botones de descarga | Se construye Vocabulary de nueve imágenes, p.1 Task 2 solamente; QA local completado. No adelantar Speaking, Grammar ni otros bloques. |
 
 | 2026-11-07 | Healthy Lifestyle Vocabulary publicada y verificada | Commit `36287140a98a458f4d2e007ed13cffaac62bb88e`; nueve asociaciones de p.1 Task 2, PDF completo y dos botones. Unit 3 tiene tres actividades disponibles contando sus dos historias previas. Siguiente bloque pendiente de acuerdo. |
+
+
+### Food and Fitness — segunda actividad de Vocabulary, 8 de noviembre de 2026
+
+El docente aprobó «sí hagámoslo»: p.2 Tasks 1–2, cinco definiciones y cinco frases originales. Task 3 queda para Speaking. Se construyó `vocabulary-unit-3-food-and-fitness.html`, con dos ejercicios y borradores independientes, glosario, 27 audios ElevenLabs de catálogo, portada propia, QR ampliable y dos botones hacia el PDF completo ya publicado. QA local completo, publicación pendiente de comprobar. Ver [documentación de Food and Fitness](preintermediate1-unit3-food-fitness.md). No adelantar la siguiente actividad sin acordarla con el docente.
