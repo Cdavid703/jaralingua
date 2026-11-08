@@ -7,7 +7,7 @@ Fecha: 8 de noviembre de 2026, Colombia.
 El docente aprobó la segunda actividad de Vocabulary: cinco definiciones y cinco frases de la página 2 del PDF Healthy Lifestyle. Las cinco preguntas personales de Task 3 quedan para Speaking. No se añade una actividad de gramática ni se avanza a otras páginas.
 
 Página: `ingles/preintermedio-1/vocabulary-unit-3-food-and-fitness.html`.
-Destino público previsto: `https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-food-and-fitness.html`.
+Página publicada y verificada: `https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-food-and-fitness.html`.
 
 ## Fidelidad al original
 
@@ -67,3 +67,19 @@ Ocho pruebas Node pasaron: incompletos; repetición/recarga; normalización y pl
 Cuarenta estados en ocho tamaños CSS comprobados tras estabilizar cada ajuste: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080. Carpetas cerradas, definiciones, frases, revisión y original abierto sin desbordamiento ni QR sobre texto. Ocho ampliaciones de QR cargadas, centradas y dentro de pantalla. Original completo 1275×1802 cargado, dos botones de PDF con acceso compartido comprobados. Informes en `tmp/preintermediate1-food-fitness-qa/`.
 
 Estado al escribir esta sección: construcción y QA local completos; publicación pendiente de comprobar y registrar.
+
+
+## Publicación verificada — 8 de noviembre de 2026, Colombia
+
+Commit publicado `e3487c8f7515f7d2839f6cacd1c849a51ba2973c`, enviado a main con push normal. Comparadas las versiones previas y **115 dependencias intactas**, se revisó la vista previa y se aplicaron **36 archivos estáticos** mediante el publicador selectivo. Respaldo `20261108T233519Z-qp9hmnz_`, bajo `/var/backups/jaralingua/vps-publish/`. Los 36 hashes de producción y **151 respuestas HTTPS 200** (36 publicados + 115 dependencias) coinciden con lo esperado. Sin cambios de autenticación, componentes compartidos, backend, datos académicos ni servicios. PDF original reutilizado sin cambios.
+
+Navegador público: Practice Lab presenta cuatro actividades de Unit 3, con las dos tarjetas de vocabulario. Definiciones: primer conjunto 1/5 sin claves; repetición/recarga no revela; segundo diferente 2/5 revela cinco explicaciones sin desbloquear modelos de frases. Frases: 1/5, repetición con mayúsculas/espacios/puntuación/plural válido conserva 1/5 sin modelos; segundo distinto 2/5 revela cinco modelos. Doble reinicio/recarga/deshacer restaura ` PLANT‑BASED ` con sus espacios y guion, las otras respuestas y los cinco modelos, conservando las definiciones. Perfecto inicial con variantes válidas 5/5.
+
+El modelo a reprodujo el archivo correcto completo, 4,272472 segundos, readyState 4 y sin error. Editar después ocultó los modelos y pausó el reproductor sin borrar la revisión de definiciones. Aerobic exercise mostró «ejercicio aeróbico» y su archivo de pronunciación correcto. QR móvil cargado y centrado; original p.2 completo cargado a 1275×1802. Dos botones Download original PDF mantienen el acceso de sesión del sitio. Accesos anterior/siguiente y desde Listening Library comprobados.
+
+Al entregar quedaron diez campos vacíos, ambos respaldos de prueba retirados y feedback/modelos ocultos. Carpetas cerradas, visor restablecido a tamaño normal y página pública marcada como entregable. Informe `tmp/preintermediate1-food-fitness-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_and_Fitness_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_and_Fitness_glosario.png`
+
+Food and Fitness está terminada y publicada. Esta entrega no construye Speaking, Phrasal Verbs, vídeo, Reading, Writing ni Grammar complementaria; esperar la elección del docente para continuar.
