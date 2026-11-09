@@ -7,7 +7,7 @@ Fecha: 8 de noviembre de 2026, Colombia.
 El docente aprobó construir el siguiente bloque de Video Listening. Se usan solamente las páginas 3–4, Tasks 1–2, de Healthy Lifestyle de ESL Pals: diez citas con huecos y ocho afirmaciones True/False. Las nueve preguntas de discusión quedan para Speaking; no se añaden tareas de gramática ni se construye otro bloque.
 
 Página: `ingles/preintermedio-1/video-listening-unit-3-healthy-lifestyle.html`.
-URL prevista: https://www.jaralingua.com/ingles/preintermedio-1/video-listening-unit-3-healthy-lifestyle.html.
+URL publicada: https://www.jaralingua.com/ingles/preintermedio-1/video-listening-unit-3-healthy-lifestyle.html.
 
 Fuente local: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`. Se reutiliza la copia completa de nueve páginas `ingles/preintermedio-1/materials/healthy-lifestyle-original.pdf`, SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`. No se reescribe ni repara el original.
 
@@ -62,4 +62,20 @@ Vídeo real reproduciendo sin error; repetición a 1:45 observada en 105,14023 s
 
 Cuarenta y ocho estados en ocho tamaños CSS reales: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080. Carpetas cerradas, vídeo, Quotes, True/False, glosario y originales abiertos, sin desbordamiento ni QR sobre texto. Ocho QR ampliados cargados, centrados y dentro de pantalla. 856 archivos existentes comprobados: solo Lab, Library y el enlace Next de Food and Fitness cambiaron. Dos reconstrucciones completas y una parcial conservaron los mismos resultados; evidencias y comprobaciones en `tmp/preintermediate1-healthy-video-qa/`.
 
-Estado: construcción y QA local; registrar publicación solamente después de verificarla.
+Estado: construcción y QA local completos; publicación verificada en la sección siguiente.
+
+
+## Publicación verificada — 8 de noviembre de 2026, Colombia
+
+Commit publicado `71b4638932d626f896512effa09c01117bee9382`, push normal a main. Comparadas las versiones previas y 136 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 36 archivos estáticos mediante el publicador selectivo. Respaldo `20261109T011038Z-hsxmuw2b`, bajo `/var/backups/jaralingua/vps-publish/`. Los 36 hashes de producción y 172 respuestas HTTPS 200 (36 publicados + 136 dependencias) coinciden con lo esperado. PDF y tres audios reutilizados intactos. Sin modificaciones de autenticación, componentes compartidos, backend, servicios ni datos académicos.
+
+Navegador público: Practice Lab muestra cinco actividades en Unit 3 y Video Listening en carpeta separada. Quotes: 1/10 sin claves; repetición normalizada/recarga sin adelanto; segundo conjunto 2/10 revela diez explicaciones sin desbloquear True/False. True/False: incompleto enfoca la primera opción; 3/8 y repetición/recarga sin claves; segundo distinto 4/8 revela ocho. Doble reinicio/recarga/deshacer recupera la escritura exacta ` MONEY. ` y las diez explicaciones, manteniendo las ocho del otro bloque. Perfectos iniciales 10/10 y 8/8.
+
+La repetición desde 1:45 reprodujo el vídeo original, observada inicialmente a 106,724882 segundos, duración 192,021 y sin error. Velocidad real 0.75 comprobada. Endorphins mostró «endorfinas» y reprodujo su archivo de apoyo, pausando el vídeo. Breathe easier mostró «respirar con más facilidad» y el MP3 correcto en celular. QR ampliado cargado, centrado y dentro de pantalla; originales completos p.3–4 cargados a 1275×1802. PDF con acceso de sesión compartida; enlaces anterior/siguiente y Listening Library correctos.
+
+Al entregar quedaron dieciocho respuestas vacías, respaldos retirados y feedback oculto. Carpetas cerradas, visor restablecido y página pública marcada como entregable. Informe `tmp/preintermediate1-healthy-video-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Video_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Video_glosario.png`
+
+Página publicada y verificada: https://www.jaralingua.com/ingles/preintermedio-1/video-listening-unit-3-healthy-lifestyle.html. Video Listening terminado. No construir Speaking, Phrasal Verbs, Reading, Writing ni Grammar complementaria hasta elegir el siguiente alcance con el docente.
