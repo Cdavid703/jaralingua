@@ -95,7 +95,7 @@ Ruta local principal: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conv
 
 Archivo de 5.100.468 bytes; SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`. Copia exacta del original del disco David, sin reparar ni reescribir el PDF. Sus nueve páginas se renderizaron e inspeccionaron completas.
 
-El enlace original del vídeo, recuperado de las anotaciones de páginas 1, 3 y 4, es `https://www.youtube.com/watch?v=Cg_GW7yhq20`. Se verificó su presencia en el PDF; todavía no se comprobó la disponibilidad/reproducción actual del vídeo ni su correspondencia literal con las actividades.
+El enlace original del vídeo, recuperado de las anotaciones de páginas 1, 3 y 4, es `https://www.youtube.com/watch?v=Cg_GW7yhq20`. Se verificó su presencia en el PDF. El 8 de noviembre de 2026 se comprobó la reproducción original (192,021 segundos) y se cotejaron las diez citas y ocho afirmaciones con la narración inglesa; ver la entrada de Video Listening al final.
 
 | Página | Sección original | Contenido textual comprobado |
 | --- | --- | --- |
@@ -136,7 +136,7 @@ Puntos para preparar la construcción:
 
 - Revisión visual completada: página 1 tiene nueve ilustraciones, en orden stress, blueberries, junk food, balanced diet, alcohol, smoothies, meditation, hiking y cigarettes. Página 7 contiene cuatro fotografías: conversación con bebidas en un bar, paseo familiar con perro, dos personas comiendo hamburguesas y un grupo corriendo. Conservar originales al construir; todavía no se extrajeron como activos del sitio.
 - Página 6 contiene cuatro opiniones atribuidas a John, Oli, Beth y Amy: dieta vegetal como única opción; impedir que los niños coman alimentos azucarados/procesados; prohibir cigarrillos/alcohol; preferir fuerza a ejercicio aeróbico. Son afirmaciones para debatir, no claves correctas ni recomendaciones del curso. La de Beth emplea un condicional hipotético; no convertirla en un objetivo gramatical nuevo de esta unidad.
-- El vídeo original es parte de la fuente. El enlace ya está recuperado; comprobar que corresponde a sus diez citas y ocho afirmaciones antes de construir la actividad de vídeo. Audios de consigna o vocabulario de ElevenLabs no reemplazan automáticamente ese vídeo.
+- El vídeo original es parte de la fuente. El enlace ya está recuperado; su reproducción y correspondencia con las diez citas y ocho afirmaciones se comprobaron el 8 de noviembre de 2026. Audios de consigna o vocabulario de ElevenLabs no reemplazan automáticamente ese vídeo.
 - Conservar el texto original y documentar cualquier errata o ambigüedad antes de definir corrección automática. Por ejemplo, la explicación de plant-based de página 2 y su frase de completar no usan exactamente el mismo alcance; no alterar el PDF ni imponer una interpretación sin revisión.
 - B1 es la clasificación de la carpeta. Prever apoyos de significado en español y pronunciación para términos como carbohydrate, endorphins o cognitive function, sin cambiar las preguntas por iniciativa propia.
 - Si se aprueban, mantener diseño de Básico 2, imagen de portada propia por página, QR ampliable, carpetas cerradas y vocabulario subrayado con significado y audio. Audios nuevos con ElevenLabs y voces de catálogo, conforme a las decisiones del curso.
@@ -237,3 +237,8 @@ Las mismas rutas relativas están disponibles y verificadas en la copia local. L
 El docente aprobó «sí hagámoslo»: p.2 Tasks 1–2, cinco definiciones y cinco frases originales. Task 3 queda para Speaking. Se construyó `vocabulary-unit-3-food-and-fitness.html`, con dos ejercicios y borradores independientes, glosario, 27 audios ElevenLabs de catálogo, portada propia, QR ampliable y dos botones hacia el PDF completo ya publicado. Construcción, QA y publicación verificados: [abrir actividad](https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-food-and-fitness.html). Ver [documentación de Food and Fitness](preintermediate1-unit3-food-fitness.md). No adelantar la siguiente actividad sin acordarla con el docente.
 
 Publicación de Food and Fitness verificada el 8 de noviembre: commit `e3487c8f7515f7d2839f6cacd1c849a51ba2973c`, 36 archivos estáticos, 115 dependencias intactas y 151 respuestas HTTPS 200 con hash esperado. Unit 3 tiene cuatro actividades disponibles, dos historias y dos páginas de vocabulario. Siguiente bloque pendiente de acuerdo.
+
+
+### Healthy Lifestyle — Video Listening, 8 de noviembre de 2026
+
+El docente aprobó p.3–4 Tasks 1–2: diez citas y ocho True/False, manteniendo las nueve preguntas de discusión para Speaking. Se construyó `video-listening-unit-3-healthy-lifestyle.html`, con el vídeo original de Every Mind Matters verificado, puntos de repetición, dos borradores independientes, 27 términos con significado/pronunciación, 26 audios nuevos Sarah de catálogo y tres reutilizados intactos. Portada propia, diseño de Básico 2, QR ampliable y dos botones hacia el PDF completo sin modificaciones. Video Listening tiene carpeta propia en Practice Lab; Unit 3 pasa a cinco actividades. Fuente, claves, portada y QA: [documentación de Video Listening](preintermediate1-unit3-healthy-video.md). Construcción y QA local completas; publicación pendiente de registrar. No adelantar otra actividad sin acuerdo.
