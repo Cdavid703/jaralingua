@@ -6,7 +6,7 @@ Fecha: 8 de noviembre de 2026, Colombia.
 
 El docente aprobó la página independiente de Phrasal Verbs: página 5, Tasks 1–2, del PDF Healthy Lifestyle de ESL Pals. Cuatro definiciones y cuatro frases con hueco; las ocho preguntas personales quedan para Speaking. No se construye otro bloque ni se presenta como una lección de Grammar.
 
-Página: `ingles/preintermedio-1/vocabulary-unit-3-healthy-phrasal-verbs.html`. URL prevista: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-healthy-phrasal-verbs.html.
+Página: `ingles/preintermedio-1/vocabulary-unit-3-healthy-phrasal-verbs.html`. URL publicada: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-healthy-phrasal-verbs.html.
 
 Fuente local: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`. Copia completa reutilizada: `ingles/preintermedio-1/materials/healthy-lifestyle-original.pdf`, nueve páginas, SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`, intacta. La página 5 se renderizó e inspeccionó a 1275×1802; WebP sin pérdida y comparación RGBA exacta. La referencia original cerrada incluye Task 3, sin controles para responderla en esta página.
 
@@ -47,4 +47,20 @@ Diez pruebas Node cubren incompletos, normalización, variantes, modelos corresp
 
 Cuarenta estados en ocho tamaños CSS reales 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080: carpetas cerradas, definiciones, revisión de frases, glosario y original, sin desbordamiento, QR sobre texto ni imágenes rotas. Ocho ampliaciones del QR cargadas, centradas y dentro de pantalla. Dos reconstrucciones completas y una parcial verifican idempotencia. Informes temporales privados: `tmp/preintermediate1-healthy-phrasals-qa/`.
 
-Estado: construcción y QA local; registrar la publicación después de comprobarla. No avanzar a otra actividad sin elección del docente.
+Estado: construcción y QA local completos; publicación verificada en la sección siguiente. No avanzar a otra actividad sin elección del docente.
+
+
+## Publicación verificada — 8 de noviembre de 2026, Colombia
+
+Commit `ae073d83d24f4e640abaa3fe9e58ef17e4542e9c`, push normal a main. Tras comparar versiones previas y 166 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 35 archivos estáticos. Respaldo `20261109T014106Z-n46_v2up`, bajo `/var/backups/jaralingua/vps-publish/`. Los 35 hashes en producción y las 201 respuestas HTTPS 200 (35 publicados + 166 dependencias) coinciden con lo esperado. PDF y dos pronunciaciones reutilizadas intactos. Sin cambios de autenticación, componentes compartidos, backend, servicios ni datos académicos.
+
+Navegador público: seis actividades de Unit 3 y carpeta independiente de Phrasal Verbs. Definiciones 1/4 repetido/recargado sin claves; segundo distinto 2/4 con cuatro explicaciones y sin modelos de frases. Frases 1/4, repetición con mayúsculas, espacios y puntuación/recarga sin revisión; segundo distinto 2/4 con cuatro modelos. Perfecto inicial con alternativas 4/4, con b usando give up y c usando cut down on; texto y archivos respectivos correctos. Doble reinicio/recarga/deshacer recupera exactamente espacios/mayúsculas y los modelos elegidos, preservando las cuatro explicaciones del otro ejercicio. Perfecto de definiciones 4/4.
+
+El modelo b alternativo reprodujo el MP3 correcto, duración 2,693515 segundos, readyState 4 y sin error. Editar una frase lo pausó y ocultó sus modelos sin borrar revisión del otro bloque. Consume corregido y cut down on reprodujeron archivos correctos; este último mostró «reducir el consumo o la frecuencia de algo» en celular. QR ampliado cargado y centrado; original completo p.5 cargado a 1275×1802; PDF protegido por sesión compartida. Enlaces anterior/siguiente y Listening Library correctos.
+
+Al entregar quedaron ocho respuestas vacías, respaldos retirados, feedback/modelos ocultos, carpetas cerradas, visor restablecido y página pública marcada como entregable. Informe `tmp/preintermediate1-healthy-phrasals-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Phrasal_Verbs_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Phrasal_Verbs_glosario.png`
+
+Página publicada: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-healthy-phrasal-verbs.html. Phrasal Verbs terminado. Las ocho preguntas personales permanecen para Speaking; esperar elección del docente para continuar.
