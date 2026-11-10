@@ -6,7 +6,7 @@ Fecha: 10 de noviembre de 2026, Colombia.
 
 El docente aprobó construir una página independiente con las cuatro afirmaciones e ilustraciones originales de John, Oli, Beth y Amy, elección de acuerdo/desacuerdo, notas opcionales para justificar la postura y la tabla original de expresiones. Se conserva el diseño de Básico 2, glosario con pronunciación/significado, ElevenLabs, portada propia, QR ampliable y botones del PDF. Esta entrega usa solamente la página 6. Picture Round de página 7 y las preguntas de conversación antes reservadas en páginas 1, 2, 4 y 5 siguen pendientes; no se construyen aquí.
 
-Página: `ingles/preintermedio-1/speaking-unit-3-healthy-living-opinions.html`. URL prevista: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-healthy-living-opinions.html.
+Página: `ingles/preintermedio-1/speaking-unit-3-healthy-living-opinions.html`. URL publicada: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-healthy-living-opinions.html.
 
 Fuente local: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`. Se reutiliza intacta la copia completa de nueve páginas `ingles/preintermedio-1/materials/healthy-lifestyle-original.pdf`, SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`.
 
@@ -52,4 +52,20 @@ Ocho pruebas Node: revisión inicial, ambas posturas sin exigir escritura, recup
 
 Cuarenta y ocho estados en ocho tamaños CSS reales (320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900, 1920×1080): cerrado, preparación, tabla, glosario, original y reflexión, sin desbordamientos, imágenes rotas ni QR sobre texto. Ocho ampliaciones QR cargadas, centradas y dentro de pantalla. Informes privados temporales: `tmp/preintermediate1-healthy-opinions-qa/`.
 
-Estado: construcción y QA local completos. Registrar publicación tras verificarla; no construir Picture Round ni otra actividad todavía.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente; no construir Picture Round ni otra actividad todavía.
+
+
+## Publicación verificada — 10 de noviembre de 2026, Colombia
+
+Commit `5fce61e32723f3caf0e84f5986d4e26193119b00`, push normal a main. Comparadas versiones previas y 185 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 56 archivos estáticos con el publicador selectivo. Respaldo `20261110T223609Z-18j8umyc`, bajo `/var/backups/jaralingua/vps-publish/`. Los 56 hashes de producción y 241 respuestas HTTPS 200 (56 publicados + 185 dependencias) coinciden con lo esperado. PDF y dos audios reutilizados intactos. Sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: siete actividades de Unit 3 y carpeta independiente Speaking. Cuatro tarjetas y veinte expresiones, con las carpetas cerradas inicialmente. John eligió Agree y pudo revisar sin notas; Oli eligió Disagree, escribió notas con espacios y salto de línea y marcó un criterio. Doble reinicio/recarga/deshacer restauró exactamente postura, texto, marca y revisión de Oli, conservando John. Revisión general 2/4 y 4/4 posturas, sin corrección de la opinión ni nota. Editar las notas de Oli pausó audio y ocultó su revisión y resumen global, manteniendo John.
+
+La afirmación de Beth reprodujo el MP3 correcto, duración 4,92263 segundos, readyState 4 y sin error. La expresión On the one hand…,on the other hand… reprodujo su archivo correcto y velocidad 0.75 comprobada. Strength training mostró «entrenamiento de fuerza» con pronunciación correcta en celular. QR ampliado cargado, centrado y dentro de pantalla; cuatro retratos y original completo p.6 cargados a sus dimensiones esperadas. PDF con sesión compartida y enlaces anterior/siguiente y Listening Library correctos.
+
+Al entregar quedaron cuatro posturas y cuatro notas vacías, ocho marcas desactivadas, respaldos retirados y feedback oculto. Carpetas cerradas, visor restablecido y página pública marcada como entregable. Informe `tmp/preintermediate1-healthy-opinions-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Living_Opinions_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Living_Opinions_glosario.png`
+
+Página publicada: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-healthy-living-opinions.html. Speaking de opiniones terminado. Picture Round de p.7 y demás preguntas reservadas quedan pendientes de acuerdo con el docente.
