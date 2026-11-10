@@ -1,0 +1,35 @@
+/* Four attributed opinions: independent preparation, never an opinion answer key. */
+(() => {
+ 'use strict';
+ const raw=document.getElementById('hlo-data');if(!raw)return;
+ const data=JSON.parse(raw.textContent),key='jl-pi1-unit3-healthy-opinions-v1',drafts={},backups={},storage=document.getElementById('hlo-storage-status'),summary=document.getElementById('hlo-result');let saved={},canSave=true,vocabulary=null;
+ const valid=s=>s&&['','Agree','Disagree'].includes(s.position)&&typeof s.notes==='string'&&Array.isArray(s.checks)&&s.checks.length===2&&s.checks.every(x=>typeof x==='boolean')&&typeof s.reviewed==='boolean'&&(!s.reviewed||Boolean(s.position));
+ const copy=s=>({position:s.position,notes:s.notes,checks:[...s.checks],reviewed:s.reviewed});
+ function unavailable(){canSave=false;storage.hidden=false;storage.textContent='This browser cannot save your preparation. Keep the page open or use the original PDF to prepare on paper.';}
+ try{saved=JSON.parse(sessionStorage.getItem(key)||'{}')||{};}catch(_){unavailable();}
+ function persist(){if(!canSave)return;try{sessionStorage.setItem(key,JSON.stringify({drafts,backups}));}catch(_){unavailable();}}
+ function hideSummary(){summary.hidden=true;summary.replaceChildren();}
+ function total(){document.getElementById('hlo-total-count').textContent=Object.values(drafts).filter(s=>s.position).length+' of 4 positions selected.';}
+ document.querySelectorAll('[data-hlo-person]').forEach(section=>{
+  const id=section.dataset.hloPerson,person=data.people.find(p=>String(p.number)===id),position=section.querySelector('select'),notes=section.querySelector('textarea'),checks=[...section.querySelectorAll('[data-hlo-check]')],feedback=section.querySelector('.hlo-feedback'),undo=section.querySelector('[data-hlo-undo]');
+  let state=drafts[id]=valid(saved.drafts?.[id])?copy(saved.drafts[id]):{position:'',notes:'',checks:[false,false],reviewed:false};if(valid(saved.backups?.[id]))backups[id]=copy(saved.backups[id]);
+  function review(){feedback.hidden=false;feedback.textContent='Your position on '+person.name+'’s statement: '+state.position+'. '+(state.notes.trim()?'Use your notes to rehearse a reason or an example.':'You can explain your reason aloud; written notes are optional.')+' Your self-check: '+state.checks.filter(Boolean).length+' of 2 points marked. These are your own reflection marks, not an automatic judgement of your opinion or a grade.';}
+  function render(){position.value=state.position;notes.value=state.notes;checks.forEach((c,i)=>{c.checked=state.checks[i];});feedback.hidden=true;feedback.textContent='';if(state.reviewed)review();undo.hidden=!backups[id];total();hideSummary();}
+  function edited(){state.position=['Agree','Disagree'].includes(position.value)?position.value:'';state.notes=notes.value;state.checks=checks.map(c=>c.checked);state.reviewed=false;delete backups[id];undo.hidden=true;feedback.hidden=true;feedback.textContent='';hideSummary();total();stop();vocabulary?.hide();persist();}
+  position.addEventListener('change',edited);notes.addEventListener('input',edited);checks.forEach(c=>c.addEventListener('change',edited));
+  section.querySelector('[data-hlo-review]').addEventListener('click',()=>{hideSummary();if(!state.position){feedback.hidden=false;feedback.textContent='Choose Agree or Disagree when you are ready to state your view. Notes are optional; explain your reason aloud.';position.focus();return;}state.reviewed=true;review();persist();feedback.focus();});
+  section.querySelector('[data-hlo-reset]').addEventListener('click',()=>{if(state.position||state.notes||state.checks.some(Boolean)||state.reviewed)backups[id]=copy(state);state=drafts[id]={position:'',notes:'',checks:[false,false],reviewed:false};stop();vocabulary?.hide();render();persist();position.focus();});
+  undo.addEventListener('click',()=>{if(!valid(backups[id]))return;state=drafts[id]=copy(backups[id]);delete backups[id];stop();vocabulary?.hide();render();persist();position.focus();});render();
+ });
+ document.getElementById('hlo-review-all').addEventListener('click',()=>{hideSummary();const selected=data.people.filter(p=>drafts[String(p.number)].position),missing=data.people.find(p=>!drafts[String(p.number)].position),notes=Object.values(drafts).filter(s=>s.notes.trim()).length,p=document.createElement('p');p.textContent='You have selected a position for '+selected.length+' of 4 statements and have optional notes for '+notes+'. Rehearse your view with a reason or an example. Your choices and self-checks are not automatically graded.';summary.append(p);if(missing){const a=document.createElement('a');a.href='#hlo-person-'+missing.number;a.textContent='Continue with '+missing.name+'’s statement';summary.append(a);}summary.hidden=false;summary.focus();persist();});
+ const audio=document.getElementById('hlo-audio'),status=document.getElementById('hlo-audio-status');let speed=1,token=0;
+ function stop(){token++;audio.pause();vocabulary?.setPlaying(null);status.textContent='Audio stopped.';}
+ async function play(path,text,button=null){stop();const request=++token;audio.src=path;audio.playbackRate=speed;vocabulary?.setPlaying(button);status.textContent='Loading audio: '+text;try{await audio.play();if(request===token)status.textContent='Playing: '+text;}catch(_){if(request===token){stop();status.textContent='Audio could not play. Check your connection and tap again to retry.';}}}
+ if(window.FirstVisitVocabulary){vocabulary=window.FirstVisitVocabulary(data.vocabulary,(entry,button)=>play(entry.audio,entry.term,button));document.querySelectorAll('[data-glossary]').forEach(el=>vocabulary.render(el,el.textContent));}
+ document.querySelectorAll('[data-hlo-audio]').forEach(b=>b.addEventListener('click',()=>{const item=data.audio[b.dataset.hloAudio];if(item)play(item.path,item.text);}));
+ document.querySelectorAll('[data-hlo-speed]').forEach(b=>b.addEventListener('click',()=>{speed=Number(b.dataset.hloSpeed);audio.playbackRate=speed;document.querySelectorAll('[data-hlo-speed]').forEach(x=>x.setAttribute('aria-pressed',String(Number(x.dataset.hloSpeed)===speed)));status.textContent='Audio speed: '+speed+'×.';}));
+ document.querySelector('[data-hlo-stop]').addEventListener('click',stop);audio.addEventListener('ended',()=>{stop();status.textContent='Finished. Tap to listen again.';});audio.addEventListener('error',()=>{stop();status.textContent='Audio could not load. Check your connection and tap again to retry.';});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();vocabulary?.hide();persist();}});window.addEventListener('pagehide',()=>{stop();vocabulary?.hide();persist();});
+ function openHash(){let id;try{id=decodeURIComponent(location.hash.slice(1));}catch(_){return;}const target=id&&document.getElementById(id);if(!target)return;let folder=target.closest('details');while(folder){folder.open=true;folder=folder.parentElement?.closest('details');}target.scrollIntoView({block:'start'});}
+ window.addEventListener('hashchange',openHash);if(location.hash)openHash();
+})();

@@ -61,3 +61,7 @@ except ModuleNotFoundError:sys.path.insert(0,str(ROOT/'tmp/unit5-explanation/pyt
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Healthy Lifestyle Phrasal Verbs: four definitions and four sentence gaps.')
+
+# Preserve the separately approved page-6 speaking activity.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit3_healthy_opinions.py'), run_name='__main__')
