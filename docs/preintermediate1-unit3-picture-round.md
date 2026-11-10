@@ -6,7 +6,7 @@ Fecha: 10 de noviembre de 2026, Colombia.
 
 El docente aprobó una página independiente con las cuatro fotografías originales y las ocho preguntas de página 7 de Healthy Lifestyle, separando descripción y conversación. Se mantienen notas opcionales, glosario con significado/pronunciación, ElevenLabs, portada propia, diseño de Básico 2, QR ampliable y botones del PDF. No se construyen Reading, Writing, vocabulario de página 9 ni las preguntas de conversación antes reservadas en otras páginas.
 
-Página: `ingles/preintermedio-1/speaking-unit-3-picture-round.html`. URL prevista: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-picture-round.html.
+Página: `ingles/preintermedio-1/speaking-unit-3-picture-round.html`. URL publicada: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-picture-round.html.
 
 Fuente local: `/Users/davidaramillo/Projects/Material inglés/B1/06 Conversacion y lecciones/ESL Pals/1723488559-(SV)  Healthy Lifestyle.pdf`. Copia completa de nueve páginas reutilizada intacta: `ingles/preintermedio-1/materials/healthy-lifestyle-original.pdf`, SHA-256 `ba27c8f7fac6b374554ed82e731ed7b3bd13864506fd90bf5223816ab9e8dbdb`.
 
@@ -59,4 +59,20 @@ Nueve pruebas Node: revisión oral sin escritura ni práctica automática, doce 
 
 Cuarenta y ocho estados en ocho tamaños CSS reales 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080: cerrado, descripción, conversación, glosario, original y reflexión, sin desbordamientos, QR sobre texto ni fotos deformadas/recortadas. Ocho QR ampliados cargados, centrados y dentro de pantalla. Informes privados temporales: `tmp/preintermediate1-picture-round-qa/`.
 
-Estado: construcción y QA local completos; registrar publicación tras verificarla. No adelantar otro bloque sin elección del docente.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente; no adelantar otro bloque sin elección del docente.
+
+
+## Publicación verificada — 10 de noviembre de 2026, Colombia
+
+Commit `ee84b83ebefc76cf4cab8782e6f330464362d0bf`, push normal a main. Tras comparar versiones previas y 263 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 37 archivos estáticos con el publicador selectivo. Respaldo `20261110T231141Z-1_voq3t6`, bajo `/var/backups/jaralingua/vps-publish/`. Los 37 hashes de producción y las 300 respuestas HTTPS 200 (37 publicados + 263 dependencias) coinciden. Se incluyeron también los archivos de audio referidos dinámicamente por las actividades previas entre las dependencias comprobadas. PDF y dos audios reutilizados intactos. Sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: ocho actividades de Unit 3 y dos tarjetas en Speaking. Cuatro fotos, ocho preguntas y doce notas; carpetas cerradas inicialmente. La revisión de imagen sin notas conserva la práctica oral opcional. Descripción de imagen 2 y pregunta e con textos exactos, espacios/saltos, marca y revisión se recuperaron tras doble reinicio/recarga/deshacer en cada sección, preservando la otra. Resúmenes independientes 1/4 y 1/8; ocho preguntas marcadas produjeron 8/8 manteniendo 1/4 imágenes. Editar la preferencia pausó audio y ocultó solo revisión/resumen de preguntas. Miniatura 4 abrió su tarjeta correcta.
+
+Pregunta h reprodujo el MP3 correcto, duración 3,529433 segundos, readyState 4 y sin error. Consigna de descripción y velocidad 0.75 correctas. Occasionally mostró «ocasionalmente; de vez en cuando» y su MP3 correcto en celular. QR ampliado cargado, centrado y dentro de pantalla; fotos completas 626×418/417 y original completo p.7 a 1275×1802 cargados. PDF con sesión compartida; enlaces anterior/siguiente y Listening Library correctos.
+
+Al entregar quedaron doce notas vacías, veinticuatro marcas desactivadas, respaldos retirados y feedback oculto. Carpetas cerradas, visor restablecido y página pública marcada como entregable. Informe `tmp/preintermediate1-picture-round-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Picture_Round_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Picture_Round_glosario.png`
+
+Página publicada: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-picture-round.html. Picture Round terminado. Elegir con el docente antes de construir Reading, vocabulario/Writing de p.9 o las preguntas antes reservadas.
