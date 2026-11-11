@@ -36,4 +36,18 @@ Diseño directo de Básico 2, azul/rojo/Arial, presentación compacta, tres carp
 
 Navegador local: artículo completo cargado sin error (readyState 4), pausa/reanudación con posición conservada, Stop a cero, párrafo 4 correcto a 0.75 y texto 7-9 intacto. Cognitive function muestra «función cognitiva; capacidades mentales» y reproduce el archivo correcto. Imágenes completas cargadas y ambos botones PDF abren sesión compartida. Treinta y dos estados en ocho tamaños CSS reales: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080; sin desbordamiento, imágenes rotas ni QR sobre texto. Ocho QR ampliados cargados, centrados y dentro de pantalla. Informes privados en `tmp/preintermediate1-healthy-reading-qa/`.
 
-Estado: construcción y QA local verificados; publicación pendiente de verificación. No adelantar página 9 ni otros bloques sin acuerdo.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente; no adelantar página 9 ni otros bloques sin acuerdo.
+
+
+## Publicación verificada — 10 de noviembre de 2026, Colombia
+
+Commit `47fc0dfe885d4c297648ae44634ed3d99190e84d`, push normal a main. Tras comparar versiones previas y 296 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 51 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261111T000229Z-zxlw30lf`. Los 51 hashes de producción y 347 respuestas HTTPS 200 (51 publicados y 296 dependencias) coinciden. PDF y tres audios reutilizados intactos; sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: artículo completo de 164,722358 segundos reproduciendo sin error, readyState 4; pausa/reanudación conserva posición y Stop vuelve a cero. Párrafo 8 reproduce su archivo a 0.75. Start reading abre los ocho párrafos. Longevity muestra «longevidad» y su MP3 correcto en celular de 390×844 sin desbordamiento. QR ampliado cargado, centrado y dentro de pantalla. Portada 1600×800, graduados 1051×464 y página 8 completa 1275×1802 cargados. Ambos botones PDF abren la sesión compartida existente. Practice Lab tiene nueve actividades, una tarjeta en Reading y dos en Speaking; enlaces desde Lab, Library y Next de Picture Round comprobados.
+
+Al entregar quedan tres carpetas cerradas, reproductor sin fuente seleccionada ni reproducción y visor normal restablecido. Página pública marcada como entregable. Informe `tmp/preintermediate1-healthy-reading-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Reading_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Reading_glosario.png`
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/reading-unit-3-benefits-of-a-healthy-lifestyle.html. Reading terminado; vocabulario y Writing de p.9 y conversación reservada requieren elección del docente.
