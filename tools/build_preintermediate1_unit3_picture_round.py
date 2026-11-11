@@ -57,3 +57,7 @@ except ModuleNotFoundError:sys.path.insert(0,str(ROOT/'tmp/unit5-explanation/pyt
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Picture Round: original four photos and eight questions in two separate speaking sections.')
+
+# Preserve the separately approved page-8 reading.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit3_healthy_reading.py'), run_name='__main__')
