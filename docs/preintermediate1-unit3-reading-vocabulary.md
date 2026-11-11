@@ -44,4 +44,20 @@ Nueve pruebas Node pasan: ambos campos necesarios para recuento, recuperación l
 
 Treinta y dos estados en ocho tamaños CSS reales 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080: cerrado, práctica, guardar y original; sin desbordamientos, imágenes visibles rotas ni QR sobre texto. Ocho QR ampliados cargados, centrados y dentro de pantalla. Informes privados temporales: `tmp/preintermediate1-reading-vocabulary-qa/`.
 
-Estado: construcción y QA local verificados; publicación pendiente de verificación. Elegir con el docente antes de construir Writing u otras actividades.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente; elegir con el docente antes de construir Writing u otras actividades.
+
+
+## Publicación verificada — 10 de noviembre de 2026, Colombia
+
+Commit `ffeeabf5641baad7028ddaf86a74a03b81b2c85c`, push normal a main. Tras comparar versiones previas y 343 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 14 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261111T002815Z-yjrlqcz1`. Los 14 hashes de producción y 357 respuestas HTTPS 200 (14 publicados y 343 dependencias) coinciden. PDF y siete pronunciaciones reutilizadas intactos. Sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: dieciséis campos vacíos y tres carpetas cerradas inicialmente. Definición sin ejemplo pide segunda parte. Tarjeta 5 con espacios/salto/caracteres literales, ejemplo propio, marca y revisión se recupera exacta tras doble reinicio/recarga/deshacer, conservando tarjeta 6. Resúmenes 1/8 y 8/8 indican partes iniciadas, sin corregir ni calificar. Editar pausa audio y oculta revisión/resumen propios. Copia pública conserva las ocho expresiones, definición literal y ejemplo revisado. Consigna de 5,20127 segundos a 0.75, readyState 4 y sin error. Mental well-being muestra «bienestar mental» y su MP3 correcto en celular de 390×844 sin desbordamiento. QR ampliado cargado, centrado y dentro de pantalla.
+
+Portada 1600×800, corazón original 544×685 y página 9 completa 1276×1802 cargados. Ambos botones PDF mantienen la sesión compartida existente. Enlace de contexto abre párrafo 5 y Next del Reading vuelve a Vocabulary. Practice Lab tiene diez actividades, tres de Vocabulary, dos de Speaking y una en la carpeta Reading; accesos desde Lab y Library comprobados. Al entregar quedaron dieciséis campos vacíos, dieciséis marcas desactivadas, respaldos de prueba retirados y feedback oculto. Carpetas cerradas, reproductor sin fuente seleccionada ni reproducción y visor restablecido; página pública marcada como entregable.
+
+Informe `tmp/preintermediate1-reading-vocabulary-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Words_in_Context_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Words_in_Context_glosario.png`
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-words-in-context.html. Task 1 terminada; Task 2 Writing y conversación reservada siguen pendientes de elección del docente.
