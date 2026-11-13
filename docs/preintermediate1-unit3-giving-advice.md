@@ -40,4 +40,19 @@ Diez pruebas Node correctas: entregas incompletas; repeticiones equivalentes de 
 
 Navegador local: entrega incompleta sin intento; repetir should not equivalente mantiene modelos ocultos; segundo conjunto distinto desbloquea. Exercise 2 obtiene 8/8 con variantes have to/must y contracciones; must not bring en un caso opcional se explica correctamente como error. Exercise 3 obtiene 8/8. Modelo obligation-1 reproduce a 0.75, readyState 4, duración 1,996916 s. Los tres borradores literales se recuperan por separado tras doble reinicio y recarga, con feedback anterior oculto. Glosario forbidden muestra «prohibido; que no está permitido» y su MP3 correcto en 390×844. Cuarenta estados en ocho tamaños de 320 a 1920 px con carpetas abiertas comprobadas, sin desbordamiento o superposición del QR. Ocho QR ampliados cargados y dentro de pantalla. Informes en `tmp/preintermediate1-giving-advice-qa/`, no versionados.
 
-Publicación pendiente de verificar y registrar.
+Publicación verificada; véase el registro siguiente.
+
+
+## Publicación verificada — 13 de noviembre de 2026, Colombia
+
+Commit `835c2633b7bf8e31f290eeeb35574adbfbd5ef9c`, push normal a main. Comparados archivos previos y 476 dependencias intactas antes de publicar. Vista previa revisada y despliegue selectivo de 54 archivos estáticos, con respaldo `/var/backups/jaralingua/vps-publish/20261113T210721Z-wv5qomas`. Los 54 hashes de producción y las 530 respuestas HTTPS 200 (54 publicados y 476 dependencias) coinciden. PDF, estilos y scripts compartidos, autenticación, datos académicos, backend y servicios intactos.
+
+En navegador público: los tres ejercicios obtienen 8/8 en la primera entrega con contracciones y las variantes have to/must aceptadas. Una respuesta must not bring en el caso opcional se explica correctamente como error de significado. Modelo de pregunta obligation-8 cargado con readyState 4, duración 2,089796 s, velocidad 0.75 y reproducción de nuevo sin error. Editar lo pausa, oculta su resultado y conserva los modelos de los otros dos bloques. Los tres borradores con espacios, salto y texto literal se recuperan exactos tras doble reinicio/recarga/deshacer, conservando sus segundas respuestas y ocultando feedback anterior.
+
+Forbidden muestra «prohibido; que no está permitido» y su MP3 correcto, readyState 4 y reproduciendo en 390×844. QR ampliado cargado y dentro de pantalla en 320×740. Ambos botones PDF abren la sesión compartida existente; no se inició sesión durante la prueba. Accesos desde Practice Lab, Listen Library y Next de Healthy Routines comprobados. Lab tiene catorce actividades de Unit 3 y dos tarjetas Grammar; Unit 1 conserva once y Unit 2 diez. Enlace a explicación abre should en Unit 3.
+
+Al entregar: veinticuatro campos vacíos, cuatro carpetas cerradas, respaldos de prueba retirados, feedback/modelos ocultos y audio sin fuente ni reproducción. Portada 1600×800 cargada; sin desbordamiento ni errores de consola. Vista normal restablecida y página pública marcada como entregable.
+
+Informe: `tmp/preintermediate1-giving-advice-qa/public-ui.json`. Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Giving_Advice_publicado.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Giving_Advice_glosario.png`.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/grammar-unit-3-giving-advice.html. Esta práctica no cierra toda Unit 3: Stress and Relaxation/Going to, Food Labels y evaluación oral oficial requieren acuerdo separado.
