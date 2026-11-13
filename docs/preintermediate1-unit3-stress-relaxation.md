@@ -40,4 +40,19 @@ Diez pruebas Node correctas: incompletos; repeticiones equivalentes de numerales
 
 Navegador local: incompleto sin intento; eight/8 y six/6 equivalentes mantienen modelos ocultos; segundo conjunto diferente desbloquea. Los tres bloques obtienen 8/8 con cifras y contracciones. Modelo plans-4 correcto, readyState 4, reproduciendo a 0.75, duración 1,764717 s. Editar pausa y oculta su resultado conservando otro bloque. Doble reinicio/recarga/deshacer recupera el texto literal de los tres borradores con espacios y salto de línea, conservando segundas respuestas y feedback oculto. Make time for muestra «reservar o encontrar tiempo para algo» con MP3 correcto en 390×844. Cuarenta estados en ocho tamaños de 320 a 1920 px con carpetas comprobadas, sin desbordamiento o superposición del QR. Ocho QR ampliados cargados y dentro de pantalla. Informes en `tmp/preintermediate1-stress-relaxation-qa/`, fuera del repositorio.
 
-Publicación pendiente de verificar y registrar.
+Publicación verificada; véase el registro siguiente.
+
+
+## Publicación verificada — 13 de noviembre de 2026, Colombia
+
+Commit `211ef34dd9e420846c987bf4b1df17738df39969`, push normal a main. Comparados archivos previos y 526 dependencias intactas antes de publicar. Vista previa revisada y despliegue selectivo de 54 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261113T214108Z-x010y0cl`. Los 54 hashes de producción y las 580 respuestas HTTPS 200 (54 publicados y 526 dependencias) coinciden. PDF, componentes compartidos, autenticación, datos académicos, backend y servicios intactos.
+
+Navegador público: los tres bloques obtienen 8/8 en la primera entrega, incluyendo cifras, aren’t, isn’t e I’m. Modelo de pregunta plans-4 cargado con readyState 4, duración 1,764717 s, velocidad 0.75; reproducción de nuevo comprobada sin error. Editar pausa su audio y oculta su resultado conservando los modelos de los otros bloques. Doble reinicio, recarga y deshacer recuperan exactamente los tres borradores con espacios, salto y texto literal, conservando sus segundas respuestas y ocultando feedback anterior.
+
+Make time for muestra «reservar o encontrar tiempo para algo» y su MP3 correcto, readyState 4 y reproduciendo en 390×844. QR ampliado cargado y dentro de pantalla en 320×740. Ambos botones PDF abren la sesión compartida existente sin iniciar sesión durante la prueba. Accesos desde Lab, Listen Library y Next de Giving Advice comprobados. Lab tiene quince actividades de Unit 3 y tres tarjetas Grammar; Unit 1 conserva once y Unit 2 diez. Enlace a explicación abre hours-frequency.
+
+Al entregar: veinticuatro campos vacíos, cuatro carpetas cerradas, respaldos de prueba retirados, feedback/modelos ocultos y audio sin fuente ni reproducción. Portada 1600×800 cargada; sin desbordamiento ni errores de consola. Vista normal restablecida y página pública marcada como entregable.
+
+Informe: `tmp/preintermediate1-stress-relaxation-qa/public-ui.json`. Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Stress_Relaxation_publicado.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Stress_Relaxation_glosario.png`.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/grammar-unit-3-stress-relaxation.html. No cerrar toda Unit 3 sin acordar Food Labels y la tarea oral oficial del 20 %.
