@@ -50,3 +50,7 @@ except ModuleNotFoundError:sys.path.insert(0,str(ROOT/'tmp/unit5-explanation/pyt
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME,image_factory=qrcode.image.svg.SvgPathImage,box_size=10,border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built page 9 Task 1 only: eight original expressions with own definitions and examples.')
+
+# Preserve separately approved page-9 Task 2 Writing.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit3_healthy_writing.py'), run_name='__main__')
