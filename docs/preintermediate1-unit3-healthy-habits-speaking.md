@@ -58,4 +58,20 @@ Navegador local: revisión sin notas no marca práctica; imagen 2, vídeo h y ph
 
 48 estados, con carpetas abiertas verificadas, en ocho tamaños CSS reales: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080. Estados cerrado, Vocabulary, Video, Phrasal Verbs, glosario y original; sin desbordamiento, imágenes visibles rotas/recortadas ni QR sobre texto. Ocho QR ampliados cargados, centrados y dentro de pantalla. Informes privados: `tmp/preintermediate1-healthy-habits-speaking-qa/`.
 
-Estado: construcción y QA local verificados; publicación pendiente de verificación. Las tareas orales reservadas quedan construidas; revisar el resto del pacing guide con el docente antes de dar por cerrada toda Unit 3.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente. Las tareas orales reservadas están terminadas; revisar el resto del pacing guide con el docente antes de dar por cerrada toda Unit 3.
+
+
+## Publicación verificada — 12 de noviembre de 2026, Colombia
+
+Commit `3264bc80e9f6ad2f9daace635b46701153854c65`, push normal a main. Comparadas versiones previas y 383 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 59 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261113T033653Z-clh4y9gg`. Los 59 hashes de producción y 442 respuestas HTTPS 200 (59 publicados y 383 dependencias) coinciden. PDF, trece imágenes originales y 21 pronunciaciones reutilizadas intactos. Sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: 34 notas vacías, 68 marcas desactivadas y cinco carpetas cerradas inicialmente. Revisión oral sin notas no marca práctica. Imagen 2, vídeo h y phrasal 7 con espacios/salto/caracteres literales, marca y revisión se recuperan exactos tras doble reinicio/recarga/deshacer, conservando Food 2. Resúmenes 1/17, 1/9 y 1/8; nueve preguntas de vídeo marcadas producen 9/9 manteniendo 1/17 y 1/8 en los otros bloques. Editar vídeo pausa audio y oculta solo su revisión/resumen, preservando los otros. Pregunta phrasal 2 reproduce el archivo correcto de 6,455147 segundos a 0.75, readyState 4 y sin error.
+
+Streaming services muestra «servicios de transmisión en línea» y su MP3 correcto en celular de 390×844, con tooltip dentro de pantalla y sin desbordamiento. QR ampliado cargado, centrado y dentro de pantalla. Portada, nueve imágenes y cuatro páginas originales completas cargadas. Ambos botones PDF mantienen sesión compartida. Enlace de vídeo abre watch-video con URL original de Every Mind Matters y carga bajo demanda; enlace de phrasal verbs correcto. Accesos desde Lab/Library y Next de Writing comprobados. Lab tiene doce actividades de Unit 3 y tres de Speaking.
+
+Al entregar quedaron 34 notas vacías, 68 marcas desactivadas, respaldos de prueba retirados y feedback oculto; los tres recuentos vuelven a cero. Cinco carpetas cerradas, reproductor sin fuente ni reproducción y visor restablecido. Página pública marcada como entregable. Informe `tmp/preintermediate1-healthy-habits-speaking-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Habits_Speaking_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Habits_Speaking_glosario.png`
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-healthy-habits.html. Tareas orales antes reservadas terminadas. Revisar el resto del pacing guide con el docente antes de cerrar toda Unit 3 o avanzar a otro bloque; no se modifica la evaluación oral oficial.
