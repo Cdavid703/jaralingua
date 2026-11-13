@@ -961,3 +961,17 @@ Página: https://www.jaralingua.com/ingles/preintermedio-1/speaking-unit-3-healt
 ## Unit 3 — Healthy Routines · Grammar, construcción aprobada
 
 12 de noviembre de 2026: aprobada práctica complementaria de sesión 6, porque Healthy Lifestyle no incluye sección Grammar. Construida `grammar-unit-3-healthy-routines.html`: diez formas Present Simple/Continuous y ocho oraciones de frecuencia. Dos ejercicios independientes con intentos completos distintos, explicaciones/modelos tras dos intentos o el primero perfecto, variantes de contracciones, edición con pausa y reinicio/deshacer recuperable. Doce términos subrayados, 34 MP3 nuevos Sarah de catálogo verificados, portada propia, diseño de Básico 2 y QR ampliable. Dos botones al PDF original de apoyo, sin atribuirle los nuevos ejercicios. Lab incorpora carpeta Grammar y trece actividades; Library añade acceso y Healthy Habits Speaking cambia solo Next. Ocho pruebas Node correctas, 1.155 archivos previos cotejados, tres reconstrucciones idempotentes; navegador local en 32 estados y ocho QR ampliados correctos. Fuente y criterios: [Healthy Routines](../preintermediate1-unit3-healthy-routines.md). Publicación pendiente de verificar. No adelantar Giving Advice, Going to ni evaluación oficial sin acuerdo.
+
+
+### Publicación verificada de Healthy Routines · Grammar — 12 de noviembre de 2026, Colombia
+
+Commit `c8d5f6d571a3486e463d322e81ccfddfe4aac2d5`, push normal a main. Comparados los archivos previos y 438 dependencias intactas antes de publicar. Vista previa revisada y publicación selectiva de 42 archivos estáticos, con respaldo `/var/backups/jaralingua/vps-publish/20261113T040649Z-ud51y3ao`. Los 42 hashes de producción y las 480 respuestas HTTPS 200 (42 publicados y 438 dependencias) coinciden. PDF, componentes compartidos, autenticación, datos académicos, backend y servicios intactos.
+
+En navegador público: primera entrega perfecta 10/10 con don't, isn't y doesn't desbloquea modelos. Pregunta 6 reproduce su MP3 correcto, readyState 4, sin error, duración 1,346757 s y velocidad 0.75. Reinicio doble, recarga y deshacer recuperan exactamente `  WALKS!\n ` y conservan el borrador literal independiente del segundo ejercicio. El modelo de la respuesta equivalente normalizada se vuelve a mostrar al recuperar la entrega perfecta. Exercise 2 acepta I’m y obtiene 8/8. Hardly ever muestra «casi nunca» y su MP3 correcto en 390×844; QR ampliado cargado y dentro de pantalla en 320×740. Ambos botones PDF abren la sesión compartida existente, sin iniciar sesión durante la prueba.
+
+Practice Lab: trece actividades de Unit 3, una tarjeta Grammar, Unit 1 conserva once y Unit 2 diez. Accesos desde Lab, Listen Library y Next de Healthy Habits Speaking comprobados. Enlace de explicación abre frequency en Unit 3. Al entregar: dieciocho campos vacíos, tres carpetas cerradas, respaldos de prueba retirados, feedback/modelos ocultos, audio sin fuente ni reproducción, portada 1600×800 cargada, sin desbordamiento ni errores de consola. Vista normal restablecida y página pública marcada como entregable.
+
+Informe: `tmp/preintermediate1-healthy-routines-qa/public-ui.json`.
+Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Routines_publicado.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Routines_glosario.png`.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/grammar-unit-3-healthy-routines.html. No se da por cerrada toda Unit 3: Giving Advice y Going to requieren un próximo acuerdo; la evaluación oficial no cambia.

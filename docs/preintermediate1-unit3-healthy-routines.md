@@ -39,4 +39,18 @@ Ocho pruebas Node de comportamiento correctas: intentos incompletos, repeticione
 
 Navegador local: intentos 0/10 repetidos mantienen modelos ocultos; un segundo conjunto diferente los muestra. Reproducción correcta readyState 4. Recuperación exacta de dos ejercicios y 8/8 con I’m aceptado. Glosario hardly ever muestra «casi nunca» y audio correcto en 390×844. 32 estados en ocho tamaños de 320 a 1920 px, carpetas abiertas comprobadas, sin desbordamiento ni superposición del QR; ocho QR ampliados centrados, cargados y dentro de pantalla. Informes en `tmp/preintermediate1-healthy-routines-qa/` (no versionados).
 
-Publicación pendiente de verificar y registrar.
+Publicación verificada; véase el registro siguiente.
+
+
+## Publicación verificada — 12 de noviembre de 2026, Colombia
+
+Commit `c8d5f6d571a3486e463d322e81ccfddfe4aac2d5`, push normal a main. Comparados los archivos previos y 438 dependencias intactas antes de publicar. Vista previa revisada y publicación selectiva de 42 archivos estáticos, con respaldo `/var/backups/jaralingua/vps-publish/20261113T040649Z-ud51y3ao`. Los 42 hashes de producción y las 480 respuestas HTTPS 200 (42 publicados y 438 dependencias) coinciden. PDF, componentes compartidos, autenticación, datos académicos, backend y servicios intactos.
+
+En navegador público: primera entrega perfecta 10/10 con don't, isn't y doesn't desbloquea modelos. Pregunta 6 reproduce su MP3 correcto, readyState 4, sin error, duración 1,346757 s y velocidad 0.75. Reinicio doble, recarga y deshacer recuperan exactamente `  WALKS!\n ` y conservan el borrador literal independiente del segundo ejercicio. El modelo de la respuesta equivalente normalizada se vuelve a mostrar al recuperar la entrega perfecta. Exercise 2 acepta I’m y obtiene 8/8. Hardly ever muestra «casi nunca» y su MP3 correcto en 390×844; QR ampliado cargado y dentro de pantalla en 320×740. Ambos botones PDF abren la sesión compartida existente, sin iniciar sesión durante la prueba.
+
+Practice Lab: trece actividades de Unit 3, una tarjeta Grammar, Unit 1 conserva once y Unit 2 diez. Accesos desde Lab, Listen Library y Next de Healthy Habits Speaking comprobados. Enlace de explicación abre frequency en Unit 3. Al entregar: dieciocho campos vacíos, tres carpetas cerradas, respaldos de prueba retirados, feedback/modelos ocultos, audio sin fuente ni reproducción, portada 1600×800 cargada, sin desbordamiento ni errores de consola. Vista normal restablecida y página pública marcada como entregable.
+
+Informe: `tmp/preintermediate1-healthy-routines-qa/public-ui.json`.
+Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Routines_publicado.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Routines_glosario.png`.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/grammar-unit-3-healthy-routines.html. No se da por cerrada toda Unit 3: Giving Advice y Going to requieren un próximo acuerdo; la evaluación oficial no cambia.
