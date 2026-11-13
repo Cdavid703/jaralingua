@@ -48,4 +48,20 @@ Ocho pruebas Node pasan: diez textos independientes, reinicio doble/recarga/desh
 
 Treinta y dos estados verificados, con carpeta abierta correspondiente comprobada, en ocho tamaños CSS reales 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080: cerrado, Writing, guardar y original. Sin desbordamientos, imágenes visibles rotas ni QR sobre texto. Apertura y cierre por teclado comprobados. Ocho QR ampliados cargados, centrados y dentro de pantalla. Informes privados: `tmp/preintermediate1-healthy-writing-qa/`.
 
-Estado: construcción y QA local verificados; publicación pendiente de verificación. No adelantar otras actividades sin elección del docente.
+Estado: construcción, QA local y publicación verificados. Ver registro siguiente; no adelantar otras actividades sin elección del docente.
+
+
+## Publicación verificada — 12 de noviembre de 2026, Colombia
+
+Commit `670540d667352439d6017cc3c757fea1384b4fea`, push normal a main. Tras comparar versiones previas y 353 dependencias intactas, se revisó la vista previa y se aplicaron exactamente 34 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261113T030404Z-lt_6lp39`. Los 34 hashes de producción y 387 respuestas HTTPS 200 (34 publicados y 353 dependencias) coinciden. PDF, dos imágenes originales y cinco pronunciaciones reutilizadas intactos. Sin cambios de autenticación, componentes compartidos, datos académicos, backend ni servicios.
+
+Navegador público: diez campos vacíos y tres carpetas cerradas inicialmente. Revisión de f vacía da orientación sobre sus dos partes. Texto de f con espacios/salto/caracteres literales, marca y revisión se recupera exacto tras doble reinicio/recarga/deshacer, conservando g. Resúmenes 10/10 y 9/10 cuentan respuestas iniciadas sin corregir ni calificar; el segundo enlaza a e. Editar pausa audio y oculta revisión/resumen propios. Copia pública conserva consigna, diez preguntas a–j y texto literal. Pregunta e reproduce su archivo correcto de 4,504671 segundos a 0.75, readyState 4, sin error, con 7-9 impreso intacto. Quality of life muestra «calidad de vida» y su MP3 correcto en celular de 390×844 sin desbordamiento. QR ampliado cargado, centrado y dentro de pantalla.
+
+Portada 1600×800, graduados 1051×464 y página 9 completa 1276×1802 cargados. Ambos botones del PDF mantienen la sesión compartida existente. Contexto de f abre párrafo 5 del artículo; secuencia Reading → Words in Context → Writing y accesos desde Lab/Library comprobados. Lab tiene once actividades, una en Writing, una en Reading, tres de Vocabulary y dos de Speaking. Al entregar quedaron diez respuestas vacías, veinte marcas desactivadas, respaldos de prueba retirados y feedback oculto; carpetas cerradas, reproductor sin fuente ni reproducción y visor restablecido. Página pública marcada como entregable.
+
+Informe `tmp/preintermediate1-healthy-writing-qa/public-ui.json`. Capturas:
+
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Writing_publicado.png`
+- `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Healthy_Lifestyle_Writing_glosario.png`
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/writing-unit-3-healthy-lifestyle.html. Task 2 terminada. Esta entrega no cierra por sí sola toda la unidad ni las preguntas de conversación reservadas; elegir con el docente antes de continuar.
