@@ -46,4 +46,19 @@ Doce pruebas Node correctas: coherencia de tabla y decimales; banco de palabras;
 
 Navegador local: narración completa reproduciendo con readyState 4; incompleto sin intento; equivalencias de 0.2 y 240 mantienen modelos ocultos; segundo conjunto distinto desbloquea. Los tres bloques obtienen 8/8 con palabras, cifras, unidades adjuntas y coma decimal. Modelo label-6 de 3,390113 s reproduce a 0.75, readyState 4. 2 g se explica correctamente como distinto de 0.2 g. Reinicio doble/recarga/deshacer recupera los tres textos literales y sus segundas respuestas. Servings per bag muestra «porciones por bolsa o paquete» y MP3 correcto en 390×844. Cuarenta estados en ocho tamaños de 320 a 1920 px, carpetas comprobadas, tabla dentro de pantalla y sin desbordamiento o superposición del QR. Ocho QR ampliados cargados y dentro de pantalla. Informes en `tmp/preintermediate1-food-labels-qa/`, no versionados.
 
-Publicación pendiente de verificar y registrar.
+Publicación verificada; véase el registro siguiente.
+
+
+## Publicación verificada — 13 de noviembre de 2026, Colombia
+
+Commit `0ab2e4ebbb8a8de4df18a926ff93b596d33817b6`, push normal a main. Comparados los archivos previos y 576 dependencias intactas antes de publicar. Vista previa revisada y despliegue selectivo de 55 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261113T220248Z-uhfv7_gp`. Los 55 hashes de producción y las 631 respuestas HTTPS 200 (55 publicados y 576 dependencias) coinciden. PDF, componentes compartidos, autenticación, datos académicos, backend y servicios intactos.
+
+Navegador público: tabla con los ocho valores exactos; porciones, masa y unidades correctas. Narración completa de 28,885624 s reproduciendo con readyState 4 y sin error. Los tres bloques obtienen 8/8 en la primera entrega, incluyendo cantidades escritas en palabras, unidades adjuntas, cero inicial omitido y coma decimal. Modelo label-6 cargado con readyState 4, duración 3,390113 s y velocidad 0.75; reproducción de nuevo comprobada. Editar pausa su audio y oculta su resultado conservando los modelos de los otros bloques. 2 g se explica correctamente como distinto de 0.2 g. View the fictional label lleva a #label-reference sin perder el borrador.
+
+Doble reinicio/recarga/deshacer recupera exactamente los tres borradores con espacios, salto y texto literal, conservando segundas respuestas y feedback oculto. Tabla completa en 390×844 sin desbordamiento ni cambios en decimales o unidades. Servings per bag muestra «porciones por bolsa o paquete» y su MP3 correcto, reproduciendo con readyState 4. QR ampliado cargado y dentro de pantalla en 320×740. Ambos botones PDF abren la sesión compartida existente sin iniciar sesión durante la prueba.
+
+Accesos desde Lab, Listen Library y Next de Stress and Relaxation comprobados. Lab tiene 16 actividades de Unit 3, cuatro tarjetas Vocabulary y tres Grammar; Unit 1 conserva once y Unit 2 diez. Enlace a explicación abre food-label. Al entregar: veinticuatro campos vacíos, cuatro carpetas cerradas, respaldos de prueba retirados, feedback/modelos ocultos y audio sin fuente ni reproducción. Portada 1600×800 cargada; sin desbordamiento ni errores de consola. Vista normal restablecida y página pública marcada como entregable.
+
+Informe: `tmp/preintermediate1-food-labels-qa/public-ui.json`. Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_publicado.png`, `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_tabla.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_glosario.png`.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-food-labels.html. Food Labels terminado. Revisar cobertura final con el docente antes de declarar cerrada Unit 3 y acordar aparte la tarea oral oficial del 20 %.
