@@ -1032,3 +1032,9 @@ Accesos desde Lab, Listen Library y Next de Stress and Relaxation comprobados. L
 Informe: `tmp/preintermediate1-food-labels-qa/public-ui.json`. Capturas: `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_publicado.png`, `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_tabla.png` y `/Users/davidaramillo/Projects/outputs/preintermedio-1/Unit_3_Food_Labels_glosario.png`.
 
 Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-3-food-labels.html. Food Labels terminado. Revisar cobertura final con el docente antes de declarar cerrada Unit 3 y acordar aparte la tarea oral oficial del 20 %.
+
+## Unit 3 — Revisión de cierre y propuesta oral, 13 de noviembre de 2026
+
+El docente aprobó revisar la cobertura y recibir una propuesta concreta antes de construir la evaluación. [Matriz de cierre y propuesta oral](../preintermediate1-unit3-cierre-y-propuesta-oral.md): 16 páginas, 16 portadas distintas, 145 anclas válidas y 686 archivos públicos con HTTP 200 y hash correcto. Library tiene quince accesos directos y el reading conectado se alcanza por Part 2 desde A Busy Week. No se modificó el sitio ni se repitió la reproducción del vídeo externo.
+
+Conclusión: vocabulario y gramática con práctica guiada disponible; se debe verificar producción aplicada del pacing guide (etiqueta propia, encuesta/dramatización de molestias y plan de un día ocupado). Esto no exige repetir las páginas ya construidas ni acredita aprendizaje de estudiantes. Propuesta pendiente: A Busy Day, A Better Plan, presencial por parejas, 6–8 minutos más 2 de preparación, nota individual con rúbrica de cinco criterios ×4 =20 puntos; el 20 % curricular proviene del pacing guide y su incorporación oficial se definirá después de aprobar. Evaluations sigue desde cero, sin examen ni notas configurados. No construir ni activar evaluación hasta que el docente apruebe la propuesta concreta.
