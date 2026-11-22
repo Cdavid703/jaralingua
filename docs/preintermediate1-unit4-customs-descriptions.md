@@ -49,4 +49,14 @@ Comprobación estática: 16 campos, tres carpetas cerradas, dos botones PDF, 33 
 
 Nueve pruebas funcionales de Chrome correctas: incompletos, intentos normalizados, contracciones/corrección, recuperación exacta, aislamiento de borradores, almacenamiento bloqueado, coordinación de audio/glosario, categorías/navegación y diseño. La comprobación visual cubre 24 estados (cerrado, abierto y feedback) en 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080; ocho ampliaciones QR. Sin desbordamiento, recursos visibles rotos ni texto cubierto por QR; paleta y Arial verificadas. Capturas móvil y escritorio inspeccionadas. Dos reconstrucciones completas desde Unit 1 y una parcial desde Vocabulary conservaron exactamente 2.518 recursos públicos.
 
-Pruebas de navegador: `tools/test_preintermediate1_customs_descriptions.cjs`. Evidencias temporales en `tmp/preintermediate1-customs-descriptions-qa/`. Publicación pendiente de verificar.
+Pruebas de navegador: `tools/test_preintermediate1_customs_descriptions.cjs`. Evidencias temporales en `tmp/preintermediate1-customs-descriptions-qa/`.
+
+## Publicación verificada — 22 de noviembre de 2026, Colombia
+
+Commit `914ee90027ced9dfc44eb8b081c01b25fd03f5cb`, push normal a main. Archivos previos y 190 dependencias cotejados; vista previa revisada. Publicados selectivamente 35 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261122T215023Z-6lxsspuz`. Los 35 hashes de producción coinciden; 225 respuestas HTTPS 200 con hashes correctos, contando dependencias. PDF de apoyo, autenticación, backend, datos académicos y servicios intactos.
+
+Cinco pruebas de Chrome público pasaron: primer perfecto con contracciones y rechazo de concordancia/cantidades erróneas; recuperación exacta de ambos borradores; coordinación de modelos/glosario/velocidad/edición; separación Grammar/Vocabulary con accesos desde Lab y Library; 24 estados visuales y ocho QR ampliados. Los ocho tamaños conservan Arial y paleta de Básico 2, sin desbordamiento, recursos visibles rotos o texto cubierto por QR.
+
+La descarga muestra el aviso compartido de inicio de sesión sin autenticar durante la prueba. Vista nueva limpia: 16 campos vacíos, tres carpetas cerradas y audio sin fuente ni reproducción. Sin errores de JavaScript de página en esa comprobación. Los borradores de prueba pertenecieron a contextos temporales de Chrome, cerrados al terminar.
+
+Informes: `public-verification.json`, `public/layout.json` y `public-ui.json` bajo `tmp/preintermediate1-customs-descriptions-qa/`. Página: https://www.jaralingua.com/ingles/preintermedio-1/grammar-unit-4-customs-celebrations.html. La entrega completa solo esta práctica; las siguientes páginas requieren acuerdo de alcance.
