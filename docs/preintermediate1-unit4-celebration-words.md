@@ -65,4 +65,16 @@ Comprobación estática: 17 selectores, cinco carpetas cerradas, dos botones PDF
 
 Pruebas funcionales en Chrome: siete escenarios correctos de incompletos, intentos distintos/repetidos, primer perfecto, edición/audio, recuperación independiente, almacenamiento bloqueado/corrupto y glosario. Revisión visual: 32 estados (cerrado, abierto, feedback y original) en ocho tamaños: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080. Sin desbordamiento ni imágenes visibles rotas; Arial y colores de Básico 2 cotejados. Ocho QR ampliados cargados dentro de pantalla. Aviso compartido de inicio de sesión del PDF comprobado sin iniciar sesión. Capturas móvil y escritorio inspeccionadas. Dos reconstrucciones completas desde Unit 1 y una directa conservaron exactamente 2.486 archivos públicos.
 
-Pruebas reproducibles: `tools/test_preintermediate1_celebration_words.cjs`. Informe y capturas locales en `tmp/preintermediate1-celebration-words-qa/`. Estado de publicación: pendiente de verificar.
+Pruebas reproducibles: `tools/test_preintermediate1_celebration_words.cjs`. Informe y capturas locales en `tmp/preintermediate1-celebration-words-qa/`.
+
+## Publicación verificada — 22 de noviembre de 2026, Colombia
+
+Commit `c1d8e0083bdfc1c4f3a257d431399045b5125358`, push normal a main. Versiones previas de los archivos modificados y 150 dependencias intactas cotejadas antes de publicar; vista previa revisada. Despliegue selectivo de 41 archivos estáticos, respaldo `/var/backups/jaralingua/vps-publish/20261122T212334Z-q2hol5um`. Los 41 hashes de producción coinciden; 191 respuestas HTTPS 200 con huellas correctas, contando las dependencias. No se cambió backend, autenticación, bases de datos, notas ni servicios.
+
+En Chrome público: los tres ejercicios perfectos revelan sus modelos; editar oculta solo su revisión y pausa el audio. Doble reinicio, recarga y deshacer recuperan los tres bloques independientemente. Mistletoe muestra muérdago y reproduce su MP3; velocidad 0.75 y parada correctas. Los 32 estados visuales y ocho QR ampliados pasan también contra producción, sin desbordamiento, imágenes visibles rotas ni texto cubierto por el QR.
+
+Acceso correcto desde Practice Lab y Listen Library; recuentos públicos 11/10/16/3/2/2 por unidad. Los botones PDF conservan el aviso compartido de sesión, sin iniciar sesión durante la prueba. Vista nueva limpia: 17 respuestas vacías, cinco carpetas cerradas y audio sin fuente ni reproducción. Sin errores de JavaScript de página en esa revisión. Los borradores de prueba estuvieron en contextos temporales independientes de Chrome, cerrados al terminar.
+
+Informes: `public-verification.json`, `public/layout.json` y `public-ui.json` bajo `tmp/preintermediate1-celebration-words-qa/`. La entrega no cierra Unit 4 ni autoriza la siguiente actividad.
+
+Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-4-celebration-words.html.
