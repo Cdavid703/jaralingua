@@ -1,0 +1,59 @@
+/* Browser regressions: grammar acceptance, independent writing and skill categories. */
+const {test,before,after}=require('node:test');
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {chromium}=require('playwright');
+const base=process.env.CUSTOMS_TEST_BASE||'http://127.0.0.1:8765';
+const url=base+'/ingles/preintermedio-1/grammar-unit-4-customs-celebrations.html';
+const key='jl-pi1-unit4-customs-descriptions-v1',out=path.resolve(process.env.CUSTOMS_TEST_OUTPUT||'tmp/preintermediate1-customs-descriptions-qa');
+let browser;before(async()=>{fs.mkdirSync(out,{recursive:true});browser=await chromium.launch({channel:'chrome',headless:true});});after(async()=>browser?.close());
+async function page(init){const p=await browser.newPage({viewport:{width:1440,height:900}});if(init)await p.addInitScript(init);await p.goto(url);await p.waitForSelector('.jl-page-qr-open');return p;}
+const section=(p,id)=>p.locator(`[data-cd-task="${id}"]`);
+async function open(p,id){await section(p,id).evaluate(el=>el.closest('details').open=true);}
+async function fill(p,id,values){await open(p,id);const fields=section(p,id).locator('textarea');for(let i=0;i<values.length;i++)await fields.nth(i).fill(values[i]);}
+async function action(p,id,kind){await open(p,id);await section(p,id).locator(`[data-cd-${kind}]`).click();}
+async function answers(p,id){return p.evaluate(id=>JSON.parse(document.getElementById('cd-data').textContent).tasks[id].map(x=>x.answer),id);}
+async function state(p){return p.evaluate(k=>JSON.parse(sessionStorage.getItem(k)),key);}
+async function hidden(p,id){return section(p,id).locator('.cd-feedback').evaluateAll(els=>els.every(el=>el.hidden));}
+
+test('incomplete and punctuation-only answers preserve both drafts without attempts',async()=>{
+ const p=await page();try{await fill(p,'customs',['invites','...']);await fill(p,'descriptions',['are']);await action(p,'customs','check');assert.equal((await state(p)).states.customs.attempts.length,0);assert.equal(await p.locator('#cd-answer-customs-2').getAttribute('aria-invalid'),'true');assert.equal(await p.locator('#cd-answer-descriptions-1').inputValue(),'are');assert.equal(await hidden(p,'customs'),true);}finally{await p.close();}
+});
+test('repeating, cosmetic changes and equivalent contractions do not advance attempts',async()=>{
+ const p=await page();try{const a=await answers(p,'customs');a[0]='invite';await fill(p,'customs',a);await action(p,'customs','check');a[3]=' DOESN’T WEAR. ';a[5]="don't exchange";await fill(p,'customs',a);await action(p,'customs','check');assert.equal((await state(p)).states.customs.attempts.length,1);await p.reload();assert.equal(await hidden(p,'customs'),true);a[0]='is inviting';await fill(p,'customs',a);await action(p,'customs','check');assert.equal(await hidden(p,'customs'),false);assert.equal(await hidden(p,'descriptions'),true);assert.equal((await state(p)).states.customs.attempts.length,2);}finally{await p.close();}
+});
+test('perfect first attempts accept contractions and reject wrong agreement or quantifiers',async()=>{
+ const p=await page();try{const a=await answers(p,'customs'),b=await answers(p,'descriptions');a[3]="doesn't wear";a[5]='DON’T EXCHANGE.';b[6]=' There’s ';await fill(p,'customs',a);await action(p,'customs','check');await fill(p,'descriptions',b);await action(p,'descriptions','check');for(const id of ['customs','descriptions']){assert.equal(await hidden(p,id),false);assert.match(await section(p,id).locator('.cd-result').textContent(),/8 of 8/);}b[0]='is';b[3]='many';await fill(p,'descriptions',b);await action(p,'descriptions','check');assert.match(await section(p,'descriptions').locator('.cd-result').textContent(),/6 of 8/);}finally{await p.close();}
+});
+test('reset twice, reload and undo preserve exact text and independent review states',async()=>{
+ const p=await page();try{const a=await answers(p,'customs'),b=await answers(p,'descriptions');a[0]='  literal <example>\n ';await fill(p,'customs',a);await action(p,'customs','check');await fill(p,'descriptions',b);await action(p,'descriptions','check');for(const id of ['customs','descriptions']){await action(p,id,'reset');await action(p,id,'reset');}await p.reload();for(const id of ['customs','descriptions'])await action(p,id,'undo');assert.deepEqual(await section(p,'customs').locator('textarea').evaluateAll(es=>es.map(e=>e.value)),a);assert.deepEqual(await section(p,'descriptions').locator('textarea').evaluateAll(es=>es.map(e=>e.value)),b);assert.equal(await hidden(p,'customs'),true);assert.equal(await hidden(p,'descriptions'),false);await action(p,'customs','reset');await action(p,'descriptions','reset');await fill(p,'customs',['new work']);assert.equal(await section(p,'customs').locator('[data-cd-undo]').isVisible(),false);assert.equal(await section(p,'descriptions').locator('[data-cd-undo]').isVisible(),true);}finally{await p.close();}
+});
+test('invalid stored states cannot reveal models or alter the vocabulary draft',async()=>{
+ const p=await page(()=>{sessionStorage.setItem('jl-pi1-unit4-celebration-words-v1','untouched');sessionStorage.setItem('jl-pi1-unit4-customs-descriptions-v1',JSON.stringify({states:{customs:{answers:['invites'],attempts:['fake'],checked:'fake'}},backups:{descriptions:{answers:[]}}}));});try{assert.equal(await p.locator('#cd-answer-customs-1').inputValue(),'');assert.equal(await hidden(p,'customs'),true);await fill(p,'customs',['invites']);assert.equal(await p.evaluate(()=>sessionStorage.getItem('jl-pi1-unit4-celebration-words-v1')),'untouched');}finally{await p.close();}
+});
+test('blocked storage still allows live checking, reset and undo',async()=>{
+ const p=await page(()=>{Storage.prototype.getItem=function(){throw new Error('Blocked');};Storage.prototype.setItem=function(){throw new Error('Blocked');};});try{await fill(p,'customs',await answers(p,'customs'));await action(p,'customs','check');await action(p,'customs','reset');await action(p,'customs','undo');assert.equal(await hidden(p,'customs'),false);assert.equal(await p.locator('#cd-storage-status').isVisible(),true);}finally{await p.close();}
+});
+test('model audio, glossary meanings, speed and editing are coordinated',async()=>{
+ const p=await page();try{for(const id of ['customs','descriptions']){await fill(p,id,await answers(p,id));await action(p,id,'check');}await section(p,'customs').locator('[data-cd-model]').first().click();await p.waitForFunction(()=>{const a=document.getElementById('cd-audio');return a.readyState>=2&&!a.paused;});assert.match(await p.locator('#cd-audio').getAttribute('src'),/customs-1.mp3$/);await fill(p,'customs',['invite']);assert.equal(await p.locator('#cd-audio').evaluate(a=>a.paused),true);assert.equal(await hidden(p,'customs'),true);assert.equal(await hidden(p,'descriptions'),false);await p.locator('#vocabulary-support').evaluate(el=>el.open=true);const word=p.locator('#vocabulary-support .fv-vocab-word').filter({hasText:/^relatives$/});await word.focus();assert.match(await p.locator('#fvVocabularyTooltip').textContent(),/familiares/);await word.click();await p.waitForFunction(()=>{const a=document.getElementById('cd-audio');return a.readyState>=2&&!a.paused;});assert.match(await p.locator('#cd-audio').getAttribute('src'),/word-relatives.mp3$/);await p.locator('[data-cd-speed="0.75"]').click();assert.equal(await p.locator('#cd-audio').evaluate(a=>a.playbackRate),0.75);await p.locator('[data-cd-stop]').click();assert.equal(await p.locator('#cd-audio').evaluate(a=>a.paused),true);}finally{await p.close();}
+});
+test('Grammar and Vocabulary remain separate in Unit 4, with correct Lab and Library navigation',async()=>{
+ const p=await page();try{await p.goto(base+'/ingles/preintermedio-1/practice-lab.html');assert.equal(await p.locator('details[open]').count(),0);assert.equal(await p.locator('#unit-4-grammar .card-link').count(),1);assert.equal(await p.locator('#unit-4-vocabulary .card-link').count(),1);assert.match(await p.locator('#unit-4-grammar .card-link').getAttribute('href'),/^grammar-unit-4/);assert.match(await p.locator('#unit-4-vocabulary .card-link').getAttribute('href'),/^vocabulary-unit-4/);assert.equal(await p.locator('#unit-4 article.course-section-card').count(),4);await p.goto(base+'/ingles/preintermedio-1/practice-lab.html#unit-4-grammar');await p.locator('#unit-4-grammar .card-link').click();assert.equal(p.url(),url);await p.goto(base+'/ingles/preintermedio-1/listening-library.html#unit-4-customs-descriptions-audio');await p.locator('#unit-4-customs-descriptions-audio .card-link').click();assert.equal(p.url(),url);}finally{await p.close();}
+});
+test('eight viewport sizes: closed/open/feedback, correct palette, loaded cover and QR without overlap',{timeout:180000},async()=>{
+ const p=await page(),results=[];try{for(const [width,height] of [[320,740],[390,844],[844,390],[820,1180],[1180,820],[1366,768],[1440,900],[1920,1080]]){
+  await p.setViewportSize({width,height});await p.reload();await p.waitForSelector('.jl-page-qr-open');assert.equal(await p.locator('details[open]').count(),0);
+  const covered=await p.evaluate(()=>{const host=document.querySelector('.pi-hero-copy'),qr=host.querySelector('.jl-page-qr-card').getBoundingClientRect(),walker=document.createTreeWalker(host,NodeFilter.SHOW_TEXT);let node,hits=[];while(node=walker.nextNode()){if(!node.textContent.trim()||node.parentElement.closest('.jl-page-qr-card'))continue;const range=document.createRange();range.selectNodeContents(node);for(const r of range.getClientRects())if(r.width&&r.height&&r.left<qr.right&&r.right>qr.left&&r.top<qr.bottom&&r.bottom>qr.top)hits.push(node.textContent.trim());}return hits;});assert.deepEqual(covered,[],`QR covers text at ${width}×${height}`);
+  for(const mode of ['closed','open','feedback']){
+   if(mode==='open')await p.locator('details').evaluateAll(ds=>ds.forEach(d=>d.open=true));
+   if(mode==='feedback')for(const id of ['customs','descriptions']){await fill(p,id,await answers(p,id));await action(p,id,'check');}
+   await p.evaluate(async()=>{const imgs=[...document.images].filter(i=>i.checkVisibility());imgs.forEach(i=>i.loading='eager');await Promise.all(imgs.map(i=>i.decode().catch(()=>{})));});
+   const layout=await p.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,broken:[...document.images].filter(i=>i.checkVisibility()&&(!i.complete||!i.naturalWidth)).map(i=>i.src),font:getComputedStyle(document.body).fontFamily,blue:getComputedStyle(document.querySelector('.pi-hero-copy')).backgroundColor,red:getComputedStyle(document.querySelector('.hero-actions .btn-primary')).backgroundColor}));
+   assert.equal(layout.overflow,false,JSON.stringify({width,height,mode,layout}));assert.deepEqual(layout.broken,[]);assert.match(layout.font,/Arial/);assert.equal(layout.blue,'rgba(7, 31, 79, 0.72)');assert.equal(layout.red,'rgb(215, 25, 63)');results.push({width,height,mode,...layout});
+  }
+  await p.locator('.jl-page-qr-open').click();await p.locator('#jlPageQrDialog img').evaluate(i=>i.decode());const qr=await p.locator('#jlPageQrDialog').evaluate(el=>{const r=el.getBoundingClientRect();return {left:r.left,top:r.top,right:r.right,bottom:r.bottom};});assert.ok(qr.left>=-1&&qr.top>=-1&&qr.right<=width+1&&qr.bottom<=height+1,JSON.stringify(qr));await p.locator('.jl-page-qr-close').click();
+  if(width===390){await p.screenshot({path:path.join(out,'mobile-feedback.png'),fullPage:true});await p.locator('details').evaluateAll(ds=>ds.forEach(d=>d.open=false));await p.evaluate(()=>scrollTo(0,0));await p.screenshot({path:path.join(out,'mobile-hero.png')});}
+  if(width===1440){await p.locator('details').evaluateAll(ds=>ds.forEach(d=>d.open=false));await p.screenshot({path:path.join(out,'desktop.png'),fullPage:true});}
+ }
+ fs.writeFileSync(path.join(out,'layout.json'),JSON.stringify(results,null,2));
+ }finally{await p.close();}
+});

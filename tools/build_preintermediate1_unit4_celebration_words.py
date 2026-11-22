@@ -91,7 +91,7 @@ unit.xpath('./p[contains(@class,"pi-goal")]')[0].text = 'Sessions 9–10 · 6 ho
 unit.append(fragment('<details class="pi-topic" id="unit-4-vocabulary"><summary><span class="pi-number">+</span><h3>Celebrations and Festivals · Vocabulary</h3></summary><div class="pi-topic-body"><p>Vocabulary activities are separate from Grammar, Speaking and Writing. Download the complete supporting worksheet inside the activity.</p><div class="pi-section-grid">'+card+'</div><p class="pi-small" lang="es">Las demás actividades de la unidad están en preparación.</p></div></details>'))
 intro = lab.xpath('//section[@class="pi-objective"]/p')[0]
 addition = ' Unit 4 adds Celebration Words and Objects vocabulary.'
-if addition.strip() not in (intro.text or ''): intro.text = (intro.text or '') + addition
+if 'Unit 4 adds Celebration Words and Objects vocabulary' not in (intro.text or ''): intro.text = (intro.text or '') + addition
 write('practice-lab.html', lab)
 
 library = html.document_fromstring((COURSE/'listening-library.html').read_text())
@@ -106,3 +106,7 @@ except ModuleNotFoundError:
 import qrcode.image.svg
 qrcode.make('https://www.jaralingua.com/ingles/preintermedio-1/'+NAME, image_factory=qrcode.image.svg.SvgPathImage, box_size=10, border=4).save(ROOT/'assets/img/page-qr'/('ingles-preintermedio-1-'+NAME.removesuffix('.html')+'.svg'))
 print('Built Celebration Words and Objects: 4 concepts, 9 pictures and 4 combinations; Unit 4 has 3 activities.')
+
+# Preserve the separately approved Grammar page and category after rebuilding Vocabulary.
+import runpy
+runpy.run_path(str(ROOT/'tools/build_preintermediate1_unit4_customs_descriptions.py'), run_name='__main__')
