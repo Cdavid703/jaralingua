@@ -41,3 +41,12 @@ Ocho pruebas Chrome correctas: fuente/evidencia y selección única, incompletos
 Vista nueva verificada sin respuestas ni audio cargado, cuatro carpetas cerradas y sin errores JavaScript. Ambos botones PDF usan el aviso compartido de sesión; prueba sin autenticar.
 
 Prueba: `tools/test_preintermediate1_christmas_reading.cjs`. Informes y capturas: `tmp/preintermediate1-christmas-reading-qa/`. Publicación pendiente de verificación. Acordar la siguiente actividad antes de construirla; no declarar cerrada Unit 4.
+
+
+## Publicación verificada — 23 de noviembre de 2026, Colombia
+
+Commit `1d6f2538811e36333963dd1790a6f05e994a51b9`, push normal a main y vista previa revisada. Publicados selectivamente 40 archivos estáticos tras comparar sus versiones previas y 246 dependencias intactas. Respaldo `/var/backups/jaralingua/vps-publish/20261123T223721Z-qqhtje1m`. Los 40 hashes en producción coinciden; 286 respuestas HTTPS 200 con huellas correctas contando dependencias. Sin cambios en PDF, componentes compartidos, autenticación, datos académicos, backend ni servicios.
+
+Ocho pruebas públicas Chrome correctas: historia/evidencia, intentos, recuperación de borrador, aislamiento/corrupción, almacenamiento bloqueado, reproductor/glosario/velocidades/pausa/parada/reintento, categorías/navegación y 32 estados visuales con ocho QR ampliados. Portada y vista de página original cargadas. Ambos botones PDF muestran el aviso compartido de sesión, sin autenticar durante la prueba. Vista nueva: cero respuestas seleccionadas, cuatro carpetas cerradas y audio sin fuente ni reproducción; sin errores JavaScript. Pruebas en contextos temporales cerrados al terminar.
+
+Informes: `public-verification.json`, `public/layout.json` y `public-ui.json` en la carpeta de QA indicada. Página: https://www.jaralingua.com/ingles/preintermedio-1/reading-unit-4-getting-ready-for-christmas.html. Esta lectura está terminada; acordar la siguiente actividad antes de construir y no declarar cerrada Unit 4.

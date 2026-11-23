@@ -334,3 +334,6 @@ Publicación verificada: commit `1e8992f91e09a9c53b82cb4b5af00f56ff551e6d`, push
 ### Getting Ready for Christmas — Reading, 23 de noviembre de 2026
 
 Adaptación aprobada de Christmas Around the World p.5: historia completa de siete párrafos/288 palabras y ocho preguntas con evidencia textual. Se cambia por qué duerme Grandpa a cuándo; comparación personal reservada para Speaking. Fuente y PDF de nueve páginas intactos; vista original de p.5 sin pérdida, 23 términos, 31 audios nuevos y nueve reutilizados verificados. Reading tiene dos tarjetas y Unit 4 seis actividades, separadas por categoría. [Fuente y validación](preintermediate1-unit4-christmas-reading.md). Publicación pendiente de verificar; no equivale a completar el PDF ni Unit 4.
+
+
+Publicación verificada: commit `1d6f2538811e36333963dd1790a6f05e994a51b9`, push normal, 40 archivos estáticos y 246 dependencias intactas; 286 respuestas HTTPS 200 con hashes correctos. Ocho pruebas públicas confirman historia y evidencias, borradores, audio/reintento, categorías, 32 estados visuales y ocho QR ampliados. PDF original intacto y botones con acceso compartido. [Abrir Getting Ready for Christmas](https://www.jaralingua.com/ingles/preintermedio-1/reading-unit-4-getting-ready-for-christmas.html).
