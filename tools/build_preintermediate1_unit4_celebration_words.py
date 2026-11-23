@@ -91,7 +91,7 @@ unit.xpath('./p[contains(@class,"pi-goal")]')[0].text = 'Sessions 9–10 · 6 ho
 unit.append(fragment('<details class="pi-topic" id="unit-4-vocabulary"><summary><span class="pi-number">+</span><h3>Celebrations and Festivals · Vocabulary</h3></summary><div class="pi-topic-body"><p>Vocabulary activities are separate from Grammar, Speaking and Writing. Download the complete supporting worksheet inside the activity.</p><div class="pi-section-grid">'+card+'</div><p class="pi-small" lang="es">Las demás actividades de la unidad están en preparación.</p></div></details>'))
 intro = lab.xpath('//section[@class="pi-objective"]/p')[0]
 addition = ' Unit 4 adds Celebration Words and Objects vocabulary.'
-if 'Unit 4 adds Celebration Words and Objects vocabulary' not in (intro.text or ''): intro.text = (intro.text or '') + addition
+if 'Unit 4 adds Celebration Words and Objects' not in (intro.text or ''): intro.text = (intro.text or '') + addition
 write('practice-lab.html', lab)
 
 library = html.document_fromstring((COURSE/'listening-library.html').read_text())
