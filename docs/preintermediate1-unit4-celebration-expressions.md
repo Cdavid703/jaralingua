@@ -44,4 +44,14 @@ Comprobación estática: cinco selectores y cinco áreas de texto, tres carpetas
 
 Nueve pruebas Chrome correctas de incompletos, normalización e intentos, primer perfecto y distinción verbo/sustantivo, recuperación exacta, aislamiento y corrupción, almacenamiento bloqueado, audio/glosario/edición, categorías/navegación y diseño. Veinticuatro estados en ocho tamaños: 320×740, 390×844, 844×390, 820×1180, 1180×820, 1366×768, 1440×900 y 1920×1080; ocho ampliaciones QR. Sin desbordamiento, recursos visibles rotos ni texto cubierto por QR; Arial y paleta de Básico 2 verificadas. Capturas móvil y escritorio inspeccionadas. Dos reconstrucciones completas desde Unit 1 y una parcial conservaron exactamente 2.542 recursos públicos.
 
-Prueba reproducible: `tools/test_preintermediate1_celebration_expressions.cjs`. Informes y capturas en `tmp/preintermediate1-celebration-expressions-qa/`. Publicación pendiente de verificar.
+Prueba reproducible: `tools/test_preintermediate1_celebration_expressions.cjs`. Informes y capturas en `tmp/preintermediate1-celebration-expressions-qa/`.
+
+## Publicación verificada — 23 de noviembre de 2026, Colombia
+
+Commit `1e8992f91e09a9c53b82cb4b5af00f56ff551e6d`, push normal a main. Comparados archivos previos y 223 dependencias intactas; vista previa revisada. Publicados selectivamente 27 archivos estáticos. Respaldo `/var/backups/jaralingua/vps-publish/20261123T180914Z-3tiijp7o`. Los 27 hashes de producción coinciden; 250 respuestas HTTPS 200 con hashes correctos contando dependencias. PDF, autenticación, datos académicos, backend y servicios intactos.
+
+Cinco pruebas públicas de Chrome correctas: primer perfecto y distinción verbo/sustantivo con guion; recuperación exacta de ambos borradores; audio/glosario/edición/velocidad; dos tarjetas en Vocabulary con Grammar separado y accesos desde Lab, Library y Next del Grammar; 24 estados visuales y ocho QR ampliados sin cubrir texto ni desbordar. Paleta y Arial verificadas.
+
+Descarga con el aviso compartido de inicio de sesión, sin autenticar durante la prueba. Vista nueva limpia: cinco selectores y cinco campos vacíos, tres carpetas cerradas y audio sin fuente ni reproducción. Sin errores de JavaScript de página en esa revisión. Los borradores de prueba estuvieron en contextos temporales de Chrome, cerrados al terminar.
+
+Informes: `public-verification.json`, `public/layout.json` y `public-ui.json` bajo la carpeta de QA citada. Página: https://www.jaralingua.com/ingles/preintermedio-1/vocabulary-unit-4-celebration-expressions.html. Esta entrega completa únicamente Celebration Expressions; la siguiente actividad requiere acordar su alcance.
